@@ -128,21 +128,21 @@ fix-the-exhibit/
 
 See `CONTRIBUTING.md` for details.
 
-## Team
+## Project Teams
 ### Development Team
 | Name | Role | Contributions | Related Source Code |
 |---|---|---|---|
-| [Yuyang Su](https://github.com/VnKnpwN) | Fullstack Dev, Docs | - Authored README.md<br>- Managed Github org<br> | - **README.md:** `FixTheExhibit/README.md`<br> |
+| [Yuyang Su](https://github.com/VnKnpwN) | Fullstack Dev, Docs | <li>Authored README.md <li>Authored CONTRIBUTING.md <li>Managed Github org </il> | - **README.md:** `FixTheExhibit/README.md`<br>- **CONTRIBUTING.md:** `FixTheExhibit/CONTRIBUTING.md`<br> |
 
 ### Visuals Team
 | Name | Role | Contributions | Related Assets |
 |---|---|---|---|
-| If other teams want to link their portfolios, e.g., your instagram if you're an art guy -> follow Yuyang's name format, but replace the link. | Example | Exammple | - **Cool cat png:** `FixTheExhibit/assets/cat.png`<br> |
+| If other teams want to link their portfolios, e.g., your instagram if you're an art guy -> follow Yuyang's name format, but replace the link. 🚩 | Example | Exammple | - **Cool cat png:** `FixTheExhibit/assets/cat.png`<br> |
 
 ### Research Team
 | Name | Role | Contributions | Related (?) |
 |---|---|---|---|
-| Example | Example | Exammple | Not sure what you'd put here, but if you guys at R-Team can think of anything feel free to add or change things around in this doc & repo architecture. |
+| Example | Example | Exammple | Not sure what you'd put here, but if you guys at R-Team can think of anything feel free to add or change things around in this doc & repo architecture - like removing this column or adding a `docs/historicalresearch` |
 
 ^just follow the table format to add ur contributions. 🚩
 
