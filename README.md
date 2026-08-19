@@ -13,14 +13,23 @@ An interactive browser-based sorting game where players take on the role of a mu
 ---
 
 ## Table of Contents
-- [Overview](#overview)
-- [Core Gameplay](#core-gameplay)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Development Workflow](#development-workflow)
-- [Team](#team)
-- [License](#license)
+ - [Overview](#overview)
+ - [Core Gameplay](#core-gameplay)
+ - [MVP Implementation Summary](#mvp-implementation-summary)
+ - [Tech Stack](#tech-stack)
+   - [Frontend Core](#frontend-core)
+   - [Web APIs, Data \& Hosting](#web-apis-data--hosting)
+ - [Getting Started](#getting-started)
+   - [Prerequisites](#prerequisites)
+   - [Installation](#installation)
+   - [Running locally](#running-locally)
+ - [Project Structure](#project-structure)
+ - [Contributing To This Project](#contributing-to-this-project)
+ - [Project Teams](#project-teams)
+   - [Development Team](#development-team)
+   - [Visuals Team](#visuals-team)
+   - [Research Team](#research-team)
+ - [License](#license)
 
 ---
 
@@ -118,31 +127,27 @@ fix-the-exhibit/
 
 ^Adjust as the project progresses, things change. Just an outline for now. 🚩
 
-## Development Workflow
+## Contributing To This Project
 
-- **Branching:** `main` is always demo-stable. Active development happens on `dev`. Feature work happens on dedicated branches (`feature/conveyor-belt`, `fix/timer-bug`).
-- **Merging:** Feature branches merge into `dev` via Pull Requests after code review or self-testing. When a release milestone is reached, `dev` is merged into `main`. 
-- **Commits:** concise, present-tense, following Conventional Commits (`feat: add rejection bin drag logic`).
-- **Issues/board:** For issue tracking; https://github.com/MQ-PlayThroughHistory-2026/FixTheExhibit/issues. A private Trello board was used by the team during development.
-- **Weekly check-ins:** Thursdays and/or Sundays during Zoom Team Meetings.
+Want to work on this project? Branching model, commit conventions, PR process, and issue tracking all live in [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
-See `CONTRIBUTING.md` for details.
+For design docs, research protocol, and client notes, see [`docs/`](./docs/).
 
-## Team
+## Project Teams
 ### Development Team
 | Name | Role | Contributions | Related Source Code |
 |---|---|---|---|
-| [Yuyang Su](https://github.com/VnKnpwN) | Fullstack Dev, Docs | - Authored README.md<br>- Managed Github org<br> | - **README.md:** `FixTheExhibit/README.md`<br> |
+| [Yuyang Su](https://github.com/VnKnpwN) | Fullstack Dev, Docs | - Authored README.md<br>- Authored CONTRIBUTING.md<br>- Managed Github org<br> | - **README.md:** `FixTheExhibit/README.md`<br>- **CONTRIBUTING.md:** `FixTheExhibit/CONTRIBUTING.md`<br> |
 
 ### Visuals Team
 | Name | Role | Contributions | Related Assets |
 |---|---|---|---|
-| If other teams want to link their portfolios, e.g., your instagram if you're an art guy -> follow Yuyang's name format, but replace the link. | Example | Exammple | - **Cool cat png:** `FixTheExhibit/assets/cat.png`<br> |
+| If other teams want to link their portfolios, e.g., your instagram if you're an art guy -> follow Yuyang's name format, but replace the link. 🚩 | Example | Exammple | - **Cool cat png:** `FixTheExhibit/assets/cat.png`<br> |
 
 ### Research Team
 | Name | Role | Contributions | Related (?) |
 |---|---|---|---|
-| Example | Example | Exammple | Not sure what you'd put here, but if you guys at R-Team can think of anything feel free to add or change things around in this doc & repo architecture. |
+| Example | Example | Exammple | Not sure what you'd put here, but if you guys at R-Team can think of anything feel free to add or change things around in this doc & repo architecture - like removing this column or adding a `docs/historicalresearch` |
 
 ^just follow the table format to add ur contributions. 🚩
 
