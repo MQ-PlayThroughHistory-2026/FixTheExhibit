@@ -120,7 +120,8 @@ fix-the-exhibit/
 
 ## Development Workflow
 
-- **Branching:** `main` is always demo-stable. Work happens on feature branches (`feature/conveyor-belt`, `fix/timer-bug`), merged via Pull Requests.
+- **Branching:** `main` is always demo-stable. Active development happens on `dev`. Feature work happens on dedicated branches (`feature/conveyor-belt`, `fix/timer-bug`).
+- **Merging:** Feature branches merge into `dev` via Pull Requests after code review or self-testing. When a release milestone is reached, `dev` is merged into `main`. 
 - **Commits:** concise, present-tense, following Conventional Commits (`feat: add rejection bin drag logic`).
 - **Issues/board:** For issue tracking; https://github.com/MQ-PlayThroughHistory-2026/FixTheExhibit/issues. A private Trello board was used by the team during development.
 - **Weekly check-ins:** Thursdays and/or Sundays during Zoom Team Meetings.
