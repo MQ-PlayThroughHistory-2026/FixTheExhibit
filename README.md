@@ -13,25 +13,23 @@ An interactive browser-based sorting game where players take on the role of a mu
 ---
 
 ## Table of Contents
-- [Fix The Exhibit](#fix-the-exhibit)
-  - [Table of Contents](#table-of-contents)
-  - [Overview](#overview)
-  - [Core Gameplay](#core-gameplay)
-  - [MVP Implementation Summary](#mvp-implementation-summary)
-  - [Tech Stack](#tech-stack)
-    - [Frontend Core](#frontend-core)
-    - [Web APIs, Data \& Hosting](#web-apis-data--hosting)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-    - [Running locally](#running-locally)
-  - [Project Structure](#project-structure)
-  - [Contributing](#contributing)
-  - [Project Teams](#project-teams)
-    - [Development Team](#development-team)
-    - [Visuals Team](#visuals-team)
-    - [Research Team](#research-team)
-  - [License](#license)
+ - [Overview](#overview)
+ - [Core Gameplay](#core-gameplay)
+ - [MVP Implementation Summary](#mvp-implementation-summary)
+ - [Tech Stack](#tech-stack)
+   - [Frontend Core](#frontend-core)
+   - [Web APIs, Data \& Hosting](#web-apis-data--hosting)
+ - [Getting Started](#getting-started)
+   - [Prerequisites](#prerequisites)
+   - [Installation](#installation)
+   - [Running locally](#running-locally)
+ - [Project Structure](#project-structure)
+ - [Contributing To This Project](#contributing-to-this-project)
+ - [Project Teams](#project-teams)
+   - [Development Team](#development-team)
+   - [Visuals Team](#visuals-team)
+   - [Research Team](#research-team)
+ - [License](#license)
 
 ---
 
@@ -129,9 +127,9 @@ fix-the-exhibit/
 
 ^Adjust as the project progresses, things change. Just an outline for now. 🚩
 
-## Contributing
+## Contributing To This Project
 
-Want to work on this repo? Branching model, commit conventions, PR process, and issue tracking all live in [`CONTRIBUTING.md`](./CONTRIBUTING.md).
+Want to work on this project? Branching model, commit conventions, PR process, and issue tracking all live in [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
 For design docs, research protocol, and client notes, see [`docs/`](./docs/).
 
@@ -139,7 +137,7 @@ For design docs, research protocol, and client notes, see [`docs/`](./docs/).
 ### Development Team
 | Name | Role | Contributions | Related Source Code |
 |---|---|---|---|
-| [Yuyang Su](https://github.com/VnKnpwN) | Fullstack Dev, Docs | <li>Authored README.md <li>Authored CONTRIBUTING.md <li>Managed Github org </il> | - **README.md:** `FixTheExhibit/README.md`<br>- **CONTRIBUTING.md:** `FixTheExhibit/CONTRIBUTING.md`<br> |
+| [Yuyang Su](https://github.com/VnKnpwN) | Fullstack Dev, Docs | - Authored README.md<br>- Authored CONTRIBUTING.md<br>- Managed Github org<br> | - **README.md:** `FixTheExhibit/README.md`<br>- **CONTRIBUTING.md:** `FixTheExhibit/CONTRIBUTING.md`<br> |
 
 ### Visuals Team
 | Name | Role | Contributions | Related Assets |
