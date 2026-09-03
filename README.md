@@ -77,7 +77,7 @@ Vanilla HTML, CSS, and JavaScript.
 | Category | Choice | Notes |
 |---|---|---|
 | **Interactivity** | Pointer Events API | - Replaces HTML5 DnD which lacks touch support.<br>- Pointer Events (`pointerdown`/`pointermove`/`pointerup`) handles mouse + touch with one code path, which matters given the mobile requirement. |
-| **Data Storage** | Static JSON files (`src/data/`) | Local data files (`artefacts.json`, `levels.json`) elimate the need for a backend server. |
+| **Data Storage** | Static JSON files (`data/`) | Local data files (`artefacts.json`, `levels.json`) elimate the need for a backend server. |
 | **State Persistence** | `localStorage` | Local storage for single-device sessions. Upgrade to Firebase/Supabase if cross-device leaderboards are needed. |
 | **Hosting** | Static hosting (GitHub Pages / Netlify / Vercel) | Plain HTML/CSS/JS easily deploys to any of these. |
 | **Analytics** | Static JS/JSON + simple submission endpoint or export | Handles quiz responses. Needs to comply with research ethics requirements. 🚩 |
