@@ -5,7 +5,7 @@
 
 # Fix The Exhibit
 
-An interactive browser-based sorting game where players take on the role of a museum curator, racing against the clock to correctly sort genuine historical artefacts from a conveyor belt of pop-culture fakes while learning the real history behind each object.
+A browser game where you're the new intern at a museum, and the artefact's shipping labels got mixed up. Sort real artefacts from the fakes before the delivery driver leaves, then build the exhibit and see how much history you picked up along the way.
 
 **Live demo:** [link once deployed] 🚩
 <br>**Status:** In development 🚩
@@ -35,19 +35,18 @@ An interactive browser-based sorting game where players take on the role of a mu
 
 ## Overview
 
-*Fix the Exhibit* evaluates how well video game and pop-culture depictions of historical artefacts hold up against the real thing. 
-Players sort through a stream of objects (some genuine museum pieces, some pop-culture props) into a correct display case or a rejection bin, receiving instant micro-feedback explaining the real history behind each item.
+*Fix the Exhibit* is an interactive companion piece to museum exhibits, providing players a hands-on way to engage with accurate historical information instead of the pop-culture version of history most games serve up.
 
-The project doubles as a lightweight research tool; pre- and post-game mini-quizzes measure whether play improves players' ability to distinguish historical fact from fiction.
+The game covers two levels, the Australian gold rush and ancient Egypt, each built around ten genuine artefacts and ten filler packages from other eras. Players sort incoming packages under a timer, then take their time arranging the correct artefacts into a display case, reading a short blurb about each one. A quiz at the end checks what stuck, and sorting, arrangement accuracy, and quiz results combine into a rank from New Visitor up to Expert Historian.
 
 ## Core Gameplay
 
-- **Conveyor belt sorting:** items move across the screen; players drag-and-drop (or swipe on mobile) genuine artefacts into the display case and pop-culture fakes into the rejection bin.
-- **Timer + scoring:** speed and accuracy affect score; mistakes cost time or points (TBD). 🚩
-- **Micro-feedback:** each sort triggers a short explanation of the real object's history.
-- **Levels/themes:** distinct historical eras or exhibits (e.g. Mesozoic Era, 1850s Gold Rush, Ancient Egypt) TBD. 🚩
-- **Pre/post quiz:** short quiz before and after play to capture learning outcomes for research purposes. (TBD/Stretch Goal) 🚩
-- **End-of-level reward:** score/leaderboard entry, and/or a printable "certificate" of a correctly sorted artefact. (TBD/Stretch Goal) 🚩
+- **Conveyor belt sorting:** packages move across the screen under a countdown timer; players drag-and-drop each one into the display case or rejection bin, judging whether it belongs to the level's time period. Correct and incorrect sorts each get a quick audio-visual response and a short fun fact.
+- **Timer:** if the timer runs out before all packages are sorted, the level restarts. Mistakes don't cost time or end the level, they only affect the final rank.
+- **Micro-feedback:** placing an artefact correctly reveals a short blurb about it, with an option to open a longer explanation.
+- **End-of-level quiz:** one multiple-choice question per artefact, shown after arranging is complete. Results are shown to the player immediately but are not stored.
+- **Ranked titles:** sorting speed, arrangement accuracy, and quiz accuracy combine into a score, presented as a named title with cut-offs that differ by difficulty mode.
+- **Levels/themes:** two levels at launch - Australian gold rush and ancient Egypt - with the codebase structured so museums can add further levels/artefacts later.
 
 ## MVP Implementation Summary
 The current MVP includes:
@@ -78,9 +77,8 @@ Vanilla HTML, CSS, and JavaScript.
 |---|---|---|
 | **Interactivity** | Pointer Events API | - Replaces HTML5 DnD which lacks touch support.<br>- Pointer Events (`pointerdown`/`pointermove`/`pointerup`) handles mouse + touch with one code path, which matters given the mobile requirement. |
 | **Data Storage** | Static JSON files (`data/`) | Local data files (`artefacts.json`, `levels.json`) elimate the need for a backend server. |
-| **State Persistence** | `localStorage` | Local storage for single-device sessions. Upgrade to Firebase/Supabase if cross-device leaderboards are needed. |
+| **State Persistence** | In-memory (JS variables/state), reset per level | Progress and settings are only kept for the duration of a level, no browser storage or server-side persistence. |
 | **Hosting** | Static hosting (GitHub Pages / Netlify / Vercel) | Plain HTML/CSS/JS easily deploys to any of these. |
-| **Analytics** | Static JS/JSON + simple submission endpoint or export | Handles quiz responses. Needs to comply with research ethics requirements. 🚩 |
 
 ## Getting Started
 
