@@ -1,0 +1,9 @@
+[
+  {
+    "id": "example-filler-1",
+    "name": "Example Filler (replace with real object - task R3)",
+    "correctZone": "rejection-bin",
+    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
+    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+  }
+]

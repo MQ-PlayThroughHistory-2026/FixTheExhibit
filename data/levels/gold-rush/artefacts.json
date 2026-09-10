@@ -1,0 +1,27 @@
+[
+  {
+    "id": "example-artefact-1",
+    "name": "Example Artefact (replace with real name - task R2)",
+    "correctZone": "display-case",
+    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
+    "longExplanation": [
+      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
+      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
+    ],
+    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
+    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
+    "riddle": "Placeholder riddle/clue used for hard-mode arrangement instead of a silhouette (task R9).",
+    "quiz": {
+      "easy": {
+        "question": "Placeholder easy-mode quiz question (task R10).",
+        "options": ["Option A", "Option B", "Option C", "Option D"],
+        "correctIndex": 0
+      },
+      "hard": {
+        "question": "Placeholder hard-mode quiz question (task R10).",
+        "options": ["Option A", "Option B", "Option C", "Option D"],
+        "correctIndex": 0
+      }
+    }
+  }
+]

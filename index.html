@@ -1,11 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fix the Exhibit</title>
+  <link rel="stylesheet" href="styles/variables.css" />
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/menu.css" />
+  <link rel="stylesheet" href="styles/belt.css" />
 </head>
 <body>
-    <h1>Hello, World!</h1>
+  <div id="app">
+
+    <!-- FR01: Main Menu -->
+    <section id="screen-main-menu" class="screen">
+      <h1>Fix the Exhibit</h1>
+      <div class="menu-actions">
+        <button id="btn-start" class="btn-primary">Start</button>
+        <button id="btn-instructions" class="btn-secondary">Instructions</button>
+        <!-- exit fullscreen function later -->
+      </div>
+    </section>
+
+    <!-- Level select -->
+    <section id="screen-level-select" class="screen hidden">
+      <h2>Choose a level</h2>
+      <p>Pick which exhibit you'll be sorting today.</p>
+      <div id="level-list" class="card-grid">Loading levels&hellip;</div>
+      <button class="btn-back" data-target="screen-main-menu">&larr; Back</button>
+    </section>
+
+    <!-- Difficulty select (D6) -->
+    <section id="screen-difficulty-select" class="screen hidden">
+      <h2>Choose difficulty</h2>
+      <p>This changes the sorting timer, belt speed, and arrangement hints.</p>
+      <div class="card-grid">
+        <button type="button" class="difficulty-card" data-difficulty="easy">
+          <h3>Easy</h3>
+          <p>Longer timer, slower belt, silhouettes to guide arrangement.</p>
+        </button>
+        <button type="button" class="difficulty-card" data-difficulty="hard">
+          <h3>Hard</h3>
+          <p>Shorter timer, faster belt, riddles and clues instead of silhouettes.</p>
+        </button>
+      </div>
+      <button class="btn-back" data-target="screen-level-select">&larr; Back</button>
+    </section>
+
+    <!-- Tutorial (shown once per session, per D6) -->
+    <section id="screen-tutorial" class="screen hidden">
+      <h2>How to play</h2>
+      <p>
+        Packages will move along the conveyor belt. Drag each one into the
+        display case if it belongs to this exhibit, or the rejection bin if
+        it doesn't. Sort everything before the timer runs out.
+      </p>
+      <button id="btn-tutorial-done" class="btn-primary">Got it, let's start</button>
+    </section>
+
+    <!-- Placeholder for the real sorting scene (D1/D8 will replace this) -->
+    <section id="screen-game-stub" class="screen hidden">
+      <h2>Stage 1: Sorting</h2>
+      <p>This screen is a placeholder until the sorting scene (D1) and its timer (D8) are built.</p>
+      <dl class="summary-box">
+        <dt>Level</dt>
+        <dd id="summary-level">-</dd>
+        <dt>Difficulty</dt>
+        <dd id="summary-difficulty">-</dd>
+        <dt>Stage 1 timer</dt>
+        <dd id="summary-timer">-</dd>
+        <dt>Arrangement hint type</dt>
+        <dd id="summary-hint-type">-</dd>
+      </dl>
+      <button id="btn-stub-main-menu" class="btn-secondary">Return to main menu</button>
+    </section>
+
+    <!-- TEMPORARY prototype screen - delete together with
+         js/game/prototypes/drag-demo.js when real Stage 1 (D1) work
+         starts. See that file's header comment for the full checklist. -->
+    <section id="screen-stage1-prototype" class="screen hidden">
+      <h2>Stage 1 Prototype &mdash; Gold Rush (Easy)</h2>
+      <p>Drag the box with a mouse or your finger. Belt motion and sorting logic aren't wired up yet - this is just testing the drag interaction itself.</p>
+      <div id="stage-area" class="stage-area">
+        <span class="zone-label zone-label--belt">Drag-and-drop demo</span>
+        <div id="drag-box" class="draggable-box">Package</div>
+        <div class="drop-zones">
+          <span class="zone-label zone-label--case">Display case</span>
+          <span class="zone-label zone-label--bin">Rejection bin</span>
+        </div>
+      </div>
+      <button id="btn-stage1-main-menu" class="btn-secondary">Return to main menu</button>
+    </section>
+
+    <!-- Instructions (FR01) -->
+    <section id="screen-instructions" class="screen hidden">
+      <h2>Instructions</h2>
+      <p>
+        You're the new intern and the delivery labels are mixed up. Sort
+        real artefacts from filler packages before time runs out, then
+        arrange the exhibit and answer a short quiz about what you learned.
+      </p>
+      <button class="btn-back" data-target="screen-main-menu">&larr; Back</button>
+    </section>
+
+  </div>
+
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

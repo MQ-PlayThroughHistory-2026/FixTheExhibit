@@ -1,0 +1,143 @@
+/**
+ * menu.js
+ *
+ * Development Team task D6: main menu + difficulty mode functionality.
+ * Flow: Main Menu -> Level Select -> Difficulty Select -> Tutorial
+ * (first time only) -> Stage 1 (currently a placeholder screen for D1/D8
+ * to replace).
+ *
+ * FR01 (Main Menu): start and instructions are covered here. No "Exit"
+ * button - as a museum kiosk game, returning to idle/main menu after a
+ * period of inactivity (FR10/FR11 in the SRS) matters more than letting a
+ * visitor close the game outright, so that's the pattern to build instead
+ * once idle-detection is implemented, rather than adding a manual exit.
+ */
+
+import { showScreen, wireBackButtons } from './screens.js';
+// TEMPORARY - see js/game/prototypes/drag-demo.js's header comment for the
+// full removal checklist when real Stage 1 work starts.
+import { initDragDemo } from '../game/prototypes/drag-demo.js';
+import {
+  DIFFICULTIES,
+  setLevel,
+  getLevel,
+  setDifficulty,
+  getDifficulty,
+  getDifficultyConfig,
+  hasSeenTutorial,
+  markTutorialSeen,
+  resetSession,
+} from '../game/state.js';
+
+const LEVELS_URL = 'data/levels/index.json';
+
+async function loadLevels() {
+  const response = await fetch(LEVELS_URL);
+  if (!response.ok) {
+    throw new Error(`Failed to load levels.json: ${response.status}`);
+  }
+  return response.json();
+}
+
+function renderLevelCards(levels) {
+  const list = document.getElementById('level-list');
+  list.innerHTML = '';
+  levels.forEach((level) => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'level-card';
+    card.dataset.levelId = level.id;
+    card.innerHTML = `<h3>${level.name}</h3><p>${level.description}</p>`;
+    card.addEventListener('click', () => onLevelChosen(level.id));
+    list.appendChild(card);
+  });
+}
+
+function onLevelChosen(levelId) {
+  setLevel(levelId);
+  showScreen('screen-difficulty-select');
+}
+
+function onDifficultyChosen(difficulty) {
+  setDifficulty(difficulty);
+  if (hasSeenTutorial()) {
+    enterStage1();
+  } else {
+    showScreen('screen-tutorial');
+  }
+}
+
+function onTutorialComplete() {
+  markTutorialSeen();
+  enterStage1();
+}
+
+/**
+ * Stage 1 entry point. Gold Rush + Easy routes to the TEMPORARY drag demo
+ * (see the import above); every other level/difficulty combination still
+ * falls back to the plain summary stub until the real Stage 1 (D1) exists.
+ */
+function enterStage1() {
+  const level = getLevel();
+  const difficulty = getDifficulty();
+
+  if (level === 'gold-rush' && difficulty === DIFFICULTIES.EASY) {
+    initDragDemo();
+    showScreen('screen-stage1-prototype');
+    return;
+  }
+
+  const config = getDifficultyConfig();
+  document.getElementById('summary-level').textContent = level;
+  document.getElementById('summary-difficulty').textContent = config.label;
+  document.getElementById('summary-timer').textContent = `${config.stage1TimerSeconds}s`;
+  document.getElementById('summary-hint-type').textContent = config.arrangementHintType;
+  showScreen('screen-game-stub');
+}
+
+function onReturnToMainMenu() {
+  resetSession();
+  showScreen('screen-main-menu');
+}
+
+function wireDifficultyCards() {
+  document.querySelectorAll('.difficulty-card').forEach((card) => {
+    card.addEventListener('click', () => onDifficultyChosen(card.dataset.difficulty));
+  });
+}
+
+function wireMainMenu() {
+  document.getElementById('btn-start').addEventListener('click', () => {
+    showScreen('screen-level-select');
+  });
+  document.getElementById('btn-instructions').addEventListener('click', () => {
+    showScreen('screen-instructions');
+  });
+}
+
+function wireTutorialAndStub() {
+  document.getElementById('btn-tutorial-done').addEventListener('click', onTutorialComplete);
+  document.getElementById('btn-stub-main-menu').addEventListener('click', onReturnToMainMenu);
+  document.getElementById('btn-stage1-main-menu').addEventListener('click', onReturnToMainMenu);
+}
+
+export async function initMenu() {
+  wireBackButtons();
+  wireMainMenu();
+  wireDifficultyCards();
+  wireTutorialAndStub();
+
+  try {
+    const levels = await loadLevels();
+    renderLevelCards(levels);
+  } catch (err) {
+    console.error(err);
+    const list = document.getElementById('level-list');
+    list.textContent = 'Levels could not be loaded. Check the console for details.';
+  }
+
+  showScreen('screen-main-menu');
+}
+
+// Exported for difficulty labels used directly in markup/tests if needed.
+export { DIFFICULTIES };
