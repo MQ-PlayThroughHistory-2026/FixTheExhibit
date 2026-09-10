@@ -1,0 +1,61 @@
+/**
+ * drag.js
+ *
+ * Minimal "pick up and move freely" behaviour for one element, built on
+ * the Pointer Events API per the tech stack decision in README/Project
+ * Plan: pointerdown/pointermove/pointerup handle mouse and touch through
+ * one code path instead of separate mouse and touch handlers.
+ *
+ * This is a prototype slice of D1 (sorting scene). It currently only supports free
+ * dragging within a bounding container.
+ */
+
+export function makeDraggable(el, container) {
+  let dragging = false;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  el.addEventListener('pointerdown', (event) => {
+    dragging = true;
+    // setPointerCapture keeps this element receiving move/up events even if
+    // the pointer moves faster than the box and briefly leaves its bounds -
+    // matters a lot on touch, where fingers are imprecise.
+    el.setPointerCapture(event.pointerId);
+    const elRect = el.getBoundingClientRect();
+    offsetX = event.clientX - elRect.left;
+    offsetY = event.clientY - elRect.top;
+    el.classList.add('is-dragging');
+  });
+
+  el.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+
+    let newLeft = event.clientX - containerRect.left - offsetX;
+    let newTop = event.clientY - containerRect.top - offsetY;
+
+    // Clamp so the box can't be dragged outside the stage area.
+    newLeft = Math.max(0, Math.min(newLeft, containerRect.width - elRect.width));
+    newTop = Math.max(0, Math.min(newTop, containerRect.height - elRect.height));
+
+    el.style.left = `${newLeft}px`;
+    el.style.top = `${newTop}px`;
+  });
+
+  function endDrag(event) {
+    if (!dragging) return;
+    dragging = false;
+    el.classList.remove('is-dragging');
+    if (el.hasPointerCapture(event.pointerId)) {
+      el.releasePointerCapture(event.pointerId);
+    }
+  }
+
+  // pointercancel fires if the OS interrupts the gesture (e.g. an incoming
+  // call, or the browser deciding it's a scroll) - without handling it the
+  // box could get stuck thinking it's still being dragged.
+  el.addEventListener('pointerup', endDrag);
+  el.addEventListener('pointercancel', endDrag);
+}

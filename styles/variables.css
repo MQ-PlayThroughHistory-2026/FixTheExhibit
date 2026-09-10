@@ -1,0 +1,39 @@
+/* variables.css
+   Shared CSS Custom Properties. Per Project Plan 8.1, colours, spacing, and
+   transition speeds live here instead of being duplicated across component
+   stylesheets (belt.css, hud.css, quiz.css, menu.css, etc.). */
+
+:root {
+  /* Colours */
+  --color-bg: #1b1410;
+  --color-surface: #2a2019;
+  --color-surface-raised: #362a20;
+  --color-text: #f5efe6;
+  --color-text-muted: #c9bfae;
+  --color-primary: #c98a3c;
+  --color-primary-hover: #e0a04f;
+  --color-easy: #4f8f6b;
+  --color-easy-hover: #62a67e;
+  --color-hard: #a3453e;
+  --color-hard-hover: #bd5851;
+  --color-focus-ring: #f2c879;
+
+  /* Typography */
+  --font-heading: 'Georgia', 'Times New Roman', serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 3.5rem;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 10px;
+
+  /* Transitions - kept short since UR08 requires immediate feedback */
+  --transition-fast: 120ms ease;
+  --transition-base: 220ms ease;
+}

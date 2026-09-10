@@ -1,0 +1,72 @@
+/* menu.css
+   Styling specific to the main menu, level select, and difficulty select
+   screens. Shared tokens/layout live in variables.css / base.css. */
+
+.level-card,
+.difficulty-card {
+  background: var(--color-surface);
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  padding: var(--space-lg) var(--space-md);
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  text-align: left;
+}
+
+.level-card:hover,
+.difficulty-card:hover {
+  background: var(--color-surface-raised);
+}
+
+.level-card h3,
+.difficulty-card h3 {
+  margin: 0;
+  font-family: var(--font-heading);
+}
+
+.level-card p,
+.difficulty-card p {
+  margin: 0;
+  color: var(--color-text-muted);
+  max-width: none;
+}
+
+.difficulty-card[data-difficulty='easy'] {
+  border-color: var(--color-easy);
+}
+
+.difficulty-card[data-difficulty='easy']:hover {
+  background: color-mix(in srgb, var(--color-easy) 18%, var(--color-surface));
+}
+
+.difficulty-card[data-difficulty='hard'] {
+  border-color: var(--color-hard);
+}
+
+.difficulty-card[data-difficulty='hard']:hover {
+  background: color-mix(in srgb, var(--color-hard) 18%, var(--color-surface));
+}
+
+.summary-box {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  width: 100%;
+  max-width: 420px;
+  text-align: left;
+}
+
+.summary-box dt {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: var(--space-sm);
+}
+
+.summary-box dd {
+  margin: 0;
+  font-size: 1.1rem;
+}
