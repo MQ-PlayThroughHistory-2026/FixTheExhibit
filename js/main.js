@@ -8,8 +8,11 @@
 
 import { registerScreens } from './ui/screens.js';
 import { initMenu } from './ui/menu.js';
+import { initFullscreenOnFirstInteraction, initStaffExit } from './ui/kiosk.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   registerScreens();
   initMenu();
+  initFullscreenOnFirstInteraction();
+  initStaffExit();
 });
