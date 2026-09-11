@@ -1,0 +1,80 @@
+/* kiosk.css
+   Staff-only fullscreen exit trigger + passphrase modal. Deliberately
+   small and low-contrast so it doesn't invite visitor curiosity, but
+   still meets UR06's touch-friendly minimum hit size. */
+
+.staff-exit-trigger {
+  position: fixed;
+  bottom: var(--space-sm);
+  right: var(--space-sm);
+  min-height: 40px;
+  min-width: 40px;
+  padding: var(--space-xs);
+  background: transparent;
+  color: var(--color-text-muted);
+  opacity: 0.15;
+  font-size: 1.1rem;
+  z-index: 1000;
+}
+
+.staff-exit-trigger:hover,
+.staff-exit-trigger:focus-visible {
+  opacity: 1;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  max-width: 320px;
+  width: 90%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.modal-content input[type='password'] {
+  font: inherit;
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-text-muted);
+  background: var(--color-bg);
+  color: var(--color-text);
+  text-align: center;
+}
+
+.modal-content input[type='password']:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.error-text {
+  color: var(--color-hard);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+}

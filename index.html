@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="styles/base.css" />
   <link rel="stylesheet" href="styles/menu.css" />
   <link rel="stylesheet" href="styles/belt.css" />
+  <link rel="stylesheet" href="styles/kiosk.css" />
 </head>
 <body>
   <div id="app">
@@ -18,7 +19,22 @@
       <div class="menu-actions">
         <button id="btn-start" class="btn-primary">Start</button>
         <button id="btn-instructions" class="btn-secondary">Instructions</button>
-        <!-- exit fullscreen function later -->
+      </div>
+
+      <!-- Exit Fullscreen function -->
+      <button id="btn-staff-exit" class="staff-exit-trigger" aria-label="Staff exit">&#9881;</button>
+
+      <div id="staff-exit-modal" class="modal hidden">
+        <div class="modal-content">
+          <h2>Staff Exit</h2>
+          <p>Enter the staff passphrase to exit fullscreen.</p>
+          <input type="password" id="staff-exit-passphrase" autocomplete="off" />
+          <p id="staff-exit-error" class="error-text hidden">Incorrect passphrase.</p>
+          <div class="modal-actions">
+            <button id="btn-staff-exit-cancel" class="btn-secondary">Cancel</button>
+            <button id="btn-staff-exit-submit" class="btn-primary">Confirm</button>
+          </div>
+        </div>
       </div>
     </section>
 
