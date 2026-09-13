@@ -8,7 +8,9 @@
   <link rel="stylesheet" href="styles/base.css" />
   <link rel="stylesheet" href="styles/menu.css" />
   <link rel="stylesheet" href="styles/belt.css" />
+  <link rel="stylesheet" href="styles/sorting.css" />
   <link rel="stylesheet" href="styles/kiosk.css" />
+  <link rel="stylesheet" href="styles/prototypes/sorting-demo.css" />
 </head>
 <body>
   <div id="app">
@@ -92,19 +94,28 @@
     </section>
 
     <!-- TEMPORARY prototype screen - delete together with
-         js/game/prototypes/drag-demo.js when real Stage 1 (D1) work
-         starts. See that file's header comment for the full checklist. -->
+         js/game/prototypes/drag-demo.js and sorting-demo.js when real
+         Stage 1 (D1) work starts. See drag-demo.js's header comment for
+         the full checklist. -->
     <section id="screen-stage1-prototype" class="screen hidden">
       <h2>Stage 1 Prototype &mdash; Gold Rush (Easy)</h2>
-      <p>Drag the box with a mouse or your finger. Belt motion and sorting logic aren't wired up yet - this is just testing the drag interaction itself.</p>
+      <p>Drag the box with a mouse or your finger, and sort the packages into the display case or rejection bin. Belt motion isn't wired up yet.</p>
       <div id="stage-area" class="stage-area">
-        <span class="zone-label zone-label--belt">Drag-and-drop demo</span>
+        <span class="zone-label zone-label--belt">Drag-and-drop and Sorting demo</span>
         <div id="drag-box" class="draggable-box">Package</div>
         <div class="drop-zones">
-          <span class="zone-label zone-label--case">Display case</span>
-          <span class="zone-label zone-label--bin">Rejection bin</span>
+          <span class="zone-label zone-label--case" data-zone="display-case">Display case</span>
+          <span class="zone-label zone-label--bin" data-zone="rejection-bin">Rejection bin</span>
+        </div>
+        <!-- Stand-in for the D3 information card, filled by sorting-demo.js -->
+        <div id="sorting-feedback" class="sorting-feedback hidden" role="status" aria-live="polite">
+          <strong id="sorting-feedback-title"></strong>
+          <p id="sorting-feedback-text"></p>
+          <button id="btn-sorting-feedback-close" class="btn-secondary">Close</button>
         </div>
       </div>
+      <p id="sorting-tally" class="sorting-tally"></p>
+      <button id="btn-stage1-restart" class="btn-primary">Restart sorting</button>
       <button id="btn-stage1-main-menu" class="btn-secondary">Return to main menu</button>
     </section>
 

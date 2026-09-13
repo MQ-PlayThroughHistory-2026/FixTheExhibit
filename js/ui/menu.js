@@ -17,6 +17,7 @@ import { showScreen, wireBackButtons } from './screens.js';
 // TEMPORARY - see js/game/prototypes/drag-demo.js's header comment for the
 // full removal checklist when real Stage 1 work starts.
 import { initDragDemo } from '../game/prototypes/drag-demo.js';
+import { initSortingDemo } from '../game/prototypes/sorting-demo.js';
 import {
   DIFFICULTIES,
   setLevel,
@@ -73,9 +74,10 @@ function onTutorialComplete() {
 }
 
 /**
- * Stage 1 entry point. Gold Rush + Easy routes to the TEMPORARY drag demo
- * (see the import above); every other level/difficulty combination still
- * falls back to the plain summary stub until the real Stage 1 (D1) exists.
+ * Stage 1 entry point. Gold Rush + Easy routes to the TEMPORARY drag and
+ * sorting demos (see the imports above); every other level/difficulty
+ * combination still falls back to the plain summary stub until the real
+ * Stage 1 (D1) exists.
  */
 function enterStage1() {
   const level = getLevel();
@@ -84,6 +86,8 @@ function enterStage1() {
   if (level === 'gold-rush' && difficulty === DIFFICULTIES.EASY) {
     initDragDemo();
     showScreen('screen-stage1-prototype');
+    // After showScreen so the stage has a width to lay the packages out in.
+    initSortingDemo();
     return;
   }
 
