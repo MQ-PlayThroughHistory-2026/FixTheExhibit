@@ -1,0 +1,44 @@
+/* arranging-demo.css
+   TEMPORARY chrome for the arranging prototype screen. Goes together
+   with js/game/prototypes/arranging-demo.js. */
+
+#screen-arranging-prototype .stage-area {
+  height: 420px;
+}
+
+@media (max-width: 600px) {
+  #screen-arranging-prototype .stage-area {
+    height: 520px;
+  }
+}
+
+.arranging-tally {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* Pops up over the stage so opening it never moves the artefacts. */
+.arranging-feedback {
+  position: absolute;
+  left: var(--space-lg);
+  right: var(--space-lg);
+  bottom: var(--space-sm);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  border-left: 6px solid var(--color-easy);
+  background: var(--color-surface-raised);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.arranging-feedback.hidden {
+  display: none;
+}
+
+.arranging-feedback p {
+  max-width: none;
+}

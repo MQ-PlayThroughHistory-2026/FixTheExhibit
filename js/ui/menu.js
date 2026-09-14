@@ -18,6 +18,7 @@ import { showScreen, wireBackButtons } from './screens.js';
 // full removal checklist when real Stage 1 work starts.
 import { initDragDemo } from '../game/prototypes/drag-demo.js';
 import { initSortingDemo } from '../game/prototypes/sorting-demo.js';
+import { initArrangingDemo } from '../game/prototypes/arranging-demo.js';
 import {
   DIFFICULTIES,
   setLevel,
@@ -117,12 +118,22 @@ function wireMainMenu() {
   document.getElementById('btn-instructions').addEventListener('click', () => {
     showScreen('screen-instructions');
   });
+  // TEMPORARY - delete together with screen-arranging-prototype and
+  // js/game/prototypes/arranging-demo.js when the real arranging scene
+  // (D2) is built.
+  document.getElementById('btn-dev-arranging-demo').addEventListener('click', () => {
+    setLevel('gold-rush');
+    showScreen('screen-arranging-prototype');
+    // After showScreen so the stage has a width to lay artefacts out in.
+    initArrangingDemo();
+  });
 }
 
 function wireTutorialAndStub() {
   document.getElementById('btn-tutorial-done').addEventListener('click', onTutorialComplete);
   document.getElementById('btn-stub-main-menu').addEventListener('click', onReturnToMainMenu);
   document.getElementById('btn-stage1-main-menu').addEventListener('click', onReturnToMainMenu);
+  document.getElementById('btn-dev-arranging-main-menu').addEventListener('click', onReturnToMainMenu);
 }
 
 export async function initMenu() {
