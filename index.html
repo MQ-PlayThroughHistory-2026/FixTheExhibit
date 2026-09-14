@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="styles/belt.css" />
   <link rel="stylesheet" href="styles/sorting.css" />
   <link rel="stylesheet" href="styles/kiosk.css" />
+  <link rel="stylesheet" href="styles/kiosk-refresh.css" />
   <link rel="stylesheet" href="styles/prototypes/sorting-demo.css" />
 </head>
 <body>
@@ -132,6 +133,20 @@
 
   </div>
 
+  <!-- Timeout Modal -->
+  <div id="timeoutModal" class="timeout-overlay hidden">
+    <div class="timeout-content">
+      <h2>Are you still there?</h2>
+        <p>You have been inactive.</p>
+        <p>The page will refresh in <span id="countdown">60</span> seconds.</p>
+        <div class="timeout-buttons">
+          <button id="btnContinue" class="btn btn-continue">Continue</button>
+        </div>
+    </div>
+  </div>
+
+
   <script type="module" src="js/main.js"></script>
+  <script src="js/ui/kiosk-refresh.js"></script>
 </body>
 </html>
