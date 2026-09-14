@@ -7,10 +7,11 @@
  * one code path instead of separate mouse and touch handlers.
  *
  * This is a prototype slice of D1 (sorting scene). It currently only supports free
- * dragging within a bounding container.
+ * dragging within a bounding container. Optional hooks (onDragStart, onDragMove,
+ * onDrop) let sorting.js react to the drag.
  */
 
-export function makeDraggable(el, container) {
+export function makeDraggable(el, container, hooks = {}) {
   let dragging = false;
   let offsetX = 0;
   let offsetY = 0;
@@ -25,6 +26,7 @@ export function makeDraggable(el, container) {
     offsetX = event.clientX - elRect.left;
     offsetY = event.clientY - elRect.top;
     el.classList.add('is-dragging');
+    hooks.onDragStart?.(el, event);
   });
 
   el.addEventListener('pointermove', (event) => {
@@ -42,6 +44,7 @@ export function makeDraggable(el, container) {
 
     el.style.left = `${newLeft}px`;
     el.style.top = `${newTop}px`;
+    hooks.onDragMove?.(el, event);
   });
 
   function endDrag(event) {
@@ -51,6 +54,7 @@ export function makeDraggable(el, container) {
     if (el.hasPointerCapture(event.pointerId)) {
       el.releasePointerCapture(event.pointerId);
     }
+    hooks.onDrop?.(el, event, { cancelled: event.type === 'pointercancel' });
   }
 
   // pointercancel fires if the OS interrupts the gesture (e.g. an incoming

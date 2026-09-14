@@ -1,0 +1,61 @@
+/* sorting-demo.css
+   TEMPORARY chrome for the sorting part of the Stage 1 prototype screen.
+   Goes together with js/game/prototypes/sorting-demo.js. */
+
+/* Room for two rows of packages beside the drag-demo box, above the zones. */
+#screen-stage1-prototype .stage-area {
+  height: 400px;
+}
+
+@media (max-width: 600px) {
+  #screen-stage1-prototype .stage-area {
+    height: 500px;
+  }
+}
+
+.stage-area .package {
+  font-size: 0.8rem;
+  line-height: 1.2;
+  text-align: center;
+  padding: var(--space-xs);
+}
+
+.sorting-tally {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* Pops up over the stage so opening it never moves the packages. */
+.sorting-feedback {
+  position: absolute;
+  left: var(--space-lg);
+  right: var(--space-lg);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  border-left: 6px solid var(--color-text-muted);
+  background: var(--color-surface-raised);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.sorting-feedback.hidden {
+  display: none;
+}
+
+.sorting-feedback.is-correct {
+  border-left-color: var(--color-easy);
+}
+
+.sorting-feedback.is-incorrect {
+  border-left-color: var(--color-hard);
+}
+
+.sorting-feedback p {
+  max-width: none;
+}
