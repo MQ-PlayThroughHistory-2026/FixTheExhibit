@@ -37,6 +37,24 @@ async function loadLevelItems(levelId) {
   return [...artefacts, ...fillers];
 }
 
+// Fetches one JSON file, throwing on a non-OK response.
+async function loadJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to load ${url}: ${response.status}`);
+  }
+  return response.json();
+}
+
+// Loads the level's artefacts and fillers as one list of package items.
+async function loadLevelItems(levelId) {
+  const [artefacts, fillers] = await Promise.all([
+    loadJson(`data/levels/${levelId}/artefacts.json`),
+    loadJson(`data/levels/${levelId}/fillers.json`),
+  ]);
+  return [...artefacts, ...fillers];
+}
+
 // Returns a shuffled copy of the list.
 function shuffle(list) {
   const out = [...list];
