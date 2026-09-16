@@ -1,51 +1,39 @@
 /**
  * sorting-demo.js
  *
- * TEMPORARY. Adds sample packages to the Stage 1 prototype screen and wires
- * them to js/game/sorting.js, so sorting can be tried from the menu flow
- * before the real Stage 1 (js/game/stage1.js) loads level data. Sits
+ * TEMPORARY. Loads the selected level's packages from data/levels/<id>/
+ * artefacts.json and fillers.json, puts them on the Stage 1 prototype
+ * screen and wires them to js/game/sorting.js, so sorting can be tried from
+ * the menu flow before the real Stage 1 (js/game/stage1.js) exists. Sits
  * alongside drag-demo.js and goes when that does.
  */
 
 import { createSorter } from '../sorting.js';
-
-// Placeholder items in the shape of artefacts.json and fillers.json.
-const DEMO_ITEMS = [
-  {
-    id: 'gold-pan',
-    name: 'Gold pan',
-    correctZone: 'display-case',
-    funFactCorrect: '[Insert fun fact here]',
-    funFactIncorrect: 'Incorrect: This belonged in the display case.',
-  },
-  {
-    id: 'miners-licence',
-    name: "Miner's licence",
-    correctZone: 'display-case',
-    funFactCorrect: '[Insert fun fact here]',
-    funFactIncorrect: 'Incorrect: This belonged in the display case.',
-  },
-  {
-    id: 'metal-detector',
-    name: 'Metal detector',
-    correctZone: 'rejection-bin',
-    funFactCorrect: '[Insert fun fact here]',
-    funFactIncorrect: 'Incorrect: This was a filler item.'
-  },
-  {
-    id: 'diamond-sword',
-    name: 'Diamond sword',
-    correctZone: 'rejection-bin',
-    funFactCorrect: '[Insert fun fact here]',
-    funFactIncorrect: 'Incorrect: This was a filler item.',
-  },
-];
+import { getLevel } from '../state.js';
 
 const FIRST_COLUMN_PX = 124; // leaves room for drag-demo.js's box
 const FIRST_ROW_PX = 40;
 const STEP_PX = 100; // 88px package plus 12px gap
 
 let wired = false;
+
+// Fetches one JSON file, throwing on a non-OK response.
+async function loadJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to load ${url}: ${response.status}`);
+  }
+  return response.json();
+}
+
+// Loads the level's artefacts and fillers as one list of package items.
+async function loadLevelItems(levelId) {
+  const [artefacts, fillers] = await Promise.all([
+    loadJson(`data/levels/${levelId}/artefacts.json`),
+    loadJson(`data/levels/${levelId}/fillers.json`),
+  ]);
+  return [...artefacts, ...fillers];
+}
 
 // Returns a shuffled copy of the list.
 function shuffle(list) {
@@ -95,9 +83,10 @@ function renderTally(summary) {
     `Sorted ${summary.sorted} / ${summary.total} · Correct ${summary.correct} · Incorrect ${summary.incorrect}`;
 }
 
-// Builds a fresh set of packages and a new sorter. Safe to call again, it starts over.
-export function initSortingDemo() {
+// Loads the level data, then builds the packages and a new sorter. Safe to call again, it starts over.
+export async function initSortingDemo() {
   const stage = document.getElementById('stage-area');
+  const tally = document.getElementById('sorting-tally');
 
   if (!wired) {
     document.getElementById('btn-sorting-feedback-close').addEventListener('click', hideCard);
@@ -106,6 +95,17 @@ export function initSortingDemo() {
   }
 
   hideCard();
+  stage.querySelectorAll('.package').forEach((el) => el.remove());
+  tally.textContent = 'Loading packages…';
+
+  let items;
+  try {
+    items = await loadLevelItems(getLevel());
+  } catch (err) {
+    console.error(err);
+    tally.textContent = 'Packages could not be loaded. Check the console for details.';
+    return;
+  }
 
   const sorter = createSorter({
     stage,
@@ -118,11 +118,11 @@ export function initSortingDemo() {
       );
     },
     onComplete(summary) {
-      document.getElementById('sorting-tally').textContent =
+      tally.textContent =
         `All ${summary.total} packages sorted, ${summary.correct} correct and ${summary.incorrect} incorrect.`;
     },
   });
 
-  spawnPackages(stage, shuffle(DEMO_ITEMS), sorter);
+  spawnPackages(stage, shuffle(items), sorter);
   renderTally(sorter.getSummary());
 }
