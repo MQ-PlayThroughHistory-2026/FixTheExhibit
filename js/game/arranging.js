@@ -2,8 +2,7 @@
  * arranging.js
  *
  * Stage 2 arranging (D2). Each artefact has exactly one correct
- * silhouette slot (unlike sorting's zones, which any correctly-categorised
- * package can land in). A correct drop snaps the artefact into place and
+ * silhouette slot. A correct drop snaps the artefact into place and
  * locks it there for good; a wrong drop (or a drop outside any slot)
  * snaps back to where it was picked up and stays draggable.
  *
@@ -12,7 +11,6 @@
 
 import { makeDraggable } from './drag.js';
 
-const SETTLE_MS = 350; // matches the transitions in arranging.css
 const SLOT_FEEDBACK_MS = 500; // one fade per wrong drop, nothing strobes (NFR05)
 
 /**
@@ -44,6 +42,7 @@ export function createArranger({ stage, onPlaced, onComplete }) {
 
   const tally = { total: 0, placed: 0 };
   const pickupPositions = new WeakMap();
+  const itemRegistry = new Map(); // Tracks locked/registered elements and their slots
 
   function slotFor(item) {
     return slots.find((slot) => slot.dataset.slot === item.id) ?? null;
@@ -62,8 +61,7 @@ export function createArranger({ stage, onPlaced, onComplete }) {
     );
   }
 
-  // Only ever highlights an item's OWN slot - hovering someone else's
-  // slot gets no encouragement.
+  // Only ever highlights an item's OWN slot - hovering someone else's slot gets no encouragement.
   function highlightOwnSlot(target) {
     slots.forEach((slot) => slot.classList.toggle('is-target', slot === target));
   }
@@ -73,18 +71,24 @@ export function createArranger({ stage, onPlaced, onComplete }) {
     setTimeout(() => slot.classList.remove('flash-incorrect'), SLOT_FEEDBACK_MS);
   }
 
+  // Centers element over slot based on stage bounding box rather than offsetParent
   function moveToSlotCentre(el, slot) {
-    el.style.left = `${slot.offsetLeft + (slot.offsetWidth - el.offsetWidth) / 2}px`;
-    el.style.top = `${slot.offsetTop + (slot.offsetHeight - el.offsetHeight) / 2}px`;
+    const stageRect = stage.getBoundingClientRect();
+    const slotRect = slot.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+
+    const targetLeft = (slotRect.left - stageRect.left) + (slotRect.width - elRect.width) / 2;
+    const targetTop = (slotRect.top - stageRect.top) + (slotRect.height - elRect.height) / 2;
+
+    el.style.left = `${targetLeft}px`;
+    el.style.top = `${targetTop}px`;
   }
 
   function snapBack(el) {
     const start = pickupPositions.get(el);
     if (!start) return;
-    el.classList.add('is-returning');
     el.style.left = `${start.left}px`;
     el.style.top = `${start.top}px`;
-    setTimeout(() => el.classList.remove('is-returning'), SETTLE_MS);
   }
 
   // Locks a correctly-placed artefact into its slot for good.
@@ -97,6 +101,8 @@ export function createArranger({ stage, onPlaced, onComplete }) {
     el.classList.add('is-placed');
     moveToSlotCentre(el, slot);
     el.dataset.locked = 'true'; // drag.js ignores pointerdown on locked elements
+
+    itemRegistry.set(el, slot); // Store reference for resize repositioning
 
     onPlaced?.({ item });
     if (tally.placed === tally.total) {
@@ -140,6 +146,15 @@ export function createArranger({ stage, onPlaced, onComplete }) {
     });
   }
 
+  // Recalculates positions of all locked elements when container/screen changes size
+  const handleResize = () => {
+    itemRegistry.forEach((slot, el) => {
+      moveToSlotCentre(el, slot);
+    });
+  };
+
+  window.addEventListener('resize', handleResize);
+
   function getSummary() {
     return {
       total: tally.total,
@@ -148,5 +163,9 @@ export function createArranger({ stage, onPlaced, onComplete }) {
     };
   }
 
-  return { addItem, getSummary };
+  function destroy() {
+    window.removeEventListener('resize', handleResize);
+  }
+
+  return { addItem, getSummary, destroy };
 }

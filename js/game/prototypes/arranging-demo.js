@@ -30,12 +30,27 @@
 import { createArranger } from '../arranging.js';
 import { getLevel } from '../state.js';
 
-const SLOT_STEP_PX = 120; // 96px slot plus 24px gap
-const SLOT_ROW_PX = 48;
-const ITEM_STEP_PX = 100; // 88px item plus 12px gap
-const ITEM_ROW_PX = 220;
+// Absolute ceiling on columns, independent of screen width - a future
+// level with far more artefacts shouldn't produce one endless row. In
+// practice the width/size bounds below already land around this number
+// for the current 10-artefact levels on the widest kiosk display.
+const MAX_COLS_ABSOLUTE = 12;
+// Item size scales between these bounds instead of staying fixed at one
+// pixel value - MIN keeps boxes touch-friendly (UR06) on narrow screens,
+// MAX stops them ballooning past a comfortable size on very wide kiosk
+// displays. Slots are drawn 8px larger than items, same ratio as the
+// original fixed 96px/88px pair, so items sit with a visible dashed
+// border once placed.
+const ITEM_SIZE_MIN_PX = 64;
+const ITEM_SIZE_MAX_PX = 160;
+const SLOT_ITEM_SIZE_DIFF_PX = 8;
+const SLOT_GAP_PX = 24;
+const ITEM_GAP_PX = 32;
+const SECTION_GAP_PX = 32;
+const STAGE_PADDING_PX = 24;
 
 let wired = false;
+let currentResizeHandler = null;
 
 // Returns a shuffled copy of the list, so items don't start lined up
 // left-to-right in their correct slot order.
@@ -48,6 +63,21 @@ function shuffle(list) {
   return out;
 }
 
+function rowsNeeded(count, cols) {
+  return Math.ceil(count / cols);
+}
+
+// Position for item `index` in a left-to-right, top-to-bottom grid that
+// wraps after `cols` columns, starting `topPx` down from the stage top.
+function gridPosition(index, cols, sizePx, gapPx, topPx) {
+  const col = index % cols;
+  const row = Math.floor(index / cols);
+  return {
+    left: col * (sizePx + gapPx) + STAGE_PADDING_PX,
+    top: topPx + row * (sizePx + gapPx),
+  };
+}
+
 async function loadArtefacts() {
   const level = getLevel() ?? 'gold-rush';
   const response = await fetch(`data/levels/${level}/artefacts.json`);
@@ -57,36 +87,77 @@ async function loadArtefacts() {
   return response.json();
 }
 
+// Picks a column count and an item size for the current stage width.
+// Previously this stayed pinned at a fixed column count with items
+// growing up to their cap, which meant any width beyond "cols * max
+// item size" just sat empty (the bug on wide landscape screens). Instead,
+// this picks the SMALLEST column count whose row still fits within
+// ITEM_SIZE_MAX_PX - i.e. it only adds columns once the current column
+// count would otherwise force items bigger than the cap - so the grid
+// keeps growing (more columns, not wasted margin) as the stage widens,
+// and settles back to fewer/bigger columns as it narrows.
+function getDynamicLayout(stageWidth, artefactCount) {
+  const availableWidth = stageWidth - (STAGE_PADDING_PX * 2);
+  const maxCols = Math.max(1, Math.min(MAX_COLS_ABSOLUTE, artefactCount));
+
+  const colsForMaxSize = Math.ceil((availableWidth + ITEM_GAP_PX) / (ITEM_SIZE_MAX_PX + ITEM_GAP_PX));
+  const cols = Math.max(1, Math.min(maxCols, colsForMaxSize));
+
+  const rawSize = (availableWidth - ITEM_GAP_PX * (cols - 1)) / cols;
+  const itemSize = Math.max(ITEM_SIZE_MIN_PX, Math.min(ITEM_SIZE_MAX_PX, rawSize));
+  const slotSize = itemSize + SLOT_ITEM_SIZE_DIFF_PX;
+
+  return { cols, itemSize, slotSize };
+}
+
+// Publishes the current box sizes as CSS custom properties so
+// arranging.css can size .silhouette-slot / .arranging-item without the
+// pixel values being duplicated (and getting out of sync) between here
+// and the stylesheet.
+function applySizeVars(stage, itemSize, slotSize) {
+  stage.style.setProperty('--arranging-item-size', `${itemSize}px`);
+  stage.style.setProperty('--arranging-slot-size', `${slotSize}px`);
+}
+
 // One labelled slot per artefact, in data order (not shuffled) so the
 // display case layout stays stable across restarts.
-function buildSlots(stage, artefacts) {
+function buildSlots(stage, artefacts, cols, slotSize) {
   artefacts.forEach((item, i) => {
-    const slot = document.createElement('div');
-    slot.className = 'silhouette-slot';
-    slot.dataset.slot = item.id;
-    slot.textContent = `Spot ${i + 1}`;
-    slot.style.left = `${i * SLOT_STEP_PX}px`;
-    slot.style.top = `${SLOT_ROW_PX}px`;
-    stage.appendChild(slot);
+    let slot = stage.querySelector(`[data-slot="${item.id}"]`);
+    if (!slot) {
+      slot = document.createElement('div');
+      slot.className = 'silhouette-slot';
+      slot.dataset.slot = item.id;
+      slot.textContent = `Spot ${i + 1}`;
+      stage.appendChild(slot);
+    }
+    const { left, top } = gridPosition(i, cols, slotSize, SLOT_GAP_PX, STAGE_PADDING_PX);
+    slot.style.left = `${left}px`;
+    slot.style.top = `${top}px`;
   });
 }
 
-// One draggable box per artefact - a real image if the data has one and
-// it actually loads, otherwise a plain box with its name.
+// Repositions each entry (in current array order) into a packed grid
+// starting at topPx.
+function layoutItems(entries, cols, topPx, itemSize) {
+  entries.forEach(({ el }, i) => {
+    const { left, top } = gridPosition(i, cols, itemSize, ITEM_GAP_PX, topPx);
+    el.style.left = `${left}px`;
+    el.style.top = `${top}px`;
+  });
+}
+
+// Creates one draggable box per artefact
 function buildItems(stage, artefacts, arranger) {
-  shuffle(artefacts).forEach((item, i) => {
+  return shuffle(artefacts).map((item) => {
     const el = document.createElement('div');
     el.className = 'draggable-box arranging-item';
-    el.style.left = `${i * ITEM_STEP_PX}px`;
-    el.style.top = `${ITEM_ROW_PX}px`;
 
     if (item.image) {
       const img = document.createElement('img');
       img.src = item.image;
       img.alt = item.name;
       img.onerror = () => {
-        // Missing/broken image path - fall back to a text box instead of
-        // showing a broken-image icon.
         img.remove();
         el.textContent = item.name;
       };
@@ -97,6 +168,7 @@ function buildItems(stage, artefacts, arranger) {
 
     stage.appendChild(el);
     arranger.addItem(el, item);
+    return { el, item };
   });
 }
 
@@ -120,8 +192,13 @@ function renderTally(summary) {
 /** Builds a fresh arranging stage. Safe to call again, it starts over. */
 export async function initArrangingDemo() {
   const stage = document.getElementById('arranging-stage');
-  // Only remove the previous run's slots/items - #arranging-feedback lives
-  // in this same container and must survive a restart.
+
+  // Clean up previous event listeners on re-init
+  if (currentResizeHandler) {
+    window.removeEventListener('resize', currentResizeHandler);
+  }
+
+  // Only remove the previous run's slots/items
   stage.querySelectorAll('.silhouette-slot, .arranging-item').forEach((el) => el.remove());
   hideFeedback();
 
@@ -142,11 +219,20 @@ export async function initArrangingDemo() {
     return;
   }
 
-  buildSlots(stage, artefacts);
+  let { cols, itemSize, slotSize } = getDynamicLayout(stage.clientWidth, artefacts.length);
+  applySizeVars(stage, itemSize, slotSize);
+  buildSlots(stage, artefacts, cols, slotSize);
+
+  let slotRows = rowsNeeded(artefacts.length, cols);
+  let itemsTopPx = STAGE_PADDING_PX + slotRows * (slotSize + SLOT_GAP_PX) + SECTION_GAP_PX;
+
+  let itemEntries;
 
   const arranger = createArranger({
     stage,
     onPlaced({ item }) {
+      itemEntries = itemEntries.filter((entry) => entry.item.id !== item.id);
+      layoutItems(itemEntries, cols, itemsTopPx, itemSize);
       renderTally(arranger.getSummary());
       showFeedback(item);
     },
@@ -156,6 +242,29 @@ export async function initArrangingDemo() {
     },
   });
 
-  buildItems(stage, artefacts, arranger);
+  itemEntries = buildItems(stage, artefacts, arranger);
+  layoutItems(itemEntries, cols, itemsTopPx, itemSize);
   renderTally(arranger.getSummary());
+
+  const itemRows = rowsNeeded(artefacts.length, cols);
+  const neededHeight = itemsTopPx + itemRows * (itemSize + ITEM_GAP_PX) + STAGE_PADDING_PX;
+  stage.style.minHeight = `${neededHeight}px`;
+
+  // Dynamic reflow on viewport change - recalculates both the column
+  // count and the box sizes, so the grid keeps using the available
+  // space rather than just staying small with extra margin.
+  currentResizeHandler = () => {
+    ({ cols, itemSize, slotSize } = getDynamicLayout(stage.clientWidth, artefacts.length));
+    applySizeVars(stage, itemSize, slotSize);
+    slotRows = rowsNeeded(artefacts.length, cols);
+    itemsTopPx = STAGE_PADDING_PX + slotRows * (slotSize + SLOT_GAP_PX) + SECTION_GAP_PX;
+
+    buildSlots(stage, artefacts, cols, slotSize);
+    layoutItems(itemEntries, cols, itemsTopPx, itemSize);
+
+    const rows = rowsNeeded(artefacts.length, cols);
+    stage.style.minHeight = `${itemsTopPx + rows * (itemSize + ITEM_GAP_PX) + STAGE_PADDING_PX}px`;
+  };
+
+  window.addEventListener('resize', currentResizeHandler);
 }

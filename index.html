@@ -26,7 +26,10 @@
         <!-- TEMPORARY - delete together with screen-arranging-prototype
              and js/game/prototypes/arranging-demo.js when the real
              arranging scene (D2) is built. -->
-        <button id="btn-dev-arranging-demo" class="btn-secondary">[Dev] Arranging Prototype</button>
+        <button id="btn-dev-arranging-demo" class="btn-secondary" style="position: relative; overflow: hidden; padding: 0; border: none;">
+          <img src="assets/ui/button.png" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; z-index: 1;" />
+          <span style="position: relative; z-index: 2; color: black;">[Dev] Arranging Prototype</span>
+        </button>
       </div>
 
       <!-- Exit Fullscreen function -->
@@ -141,7 +144,7 @@
          main menu when the real arranging scene (D2) is built. -->
     <section id="screen-arranging-prototype" class="screen hidden">
       <h2>Arranging Prototype &mdash; Gold Rush</h2>
-      <p>Drag each artefact into its own spot in the display case. Only real artefacts.json content is used here - no fillers, since fillers never make it to arranging.</p>
+      <p>Drag each artefact into its own spot in the display case.</p>
       <div id="arranging-stage" class="stage-area">
         <!-- Stand-in for the D4 information card, filled by arranging-demo.js -->
         <div id="arranging-feedback" class="arranging-feedback hidden" role="status" aria-live="polite">

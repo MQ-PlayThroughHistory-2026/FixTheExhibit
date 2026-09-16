@@ -2,14 +2,24 @@
    TEMPORARY chrome for the arranging prototype screen. Goes together
    with js/game/prototypes/arranging-demo.js. */
 
-#screen-arranging-prototype .stage-area {
-  height: 420px;
+/* Arranging needs more room than belt.css's shared .stage-area rule
+   gives it (max-width: 640px, sized for the sorting belt) and more than
+   #app's default 960px page-wide cap (sized for menu text) - it's a
+   grid of artefacts, not a column of copy, so it should use most of a
+   kiosk's 1920x1080 screen. Widen #app only while this screen is showing;
+   other screens keep their normal reading width. Falls back gracefully -
+   browsers without :has() just keep #app at its default max-width. */
+#app:has(#screen-arranging-prototype:not(.hidden)) {
+  max-width: min(1800px, 96vw);
 }
 
-@media (max-width: 600px) {
-  #screen-arranging-prototype .stage-area {
-    height: 520px;
-  }
+#screen-arranging-prototype .stage-area {
+  position: relative; /* Ensures absolute children position relative to stage */
+  min-height: 320px;
+  width: 100%;
+  max-width: 100%; /* overrides belt.css's 640px cap, shared via .stage-area */
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .arranging-tally {
@@ -23,7 +33,7 @@
   left: var(--space-lg);
   right: var(--space-lg);
   bottom: var(--space-sm);
-  z-index: 3;
+  z-index: 10; /* Keeps modal layered over active draggable items */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,6 +43,7 @@
   border-left: 6px solid var(--color-easy);
   background: var(--color-surface-raised);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transition: opacity var(--transition-base), transform var(--transition-base);
 }
 
 .arranging-feedback.hidden {

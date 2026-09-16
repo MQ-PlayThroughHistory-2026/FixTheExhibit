@@ -1,12 +1,17 @@
 /* arranging.css
    States toggled by js/game/arranging.js. Stage sizing/layout for the
    prototype stays in prototypes/arranging-demo.css. Tints are a single
-   fade, nothing strobes (NFR05). */
+   fade, nothing strobes (NFR05).
+
+   Slot/item box sizes read --arranging-slot-size / --arranging-item-size,
+   set on the stage element by whatever screen builds the grid (currently
+   arranging-demo.js, computed responsively from stage width). The pixel
+   fallbacks here only apply if nothing sets those variables. */
 
 .silhouette-slot {
   position: absolute;
-  width: 96px;
-  height: 96px;
+  width: var(--arranging-slot-size, 96px);
+  height: var(--arranging-slot-size, 96px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,6 +19,7 @@
   color: var(--color-text-muted);
   border: 2px dashed var(--color-text-muted);
   border-radius: var(--radius-md);
+  box-sizing: border-box;
   transition:
     background-color var(--transition-base),
     border-color var(--transition-base),
@@ -39,6 +45,16 @@
 }
 
 /* Artefacts carry both classes, class="draggable-box arranging-item". */
+.arranging-item {
+  position: absolute;
+  width: var(--arranging-item-size, 88px);
+  height: var(--arranging-item-size, 88px);
+  touch-action: none; /* Disables native touch scrolling while dragging */
+  user-select: none;
+  box-sizing: border-box;
+  transition: left 300ms ease, top 300ms ease;
+}
+
 .arranging-item img {
   width: 100%;
   height: 100%;
@@ -48,23 +64,19 @@
 }
 
 .arranging-item.is-dragging {
-  z-index: 2;
-}
-
-.arranging-item.is-returning {
-  transition: left 350ms ease, top 350ms ease;
+  transition: none;
+  z-index: 5;
+  cursor: grabbing;
 }
 
 .arranging-item.is-placed {
   cursor: default;
-  transition: left 350ms ease, top 350ms ease;
+  z-index: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .silhouette-slot,
-  .arranging-item.is-returning,
-  .arranging-item.is-placed {
+  .arranging-item {
     transition: none;
   }
 }
-
