@@ -70,3 +70,30 @@
   cursor: grabbing;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
 }
+
+/* Conveyor belt. A dark band with a row of dots that scrolls left to right
+   at belt speed. js/game/belt.js adds this element to the stage, sets its
+   top and --belt-period-seconds (seconds per 24px dot period) and pauses
+   the animation whenever the belt is paused or stopped. */
+.belt-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 14px;
+  border-radius: 7px;
+  background-color: rgba(0, 0, 0, 0.35);
+  background-image: radial-gradient(circle, var(--color-text-muted) 3px, transparent 3.5px);
+  background-size: 24px 14px;
+  background-repeat: repeat-x;
+  pointer-events: none;
+  animation: belt-scroll var(--belt-period-seconds, 0.5s) linear infinite paused;
+}
+
+@keyframes belt-scroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 24px 0;
+  }
+}
