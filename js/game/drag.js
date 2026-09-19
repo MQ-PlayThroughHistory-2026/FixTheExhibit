@@ -17,6 +17,10 @@ export function makeDraggable(el, container, hooks = {}) {
   let offsetY = 0;
 
   el.addEventListener('pointerdown', (event) => {
+    // Set by other game code (e.g. arranging.js) once an item has been
+    // correctly placed and should stop being draggable.
+    if (el.dataset.locked === 'true') return;
+
     dragging = true;
     // setPointerCapture keeps this element receiving move/up events even if
     // the pointer moves faster than the box and briefly leaves its bounds -

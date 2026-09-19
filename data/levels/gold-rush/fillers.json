@@ -1,8 +1,81 @@
 [
   {
-    "id": "example-filler-1",
+    "id": "old-gold-chocolate",
+    "name": "Old Gold Chocolate",
+    "correctZone": "rejection-bin",
+    "image": "assets/gold-rush/old-gold-chocolate.png",
+    "funFactCorrect": "Sir Macpherson Robertson created many classic chocolates after the gold rush ended, including Old Gold Chocolate, Cherry Ripe, and Freddo Frogs.",
+    "funFactIncorrect": "While the creator of Old Gold Chocolate was born in Ballarat during the gold rush, the chocolate itself was not produced until 1916."
+  },
+  {
+    "id": "example-filler-2",
     "name": "Example Filler (replace with real object - task R3)",
     "correctZone": "rejection-bin",
+    "image": "assets/gold-rush/old-gold-chocolate.png",
+    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
+    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+  },
+  {
+    "id": "example-filler-3",
+    "name": "Example Filler (replace with real object - task R3)",
+    "correctZone": "rejection-bin",
+    "image": "assets/gold-rush/old-gold-chocolate.png", 
+    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
+    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+  },
+  {
+    "id": "example-filler-4",
+    "name": "Example Filler (replace with real object - task R3)",
+    "correctZone": "rejection-bin",
+    "image": "assets/gold-rush/old-gold-chocolate.png",
+    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
+    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+  },
+  {
+    "id": "example-filler-5",
+    "name": "Example Filler (replace with real object - task R3)",
+    "correctZone": "rejection-bin",
+    "image": "assets/gold-rush/old-gold-chocolate.png",
+    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
+    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+  },
+  {
+    "id": "example-filler-6",
+    "name": "Example Filler (replace with real object - task R3)",
+    "correctZone": "rejection-bin",
+    "image": "assets/gold-rush/old-gold-chocolate.png",
+    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
+    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+  },
+  {
+    "id": "example-filler-7",
+    "name": "Example Filler (replace with real object - task R3)",
+    "correctZone": "rejection-bin",
+    "image": "assets/gold-rush/old-gold-chocolate.png",
+    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
+    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+  },
+  {
+    "id": "example-filler-8",
+    "name": "Example Filler (replace with real object - task R3)",
+    "correctZone": "rejection-bin",
+    "image": "assets/gold-rush/old-gold-chocolate.png",
+    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
+    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+  },  
+  {
+    "id": "example-filler-9",
+    "name": "Example Filler (replace with real object - task R3)",
+    "correctZone": "rejection-bin",
+    "image": "assets/gold-rush/old-gold-chocolate.png",
+    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
+    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+  },
+  {
+    "id": "example-filler-10",
+    "name": "Example Filler (replace with real object - task R3)",
+    "correctZone": "rejection-bin",
+    "image": "assets/gold-rush/old-gold-chocolate.png",
     "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
     "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
   }

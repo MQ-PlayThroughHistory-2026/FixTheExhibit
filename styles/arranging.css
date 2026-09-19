@@ -1,0 +1,82 @@
+/* arranging.css
+   States toggled by js/game/arranging.js. Stage sizing/layout for the
+   prototype stays in prototypes/arranging-demo.css. Tints are a single
+   fade, nothing strobes (NFR05).
+
+   Slot/item box sizes read --arranging-slot-size / --arranging-item-size,
+   set on the stage element by whatever screen builds the grid (currently
+   arranging-demo.js, computed responsively from stage width). The pixel
+   fallbacks here only apply if nothing sets those variables. */
+
+.silhouette-slot {
+  position: absolute;
+  width: var(--arranging-slot-size, 96px);
+  height: var(--arranging-slot-size, 96px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  border: 2px dashed var(--color-text-muted);
+  border-radius: var(--radius-md);
+  box-sizing: border-box;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    transform var(--transition-fast);
+}
+
+.silhouette-slot.is-target {
+  border-style: solid;
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 22%, transparent);
+  transform: scale(1.05);
+}
+
+.silhouette-slot.is-filled {
+  border-style: solid;
+  border-color: var(--color-easy);
+}
+
+.silhouette-slot.flash-incorrect {
+  border-style: solid;
+  border-color: var(--color-hard);
+  background: color-mix(in srgb, var(--color-hard) 35%, transparent);
+}
+
+/* Artefacts carry both classes, class="draggable-box arranging-item". */
+.arranging-item {
+  position: absolute;
+  width: var(--arranging-item-size, 88px);
+  height: var(--arranging-item-size, 88px);
+  touch-action: none; /* Disables native touch scrolling while dragging */
+  user-select: none;
+  box-sizing: border-box;
+  transition: left 300ms ease, top 300ms ease;
+}
+
+.arranging-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  pointer-events: none; /* the box itself handles dragging, not the image */
+}
+
+.arranging-item.is-dragging {
+  transition: none;
+  z-index: 5;
+  cursor: grabbing;
+}
+
+.arranging-item.is-placed {
+  cursor: default;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .silhouette-slot,
+  .arranging-item {
+    transition: none;
+  }
+}
