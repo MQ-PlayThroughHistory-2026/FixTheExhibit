@@ -2,7 +2,7 @@
    TEMPORARY chrome for the sorting part of the Stage 1 prototype screen.
    Goes together with js/game/prototypes/sorting-demo.js. */
 
-/* Room for two rows of packages beside the drag-demo box, above the zones. */
+/* Room for two rows of packages above the zones. */
 #screen-stage1-prototype .stage-area {
   height: 400px;
 }

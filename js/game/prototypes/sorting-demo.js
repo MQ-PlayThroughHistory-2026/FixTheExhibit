@@ -5,8 +5,21 @@
  * artefacts.json and fillers.json, puts them on the conveyor belt
  * (js/game/belt.js) on the Stage 1 prototype screen and wires them to
  * js/game/sorting.js, so sorting can be tried from the menu flow before the
- * real Stage 1 (js/game/stage1.js) exists. Sits alongside drag-demo.js and
- * goes when that does.
+ * real Stage 1 (js/game/stage1.js) exists.
+ *
+ * When someone starts building the real sorting scene:
+ *   1. Delete this file and styles/prototypes/sorting-demo.css (plus their
+ *      folders if empty afterwards, and the stylesheet <link> in index.html).
+ *   2. Remove the `screen-stage1-prototype` section from index.html.
+ *   3. In js/ui/menu.js, remove the import of initSortingDemo, the
+ *      gold-rush/easy special case in enterStage1(), and the
+ *      btn-stage1-main-menu listener in wireTutorialAndStub() (it would
+ *      throw on a missing element once the screen is gone).
+ *   4. Build the real scene in js/game/stage1.js instead - that file is
+ *      intentionally untouched by this prototype.
+ *
+ * js/game/drag.js, sorting.js and belt.js are NOT part of this cleanup -
+ * they are generic, reusable helpers the real scene will use.
  */
 
 import { createSorter } from '../sorting.js';
