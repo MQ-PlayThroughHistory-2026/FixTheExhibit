@@ -38,16 +38,26 @@ const MAX_COLS_ABSOLUTE = 12;
 // Item size scales between these bounds instead of staying fixed at one
 // pixel value - MIN keeps boxes touch-friendly (UR06) on narrow screens,
 // MAX stops them ballooning past a comfortable size on very wide kiosk
-// displays. Slots are drawn 8px larger than items, same ratio as the
-// original fixed 96px/88px pair, so items sit with a visible dashed
-// border once placed.
+// displays. Slots are drawn 4px larger than items - exactly the slot's two
+// 2px borders (see .silhouette-slot in arranging.css) - so a placed item
+// fills the inside of its slot with the border still visible around it.
 const ITEM_SIZE_MIN_PX = 64;
 const ITEM_SIZE_MAX_PX = 160;
-const SLOT_ITEM_SIZE_DIFF_PX = 8;
+const SLOT_ITEM_SIZE_DIFF_PX = 4;
 const SLOT_GAP_PX = 24;
 const ITEM_GAP_PX = 32;
 const SECTION_GAP_PX = 32;
 const STAGE_PADDING_PX = 24;
+
+// On phones the stage is a fixed height (arranging-demo.css sets it, the same
+// way sorting-demo.css does) instead of growing with its content, which would
+// turn the whole page into a long scroll. Item and slot boxes are scaled down
+// until both grids fit inside it, using tighter gaps than the roomy desktop ones.
+// Keep the breakpoint in sync with the media query in arranging-demo.css.
+const FIXED_STAGE_QUERY = '(max-width: 600px)';
+const FIXED_STAGE_PADDING_PX = 12;
+const FIXED_GAP_PX = 8;
+const FIXED_SECTION_GAP_PX = 16;
 
 let wired = false;
 let currentResizeHandler = null;
@@ -68,12 +78,13 @@ function rowsNeeded(count, cols) {
 }
 
 // Position for item `index` in a left-to-right, top-to-bottom grid that
-// wraps after `cols` columns, starting `topPx` down from the stage top.
-function gridPosition(index, cols, sizePx, gapPx, topPx) {
+// wraps after `cols` columns, starting `topPx` down from the stage top and
+// `paddingPx` in from its left edge.
+function gridPosition(index, cols, sizePx, gapPx, topPx, paddingPx) {
   const col = index % cols;
   const row = Math.floor(index / cols);
   return {
-    left: col * (sizePx + gapPx) + STAGE_PADDING_PX,
+    left: col * (sizePx + gapPx) + paddingPx,
     top: topPx + row * (sizePx + gapPx),
   };
 }
@@ -107,21 +118,87 @@ function getDynamicLayout(stageWidth, artefactCount) {
   const itemSize = Math.max(ITEM_SIZE_MIN_PX, Math.min(ITEM_SIZE_MAX_PX, rawSize));
   const slotSize = itemSize + SLOT_ITEM_SIZE_DIFF_PX;
 
-  return { cols, itemSize, slotSize };
+  return {
+    cols,
+    itemSize,
+    slotSize,
+    padding: STAGE_PADDING_PX,
+    slotGap: SLOT_GAP_PX,
+    itemGap: ITEM_GAP_PX,
+    sectionGap: SECTION_GAP_PX,
+    fixedHeight: false,
+  };
+}
+
+// Phone layout: the stage's width AND height are both given, so this looks
+// for the column count that allows the biggest boxes while the slot grid and
+// the item grid (stacked, with the gap between them) still fit inside it.
+// More columns means fewer rows but narrower boxes; fewer columns means wider
+// boxes but more rows - the best trade-off depends on the stage's shape and
+// on how many artefacts a level has, so every column count is tried rather
+// than hardcoding one. The height sum mirrors getLayout()'s neededHeight.
+function getFixedLayout(stageWidth, stageHeight, artefactCount) {
+  const padding = FIXED_STAGE_PADDING_PX;
+  const availableWidth = stageWidth - (padding * 2);
+  let best = null;
+
+  for (let cols = 1; cols <= artefactCount; cols += 1) {
+    const rows = rowsNeeded(artefactCount, cols);
+    // Slots are the wider grid, so they decide how big the boxes can be across.
+    const maxByWidth = (availableWidth - FIXED_GAP_PX * (cols - 1)) / cols - SLOT_ITEM_SIZE_DIFF_PX;
+    // Slot rows + item rows + section gap + padding top and bottom.
+    const maxByHeight =
+      (stageHeight - padding * 2 - FIXED_SECTION_GAP_PX - rows * (SLOT_ITEM_SIZE_DIFF_PX + FIXED_GAP_PX * 2)) /
+      (rows * 2);
+    const itemSize = Math.min(ITEM_SIZE_MAX_PX, maxByWidth, maxByHeight);
+    if (!best || itemSize > best.itemSize) best = { cols, itemSize };
+  }
+
+  const itemSize = Math.max(1, best.itemSize);
+  return {
+    cols: best.cols,
+    itemSize,
+    slotSize: itemSize + SLOT_ITEM_SIZE_DIFF_PX,
+    padding,
+    slotGap: FIXED_GAP_PX,
+    itemGap: FIXED_GAP_PX,
+    sectionGap: FIXED_SECTION_GAP_PX,
+    fixedHeight: true,
+  };
+}
+
+// Picks the layout for the current screen and works out where the item grid
+// starts (below the slot grid) and how tall everything needs to be.
+function getLayout(stage, artefactCount) {
+  const fixedHeight = window.matchMedia(FIXED_STAGE_QUERY).matches;
+  // A min-height left over from a taller (desktop) layout would override the
+  // stylesheet's fixed height and skew the measurement below.
+  if (fixedHeight) stage.style.minHeight = '';
+
+  const base = fixedHeight
+    ? getFixedLayout(stage.clientWidth, stage.clientHeight, artefactCount)
+    : getDynamicLayout(stage.clientWidth, artefactCount);
+
+  const rows = rowsNeeded(artefactCount, base.cols);
+  const itemsTop = base.padding + rows * (base.slotSize + base.slotGap) + base.sectionGap;
+  const neededHeight = itemsTop + rows * (base.itemSize + base.itemGap) + base.padding;
+  return { ...base, itemsTop, neededHeight };
 }
 
 // Publishes the current box sizes as CSS custom properties so
 // arranging.css can size .silhouette-slot / .arranging-item without the
 // pixel values being duplicated (and getting out of sync) between here
-// and the stylesheet.
-function applySizeVars(stage, itemSize, slotSize) {
-  stage.style.setProperty('--arranging-item-size', `${itemSize}px`);
-  stage.style.setProperty('--arranging-slot-size', `${slotSize}px`);
+// and the stylesheet. On desktop it also grows the stage to fit the content;
+// on phones the stage keeps the fixed height from the stylesheet instead.
+function applyLayout(stage, layout) {
+  stage.style.setProperty('--arranging-item-size', `${layout.itemSize}px`);
+  stage.style.setProperty('--arranging-slot-size', `${layout.slotSize}px`);
+  stage.style.minHeight = layout.fixedHeight ? '' : `${layout.neededHeight}px`;
 }
 
 // One labelled slot per artefact, in data order (not shuffled) so the
 // display case layout stays stable across restarts.
-function buildSlots(stage, artefacts, cols, slotSize) {
+function buildSlots(stage, artefacts, layout) {
   artefacts.forEach((item, i) => {
     let slot = stage.querySelector(`[data-slot="${item.id}"]`);
     if (!slot) {
@@ -131,17 +208,21 @@ function buildSlots(stage, artefacts, cols, slotSize) {
       slot.textContent = `Spot ${i + 1}`;
       stage.appendChild(slot);
     }
-    const { left, top } = gridPosition(i, cols, slotSize, SLOT_GAP_PX, STAGE_PADDING_PX);
+    const { left, top } = gridPosition(
+      i, layout.cols, layout.slotSize, layout.slotGap, layout.padding, layout.padding,
+    );
     slot.style.left = `${left}px`;
     slot.style.top = `${top}px`;
   });
 }
 
 // Repositions each entry (in current array order) into a packed grid
-// starting at topPx.
-function layoutItems(entries, cols, topPx, itemSize) {
+// starting at the layout's itemsTop.
+function layoutItems(entries, layout) {
   entries.forEach(({ el }, i) => {
-    const { left, top } = gridPosition(i, cols, itemSize, ITEM_GAP_PX, topPx);
+    const { left, top } = gridPosition(
+      i, layout.cols, layout.itemSize, layout.itemGap, layout.itemsTop, layout.padding,
+    );
     el.style.left = `${left}px`;
     el.style.top = `${top}px`;
   });
@@ -157,8 +238,10 @@ function buildItems(stage, artefacts, arranger) {
       const img = document.createElement('img');
       img.src = item.image;
       img.alt = item.name;
+      el.classList.add('has-image');
       img.onerror = () => {
         img.remove();
+        el.classList.remove('has-image');
         el.textContent = item.name;
       };
       el.appendChild(img);
@@ -219,12 +302,9 @@ export async function initArrangingDemo() {
     return;
   }
 
-  let { cols, itemSize, slotSize } = getDynamicLayout(stage.clientWidth, artefacts.length);
-  applySizeVars(stage, itemSize, slotSize);
-  buildSlots(stage, artefacts, cols, slotSize);
-
-  let slotRows = rowsNeeded(artefacts.length, cols);
-  let itemsTopPx = STAGE_PADDING_PX + slotRows * (slotSize + SLOT_GAP_PX) + SECTION_GAP_PX;
+  let layout = getLayout(stage, artefacts.length);
+  applyLayout(stage, layout);
+  buildSlots(stage, artefacts, layout);
 
   let itemEntries;
 
@@ -232,7 +312,7 @@ export async function initArrangingDemo() {
     stage,
     onPlaced({ item }) {
       itemEntries = itemEntries.filter((entry) => entry.item.id !== item.id);
-      layoutItems(itemEntries, cols, itemsTopPx, itemSize);
+      layoutItems(itemEntries, layout);
       renderTally(arranger.getSummary());
       showFeedback(item);
     },
@@ -243,27 +323,24 @@ export async function initArrangingDemo() {
   });
 
   itemEntries = buildItems(stage, artefacts, arranger);
-  layoutItems(itemEntries, cols, itemsTopPx, itemSize);
+  layoutItems(itemEntries, layout);
   renderTally(arranger.getSummary());
-
-  const itemRows = rowsNeeded(artefacts.length, cols);
-  const neededHeight = itemsTopPx + itemRows * (itemSize + ITEM_GAP_PX) + STAGE_PADDING_PX;
-  stage.style.minHeight = `${neededHeight}px`;
 
   // Dynamic reflow on viewport change - recalculates both the column
   // count and the box sizes, so the grid keeps using the available
-  // space rather than just staying small with extra margin.
+  // space rather than just staying small with extra margin. Crossing the
+  // phone breakpoint (e.g. rotating a tablet) switches between the growing
+  // and fixed-height layouts here too.
   currentResizeHandler = () => {
-    ({ cols, itemSize, slotSize } = getDynamicLayout(stage.clientWidth, artefacts.length));
-    applySizeVars(stage, itemSize, slotSize);
-    slotRows = rowsNeeded(artefacts.length, cols);
-    itemsTopPx = STAGE_PADDING_PX + slotRows * (slotSize + SLOT_GAP_PX) + SECTION_GAP_PX;
+    layout = getLayout(stage, artefacts.length);
+    applyLayout(stage, layout);
 
-    buildSlots(stage, artefacts, cols, slotSize);
-    layoutItems(itemEntries, cols, itemsTopPx, itemSize);
-
-    const rows = rowsNeeded(artefacts.length, cols);
-    stage.style.minHeight = `${itemsTopPx + rows * (itemSize + ITEM_GAP_PX) + STAGE_PADDING_PX}px`;
+    buildSlots(stage, artefacts, layout);
+    layoutItems(itemEntries, layout);
+    // Already-placed artefacts aren't in itemEntries, so re-centre them on
+    // their (just moved) slots. arranging.js does this on resize itself, but
+    // its listener runs before this one, i.e. against the old slot positions.
+    arranger.repositionPlaced();
   };
 
   window.addEventListener('resize', currentResizeHandler);
