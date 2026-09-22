@@ -26,6 +26,27 @@
     transform var(--transition-fast);
 }
 
+.silhouette-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  border-radius: inherit;
+
+  /* Turns image black and adds an outline effect */
+  filter: brightness(0) drop-shadow(0 0 3px #ffffff);
+  opacity: 0.35;
+  transition: opacity var(--transition-base), filter var(--transition-base);
+}
+
+.silhouette-slot.is-target img {
+  opacity: 0.7;
+}
+
+.silhouette-slot.is-filled img {
+  opacity: 0;
+}
+
 .silhouette-slot.is-target {
   border-style: solid;
   border-color: var(--color-primary);
@@ -59,11 +80,10 @@
   transition: left 300ms ease, top 300ms ease;
 }
 
-/* Artefact images aren't square. `contain` shows the whole picture instead of
-   cropping it to the box; the box drops its solid fill so the leftover space
-   isn't a coloured bar. (The fill stays for the text fallback.) */
 .arranging-item.has-image {
   background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .arranging-item img {

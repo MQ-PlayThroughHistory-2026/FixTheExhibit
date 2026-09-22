@@ -205,9 +205,27 @@ function buildSlots(stage, artefacts, layout) {
       slot = document.createElement('div');
       slot.className = 'silhouette-slot';
       slot.dataset.slot = item.id;
-      slot.textContent = `Spot ${i + 1}`;
+
+      if (item.image) {
+        const img = document.createElement('img');
+        img.src = item.image;
+        img.alt = `Silhouette for ${item.name}`;
+        
+        // Fallback to label if image fails to load
+        img.onerror = () => {
+          img.remove();
+          slot.textContent = `Spot ${i + 1}`;
+        };
+
+        slot.appendChild(img);
+      } else {
+        // Fallback if no image field exists in JSON
+        slot.textContent = `Spot ${i + 1}`;
+      }
+
       stage.appendChild(slot);
     }
+
     const { left, top } = gridPosition(
       i, layout.cols, layout.slotSize, layout.slotGap, layout.padding, layout.padding,
     );
