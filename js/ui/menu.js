@@ -118,11 +118,19 @@ function wireMainMenu() {
   });
   // TEMPORARY - delete together with screen-arranging-prototype and
   // js/game/prototypes/arranging-demo.js when the real arranging scene
-  // (D2) is built.
+  // (D2) is built. One button per hint type (state.js's
+  // arrangementHintType), skipping the full menu -> sorting flow.
   document.getElementById('btn-dev-arranging-demo').addEventListener('click', () => {
     setLevel('gold-rush');
+    setDifficulty(DIFFICULTIES.EASY);
     showScreen('screen-arranging-prototype');
     // After showScreen so the stage has a width to lay artefacts out in.
+    initArrangingDemo();
+  });
+  document.getElementById('btn-dev-arranging-hard-demo').addEventListener('click', () => {
+    setLevel('gold-rush');
+    setDifficulty(DIFFICULTIES.HARD);
+    showScreen('screen-arranging-prototype');
     initArrangingDemo();
   });
 }
@@ -152,5 +160,4 @@ export async function initMenu() {
   showScreen('screen-main-menu');
 }
 
-// Exported for difficulty labels used directly in markup/tests if needed.
 export { DIFFICULTIES };
