@@ -26,13 +26,8 @@ body {
   width: 100%;
   max-width: 960px;
   min-height: 100vh;
-  /* Vertically centers #app the same way align-items: center would, but
-     without its overflow bug: when content is taller than the viewport
-     (e.g. the arranging screen on mobile), align-items: center clips the
-     overflow symmetrically and the top half becomes unreachable even
-     though the page still scrolls. Auto margins collapse to 0 instead
-     once content overflows, so everything stays reachable by scrolling
-     from the top down. */
+  /* Auto margins centre vertically but, unlike align-items: center, keep
+     the top reachable when content is taller than the viewport. */
   margin-top: auto;
   margin-bottom: auto;
   padding: var(--space-lg);

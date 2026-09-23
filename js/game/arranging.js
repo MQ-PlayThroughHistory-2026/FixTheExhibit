@@ -7,6 +7,11 @@
  * snaps back to where it was picked up and stays draggable.
  *
  * Slots are elements inside the stage carrying data-slot="<artefact id>".
+ *
+ * revealCorrectSlot (default true) controls the drag-over glow: true glows
+ * only the artefact's own slot as a hint (easy mode); false glows whichever
+ * slot is under the artefact regardless of correctness, so hovering can't
+ * be used to find the right one (hard mode - see arranging-demo.js).
  */
 
 import { makeDraggable } from './drag.js';
@@ -34,7 +39,7 @@ const SLOT_FEEDBACK_MS = 500; // one fade per wrong drop, nothing strobes (NFR05
  * @param {(result: { item: ArtefactItem }) => void} [options.onPlaced]
  * @param {(summary: ArrangeSummary) => void} [options.onComplete]
  */
-export function createArranger({ stage, onPlaced, onComplete }) {
+export function createArranger({ stage, onPlaced, onComplete, revealCorrectSlot = true }) {
   const slots = Array.from(stage.querySelectorAll('[data-slot]'));
   if (slots.length === 0) {
     throw new Error('createArranger needs at least one [data-slot] element inside the stage');
@@ -61,8 +66,10 @@ export function createArranger({ stage, onPlaced, onComplete }) {
     );
   }
 
-  // Only ever highlights an item's OWN slot - hovering someone else's slot gets no encouragement.
-  function highlightOwnSlot(target) {
+  // Toggles is-target (the drag-over "glow", styled in arranging.css) onto
+  // exactly one slot - whichever is passed in - and off every other one.
+  // What gets passed in is what makes this a hint or not; see onDragMove.
+  function highlightHoveredSlot(target) {
     slots.forEach((slot) => slot.classList.toggle('is-target', slot === target));
   }
 
@@ -132,10 +139,12 @@ export function createArranger({ stage, onPlaced, onComplete }) {
       },
       onDragMove(target) {
         const under = slotUnder(target);
-        highlightOwnSlot(under && under.dataset.slot === item.id ? under : null);
+        // Easy mode glows only the item's own slot; hard mode glows
+        // whichever slot is under the artefact, right or wrong.
+        highlightHoveredSlot(revealCorrectSlot ? (under && under.dataset.slot === item.id ? under : null) : under);
       },
       onDrop(target, _event, { cancelled }) {
-        highlightOwnSlot(null);
+        highlightHoveredSlot(null);
         const under = cancelled ? null : slotUnder(target);
         const isOwnSlot = under && under.dataset.slot === item.id && !under.classList.contains('is-filled');
 

@@ -11,27 +11,39 @@
  * onDrop) let sorting.js react to the drag.
  */
 
+// Module-level so a popup covering the stage can stop every draggable at
+// once. Set/cleared by whichever screen owns the popup.
+let inputSuspended = false;
+
+// Blocks new drags from starting until called again with false. Doesn't
+// interrupt a drag already in progress.
+export function setDragSuspended(suspended) {
+  inputSuspended = suspended;
+}
+
 export function makeDraggable(el, container, hooks = {}) {
   let dragging = false;
   let offsetX = 0;
   let offsetY = 0;
 
   el.addEventListener('pointerdown', (event) => {
-    // Set by other game code (e.g. arranging.js) once an item has been
-    // correctly placed and should stop being draggable.
-    if (el.dataset.locked === 'true') return;
+  // Set by other game code (e.g. arranging.js) once an item has been
+  // correctly placed and should stop being draggable.
+  if (el.dataset.locked === 'true') return;
+  // A popup is covering the stage.
+  if (inputSuspended) return;
 
-    dragging = true;
-    // setPointerCapture keeps this element receiving move/up events even if
-    // the pointer moves faster than the box and briefly leaves its bounds -
-    // matters a lot on touch, where fingers are imprecise.
-    el.setPointerCapture(event.pointerId);
-    const elRect = el.getBoundingClientRect();
-    offsetX = event.clientX - elRect.left;
-    offsetY = event.clientY - elRect.top;
-    el.classList.add('is-dragging');
-    hooks.onDragStart?.(el, event);
-  });
+  dragging = true;
+  // setPointerCapture keeps this element receiving move/up events even if
+  // the pointer moves faster than the box and briefly leaves its bounds -
+  // matters a lot on touch, where fingers are imprecise.
+  el.setPointerCapture(event.pointerId);
+  const elRect = el.getBoundingClientRect();
+  offsetX = event.clientX - elRect.left;
+  offsetY = event.clientY - elRect.top;
+  el.classList.add('is-dragging');
+  hooks.onDragStart?.(el, event);
+});
 
   el.addEventListener('pointermove', (event) => {
     if (!dragging) return;
