@@ -29,7 +29,14 @@
              arranging scene (D2) is built. -->
         <button id="btn-dev-arranging-demo" class="btn-secondary" style="position: relative; overflow: hidden; padding: 0; border: none;">
           <img src="assets/ui/button.png" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; z-index: 1;" />
-          <span style="position: relative; z-index: 2; color: black;">[Dev] Arranging Prototype</span>
+          <span style="position: relative; z-index: 2; color: black;">[Dev] Arranging Prototype (Easy)</span>
+        </button>
+        <!-- TEMPORARY - delete together with screen-arranging-prototype
+             and js/game/prototypes/arranging-demo.js when the real
+             arranging scene (D2) is built. -->
+        <button id="btn-dev-arranging-hard-demo" class="btn-secondary" style="position: relative; overflow: hidden; padding: 0; border: none;">
+          <img src="assets/ui/button.png" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; z-index: 1;" />
+          <span style="position: relative; z-index: 2; color: black;">[Dev] Arranging Prototype (Hard)</span>
         </button>
       </div>
 
@@ -143,14 +150,26 @@
          js/game/prototypes/arranging-demo.js and the [Dev] button on the
          main menu when the real arranging scene (D2) is built. -->
     <section id="screen-arranging-prototype" class="screen hidden">
-      <h2>Arranging Prototype &mdash; Gold Rush</h2>
-      <p>Drag each artefact into its own spot in the display case.</p>
+      <h2 id="arranging-heading">Arranging Prototype &mdash; Gold Rush</h2>
+      <p id="arranging-intro">Drag each artefact into its own spot in the display case.</p>
       <div id="arranging-stage" class="stage-area">
         <!-- Stand-in for the D4 information card, filled by arranging-demo.js -->
         <div id="arranging-feedback" class="arranging-feedback hidden" role="status" aria-live="polite">
-          <strong id="arranging-feedback-title"></strong>
-          <p id="arranging-feedback-text"></p>
-          <button id="btn-arranging-feedback-close" class="btn-secondary">Close</button>
+          <img id="arranging-feedback-image" class="arranging-feedback-image hidden" alt="" />
+          <div class="arranging-feedback-content">
+            <strong id="arranging-feedback-title"></strong>
+            <p id="arranging-feedback-text"></p>
+            <button id="btn-arranging-feedback-close" class="btn-secondary">Close</button>
+          </div>
+        </div>
+        <!-- Hard-mode clue popup, stand-in for the D4 information card.
+             Opened by tapping an empty slot's info card. -->
+        <div id="arranging-clue" class="arranging-clue hidden" role="status" aria-live="polite">
+          <div class="arranging-clue-content">
+            <strong>Clue</strong>
+            <p id="arranging-clue-text"></p>
+            <button id="btn-arranging-clue-close" class="btn-secondary">Close</button>
+          </div>
         </div>
       </div>
       <p id="arranging-tally" class="arranging-tally"></p>

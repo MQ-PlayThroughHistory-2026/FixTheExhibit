@@ -32,18 +32,42 @@
   object-fit: contain;
   pointer-events: none;
   border-radius: inherit;
-
-  /* Turns image black and adds an outline effect */
-  filter: brightness(0) drop-shadow(0 0 3px #ffffff);
-  opacity: 0.35;
   transition: opacity var(--transition-base), filter var(--transition-base);
 }
 
-.silhouette-slot.is-target img {
+/* Easy mode only - img.silhouette-img, set in arranging-demo.js. */
+.silhouette-slot img.silhouette-img {
+  /* Turns image black and adds an outline effect */
+  filter: brightness(0) drop-shadow(0 0 3px #ffffff);
+  opacity: 0.35;
+}
+
+.silhouette-slot.is-target img.silhouette-img {
   opacity: 0.7;
 }
 
 .silhouette-slot.is-filled img {
+  opacity: 0;
+}
+
+/* Hard mode only - img.clue-card-art, set in arranging-demo.js. */
+.silhouette-slot.is-clue-slot:not(.is-filled) {
+  cursor: pointer;
+}
+
+/* :not(.is-clue-open) stops the hover state fighting the fade to 0 below. */
+.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):hover img.clue-card-art,
+.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):focus-visible img.clue-card-art {
+  opacity: 0.8;
+}
+
+.silhouette-slot.is-clue-slot:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Hide the slot's own card while its clue popup is open. */
+.silhouette-slot.is-clue-open img.clue-card-art {
   opacity: 0;
 }
 

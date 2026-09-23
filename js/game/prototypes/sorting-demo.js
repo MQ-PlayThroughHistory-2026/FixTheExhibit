@@ -25,6 +25,7 @@
 import { createSorter } from '../sorting.js';
 import { createBelt } from '../belt.js';
 import { getLevel, getDifficultyConfig } from '../state.js';
+import { setDragSuspended } from '../drag.js';
 
 const BASE_BELT_SPEED_PX_PER_SEC = 60; // scaled by the difficulty's beltSpeedMultiplier
 const BELT_TO_ZONES_GAP_PX = 40; // space between the belt line and the top of the drop zones
@@ -93,12 +94,17 @@ function showCard(title, text, correct) {
   card.classList.toggle('is-incorrect', !correct);
   card.classList.remove('hidden');
   belt?.pause();
+  // Without this, a package already off the belt (mid-drag when this
+  // package's own drop triggered the card) could still be dropped into a
+  // bin underneath the card while it covers the drop zones.
+  setDragSuspended(true);
 }
 
 // Hides the feedback card and lets the belt move again.
 function hideCard() {
   document.getElementById('sorting-feedback').classList.add('hidden');
   belt?.resume();
+  setDragSuspended(false);
 }
 
 // Writes the running tally line.
