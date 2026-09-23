@@ -27,12 +27,14 @@
   font-weight: 600;
 }
 
-/* Pops up over the stage so opening it never moves the artefacts. */
+/* Pops up over the stage so opening it never moves the artefacts. Centred
+   in the stage, same as the sorting prototype's card. */
 .arranging-feedback {
   position: absolute;
   left: var(--space-lg);
   right: var(--space-lg);
-  bottom: var(--space-sm);
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 10; /* Keeps modal layered over active draggable items */
   display: flex;
   flex-direction: column;
@@ -52,4 +54,40 @@
 
 .arranging-feedback p {
   max-width: none;
+}
+
+/* Phones: a fixed-height stage instead of one that grows with the artefacts,
+   so the page doesn't turn into a long scroll. Same height as the sorting
+   prototype's stage (sorting-demo.css); arranging-demo.js scales the slots
+   and artefacts down to fit inside it. Keep the breakpoint in sync with
+   FIXED_STAGE_QUERY in arranging-demo.js. */
+@media (max-width: 600px) {
+  #screen-arranging-prototype .stage-area {
+    height: 500px;
+  }
+
+  /* Labels inside the scaled-down boxes shrink with them (placeholder text
+     until real artefact images exist). */
+  .arranging-item,
+  .silhouette-slot {
+    font-size: clamp(0.55rem, calc(var(--arranging-item-size, 88px) * 0.2), 0.8rem);
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  .arranging-item {
+    padding: 2px;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+  }
+
+  /* The blurb can be long and the stage is no longer tall enough to fit it,
+     so let the card scroll instead of being clipped. */
+  .arranging-feedback {
+    left: var(--space-sm);
+    right: var(--space-sm);
+    max-height: calc(100% - var(--space-sm) * 2);
+    overflow-y: auto;
+    padding: var(--space-sm) var(--space-md);
+  }
 }

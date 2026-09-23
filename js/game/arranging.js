@@ -71,14 +71,17 @@ export function createArranger({ stage, onPlaced, onComplete }) {
     setTimeout(() => slot.classList.remove('flash-incorrect'), SLOT_FEEDBACK_MS);
   }
 
-  // Centers element over slot based on stage bounding box rather than offsetParent
+  // Centers element over slot based on stage bounding box rather than offsetParent.
+  // left/top are measured from the stage's padding box (inside its border), so the
+  // border width (clientLeft/clientTop) has to come off the bounding-box offset or
+  // every placed artefact lands a border-width down and to the right of centre.
   function moveToSlotCentre(el, slot) {
     const stageRect = stage.getBoundingClientRect();
     const slotRect = slot.getBoundingClientRect();
     const elRect = el.getBoundingClientRect();
 
-    const targetLeft = (slotRect.left - stageRect.left) + (slotRect.width - elRect.width) / 2;
-    const targetTop = (slotRect.top - stageRect.top) + (slotRect.height - elRect.height) / 2;
+    const targetLeft = (slotRect.left - stageRect.left - stage.clientLeft) + (slotRect.width - elRect.width) / 2;
+    const targetTop = (slotRect.top - stageRect.top - stage.clientTop) + (slotRect.height - elRect.height) / 2;
 
     el.style.left = `${targetLeft}px`;
     el.style.top = `${targetTop}px`;
@@ -167,5 +170,7 @@ export function createArranger({ stage, onPlaced, onComplete }) {
     window.removeEventListener('resize', handleResize);
   }
 
-  return { addItem, getSummary, destroy };
+  // Exposed so a caller that moves the slots on resize can re-centre the placed
+  // artefacts afterwards (this file's own resize listener fires before theirs).
+  return { addItem, getSummary, repositionPlaced: handleResize, destroy };
 }
