@@ -24,9 +24,9 @@ const HELD_CLASSES = ['is-dragging', 'is-returning', 'is-sorted'];
  * @param {number} options.laneTop         y of the belt band inside the stage, in px
  * @param {number} options.speedPxPerSec
  * @param {number} [options.minGapPx=40]   smallest random gap between packages
- * @param {number} [options.maxGapPx=220]  largest random gap between packages
+ * @param {number} [options.maxGapPx=120]  largest random gap between packages
  */
-export function createBelt({ stage, laneTop, speedPxPerSec, minGapPx = 40, maxGapPx = 220 }) {
+export function createBelt({ stage, laneTop, speedPxPerSec, minGapPx = 40, maxGapPx = 120 }) {
   const positions = new Map(); // el -> left edge as a float, so slow speeds don't round away
   const track = stage.querySelector('.belt-track') ?? createTrack();
   let rafId = null;
@@ -72,7 +72,12 @@ export function createBelt({ stage, laneTop, speedPxPerSec, minGapPx = 40, maxGa
 
   // Places el off-screen left of the queue so it enters after a random gap.
   function add(el) {
-    const x = tailX() - el.offsetWidth - randomGap();
+    let x = 0;
+    if (tailX() == 0) {
+      x = -el.offsetWidth - minGapPx/2; //Don't want large gap for first package
+    } else {
+      x = tailX() - el.offsetWidth - randomGap();
+    }
     positions.set(el, x);
     el.style.left = `${x}px`;
     el.style.top = `${restingTop(el)}px`;

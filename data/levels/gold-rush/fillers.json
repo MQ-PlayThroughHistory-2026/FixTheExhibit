@@ -3,80 +3,80 @@
     "id": "old-gold-chocolate",
     "name": "Old Gold Chocolate",
     "correctZone": "rejection-bin",
-    "image": "assets/gold-rush/old-gold-chocolate.png",
+    "image": "assets/gold-rush/old-gold-chocolate.avif",
     "funFactCorrect": "Sir Macpherson Robertson created many classic chocolates after the gold rush ended, including Old Gold Chocolate, Cherry Ripe, and Freddo Frogs.",
     "funFactIncorrect": "While the creator of Old Gold Chocolate was born in Ballarat during the gold rush, the chocolate itself was not produced until 1916."
   },
   {
-    "id": "example-filler-2",
-    "name": "Example Filler (replace with real object - task R3)",
+    "id": "thylacine-skull",
+    "name": "Thylacine Skull",
     "correctZone": "rejection-bin",
-    "image": "assets/gold-rush/old-gold-chocolate.png",
-    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+    "image": "assets/gold-rush/thylacine-skull.avif",
+    "funFactCorrect": "This skull belongs to a Thylacine, also known as the Tasmanian Tiger, which were officially declared extinct in 1986.",
+    "funFactIncorrect": "This skull belongs to a Thylacine, and while some were still living in Tasmania during the gold rush, they didn't have a big role in it."
   },
   {
-    "id": "example-filler-3",
-    "name": "Example Filler (replace with real object - task R3)",
+    "id": "gregorian-telescope",
+    "name": "Gregorian Astronomical Reflector Telescope",
     "correctZone": "rejection-bin",
-    "image": "assets/gold-rush/old-gold-chocolate.png", 
-    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+    "image": "assets/gold-rush/gregorian-telescope.avif", 
+    "funFactCorrect": "This type of telescope was invented in the 1600s by James Gregory, and makes things appear larger by reflecting light off two metal mirrors.",
+    "funFactIncorrect": "This is a Gregorian reflector astronomical telescope which was invented in 1661, long before the Australian gold rush."
   },
   {
-    "id": "example-filler-4",
-    "name": "Example Filler (replace with real object - task R3)",
+    "id": "trilobite",
+    "name": "Trilobite",
     "correctZone": "rejection-bin",
-    "image": "assets/gold-rush/old-gold-chocolate.png",
-    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+    "image": "assets/gold-rush/trilobite.avif",
+    "funFactCorrect": "This is a fossilised Trilobite, which is a group of prehistoric animals with over 20,000 different species that have been found all over the world.",
+    "funFactIncorrect": "This is a fossilised Trilobite, which is a type of animal that lived between 521 million years ago and 251 million years ago."
   },
   {
-    "id": "example-filler-5",
-    "name": "Example Filler (replace with real object - task R3)",
+    "id": "monopoly",
+    "name": "Monopoly",
     "correctZone": "rejection-bin",
-    "image": "assets/gold-rush/old-gold-chocolate.png",
-    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+    "image": "assets/gold-rush/monopoly.avif",
+    "funFactCorrect": "The first version of Monopoly was called “The Landlord's Game” and included two sets of rules - one known as Monopoly, and the other known as Prosperity.",
+    "funFactIncorrect": "The first version of Monopoly was called “The Landlord's Game”, and was created by Lizzie Magie in 1903."
   },
   {
-    "id": "example-filler-6",
-    "name": "Example Filler (replace with real object - task R3)",
+    "id": "awa-television",
+    "name": "AWA Radiola Deep Image Television",
     "correctZone": "rejection-bin",
-    "image": "assets/gold-rush/old-gold-chocolate.png",
-    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+    "image": "assets/gold-rush/awa-television.avif",
+    "funFactCorrect": "Television did not begin regular broadcasting in Australia until 1956, and this particular AWA Radiola Deep Image Television was made in 1958.",
+    "funFactIncorrect": "While this AWA Radiola television was made by an Australian company it wasn't produced until 1958, so most gold rush miners would not have lived to see it."
   },
   {
-    "id": "example-filler-7",
-    "name": "Example Filler (replace with real object - task R3)",
+    "id": "mining-safety-lamp",
+    "name": "Mining Safety Lamp",
     "correctZone": "rejection-bin",
-    "image": "assets/gold-rush/old-gold-chocolate.png",
-    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+    "image": "assets/gold-rush/mining-safety-lamp.avif",
+    "funFactCorrect": "These safety lamps were designed to prevent explosions in coal mines, and this particular type of lamp was used at Cooranbong Colliery in the 1990s.",
+    "funFactIncorrect": "While this safety lamp may look like something a gold rush miner would carry, it was designed to be used in enclosed coal mines, not the open goldfields."
   },
   {
-    "id": "example-filler-8",
-    "name": "Example Filler (replace with real object - task R3)",
+    "id": "miner-helmet",
+    "name": "Miner's Helmet",
     "correctZone": "rejection-bin",
-    "image": "assets/gold-rush/old-gold-chocolate.png",
-    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+    "image": "assets/gold-rush/miner-helmet.avif",
+    "funFactCorrect": "This miner's helmet was manufactured by Protector Safety in 1989, and includes fittings for an electric cap lamp and battery cable.",
+    "funFactIncorrect": "This miner's safety helmet would have looked out of place on the goldfields, where the main form of head protection was cloth hats."
   },  
   {
-    "id": "example-filler-9",
-    "name": "Example Filler (replace with real object - task R3)",
+    "id": "box-camera",
+    "name": "Box Camera",
     "correctZone": "rejection-bin",
-    "image": "assets/gold-rush/old-gold-chocolate.png",
-    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+    "image": "assets/gold-rush/box-camera.avif",
+    "funFactCorrect": "This is an Austral No 1A Film & Plate camera, which was sold by Baker & Rouse Pty Ltd in the early 1900s.",
+    "funFactIncorrect": "While photography was around during the gold rush, this particular type of box camera wasn't sold until the early 1900s."
   },
   {
-    "id": "example-filler-10",
-    "name": "Example Filler (replace with real object - task R3)",
+    "id": "backpack",
+    "name": "Modern Backpack",
     "correctZone": "rejection-bin",
-    "image": "assets/gold-rush/old-gold-chocolate.png",
-    "funFactCorrect": "Placeholder fun fact shown when correctly put in the rejection bin (task R4).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly put in the display case (task R4)."
+    "image": "assets/gold-rush/backpack.avif",
+    "funFactCorrect": "This is a modern backpack, with features like padded shoulder straps and zippers which were not invented until after the gold rush.",
+    "funFactIncorrect": "While prospectors may have found this modern backpack useful, they would have carried their belongings in swags or other types of luggage from that time."
   }
 ]
