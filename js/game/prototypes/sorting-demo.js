@@ -26,7 +26,8 @@ import { createSorter } from '../sorting.js';
 import { createBelt } from '../belt.js';
 import { getLevel, getDifficultyConfig } from '../state.js';
 
-const BASE_BELT_SPEED_PX_PER_SEC = 60; // scaled by the difficulty's beltSpeedMultiplier
+//const BASE_BELT_SPEED_PX_PER_SEC = 60; // scaled by the difficulty's beltSpeedMultiplier
+const BASE_BELT_SPEED_PX_PER_SEC = 120; // *TEMP ADJUSTED FOR DEMO
 const BELT_TO_ZONES_GAP_PX = 40; // space between the belt line and the top of the drop zones
 
 let wired = false;
@@ -77,7 +78,20 @@ function spawnPackages(stage, items, sorter, runBelt) {
   items.forEach((item) => {
     const el = document.createElement('div');
     el.className = 'draggable-box package';
-    el.textContent = item.name;
+    
+    if (item.image) {
+      const img = document.createElement('img');
+      img.src = item.image;
+      img.alt = item.name;
+      img.onerror = () => {
+        img.remove();
+        el.textContent = item.name;
+      };
+      el.appendChild(img);
+    } else {
+      el.textContent = item.name;
+    }
+
     stage.appendChild(el);
     runBelt.add(el);
     sorter.addPackage(el, item);
