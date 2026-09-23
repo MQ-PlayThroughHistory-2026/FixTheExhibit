@@ -3,7 +3,7 @@
     "id": "example-artefact-1",
     "name": "Crab",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/old-gold-chocolate.png",
+    "image": "assets/gold-rush/old-gold-chocolate.avif",
     "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
     "longExplanation": [
       "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
