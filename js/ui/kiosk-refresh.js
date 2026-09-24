@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Timeout Configuration (in milliseconds & seconds)
-    const IDLE_TIME_LIMIT = 5 * 60 * 1000; // 5 minutes in ms
+    const IDLE_TIME_LIMIT = 3 * 60 * 1000; // 3 minutes in ms
     const COUNTDOWN_TIME = 60;             // 1 minute in seconds
 
     // State Tracking variables
