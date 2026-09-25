@@ -1,0 +1,137 @@
+/* arranging.css
+   States toggled by js/game/arranging.js. Stage sizing/layout for the
+   prototype stays in prototypes/arranging-demo.css. Tints are a single
+   fade, nothing strobes (NFR05).
+
+   Slot/item box sizes read --arranging-slot-size / --arranging-item-size,
+   set on the stage element by whatever screen builds the grid (currently
+   arranging-demo.js, computed responsively from stage width). The pixel
+   fallbacks here only apply if nothing sets those variables. */
+
+.silhouette-slot {
+  position: absolute;
+  width: var(--arranging-slot-size, 96px);
+  height: var(--arranging-slot-size, 96px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  border: 2px dashed var(--color-text-muted);
+  border-radius: var(--radius-md);
+  box-sizing: border-box;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    transform var(--transition-fast);
+}
+
+.silhouette-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  border-radius: inherit;
+  transition: opacity var(--transition-base), filter var(--transition-base);
+}
+
+/* Easy mode only - img.silhouette-img, set in arranging-demo.js. */
+.silhouette-slot img.silhouette-img {
+  /* Turns image black and adds an outline effect */
+  filter: brightness(0) drop-shadow(0 0 3px #ffffff);
+  opacity: 0.35;
+}
+
+.silhouette-slot.is-target img.silhouette-img {
+  opacity: 0.7;
+}
+
+.silhouette-slot.is-filled img {
+  opacity: 0;
+}
+
+/* Hard mode only - img.clue-card-art, set in arranging-demo.js. */
+.silhouette-slot.is-clue-slot:not(.is-filled) {
+  cursor: pointer;
+}
+
+/* :not(.is-clue-open) stops the hover state fighting the fade to 0 below. */
+.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):hover img.clue-card-art,
+.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):focus-visible img.clue-card-art {
+  opacity: 0.8;
+}
+
+.silhouette-slot.is-clue-slot:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Hide the slot's own card while its clue popup is open. */
+.silhouette-slot.is-clue-open img.clue-card-art {
+  opacity: 0;
+}
+
+.silhouette-slot.is-target {
+  border-style: solid;
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 22%, transparent);
+  transform: scale(1.05);
+}
+
+.silhouette-slot.is-filled {
+  border-style: solid;
+  border-color: var(--color-easy);
+  color: transparent; /* hide the "Spot N" label showing through a transparent artefact image */
+}
+
+.silhouette-slot.flash-incorrect {
+  border-style: solid;
+  border-color: var(--color-hard);
+  background: color-mix(in srgb, var(--color-hard) 35%, transparent);
+}
+
+/* Artefacts carry both classes, class="draggable-box arranging-item". */
+.arranging-item {
+  position: absolute;
+  width: var(--arranging-item-size, 88px);
+  height: var(--arranging-item-size, 88px);
+  touch-action: none; /* Disables native touch scrolling while dragging */
+  user-select: none;
+  box-sizing: border-box;
+  /* Matches the inside curve of a slot's 2px border, so a placed item doesn't
+     poke past the slot's rounded corners. */
+  border-radius: calc(var(--radius-md) - 2px);
+  transition: left 300ms ease, top 300ms ease;
+}
+
+.arranging-item.has-image {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.arranging-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: inherit;
+  pointer-events: none; /* the box itself handles dragging, not the image */
+}
+
+.arranging-item.is-dragging {
+  transition: none;
+  z-index: 5;
+  cursor: grabbing;
+}
+
+.arranging-item.is-placed {
+  cursor: default;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .silhouette-slot,
+  .arranging-item {
+    transition: none;
+  }
+}

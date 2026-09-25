@@ -1,0 +1,51 @@
+.timeout-overlay {
+    position: fixed;
+    bottom: 20px;
+    z-index: 9999; /* Keeps it above all existing page elements */
+    pointer-events: auto;
+    display: flex;
+}
+
+.timeout-overlay.hidden {
+    display: none;
+}
+
+.timeout-content {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    width: 320px;
+    max-width: calc(100vw - 40px);
+    font-family: Arial, sans-serif;
+    border: 1px solid #e0e0e0;
+}
+
+.timeout-buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.timeout-buttons .btn {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    min-height: 44px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.btn-continue {
+    background-color: #28a745;
+    color: white;
+}
+
+#countdown {
+    font-weight: bold;
+    color: #dc3545;
+}

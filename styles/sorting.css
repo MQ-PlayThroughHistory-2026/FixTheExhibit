@@ -1,0 +1,81 @@
+
+/* sorting.css
+   States toggled by js/game/sorting.js. Stage and belt layout stay in
+   belt.css. Tints are a single fade, nothing strobes (NFR05). */
+
+/* Any element inside the stage carrying data-zone is a drop target. In the
+   prototype these are the two zone labels inside .drop-zones. */
+.stage-area [data-zone] {
+  flex: 0 0 44%;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px dashed var(--color-text-muted);
+  border-radius: var(--radius-md);
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base),
+    transform var(--transition-fast);
+}
+
+.stage-area [data-zone].is-target {
+  border-style: solid;
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 22%, transparent);
+  color: var(--color-text);
+  transform: scale(1.03);
+}
+
+.stage-area [data-zone].flash-correct {
+  border-style: solid;
+  border-color: var(--color-easy);
+  background: color-mix(in srgb, var(--color-easy) 35%, transparent);
+  color: var(--color-text);
+}
+
+.stage-area [data-zone].flash-incorrect {
+  border-style: solid;
+  border-color: var(--color-hard);
+  background: color-mix(in srgb, var(--color-hard) 35%, transparent);
+  color: var(--color-text);
+}
+
+/* Packages carry both classes, class="draggable-box package". */
+.package.is-dragging {
+  z-index: 2;
+}
+
+.package.is-returning {
+  transition: left 350ms ease, top 350ms ease;
+}
+
+.package.is-sorted {
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.4);
+  transition:
+    left 350ms ease,
+    top 350ms ease,
+    transform 350ms ease,
+    opacity 350ms ease;
+}
+
+.package img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: inherit;
+  pointer-events: none; /* the box itself handles dragging, not the image */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-area [data-zone],
+  .package.is-returning,
+  .package.is-sorted {
+    transition: none;
+  }
+}

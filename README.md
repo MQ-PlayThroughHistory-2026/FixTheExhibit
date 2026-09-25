@@ -13,29 +13,31 @@ A browser game where you're the new intern at a museum, and the artefact's shipp
 ---
 
 ## Table of Contents
- - [Overview](#overview)
- - [Core Gameplay](#core-gameplay)
- - [MVP Implementation Summary](#mvp-implementation-summary)
- - [Tech Stack](#tech-stack)
-   - [Frontend Core](#frontend-core)
-   - [Web APIs, Data \& Hosting](#web-apis-data--hosting)
- - [Getting Started](#getting-started)
-   - [Prerequisites](#prerequisites)
-   - [Installation](#installation)
-   - [Running locally](#running-locally)
- - [Project Structure](#project-structure)
- - [Contributing To This Project](#contributing-to-this-project)
- - [Project Teams](#project-teams)
-   - [Development Team](#development-team)
-   - [Visuals Team](#visuals-team)
-   - [Research Team](#research-team)
- - [License](#license)
+- [Fix The Exhibit](#fix-the-exhibit)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Core Gameplay](#core-gameplay)
+  - [MVP Implementation Summary](#mvp-implementation-summary)
+  - [Tech Stack](#tech-stack)
+    - [Frontend Core](#frontend-core)
+    - [Web APIs, Data \& Hosting](#web-apis-data--hosting)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Running locally](#running-locally)
+  - [Project Structure](#project-structure)
+  - [Contributing To This Project](#contributing-to-this-project)
+  - [Project Teams](#project-teams)
+    - [Development Team](#development-team)
+    - [Visuals Team](#visuals-team)
+    - [Research Team](#research-team)
+  - [License](#license)
 
 ---
 
 ## Overview
 
-*Fix the Exhibit* is an interactive companion piece to museum exhibits, providing players a hands-on way to engage with accurate historical information instead of the pop-culture version of history most games serve up.
+*Fix The Exhibit* is an interactive companion piece to museum exhibits, providing players a hands-on way to engage with accurate historical information instead of the pop-culture version of history most games serve up.
 
 The game covers two levels, the Australian gold rush and ancient Egypt, each built around ten genuine artefacts and ten filler packages from other eras. Players sort incoming packages under a timer, then take their time arranging the correct artefacts into a display case, reading a short blurb about each one. A quiz at the end checks what stuck, and sorting, arrangement accuracy, and quiz results combine into a rank from New Visitor up to Expert Historian.
 
@@ -106,20 +108,28 @@ App runs at `http://localhost:3000` (or whatever port `serve` gives you).
 
 ```
 fix-the-exhibit/
-├── docs/                  # design docs, client proposal, research protocol
-├── assets/                # artefact images, audio, icons
-├── data/                  # artefacts.json, levels.json
+├── docs/                         # design docs, client proposal, research protocol
+├── assets/                       # artefact images, audio, icons
+├── data/
+│   └── levels/
+│       ├── index.json            # level-select metadata (id, name, description)
+│       ├── gold-rush/
+│       │   ├── artefacts.json    # the 10 real artefacts for this level
+│       │   └── fillers.json      # the 10 filler packages for this level
+│       └── ancient-egypt/
+│           ├── artefacts.json
+│           └── fillers.json
 ├── js/
-│   ├── game/              # game loop, conveyor belt, scoring, timer
-│   ├── ui/                # display case, rejection bin, HUD rendering
-│   ├── quiz/              # pre/post quiz logic
-│   └── main.js            # entry point
+│   ├── game/                     # game loop, conveyor belt, scoring, timer, drag interactions
+│   ├── ui/                       # display case, rejection bin, HUD rendering
+│   ├── quiz/                     # end-of-level quiz logic
+│   └── main.js                   # entry point
 ├── styles/
 │   ├── base.css
 │   ├── belt.css
 │   └── quiz.css
 ├── index.html
-├── README.md              # you are here
+├── README.md                     # you are here
 └── CONTRIBUTING.md
 ```
 
@@ -135,17 +145,17 @@ For design docs, research protocol, and client notes, see [`docs/`](./docs/).
 ### Development Team
 | Name | Role | Contributions | Related Source Code |
 |---|---|---|---|
-| [Yuyang Su](https://github.com/VnKnpwN) | Fullstack Dev, Docs | - Authored README.md<br>- Authored CONTRIBUTING.md<br>- Managed Github org<br> | - **README.md:** `FixTheExhibit/README.md`<br>- **CONTRIBUTING.md:** `FixTheExhibit/CONTRIBUTING.md`<br> |
+| [Yuyang Su](https://github.com/VnKnpwN) | Fullstack Dev, Docs | - Authored README.md<br>- Authored CONTRIBUTING.md<br>- Managed Github operations<br> | - **README.md:** `FixTheExhibit/README.md`<br>- **CONTRIBUTING.md:** `FixTheExhibit/CONTRIBUTING.md`<br> |
 
 ### Visuals Team
 | Name | Role | Contributions | Related Assets |
 |---|---|---|---|
-| If other teams want to link their portfolios, e.g., your instagram if you're an art guy -> follow Yuyang's name format, but replace the link. 🚩 | Example | Exammple | - **Cool cat png:** `FixTheExhibit/assets/cat.png`<br> |
+| If other teams want to link their portfolios, e.g., your instagram if you're an art guy -> follow Yuyang's name format, but replace the link. 🚩 | Example | Example | - **Cool cat png:** `FixTheExhibit/assets/cat.png`<br> |
 
 ### Research Team
-| Name | Role | Contributions | Related (?) |
+| Name | Role | Contributions | Related Research |
 |---|---|---|---|
-| Example | Example | Exammple | Not sure what you'd put here, but if you guys at R-Team can think of anything feel free to add or change things around in this doc & repo architecture - like removing this column or adding a `docs/historicalresearch` |
+| Example | Example | Example | - `data/levels/ancient-egypt` |
 
 ^just follow the table format to add ur contributions. 🚩
 

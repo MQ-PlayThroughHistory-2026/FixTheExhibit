@@ -1,0 +1,99 @@
+/* belt.css
+   Sorting-stage prototype visuals. The conveyor belt / display case /
+   rejection bin here are static placeholders for now - only the box
+   itself is interactive (see js/game/drag.js). Real belt motion and
+   drop-zone detection are later D1 work. */
+
+.stage-area {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  height: 320px;
+  background: var(--color-surface);
+  border: 2px dashed var(--color-text-muted);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.zone-label {
+  position: absolute;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  padding: var(--space-xs) var(--space-sm);
+  pointer-events: none; /* visual context only - must not intercept drag events */
+}
+
+.zone-label--belt {
+  top: var(--space-sm);
+  left: var(--space-sm);
+}
+
+.drop-zones {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-sm);
+  pointer-events: none;
+}
+
+.zone-label--case,
+.zone-label--bin {
+  position: static;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-sm);
+}
+
+.draggable-box {
+  position: absolute;
+  top: 56px;
+  left: 24px;
+  width: 88px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+  color: var(--color-bg);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: grab;
+  user-select: none;
+  /* Without this, touch browsers try to scroll the page as soon as the
+     finger moves, instead of letting pointermove drag the box. */
+  touch-action: none;
+}
+
+.draggable-box.is-dragging {
+  cursor: grabbing;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+}
+
+/* Conveyor belt. A dark band with a row of dots that scrolls left to right
+   at belt speed. js/game/belt.js adds this element to the stage, sets its
+   top and --belt-period-seconds (seconds per 24px dot period) and pauses
+   the animation whenever the belt is paused or stopped. */
+.belt-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 14px;
+  border-radius: 7px;
+  background-color: rgba(0, 0, 0, 0.35);
+  background-image: radial-gradient(circle, var(--color-text-muted) 3px, transparent 3.5px);
+  background-size: 24px 14px;
+  background-repeat: repeat-x;
+  pointer-events: none;
+  animation: belt-scroll var(--belt-period-seconds, 0.5s) linear infinite paused;
+}
+
+@keyframes belt-scroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 24px 0;
+  }
+}
