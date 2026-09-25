@@ -121,11 +121,11 @@
   top: 50%;
   transform: translate(-50%, -50%);
   width: min(720px, 85%);
-  /* Matches assets/ui/info-card.png's proportions. Long clues scroll in
+  /* Matches assets/ui/info-card.avif's proportions. Long clues scroll in
      .arranging-clue-content once max-height is reached. */
   aspect-ratio: 711 / 991;
   max-height: calc(100% - var(--space-md) * 2);
-  background-image: url('../../assets/ui/info-card.png');
+  background-image: url('../../assets/ui/info-card.avif');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   z-index: 10;

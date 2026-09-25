@@ -1,0 +1,251 @@
+/* pause-menu.css
+   The in-game pause button and pause menu. Goes together with
+   js/ui/pause-menu.js. Built on the assets/ui/*.avif art. */
+
+/* Top-right of the viewport, over whichever game screen is showing. */
+.pause-button {
+  position: fixed;
+  top: var(--space-md);
+  right: var(--space-md);
+  z-index: 100;
+  width: clamp(56px, 7vw, 80px);
+  aspect-ratio: 1;
+  padding: 0;
+  min-height: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+.pause-button img,
+.pause-mute img,
+.pause-resume img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.pause-button.hidden,
+.pause-overlay.hidden,
+.pause-action.hidden {
+  display: none;
+}
+
+/* Sizing works on two levels of container queries:
+     - .pause-overlay is a size container, so the panel can size itself
+       (in cqw/cqh) to whatever fits the viewport.
+     - .pause-panel is an inline-size container, so everything inside it
+       is sized in cqw (% of the panel's content width) and the whole menu
+       scales as one piece, keeping the mockup's proportions at any size.
+   Plain % padding can't be used on the panel: it resolves against the
+   overlay's width, which squashed the contents on wide screens. */
+
+/* Below the inactivity timeout (z-index 9999) so that stays reachable. */
+.pause-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  container: pause-overlay / size;
+  display: flex;
+  padding: var(--space-md);
+  background: rgba(0, 0, 0, 0.65);
+  overflow-y: auto;
+}
+
+/* Wide layout (the mockup): label | speaker | slider rows, at the
+   backplate art's own aspect ratio, as big as the viewport allows. */
+.pause-panel {
+  --panel-width: min(880px, 100cqw, 100cqh * 4961 / 4008);
+  container-type: inline-size;
+  width: var(--panel-width);
+  aspect-ratio: 4961 / 4008;
+  margin: auto; /* centres, and stays scrollable from the top if it overflows */
+  /* Keeps the content clear of the frame and its cut corners. */
+  padding: calc(var(--panel-width) * 0.1) calc(var(--panel-width) * 0.11);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* The panel's own cqw would measure the overlay, not itself, so its
+     gap is derived from --panel-width instead (~3% of the content width). */
+  gap: calc(var(--panel-width) * 0.023);
+  background: url('../assets/ui/menu-backplate.avif') center / 100% 100% no-repeat;
+  color: var(--color-bg);
+}
+
+/* Title and row labels share the dark title-card art. */
+.pause-title,
+.pause-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-text);
+  line-height: 1.15;
+  background: url('../assets/ui/menu-titlecard.avif') center / 100% 100% no-repeat;
+}
+
+.pause-title {
+  align-self: center;
+  width: 48cqw;
+  aspect-ratio: 4745 / 2284;
+  margin: 0;
+  font-size: 9.5cqw;
+}
+
+.pause-volume-row {
+  display: grid;
+  grid-template-columns: 27cqw 10cqw 1fr;
+  align-items: center;
+  gap: 3cqw;
+}
+
+.pause-label {
+  aspect-ratio: 4745 / 2284;
+  padding: 0 3cqw;
+  font-weight: 600;
+  font-size: 3.3cqw;
+}
+
+.pause-mute,
+.pause-resume {
+  padding: 0;
+  min-height: 0;
+  aspect-ratio: 1;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* Volume slider: a native range input (keyboard + screen reader support
+   for free) skinned with the track and knob art. Its height is a taller
+   hit area around the thinner track. */
+.pause-slider {
+  --track-height: 4.2cqw;
+  --thumb-size: 8.5cqw;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 10cqw;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  touch-action: none; /* dragging the knob shouldn't scroll the overlay */
+}
+
+.pause-slider:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.pause-slider::-webkit-slider-runnable-track {
+  height: var(--track-height);
+  background: url('../assets/ui/volume-slider.avif') center / 100% 100% no-repeat;
+}
+
+.pause-slider::-moz-range-track {
+  height: var(--track-height);
+  background: url('../assets/ui/volume-slider.avif') center / 100% 100% no-repeat;
+}
+
+.pause-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+  /* Centres the knob on the track. */
+  margin-top: calc((var(--track-height) - var(--thumb-size)) / 2);
+  border: none;
+  background: url('../assets/ui/volume-knob.avif') center / contain no-repeat;
+}
+
+.pause-slider::-moz-range-thumb {
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+  border: none;
+  border-radius: 0;
+  background: url('../assets/ui/volume-knob.avif') center / contain no-repeat;
+}
+
+.pause-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5cqw;
+  margin-top: 1.5cqw;
+}
+
+.pause-resume {
+  width: 14cqw;
+  flex-shrink: 0;
+}
+
+.pause-action {
+  width: 27cqw;
+  aspect-ratio: 4745 / 2284;
+  min-height: 0;
+  padding: 0;
+  background: url('../assets/ui/button.avif') center / 100% 100% no-repeat;
+  border-radius: 0;
+  color: var(--color-bg);
+  font-weight: 600;
+  font-size: 4.6cqw;
+}
+
+.pause-mute:hover,
+.pause-resume:hover,
+.pause-action:hover,
+.pause-button:hover {
+  filter: brightness(1.08);
+}
+
+/* Narrow layout (portrait phones): each label sits on its own line above
+   its speaker + slider, and the panel grows taller than the art's aspect
+   ratio instead of shrinking everything to fit. Everything is sized up
+   relative to the (narrower) panel so it stays tappable. */
+@container pause-overlay (max-width: 600px) {
+  .pause-panel {
+    --panel-width: min(520px, 100cqw);
+    aspect-ratio: auto;
+    padding: calc(var(--panel-width) * 0.15) calc(var(--panel-width) * 0.1);
+    gap: calc(var(--panel-width) * 0.032);
+  }
+
+  .pause-title {
+    width: 70cqw;
+    font-size: 13cqw;
+  }
+
+  .pause-volume-row {
+    grid-template-columns: 14cqw 1fr;
+    gap: 2cqw 4cqw;
+  }
+
+  .pause-label {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 64cqw;
+    aspect-ratio: auto;
+    padding: 2.5cqw 4cqw;
+    font-size: 5.5cqw;
+  }
+
+  .pause-slider {
+    --track-height: 6cqw;
+    --thumb-size: 12cqw;
+    height: 14cqw;
+  }
+
+  .pause-actions {
+    gap: 4cqw;
+    margin-top: 2cqw;
+  }
+
+  .pause-resume {
+    width: 20cqw;
+  }
+
+  .pause-action {
+    width: 34cqw;
+    font-size: 6.5cqw;
+  }
+}

@@ -14,6 +14,7 @@
  */
 
 import { showScreen, wireBackButtons } from './screens.js';
+import { initPauseMenu } from './pause-menu.js';
 
 //remove or rename the imports to the true game once the real Stage 1 (D1) exists
 import { initSortingDemo } from '../game/prototypes/sorting-demo.js';
@@ -135,18 +136,17 @@ function wireMainMenu() {
   });
 }
 
-function wireTutorialAndStub() {
+function wireTutorial() {
   document.getElementById('btn-tutorial-done').addEventListener('click', onTutorialComplete);
-  document.getElementById('btn-stub-main-menu').addEventListener('click', onReturnToMainMenu);
-  document.getElementById('btn-stage1-main-menu').addEventListener('click', onReturnToMainMenu);
-  document.getElementById('btn-dev-arranging-main-menu').addEventListener('click', onReturnToMainMenu);
 }
 
 export async function initMenu() {
   wireBackButtons();
   wireMainMenu();
   wireDifficultyCards();
-  wireTutorialAndStub();
+  wireTutorial();
+  // The pause menu's Quit button is the way back from any game screen.
+  initPauseMenu({ onQuit: onReturnToMainMenu });
 
   try {
     const levels = await loadLevels();

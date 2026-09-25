@@ -22,6 +22,8 @@ export function showScreen(screenId) {
   screens.forEach((el, id) => {
     el.classList.toggle('hidden', id !== screenId);
   });
+  // Lets screen-independent UI (e.g. pause-menu.js) react to navigation.
+  document.dispatchEvent(new CustomEvent('screenchange', { detail: { screenId } }));
 }
 
 /** Wires up any element with [data-target] to call showScreen on click. */

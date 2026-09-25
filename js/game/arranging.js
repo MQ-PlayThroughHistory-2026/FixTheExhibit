@@ -37,9 +37,11 @@ const SLOT_FEEDBACK_MS = 500; // one fade per wrong drop, nothing strobes (NFR05
  * @param {object} options
  * @param {HTMLElement} options.stage  holds the items and the [data-slot] elements
  * @param {(result: { item: ArtefactItem }) => void} [options.onPlaced]
+ * @param {(result: { item: ArtefactItem, slot: HTMLElement }) => void} [options.onMisplaced]
+ *   an artefact was dropped on a slot that isn't its own (not fired for drops outside every slot)
  * @param {(summary: ArrangeSummary) => void} [options.onComplete]
  */
-export function createArranger({ stage, onPlaced, onComplete, revealCorrectSlot = true }) {
+export function createArranger({ stage, onPlaced, onMisplaced, onComplete, revealCorrectSlot = true }) {
   const slots = Array.from(stage.querySelectorAll('[data-slot]'));
   if (slots.length === 0) {
     throw new Error('createArranger needs at least one [data-slot] element inside the stage');
@@ -151,7 +153,10 @@ export function createArranger({ stage, onPlaced, onComplete, revealCorrectSlot 
         if (isOwnSlot) {
           commitPlacement(target, item, under);
         } else {
-          if (under) flashWrongSlot(under);
+          if (under) {
+            flashWrongSlot(under);
+            onMisplaced?.({ item, slot: under });
+          }
           snapBack(target);
         }
       },
