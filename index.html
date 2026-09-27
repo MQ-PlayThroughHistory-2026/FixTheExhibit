@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="styles/arranging.css" />
   <link rel="stylesheet" href="styles/kiosk.css" />
   <link rel="stylesheet" href="styles/kiosk-refresh.css" />
+  <link rel="stylesheet" href="styles/pause-menu.css" />
   <link rel="stylesheet" href="styles/prototypes/sorting-demo.css" />
   <link rel="stylesheet" href="styles/prototypes/arranging-demo.css" />
 </head>
@@ -28,14 +29,14 @@
              and js/game/prototypes/arranging-demo.js when the real
              arranging scene (D2) is built. -->
         <button id="btn-dev-arranging-demo" class="btn-secondary" style="position: relative; overflow: hidden; padding: 0; border: none;">
-          <img src="assets/ui/button.png" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; z-index: 1;" />
+          <img src="assets/ui/button.avif" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; z-index: 1;" />
           <span style="position: relative; z-index: 2; color: black;">[Dev] Arranging Prototype (Easy)</span>
         </button>
         <!-- TEMPORARY - delete together with screen-arranging-prototype
              and js/game/prototypes/arranging-demo.js when the real
              arranging scene (D2) is built. -->
         <button id="btn-dev-arranging-hard-demo" class="btn-secondary" style="position: relative; overflow: hidden; padding: 0; border: none;">
-          <img src="assets/ui/button.png" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; z-index: 1;" />
+          <img src="assets/ui/button.avif" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; z-index: 1;" />
           <span style="position: relative; z-index: 2; color: black;">[Dev] Arranging Prototype (Hard)</span>
         </button>
       </div>
@@ -94,7 +95,7 @@
     </section>
 
     <!-- Placeholder for the real sorting scene (D1/D8 will replace this) -->
-    <section id="screen-game-stub" class="screen hidden">
+    <section id="screen-game-stub" class="screen hidden" data-pausable>
       <h2>Stage 1: Sorting</h2>
       <p>This screen is a placeholder until the sorting scene (D1) and its timer (D8) are built.</p>
       <dl class="summary-box">
@@ -107,14 +108,13 @@
         <dt>Arrangement hint type</dt>
         <dd id="summary-hint-type">-</dd>
       </dl>
-      <button id="btn-stub-main-menu" class="btn-secondary">Return to main menu</button>
     </section>
 
     <!-- TEMPORARY prototype screen - delete together with
          js/game/prototypes/sorting-demo.js when real Stage 1 (D1) work
          starts. See sorting-demo.js's header comment for the full
          checklist. -->
-    <section id="screen-stage1-prototype" class="screen hidden">
+    <section id="screen-stage1-prototype" class="screen hidden" data-pausable>
       <h2>Stage 1 Prototype &mdash; Gold Rush (Easy)</h2>
       <p>Drag each package with a mouse or your finger into the display case or rejection bin.</p>
       <div id="stage-area" class="stage-area">
@@ -131,8 +131,6 @@
         </div>
       </div>
       <p id="sorting-tally" class="sorting-tally"></p>
-      <button id="btn-stage1-restart" class="btn-primary">Restart sorting</button>
-      <button id="btn-stage1-main-menu" class="btn-secondary">Return to main menu</button>
     </section>
 
     <!-- Instructions (FR01) -->
@@ -149,7 +147,7 @@
     <!-- TEMPORARY prototype screen - delete together with
          js/game/prototypes/arranging-demo.js and the [Dev] button on the
          main menu when the real arranging scene (D2) is built. -->
-    <section id="screen-arranging-prototype" class="screen hidden">
+    <section id="screen-arranging-prototype" class="screen hidden" data-pausable>
       <h2 id="arranging-heading">Arranging Prototype &mdash; Gold Rush</h2>
       <p id="arranging-intro">Drag each artefact into its own spot in the display case.</p>
       <div id="arranging-stage" class="stage-area">
@@ -173,10 +171,44 @@
         </div>
       </div>
       <p id="arranging-tally" class="arranging-tally"></p>
-      <button id="btn-arranging-restart" class="btn-primary">Restart arranging</button>
-      <button id="btn-dev-arranging-main-menu" class="btn-secondary">Return to main menu</button>
     </section>
 
+  </div>
+
+  <!-- Pause button + menu (js/ui/pause-menu.js). The button only shows on
+       screens marked data-pausable above. -->
+  <button id="btn-pause" class="pause-button hidden" aria-label="Pause" aria-haspopup="dialog" aria-controls="pause-menu">
+    <img src="assets/ui/pause-button.avif" alt="" />
+  </button>
+
+  <div id="pause-menu" class="pause-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pause-menu-title">
+    <div class="pause-panel">
+      <h2 id="pause-menu-title" class="pause-title">Settings</h2>
+
+      <div class="pause-volume-row">
+        <span id="pause-bgm-label" class="pause-label">Background Music</span>
+        <button type="button" class="pause-mute" data-channel="bgm" aria-label="Mute background music">
+          <img src="assets/ui/menu-volume.avif" alt="" />
+        </button>
+        <input type="range" class="pause-slider" data-channel="bgm" min="0" max="100" step="1" aria-labelledby="pause-bgm-label" />
+      </div>
+
+      <div class="pause-volume-row">
+        <span id="pause-sfx-label" class="pause-label">Sound Effects</span>
+        <button type="button" class="pause-mute" data-channel="sfx" aria-label="Mute sound effects">
+          <img src="assets/ui/menu-volume.avif" alt="" />
+        </button>
+        <input type="range" class="pause-slider" data-channel="sfx" min="0" max="100" step="1" aria-labelledby="pause-sfx-label" />
+      </div>
+
+      <div class="pause-actions">
+        <button type="button" id="btn-pause-resume" class="pause-resume" aria-label="Resume">
+          <img src="assets/ui/resume-button.avif" alt="" />
+        </button>
+        <button type="button" id="btn-pause-restart" class="pause-action">Restart</button>
+        <button type="button" id="btn-pause-quit" class="pause-action">Quit</button>
+      </div>
+    </div>
   </div>
 
   <!-- Timeout Modal -->

@@ -11,10 +11,10 @@
  *   1. Delete this file and styles/prototypes/sorting-demo.css (plus their
  *      folders if empty afterwards, and the stylesheet <link> in index.html).
  *   2. Remove the `screen-stage1-prototype` section from index.html.
- *   3. In js/ui/menu.js, remove the import of initSortingDemo, the
- *      gold-rush/easy special case in enterStage1(), and the
- *      btn-stage1-main-menu listener in wireTutorialAndStub() (it would
- *      throw on a missing element once the screen is gone).
+ *   3. In js/ui/menu.js, remove the import of initSortingDemo and the
+ *      gold-rush/easy special case in enterStage1(). The real scene
+ *      registers its own pause handlers (js/ui/pause-menu.js) the way
+ *      this file does.
  *   4. Build the real scene in js/game/stage1.js instead - that file is
  *      intentionally untouched by this prototype.
  *
@@ -26,6 +26,8 @@ import { createSorter } from '../sorting.js';
 import { createBelt } from '../belt.js';
 import { getLevel, getDifficultyConfig } from '../state.js';
 import { setDragSuspended } from '../drag.js';
+import { registerPauseHandlers } from '../../ui/pause-menu.js';
+import { playSfx } from '../../ui/audio.js';
 
 //const BASE_BELT_SPEED_PX_PER_SEC = 60; // scaled by the difficulty's beltSpeedMultiplier
 const BASE_BELT_SPEED_PX_PER_SEC = 120; // *TEMP ADJUSTED FOR DEMO
@@ -114,6 +116,10 @@ function showCard(title, text, correct) {
   setDragSuspended(true);
 }
 
+function isCardOpen() {
+  return !document.getElementById('sorting-feedback').classList.contains('hidden');
+}
+
 // Hides the feedback card and lets the belt move again.
 function hideCard() {
   document.getElementById('sorting-feedback').classList.add('hidden');
@@ -134,8 +140,20 @@ export async function initSortingDemo() {
 
   if (!wired) {
     document.getElementById('btn-sorting-feedback-close').addEventListener('click', hideCard);
-    document.getElementById('btn-stage1-restart').addEventListener('click', initSortingDemo);
-    document.getElementById('btn-stage1-main-menu').addEventListener('click', () => belt?.stop());
+    registerPauseHandlers('screen-stage1-prototype', {
+      onPause() {
+        belt?.pause();
+        setDragSuspended(true);
+      },
+      // The feedback card holds the belt and drag itself, so leave them held if it's still open.
+      onResume() {
+        if (isCardOpen()) return;
+        belt?.resume();
+        setDragSuspended(false);
+      },
+      onRestart: initSortingDemo,
+      onQuit: () => belt?.stop(),
+    });
     wired = true;
   }
 
@@ -160,6 +178,7 @@ export async function initSortingDemo() {
     stage,
     onReturn: (el) => runBelt.putBack(el),
     onSorted(result) {
+      playSfx(result.correct ? 'correct' : 'incorrect');
       renderTally(sorter.getSummary());
       showCard(
         result.correct ? `Correct, ${result.item.name} sorted` : `Not quite, ${result.item.name}`,

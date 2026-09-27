@@ -20,7 +20,7 @@
  * Reads state.js's arrangementHintType (set by which dev button was used,
  * same as a real difficulty choice would) to decide what an empty slot
  * shows: easy mode keeps the silhouette/label above, hard mode instead
- * shows assets/ui/info-card.png on every slot, and tapping an unfilled
+ * shows assets/ui/info-card.avif on every slot, and tapping an unfilled
  * one opens a popup with the artefact's `riddle` field from
  * artefacts.json (task R9). The popup never shows the artefact's name.
  *
@@ -45,6 +45,8 @@
 import { createArranger } from '../arranging.js';
 import { getLevel, getDifficultyConfig } from '../state.js';
 import { setDragSuspended } from '../drag.js';
+import { registerPauseHandlers } from '../../ui/pause-menu.js';
+import { playSfx } from '../../ui/audio.js';
 
 // Item size never grows past this, so boxes stay a comfortable size on a
 // wide kiosk display. There's no minimum - shrinking is what keeps a large
@@ -219,7 +221,7 @@ function buildSlots(stage, artefacts, layout, hintType, onClueRequested) {
 
       if (hintType === 'riddle') {
         const img = document.createElement('img');
-        img.src = 'assets/ui/info-card.png';
+        img.src = 'assets/ui/info-card.avif';
         img.alt = ''; // decorative - the slot's own aria-label carries the meaning
         img.className = 'clue-card-art';
         slot.appendChild(img);
@@ -383,7 +385,12 @@ export async function initArrangingDemo() {
   if (!wired) {
     document.getElementById('btn-arranging-feedback-close').addEventListener('click', hideFeedback);
     document.getElementById('btn-arranging-clue-close').addEventListener('click', hideCluePopup);
-    document.getElementById('btn-arranging-restart').addEventListener('click', initArrangingDemo);
+    registerPauseHandlers('screen-arranging-prototype', {
+      onPause: () => setDragSuspended(true),
+      // An open clue/blurb popup suspends drag itself, so keep it suspended.
+      onResume: () => setDragSuspended(isPopupOpen()),
+      onRestart: initArrangingDemo,
+    });
     wired = true;
   }
 
@@ -419,11 +426,13 @@ export async function initArrangingDemo() {
     // that would give the answer away for free and skip the clue entirely.
     revealCorrectSlot: hintType !== 'riddle',
     onPlaced({ item }) {
+      playSfx('correct');
       itemEntries = itemEntries.filter((entry) => entry.item.id !== item.id);
       layoutItems(itemEntries, layout);
       renderTally(arranger.getSummary());
       showFeedback(item);
     },
+    onMisplaced: () => playSfx('incorrect'),
     onComplete(summary) {
       document.getElementById('arranging-tally').textContent =
         `All ${summary.total} artefacts placed!`;

@@ -9,9 +9,11 @@
 import { registerScreens } from './ui/screens.js';
 import { initMenu } from './ui/menu.js';
 import { initFullscreenOnFirstInteraction, initStaffExit } from './ui/kiosk.js';
+import { initAudio } from './ui/audio.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   registerScreens();
+  initAudio();
   initMenu();
   initFullscreenOnFirstInteraction();
   initStaffExit();
