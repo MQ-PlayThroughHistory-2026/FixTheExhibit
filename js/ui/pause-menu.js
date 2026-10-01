@@ -35,10 +35,21 @@ const volumeBeforeMute = { bgm: null, sfx: null };
 
 let activeScreenId = null;
 let isOpen = false;
+let isBlocked = false;
 let quitToMainMenu = () => {};
 
 export function registerPauseHandlers(screenId, handlers) {
   handlersByScreen.set(screenId, handlers);
+}
+
+/**
+ * Hides the pause button (and ignores Escape) while another popup owns the
+ * screen, e.g. the stage transition (js/ui/stage-transition.js).
+ */
+export function setPauseBlocked(blocked) {
+  isBlocked = blocked;
+  if (blocked && isOpen) hideMenu();
+  syncPauseButton();
 }
 
 function activeHandlers() {
@@ -47,6 +58,10 @@ function activeHandlers() {
 
 function isPausableScreen(screenId) {
   return document.getElementById(screenId)?.hasAttribute('data-pausable') ?? false;
+}
+
+function syncPauseButton() {
+  document.getElementById('btn-pause').classList.toggle('hidden', isBlocked || !isPausableScreen(activeScreenId));
 }
 
 // Syncs one channel's slider position and speaker icon to its current volume.
@@ -76,7 +91,7 @@ function toggleMute(channel) {
 }
 
 function openMenu() {
-  if (isOpen || !isPausableScreen(activeScreenId)) return;
+  if (isOpen || isBlocked || !isPausableScreen(activeScreenId)) return;
   isOpen = true;
   activeHandlers().onPause?.();
   Object.keys(CHANNELS).forEach(renderChannel);
@@ -90,7 +105,7 @@ function openMenu() {
 function hideMenu() {
   isOpen = false;
   document.getElementById('pause-menu').classList.add('hidden');
-  document.getElementById('btn-pause').classList.toggle('hidden', !isPausableScreen(activeScreenId));
+  syncPauseButton();
 }
 
 function resume() {
@@ -118,7 +133,7 @@ function onScreenChange(event) {
   activeScreenId = event.detail.screenId;
   // Leaving a screen by any route (e.g. Quit) always closes the menu.
   if (isOpen) hideMenu();
-  document.getElementById('btn-pause').classList.toggle('hidden', !isPausableScreen(activeScreenId));
+  syncPauseButton();
 }
 
 function wireVolumeControls() {
