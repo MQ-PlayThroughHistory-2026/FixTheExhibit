@@ -1,12 +1,11 @@
 /* arranging.css
-   States toggled by js/game/arranging.js. Stage sizing/layout for the
-   prototype stays in prototypes/arranging-demo.css. Tints are a single
-   fade, nothing strobes (NFR05).
+   States toggled by js/game/arranging.js. Stage sizing/layout is in
+   arranging-scene.css. Tints are a single fade, nothing strobes (NFR05).
 
    Slot/item box sizes read --arranging-slot-size / --arranging-item-size,
-   set on the stage element by whatever screen builds the grid (currently
-   arranging-demo.js, computed responsively from stage width). The pixel
-   fallbacks here only apply if nothing sets those variables. */
+   set on the stage element by arranging-scene.js (computed responsively
+   from stage size). The pixel fallbacks here only apply if nothing sets
+   those variables. */
 
 .silhouette-slot {
   position: absolute;
@@ -35,7 +34,7 @@
   transition: opacity var(--transition-base), filter var(--transition-base);
 }
 
-/* Easy mode only - img.silhouette-img, set in arranging-demo.js. */
+/* Easy mode only - img.silhouette-img, set in arranging-scene.js. */
 .silhouette-slot img.silhouette-img {
   /* Turns image black and adds an outline effect */
   filter: brightness(0) drop-shadow(0 0 3px #ffffff);
@@ -50,14 +49,14 @@
   opacity: 0;
 }
 
-/* Hard mode only - img.clue-card-art, set in arranging-demo.js. */
+/* Hard mode only - img.riddle-card-art, set in arranging-scene.js. */
 .silhouette-slot.is-clue-slot:not(.is-filled) {
   cursor: pointer;
 }
 
 /* :not(.is-clue-open) stops the hover state fighting the fade to 0 below. */
-.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):hover img.clue-card-art,
-.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):focus-visible img.clue-card-art {
+.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):hover img.riddle-card-art,
+.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):focus-visible img.riddle-card-art {
   opacity: 0.8;
 }
 
@@ -67,7 +66,7 @@
 }
 
 /* Hide the slot's own card while its clue popup is open. */
-.silhouette-slot.is-clue-open img.clue-card-art {
+.silhouette-slot.is-clue-open img.riddle-card-art {
   opacity: 0;
 }
 

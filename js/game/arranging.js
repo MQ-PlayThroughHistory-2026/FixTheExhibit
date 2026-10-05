@@ -1,7 +1,7 @@
 /**
  * arranging.js
  *
- * Stage 2 arranging (D2). Each artefact has exactly one correct
+ * Arranging phase mechanics (D2). Each artefact has exactly one correct
  * silhouette slot. A correct drop snaps the artefact into place and
  * locks it there for good; a wrong drop (or a drop outside any slot)
  * snaps back to where it was picked up and stays draggable.
@@ -11,7 +11,7 @@
  * revealCorrectSlot (default true) controls the drag-over glow: true glows
  * only the artefact's own slot as a hint (easy mode); false glows whichever
  * slot is under the artefact regardless of correctness, so hovering can't
- * be used to find the right one (hard mode - see arranging-demo.js).
+ * be used to find the right one (hard mode - see arranging-scene.js).
  */
 
 import { makeDraggable } from './drag.js';

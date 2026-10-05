@@ -14,8 +14,9 @@
   <link rel="stylesheet" href="styles/kiosk-refresh.css" />
   <link rel="stylesheet" href="styles/pause-menu.css" />
   <link rel="stylesheet" href="styles/stage-transition.css" />
-  <link rel="stylesheet" href="styles/prototypes/sorting-demo.css" />
-  <link rel="stylesheet" href="styles/prototypes/arranging-demo.css" />
+  <link rel="stylesheet" href="styles/info-card.css" />
+  <link rel="stylesheet" href="styles/sorting-scene.css" />
+  <link rel="stylesheet" href="styles/arranging-scene.css" />
 </head>
 <body>
   <div id="app">
@@ -26,20 +27,6 @@
       <div class="menu-actions">
         <button id="btn-start" class="btn-primary">Start</button>
         <button id="btn-instructions" class="btn-secondary">Instructions</button>
-        <!-- TEMPORARY - delete together with screen-arranging-prototype
-             and js/game/prototypes/arranging-demo.js when the real
-             arranging scene (D2) is built. -->
-        <button id="btn-dev-arranging-demo" class="btn-secondary" style="position: relative; overflow: hidden; padding: 0; border: none;">
-          <img src="assets/ui/button.avif" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; z-index: 1;" />
-          <span style="position: relative; z-index: 2; color: black;">[Dev] Arranging Prototype (Easy)</span>
-        </button>
-        <!-- TEMPORARY - delete together with screen-arranging-prototype
-             and js/game/prototypes/arranging-demo.js when the real
-             arranging scene (D2) is built. -->
-        <button id="btn-dev-arranging-hard-demo" class="btn-secondary" style="position: relative; overflow: hidden; padding: 0; border: none;">
-          <img src="assets/ui/button.avif" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; z-index: 1;" />
-          <span style="position: relative; z-index: 2; color: black;">[Dev] Arranging Prototype (Hard)</span>
-        </button>
       </div>
 
       <!-- Exit Fullscreen function -->
@@ -95,40 +82,22 @@
       <button id="btn-tutorial-done" class="btn-primary">Got it, let's start</button>
     </section>
 
-    <!-- Placeholder for the real sorting scene (D1/D8 will replace this) -->
-    <section id="screen-game-stub" class="screen hidden" data-pausable>
-      <h2>Stage 1: Sorting</h2>
-      <p>This screen is a placeholder until the sorting scene (D1) and its timer (D8) are built.</p>
-      <dl class="summary-box">
-        <dt>Level</dt>
-        <dd id="summary-level">-</dd>
-        <dt>Difficulty</dt>
-        <dd id="summary-difficulty">-</dd>
-        <dt>Stage 1 timer</dt>
-        <dd id="summary-timer">-</dd>
-        <dt>Arrangement hint type</dt>
-        <dd id="summary-hint-type">-</dd>
-      </dl>
-    </section>
-
-    <!-- TEMPORARY prototype screen - delete together with
-         js/game/prototypes/sorting-demo.js when real Stage 1 (D1) work
-         starts. See sorting-demo.js's header comment for the full
-         checklist. -->
-    <section id="screen-stage1-prototype" class="screen hidden" data-pausable>
-      <h2>Stage 1 Prototype &mdash; Gold Rush (Easy)</h2>
-      <p>Drag each package with a mouse or your finger into the display case or rejection bin.</p>
+    <!-- Sorting phase (D1), built by js/game/sorting-scene.js -->
+    <section id="screen-sorting" class="screen hidden" data-pausable>
+      <h2 id="sorting-heading"></h2>
+      <p>Drag each package into the display case if it belongs in the exhibit, or the rejection bin if it doesn't.</p>
       <div id="stage-area" class="stage-area">
-        <span class="zone-label zone-label--belt">Sorting demo</span>
         <div class="drop-zones">
           <span class="zone-label zone-label--case" data-zone="display-case">Display case</span>
           <span class="zone-label zone-label--bin" data-zone="rejection-bin">Rejection bin</span>
         </div>
-        <!-- Stand-in for the D3 information card, filled by sorting-demo.js -->
-        <div id="sorting-feedback" class="sorting-feedback hidden" role="status" aria-live="polite">
-          <strong id="sorting-feedback-title"></strong>
-          <p id="sorting-feedback-text"></p>
-          <button id="btn-sorting-feedback-close" class="btn-secondary">Close</button>
+        <!-- Information card (D3), shown after each drop -->
+        <div id="sorting-feedback" class="info-card sorting-feedback hidden" role="status" aria-live="polite">
+          <div class="info-card-content">
+            <strong id="sorting-feedback-title" class="info-card-title"></strong>
+            <p id="sorting-feedback-text"></p>
+            <button id="btn-sorting-feedback-close" class="btn-secondary">Close</button>
+          </div>
         </div>
       </div>
       <p id="sorting-tally" class="sorting-tally"></p>
@@ -145,27 +114,24 @@
       <button class="btn-back" data-target="screen-main-menu">&larr; Back</button>
     </section>
 
-    <!-- TEMPORARY prototype screen - delete together with
-         js/game/prototypes/arranging-demo.js and the [Dev] button on the
-         main menu when the real arranging scene (D2) is built. -->
-    <section id="screen-arranging-prototype" class="screen hidden" data-pausable>
-      <h2 id="arranging-heading">Arranging Prototype &mdash; Gold Rush</h2>
-      <p id="arranging-intro">Drag each artefact into its own spot in the display case.</p>
+    <!-- Arranging phase (D2), built by js/game/arranging-scene.js -->
+    <section id="screen-arranging" class="screen hidden" data-pausable>
+      <h2 id="arranging-heading"></h2>
+      <p id="arranging-intro"></p>
       <div id="arranging-stage" class="stage-area">
-        <!-- Stand-in for the D4 information card, filled by arranging-demo.js -->
-        <div id="arranging-feedback" class="arranging-feedback hidden" role="status" aria-live="polite">
-          <img id="arranging-feedback-image" class="arranging-feedback-image hidden" alt="" />
-          <div class="arranging-feedback-content">
-            <strong id="arranging-feedback-title"></strong>
+        <!-- Information card (D4), shown after each correct placement -->
+        <div id="arranging-feedback" class="info-card arranging-feedback hidden" role="status" aria-live="polite">
+          <div class="info-card-content arranging-feedback-content">
+            <img id="arranging-feedback-image" class="arranging-feedback-image hidden" alt="" />
+            <strong id="arranging-feedback-title" class="info-card-title"></strong>
             <p id="arranging-feedback-text"></p>
             <button id="btn-arranging-feedback-close" class="btn-secondary">Close</button>
           </div>
         </div>
-        <!-- Hard-mode clue popup, stand-in for the D4 information card.
-             Opened by tapping an empty slot's info card. -->
-        <div id="arranging-clue" class="arranging-clue hidden" role="status" aria-live="polite">
-          <div class="arranging-clue-content">
-            <strong>Clue</strong>
+        <!-- Hard-mode riddle popup, opened by tapping an empty slot's riddle card -->
+        <div id="arranging-clue" class="info-card arranging-clue hidden" role="status" aria-live="polite">
+          <div class="info-card-content arranging-clue-content">
+            <strong class="info-card-title">Clue</strong>
             <p id="arranging-clue-text"></p>
             <button id="btn-arranging-clue-close" class="btn-secondary">Close</button>
           </div>

@@ -1,52 +1,35 @@
 /**
- * arranging-demo.js
+ * arranging-scene.js
  *
- * TEMPORARY. Loads the current level's real artefacts.json - fillers never
- * reach the arranging stage, they're rejected during sorting, so this only
- * reads artefacts.json, not fillers.json - and wires them to
- * js/game/arranging.js. Reachable directly from a temporary main-menu
- * button so arranging can be tried without going through the full
- * level -> difficulty -> tutorial -> sorting flow first.
+ * The arranging phase (D2) for js/game/level.js. Wires the level's
+ * artefacts - fillers never reach arranging, they're rejected during
+ * sorting - to arranging.js.
  *
- * Renders each artefact's real `image` if the field is present, falling
- * back to a plain labelled box if it's missing OR the image fails to load.
- * There are no real image assets yet, so every artefact currently falls
- * back to a box - that fallback is what makes this safe to run today.
+ * Renders each artefact's `image` if the field is present, falling back to
+ * a plain labelled box if it's missing or the image fails to load.
  *
- * Silhouette slots are plain labelled boxes ("Spot 1", "Spot 2"...), not
- * real silhouette artwork - that's a Visual Arts task (VA10). The slot
- * label never reveals which artefact belongs there.
+ * Reads settings.arrangementHintType (from the chosen difficulty, see
+ * state.js) to decide what an empty slot shows: easy mode shows the
+ * artefact's silhouette (or a "Spot N" label until silhouette art exists,
+ * VA10), hard mode shows assets/ui/riddle.avif on every slot, and tapping
+ * an unfilled one opens the riddle popup with the artefact's `riddle`
+ * field (task R9). Neither ever reveals the artefact's name.
  *
- * Reads state.js's arrangementHintType (set by which dev button was used,
- * same as a real difficulty choice would) to decide what an empty slot
- * shows: easy mode keeps the silhouette/label above, hard mode instead
- * shows assets/ui/info-card.avif on every slot, and tapping an unfilled
- * one opens a popup with the artefact's `riddle` field from
- * artefacts.json (task R9). The popup never shows the artefact's name.
- *
- * The feedback panel on correct placement is a stand-in for the D4
- * information card, same as sorting-feedback stands in for D3. It shows
- * item.blurb (and item.image, hidden if absent/broken - true for every
- * current artefact), so this only looks fully populated once Research and
- * Visual Arts have written those fields in.
+ * A correct placement opens the information card (#arranging-feedback)
+ * with item.image (hidden if absent or broken) and item.blurb.
  *
  * The stage never grows to fit its content, at any screen size - its
- * height comes from arranging-demo.css alone. getLayout() below always
+ * height comes from sizeStageToViewport(). getLayout() below always
  * shrinks the artefact/slot boxes (and, past a certain count, adds more
  * rows within that fixed height) to fit whatever the stage's current
  * width and height are; a level with 20+ artefacts fits by getting
  * smaller, not by growing the page into a long scroll.
- *
- * Goes together with: the temporary menu button in index.html, the
- * screen-arranging-prototype section, and this file's import in menu.js.
- * Delete all of it together when the real arranging scene (D2) is built.
  */
 
-import { createArranger } from '../arranging.js';
-import { getLevel, getDifficultyConfig } from '../state.js';
-import { setDragSuspended } from '../drag.js';
-import { registerPauseHandlers } from '../../ui/pause-menu.js';
-import { playSfx } from '../../ui/audio.js';
+import { createArranger } from './arranging.js';
+import { setDragSuspended } from './drag.js';
+import { registerPauseHandlers } from '../ui/pause-menu.js';
+import { playSfx } from '../ui/audio.js';
 
 // Item size never grows past this, so boxes stay a comfortable size on a
 // wide kiosk display. There's no minimum - shrinking is what keeps a large
@@ -58,13 +41,11 @@ const SLOT_ITEM_SIZE_DIFF_PX = 4;
 
 // Below this stage width, layout switches to the tighter COMPACT spacing
 // so small boxes don't lose most of their space to gaps and padding.
-// Keep in sync with arranging-demo.css's
-// max-width:600px breakpoint for the feedback card's image placement.
 const COMPACT_WIDTH_PX = 600;
 const ROOMY_SPACING = { padding: 24, gap: 24, sectionGap: 32 };
 const COMPACT_SPACING = { padding: 12, gap: 8, sectionGap: 16 };
 
-// Bounds for sizeStageToViewport(). arranging-demo.css's height:clamp(...)
+// Bounds for sizeStageToViewport(). arranging-scene.css's height:clamp(...)
 // mirrors these as the fallback before JS runs.
 const STAGE_HEIGHT_MIN_PX = 320;
 const STAGE_HEIGHT_MAX_PX = 760;
@@ -77,6 +58,8 @@ let currentResizeHandler = null;
 let settleTimeoutId = null;
 // The slot the clue popup is currently open for.
 let openClueSlot = null;
+// The ctx from level.js for the current run, kept so restarting reuses it.
+let ctx = null;
 
 // Returns a shuffled copy of the list.
 function shuffle(list) {
@@ -102,15 +85,6 @@ function gridPosition(index, cols, sizePx, gapPx, topPx, paddingPx) {
     left: col * (sizePx + gapPx) + paddingPx,
     top: topPx + row * (sizePx + gapPx),
   };
-}
-
-async function loadArtefacts() {
-  const level = getLevel() ?? 'gold-rush';
-  const response = await fetch(`data/levels/${level}/artefacts.json`);
-  if (!response.ok) {
-    throw new Error(`Failed to load artefacts.json for "${level}": ${response.status}`);
-  }
-  return response.json();
 }
 
 // Finds the column count that allows the biggest boxes while the slot grid
@@ -190,7 +164,7 @@ function wireClueSlot(slot, item, onClueRequested) {
   slot.setAttribute('role', 'button');
   slot.tabIndex = 0;
   // Doesn't name the artefact, or it would give the answer away.
-  slot.setAttribute('aria-label', 'View clue for this spot');
+  slot.setAttribute('aria-label', 'Read the riddle for this spot');
 
   const activate = () => {
     // No clue once the slot is filled (is-filled is set by arranging.js).
@@ -209,7 +183,7 @@ function wireClueSlot(slot, item, onClueRequested) {
 
 // One labelled slot per artefact, in data order (not shuffled) so the
 // display case layout stays stable across restarts. hintType picks what
-// an empty slot shows: 'riddle' (hard mode) gets a clickable info card
+// an empty slot shows: 'riddle' (hard mode) gets a clickable riddle card
 // wired through onClueRequested instead of easy mode's silhouette/label.
 function buildSlots(stage, artefacts, layout, hintType, onClueRequested) {
   artefacts.forEach((item, i) => {
@@ -221,9 +195,9 @@ function buildSlots(stage, artefacts, layout, hintType, onClueRequested) {
 
       if (hintType === 'riddle') {
         const img = document.createElement('img');
-        img.src = 'assets/ui/info-card.avif';
+        img.src = 'assets/ui/riddle.avif';
         img.alt = ''; // decorative - the slot's own aria-label carries the meaning
-        img.className = 'clue-card-art';
+        img.className = 'riddle-card-art';
         slot.appendChild(img);
         wireClueSlot(slot, item, onClueRequested);
       } else if (item.image) {
@@ -366,8 +340,14 @@ function renderTally(summary) {
     `Placed ${summary.placed} / ${summary.total}`;
 }
 
-/** Builds a fresh arranging stage. Safe to call again, it starts over. */
-export async function initArrangingDemo() {
+/**
+ * Builds a fresh arranging stage. Safe to call again, it starts over.
+ *
+ * @param {object} runCtx  { level, settings, onNext } from js/game/level.js
+ */
+export function initArrangingScene(runCtx) {
+  ctx = runCtx;
+  const { level, settings } = ctx;
   const stage = document.getElementById('arranging-stage');
 
   // Clean up previous event listeners on re-init
@@ -385,35 +365,23 @@ export async function initArrangingDemo() {
   if (!wired) {
     document.getElementById('btn-arranging-feedback-close').addEventListener('click', hideFeedback);
     document.getElementById('btn-arranging-clue-close').addEventListener('click', hideCluePopup);
-    registerPauseHandlers('screen-arranging-prototype', {
+    registerPauseHandlers('screen-arranging', {
       onPause: () => setDragSuspended(true),
       // An open clue/blurb popup suspends drag itself, so keep it suspended.
       onResume: () => setDragSuspended(isPopupOpen()),
-      onRestart: initArrangingDemo,
+      onRestart: () => initArrangingScene(ctx),
     });
     wired = true;
   }
 
-  const difficultyConfig = getDifficultyConfig();
-  const hintType = difficultyConfig?.arrangementHintType ?? 'silhouette';
-  document.getElementById('arranging-heading').textContent =
-    `Arranging Prototype — Gold Rush (${difficultyConfig?.label ?? 'Easy'})`;
+  const hintType = settings.arrangementHintType;
+  document.getElementById('arranging-heading').textContent = level.name;
   document.getElementById('arranging-intro').textContent =
     hintType === 'riddle'
-      ? "Tap a spot's card for a clue about which artefact belongs there, then drag the matching artefact into place."
+      ? 'Tap a riddle card to work out which artefact belongs there, then drag that artefact into place.'
       : 'Drag each artefact into its own spot in the display case.';
 
-  let artefacts;
-  try {
-    artefacts = await loadArtefacts();
-  } catch (err) {
-    console.error(err);
-    const errorEl = document.createElement('p');
-    errorEl.textContent = 'Artefacts could not be loaded. Check the console for details.';
-    stage.appendChild(errorEl);
-    return;
-  }
-
+  const { artefacts } = level;
   let layout = getLayout(stage, artefacts.length);
   applyLayout(stage, layout);
   buildSlots(stage, artefacts, layout, hintType, showCluePopup);

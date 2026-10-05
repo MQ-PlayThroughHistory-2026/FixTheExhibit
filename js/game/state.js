@@ -9,10 +9,13 @@
  * resets everything, which matches the game's kiosk-style reset-on-idle
  * behaviour.
  *
- * Difficulty adjusts gameplay variables - currently just the Stage 1
- * (sorting) timer, per Development Team task D6. D8 (sorting-scene timer)
- * should read stage1TimerSeconds from getDifficultyConfig() rather than
- * hardcoding a duration.
+ * Difficulty settings come in two layers (task D6):
+ *   - DIFFICULTY_CONFIG below: what a difficulty means everywhere (label,
+ *     description, arrangement hint type) plus default tuning numbers.
+ *   - data/levels/<level-id>/config.json: per-level overrides of the tuning
+ *     numbers (sorting timer, belt speed) for each difficulty.
+ * getLevelSettings() merges the two. Phases should read their numbers from
+ * there rather than hardcoding them.
  */
 
 export const DIFFICULTIES = Object.freeze({
@@ -25,17 +28,18 @@ const DIFFICULTY_CONFIG = {
     label: 'Easy',
     description:
       'A longer timer and a slower conveyor belt. Silhouettes guide artefact placement.',
-    stage1TimerSeconds: 90,
-    beltSpeedMultiplier: 0.75,
     arrangementHintType: 'silhouette',
+    // Defaults, used when a level's config.json leaves a value out.
+    sortingTimerSeconds: 90,
+    beltSpeedPxPerSec: 90,
   },
   [DIFFICULTIES.HARD]: {
     label: 'Hard',
     description:
       'A shorter timer and a faster conveyor belt. Riddles and clues guide artefact placement.',
-    stage1TimerSeconds: 45,
-    beltSpeedMultiplier: 1.25,
     arrangementHintType: 'riddle',
+    sortingTimerSeconds: 45,
+    beltSpeedPxPerSec: 150,
   },
 };
 
@@ -68,8 +72,16 @@ export function getDifficultyConfig(difficulty = state.difficulty) {
   return DIFFICULTY_CONFIG[difficulty] ?? null;
 }
 
-export function getStage1TimerSeconds() {
-  return getDifficultyConfig()?.stage1TimerSeconds ?? null;
+/**
+ * The difficulty's settings with the level's config.json overrides applied.
+ *
+ * @param {object} levelConfig  parsed config.json, keyed by difficulty
+ * @param {string} [difficulty]
+ */
+export function getLevelSettings(levelConfig, difficulty = state.difficulty) {
+  const base = getDifficultyConfig(difficulty);
+  if (!base) return null;
+  return { ...base, ...levelConfig?.[difficulty] };
 }
 
 export function hasSeenTutorial() {

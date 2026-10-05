@@ -1,0 +1,39 @@
+/* sorting-scene.css
+   Layout for the sorting screen (js/game/sorting-scene.js). Drop-zone and
+   package states are in sorting.css, the belt in belt.css. */
+
+/* Room for two rows of packages above the zones. */
+#screen-sorting .stage-area {
+  height: 400px;
+}
+
+@media (max-width: 600px) {
+  #screen-sorting .stage-area {
+    height: 500px;
+  }
+}
+
+.stage-area .package {
+  font-size: 0.8rem;
+  line-height: 1.2;
+  text-align: center;
+  padding: var(--space-xs);
+}
+
+.sorting-tally {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* Information card, filling the stage height so opening it never moves the packages. */
+.sorting-feedback {
+  height: calc(100% - var(--space-md) * 2);
+}
+
+.sorting-feedback.is-correct .info-card-title {
+  color: color-mix(in srgb, var(--color-easy) 75%, #000);
+}
+
+.sorting-feedback.is-incorrect .info-card-title {
+  color: color-mix(in srgb, var(--color-hard) 85%, #000);
+}

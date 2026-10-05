@@ -1,8 +1,6 @@
 /* belt.css
-   Sorting-stage prototype visuals. The conveyor belt / display case /
-   rejection bin here are static placeholders for now - only the box
-   itself is interactive (see js/game/drag.js). Real belt motion and
-   drop-zone detection are later D1 work. */
+   Shared stage box, drop-zone labels, draggable boxes and the conveyor
+   belt (js/game/belt.js). Drop-zone states are in sorting.css. */
 
 .stage-area {
   position: relative;
@@ -21,11 +19,6 @@
   color: var(--color-text-muted);
   padding: var(--space-xs) var(--space-sm);
   pointer-events: none; /* visual context only - must not intercept drag events */
-}
-
-.zone-label--belt {
-  top: var(--space-sm);
-  left: var(--space-sm);
 }
 
 .drop-zones {

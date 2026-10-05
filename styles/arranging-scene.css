@@ -1,0 +1,73 @@
+/* arranging-scene.css
+   Layout for the arranging screen (js/game/arranging-scene.js). Slot and
+   artefact states are in arranging.css, the popup card art in
+   info-card.css. */
+
+/* Arranging needs more room than #app's default 960px cap, so widen #app
+   only while this screen is showing. Browsers without :has() keep the
+   default max-width. */
+#app:has(#screen-arranging:not(.hidden)) {
+  max-width: min(1800px, 96vw);
+}
+
+#screen-arranging .stage-area {
+  position: relative; /* Ensures absolute children position relative to stage */
+  /* Fixed height so the stage never grows with the artefact count -
+     getLayout() in arranging-scene.js shrinks the boxes to fit instead.
+     Overridden by sizeStageToViewport() once JS runs. */
+  height: clamp(320px, 68vh, 760px);
+  width: 100%;
+  max-width: 100%; /* overrides belt.css's 640px cap, shared via .stage-area */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Labels inside the boxes shrink along with them. */
+.arranging-item,
+.silhouette-slot {
+  font-size: clamp(0.55rem, calc(var(--arranging-item-size, 88px) * 0.2), 0.8rem);
+  line-height: 1.1;
+  text-align: center;
+}
+
+.arranging-item {
+  padding: 2px;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.arranging-tally {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* Information card. Height-led so it keeps the card art's proportions,
+   capped so it doesn't tower over the stage on a tall kiosk display.
+   arranging-scene.js's capPopupToStage() also caps it to the stage. */
+.arranging-feedback {
+  height: min(calc(100% - var(--space-md) * 2), 640px);
+}
+
+/* Shrinks on a short card, leaving the room to the blurb. */
+.arranging-feedback-image {
+  width: 120px;
+  height: 120px;
+  min-height: 48px;
+  flex-shrink: 1;
+  object-fit: contain;
+}
+
+.arranging-feedback-image.hidden {
+  display: none;
+}
+
+/* Hard-mode riddle popup: the same card on the riddle art, sized bigger
+   than a slot's own riddle card so opening it reads as picking it up. */
+.arranging-clue {
+  width: min(640px, 85%);
+  /* Matches assets/ui/riddle.avif's proportions. */
+  aspect-ratio: 1281 / 966;
+  background-image: url('../assets/ui/riddle.avif');
+  /* Keeps the text on the front sheet of the stack. */
+  padding: var(--space-lg) var(--space-xl);
+}

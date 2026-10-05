@@ -1,0 +1,10 @@
+{
+  "easy": {
+    "sortingTimerSeconds": 90,
+    "beltSpeedPxPerSec": 90
+  },
+  "hard": {
+    "sortingTimerSeconds": 45,
+    "beltSpeedPxPerSec": 150
+  }
+}

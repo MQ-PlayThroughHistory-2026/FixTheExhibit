@@ -1,7 +1,7 @@
 /**
  * belt.js
  *
- * Conveyor belt for Stage 1 (task D1). Moves packages left to right along a
+ * Conveyor belt for the sorting phase (task D1). Moves packages left to right along a
  * lane inside the stage, feeds them in from off-screen left with random
  * gaps, and sends anything that leaves on the right back to the queue on
  * the left, so unsorted packages keep coming round. Draws the belt as a

@@ -1,63 +1,27 @@
 /**
- * sorting-demo.js
+ * sorting-scene.js
  *
- * TEMPORARY. Loads the selected level's packages from data/levels/<id>/
- * artefacts.json and fillers.json, puts them on the conveyor belt
- * (js/game/belt.js) on the Stage 1 prototype screen and wires them to
- * js/game/sorting.js, so sorting can be tried from the menu flow before the
- * real Stage 1 (js/game/stage1.js) exists.
- *
- * When someone starts building the real sorting scene:
- *   1. Delete this file and styles/prototypes/sorting-demo.css (plus their
- *      folders if empty afterwards, and the stylesheet <link> in index.html).
- *   2. Remove the `screen-stage1-prototype` section from index.html.
- *   3. In js/ui/menu.js, remove the import of initSortingDemo and the
- *      gold-rush/easy special case in enterStage1(). The real scene
- *      registers its own pause handlers (js/ui/pause-menu.js) the way
- *      this file does.
- *   4. Build the real scene in js/game/stage1.js instead - that file is
- *      intentionally untouched by this prototype.
- *
- * js/game/drag.js, sorting.js and belt.js are NOT part of this cleanup -
- * they are generic, reusable helpers the real scene will use.
+ * The sorting phase (D1) for js/game/level.js. Puts the level's artefacts
+ * and fillers on the conveyor belt (belt.js) and wires them to sorting.js.
+ * Each drop opens the information card (#sorting-feedback) with the item's
+ * fun fact, holding the belt until it's closed.
  */
 
-import { createSorter } from '../sorting.js';
-import { createBelt } from '../belt.js';
-import { getLevel, getDifficultyConfig } from '../state.js';
-import { setDragSuspended } from '../drag.js';
-import { registerPauseHandlers } from '../../ui/pause-menu.js';
-import { playSfx } from '../../ui/audio.js';
-import { showScreen } from '../../ui/screens.js';
-import { showStageTransition } from '../../ui/stage-transition.js';
-import { initArrangingDemo } from './arranging-demo.js';
+import { createSorter } from './sorting.js';
+import { createBelt } from './belt.js';
+import { setDragSuspended } from './drag.js';
+import { registerPauseHandlers } from '../ui/pause-menu.js';
+import { playSfx } from '../ui/audio.js';
+import { showStageTransition } from '../ui/stage-transition.js';
 
-//const BASE_BELT_SPEED_PX_PER_SEC = 60; // scaled by the difficulty's beltSpeedMultiplier
-const BASE_BELT_SPEED_PX_PER_SEC = 120; // *TEMP ADJUSTED FOR DEMO
 const BELT_TO_ZONES_GAP_PX = 40; // space between the belt line and the top of the drop zones
 
 let wired = false;
 let belt = null;
+// The ctx from level.js for the current run, kept so restarting reuses it.
+let ctx = null;
 // Set once every package is sorted; the transition opens when the last card closes.
 let completedSummary = null;
-
-// Fetches one JSON file, throwing on a non-OK response.
-async function loadJson(url) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Failed to load ${url}: ${response.status}`);
-  }
-  return response.json();
-}
-
-// Loads the level's artefacts and fillers as one list of package items.
-async function loadLevelItems(levelId) {
-  const [artefacts, fillers] = await Promise.all([
-    loadJson(`data/levels/${levelId}/artefacts.json`),
-    loadJson(`data/levels/${levelId}/fillers.json`),
-  ]);
-  return [...artefacts, ...fillers];
-}
 
 // Returns a shuffled copy of the list.
 function shuffle(list) {
@@ -70,13 +34,13 @@ function shuffle(list) {
 }
 
 // Creates the belt for this run, its band sitting a little above the drop zones.
-function createStageBelt(stage) {
+function createStageBelt(stage, speedPxPerSec) {
   const laneTop = stage.querySelector('.drop-zones').offsetTop - BELT_TO_ZONES_GAP_PX;
-  return createBelt({
-    stage,
-    laneTop,
-    speedPxPerSec: BASE_BELT_SPEED_PX_PER_SEC * (getDifficultyConfig()?.beltSpeedMultiplier ?? 1),
-  });
+  return createBelt({ stage, laneTop, speedPxPerSec });
+}
+
+function restart() {
+  initSortingScene(ctx);
 }
 
 // Creates one element per item, puts it on the belt and registers it with the sorter.
@@ -86,7 +50,7 @@ function spawnPackages(stage, items, sorter, runBelt) {
   items.forEach((item) => {
     const el = document.createElement('div');
     el.className = 'draggable-box package';
-    
+
     if (item.image) {
       const img = document.createElement('img');
       img.src = item.image;
@@ -133,17 +97,13 @@ function hideCard() {
   if (completedSummary) showSortingComplete(completedSummary);
 }
 
-// Offers moving on to arranging, sorting again, or going back to the main menu.
+// Offers moving on to the next phase, sorting again, or going back to the main menu.
 function showSortingComplete(summary) {
   showStageTransition({
     title: 'Well Done!',
     message: `You sorted ${summary.correct} of ${summary.total} packages correctly. Next up: arranging the display case.`,
-    onNext() {
-      showScreen('screen-arranging-prototype');
-      // After showScreen so the stage has a width to lay artefacts out in.
-      initArrangingDemo();
-    },
-    onRestart: initSortingDemo,
+    onNext: ctx.onNext,
+    onRestart: restart,
     onExit: () => belt?.stop(),
   });
 }
@@ -154,14 +114,20 @@ function renderTally(summary) {
     `Sorted ${summary.sorted} / ${summary.total} · Correct ${summary.correct} · Incorrect ${summary.incorrect}`;
 }
 
-// Loads the level data, then builds the belt, the packages and a new sorter. Safe to call again, it starts over.
-export async function initSortingDemo() {
+/**
+ * Builds the belt, the packages and a new sorter. Safe to call again, it starts over.
+ *
+ * @param {object} runCtx  { level, settings, onNext } from js/game/level.js
+ */
+export function initSortingScene(runCtx) {
+  ctx = runCtx;
+  const { level, settings } = ctx;
   const stage = document.getElementById('stage-area');
   const tally = document.getElementById('sorting-tally');
 
   if (!wired) {
     document.getElementById('btn-sorting-feedback-close').addEventListener('click', hideCard);
-    registerPauseHandlers('screen-stage1-prototype', {
+    registerPauseHandlers('screen-sorting', {
       onPause() {
         belt?.pause();
         setDragSuspended(true);
@@ -172,7 +138,7 @@ export async function initSortingDemo() {
         belt?.resume();
         setDragSuspended(false);
       },
-      onRestart: initSortingDemo,
+      onRestart: restart,
       onQuit: () => belt?.stop(),
     });
     wired = true;
@@ -181,19 +147,10 @@ export async function initSortingDemo() {
   belt?.stop();
   completedSummary = null;
   hideCard();
-  stage.querySelectorAll('.package').forEach((el) => el.remove());
-  tally.textContent = 'Loading packages…';
+  document.getElementById('sorting-heading').textContent = level.name;
 
-  let items;
-  try {
-    items = await loadLevelItems(getLevel());
-  } catch (err) {
-    console.error(err);
-    tally.textContent = 'Packages could not be loaded. Check the console for details.';
-    return;
-  }
-
-  const runBelt = createStageBelt(stage);
+  const items = [...level.artefacts, ...level.fillers];
+  const runBelt = createStageBelt(stage, settings.beltSpeedPxPerSec);
   belt = runBelt;
 
   const sorter = createSorter({
