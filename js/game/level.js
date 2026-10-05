@@ -1,20 +1,20 @@
 /**
  * level.js
  *
- * Runs one level from start to finish: loads its data once, works out the
- * settings for the chosen difficulty, then plays the phases in order
- * (sorting -> arranging -> quiz). Level-agnostic - every level runs through
- * the same phases, only the data and numbers change.
+ * Runs one level from start to finish: loads its data once, then plays the
+ * phases in order (sorting -> arranging -> quiz) with the chosen
+ * difficulty's settings. Level-agnostic - every level runs through the
+ * same phases, only the data changes.
  *
  * Each phase is a function start(ctx) that builds its scene on an
  * already-shown screen. ctx is:
- *   level     { id, name, artefacts, fillers, config } from level-data.js
- *   settings  state.js's getLevelSettings() for this level + difficulty
+ *   level     { id, name, artefacts, fillers } from level-data.js
+ *   settings  state.js's getDifficultyConfig() for the chosen difficulty
  *   onNext    call to move on to the next phase; undefined on the last one
  * A phase that restarts itself should call start again with the same ctx.
  */
 
-import { getLevel, getLevelSettings } from './state.js';
+import { getLevel, getDifficultyConfig } from './state.js';
 import { loadLevelData } from './level-data.js';
 import { showScreen } from '../ui/screens.js';
 import { initSortingScene } from './sorting-scene.js';
@@ -47,6 +47,6 @@ function runPhase(index) {
  */
 export async function startLevel() {
   level = await loadLevelData(getLevel());
-  settings = getLevelSettings(level.config);
+  settings = getDifficultyConfig();
   runPhase(0);
 }

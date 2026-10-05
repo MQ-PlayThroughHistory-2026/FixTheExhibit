@@ -2,8 +2,8 @@
  * menu.js
  *
  * Development Team task D6: main menu + difficulty mode functionality.
- * Flow: Main Menu -> Level Select -> Difficulty Select -> Tutorial
- * (first time only) -> the level itself (js/game/level.js).
+ * Flow: Main Menu -> Level Select -> Difficulty Select -> the level itself
+ * (js/game/level.js), whose scenes show their own first-time tutorials.
  *
  * FR01 (Main Menu): start and instructions are covered here. No "Exit"
  * button - as a museum kiosk game, returning to idle/main menu after a
@@ -17,13 +17,7 @@ import { initPauseMenu } from './pause-menu.js';
 import { initStageTransition } from './stage-transition.js';
 import { startLevel } from '../game/level.js';
 import { loadLevelIndex } from '../game/level-data.js';
-import {
-  setLevel,
-  setDifficulty,
-  hasSeenTutorial,
-  markTutorialSeen,
-  resetSession,
-} from '../game/state.js';
+import { setLevel, setDifficulty, resetSession } from '../game/state.js';
 
 function renderLevelCards(levels) {
   const list = document.getElementById('level-list');
@@ -46,15 +40,6 @@ function onLevelChosen(levelId) {
 
 function onDifficultyChosen(difficulty) {
   setDifficulty(difficulty);
-  if (hasSeenTutorial()) {
-    enterLevel();
-  } else {
-    showScreen('screen-tutorial');
-  }
-}
-
-function onTutorialComplete() {
-  markTutorialSeen();
   enterLevel();
 }
 
@@ -89,15 +74,10 @@ function wireMainMenu() {
   });
 }
 
-function wireTutorial() {
-  document.getElementById('btn-tutorial-done').addEventListener('click', onTutorialComplete);
-}
-
 export async function initMenu() {
   wireBackButtons();
   wireMainMenu();
   wireDifficultyCards();
-  wireTutorial();
   // The pause menu's Quit button is the way back from any game screen.
   initPauseMenu({ onQuit: onReturnToMainMenu });
   initStageTransition({ onExit: onReturnToMainMenu });

@@ -20,13 +20,8 @@
   padding: var(--space-xs);
 }
 
-.sorting-tally {
-  color: var(--color-text);
-  font-weight: 600;
-}
-
-/* Information card, filling the stage height so opening it never moves the packages. */
-.sorting-feedback {
+/* Information card and tutorial, filling the stage height so opening them never moves the packages. */
+#screen-sorting .info-card {
   height: calc(100% - var(--space-md) * 2);
 }
 

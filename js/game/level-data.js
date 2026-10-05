@@ -17,33 +17,18 @@ async function loadJson(url) {
   return response.json();
 }
 
-// Like loadJson, but a missing file (404) gives `fallback` instead of throwing.
-async function loadOptionalJson(url, fallback) {
-  const response = await fetch(url);
-  if (response.status === 404) return fallback;
-  if (!response.ok) {
-    throw new Error(`Failed to load ${url}: ${response.status}`);
-  }
-  return response.json();
-}
-
 /** The level-select metadata from index.json. */
 export function loadLevelIndex() {
   return loadJson(`${LEVELS_DIR}/index.json`);
 }
 
-/**
- * Everything one level needs: its index.json entry, artefacts, fillers and
- * per-difficulty config (empty if the level has no config.json, so
- * state.js's defaults apply).
- */
+/** Everything one level needs: its index.json entry, artefacts and fillers. */
 export async function loadLevelData(levelId) {
   const dir = `${LEVELS_DIR}/${levelId}`;
-  const [index, artefacts, fillers, config] = await Promise.all([
+  const [index, artefacts, fillers] = await Promise.all([
     loadLevelIndex(),
     loadJson(`${dir}/artefacts.json`),
     loadJson(`${dir}/fillers.json`),
-    loadOptionalJson(`${dir}/config.json`, {}),
   ]);
   const entry = index.find((level) => level.id === levelId);
   return {
@@ -51,6 +36,5 @@ export async function loadLevelData(levelId) {
     name: entry?.name ?? levelId,
     artefacts,
     fillers,
-    config,
   };
 }

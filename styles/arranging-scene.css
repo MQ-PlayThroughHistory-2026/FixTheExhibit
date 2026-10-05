@@ -36,15 +36,12 @@
   overflow-wrap: anywhere;
 }
 
-.arranging-tally {
-  color: var(--color-text);
-  font-weight: 600;
-}
-
-/* Information card. Height-led so it keeps the card art's proportions,
-   capped so it doesn't tower over the stage on a tall kiosk display.
-   arranging-scene.js's capPopupToStage() also caps it to the stage. */
-.arranging-feedback {
+/* Information card and tutorial. Height-led so they keep the card art's
+   proportions, capped so they don't tower over the stage on a tall kiosk
+   display. arranging-scene.js's capPopupToStage() also caps the
+   information card to the stage. */
+.arranging-feedback,
+#arranging-tutorial {
   height: min(calc(100% - var(--space-md) * 2), 640px);
 }
 

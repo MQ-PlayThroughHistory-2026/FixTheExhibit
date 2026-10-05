@@ -15,6 +15,9 @@
  * an unfilled one opens the riddle popup with the artefact's `riddle`
  * field (task R9). Neither ever reveals the artefact's name.
  *
+ * The first time each hint type comes up this session, it opens on the
+ * how-to-play card (#arranging-tutorial, js/ui/tutorial.js).
+ *
  * A correct placement opens the information card (#arranging-feedback)
  * with item.image (hidden if absent or broken) and item.blurb.
  *
@@ -30,6 +33,8 @@ import { createArranger } from './arranging.js';
 import { setDragSuspended } from './drag.js';
 import { registerPauseHandlers } from '../ui/pause-menu.js';
 import { playSfx } from '../ui/audio.js';
+import { setProgress } from '../ui/progress-bar.js';
+import { showTutorialOnce } from '../ui/tutorial.js';
 
 // Item size never grows past this, so boxes stay a comfortable size on a
 // wide kiosk display. There's no minimum - shrinking is what keeps a large
@@ -123,7 +128,7 @@ function getStageLayout(stageWidth, stageHeight, artefactCount, spacing) {
 }
 
 // Sizes the stage to whatever's left of the viewport after the heading,
-// intro text, tally and buttons around it, so the page itself doesn't
+// progress bar above it, so the page itself doesn't
 // scroll on a short viewport.
 function sizeStageToViewport(stage) {
   const section = stage.closest('.screen');
@@ -153,8 +158,8 @@ function applyLayout(stage, layout) {
 }
 
 function isPopupOpen() {
-  return !document.getElementById('arranging-clue').classList.contains('hidden')
-    || !document.getElementById('arranging-feedback').classList.contains('hidden');
+  return ['arranging-clue', 'arranging-feedback', 'arranging-tutorial']
+    .some((id) => !document.getElementById(id).classList.contains('hidden'));
 }
 
 // Wires the click/keyboard activation for a hard-mode clue slot. Only
@@ -335,9 +340,9 @@ function hideCluePopup() {
   setDragSuspended(false);
 }
 
-function renderTally(summary) {
-  document.getElementById('arranging-tally').textContent =
-    `Placed ${summary.placed} / ${summary.total}`;
+// Fills the progress bar by how many artefacts have been placed.
+function renderProgress(summary) {
+  setProgress(document.getElementById('arranging-progress'), summary.placed, summary.total);
 }
 
 /**
@@ -376,10 +381,10 @@ export function initArrangingScene(runCtx) {
 
   const hintType = settings.arrangementHintType;
   document.getElementById('arranging-heading').textContent = level.name;
-  document.getElementById('arranging-intro').textContent =
+  document.getElementById('arranging-tutorial-text').textContent =
     hintType === 'riddle'
       ? 'Tap a riddle card to work out which artefact belongs there, then drag that artefact into place.'
-      : 'Drag each artefact into its own spot in the display case.';
+      : 'Drag each artefact onto its matching silhouette in the display case.';
 
   const { artefacts } = level;
   let layout = getLayout(stage, artefacts.length);
@@ -397,19 +402,18 @@ export function initArrangingScene(runCtx) {
       playSfx('correct');
       itemEntries = itemEntries.filter((entry) => entry.item.id !== item.id);
       layoutItems(itemEntries, layout);
-      renderTally(arranger.getSummary());
+      renderProgress(arranger.getSummary());
       showFeedback(item);
     },
     onMisplaced: () => playSfx('incorrect'),
-    onComplete(summary) {
-      document.getElementById('arranging-tally').textContent =
-        `All ${summary.total} artefacts placed!`;
-    },
   });
 
   itemEntries = buildItems(stage, artefacts, arranger);
   layoutItems(itemEntries, layout);
-  renderTally(arranger.getSummary());
+  renderProgress(arranger.getSummary());
+  // Separate ids per hint type, so hard mode's riddles get explained even
+  // after easy mode's tutorial has been seen.
+  showTutorialOnce(`arranging-${hintType}`, document.getElementById('arranging-tutorial'), () => {});
 
   // Recalculates the column count and box sizes on viewport change.
   currentResizeHandler = () => {

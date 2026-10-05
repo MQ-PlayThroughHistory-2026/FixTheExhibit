@@ -12,8 +12,7 @@ data/levels/
 ├── index.json              # level-select metadata shown on the level-select screen
 ├── <level-id>/
 │   ├── artefacts.json      # the 10 real artefacts for this level
-│   ├── fillers.json        # the 10 filler packages for this level
-│   └── config.json         # per-difficulty tuning (timer, belt speed)
+│   └── fillers.json        # the 10 filler packages for this level
 ```
 
 ## index.json
@@ -49,24 +48,6 @@ equivalent tasks for ancient-egypt):
 | `id`, `name` | Stable id + display name |
 | `correctZone` | Always `"rejection-bin"` for fillers |
 | `funFactCorrect` / `funFactIncorrect` | Shown immediately after sorting |
-
-## `<level-id>/config.json`
-
-Gameplay numbers for this level, one block per difficulty. Every field is
-optional: anything left out (or the whole file, if missing) falls back to
-the defaults in `js/game/state.js`'s `DIFFICULTY_CONFIG`.
-
-```json
-{
-  "easy": { "sortingTimerSeconds": 90, "beltSpeedPxPerSec": 90 },
-  "hard": { "sortingTimerSeconds": 45, "beltSpeedPxPerSec": 150 }
-}
-```
-
-| Field | Notes |
-|---|---|
-| `sortingTimerSeconds` | Length of the sorting countdown |
-| `beltSpeedPxPerSec` | Conveyor belt speed during sorting |
 
 ## Before merging real content
 
