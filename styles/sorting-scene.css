@@ -1,0 +1,53 @@
+/* sorting-scene.css
+   Layout for the sorting screen (js/game/sorting-scene.js). Drop-zone and
+   package states are in sorting.css, the belt and the stage's own size in
+   belt.css.
+
+   The stage is a size container (belt.css), so packages, drop zones and
+   their labels are sized in cqh/cqw and scale with it, with px bounds so
+   they stay usable on a phone and don't balloon on a kiosk. */
+
+.stage-area .package {
+  width: clamp(76px, min(20cqh, 24cqw), 150px);
+  height: clamp(76px, min(20cqh, 24cqw), 150px);
+  font-size: clamp(0.7rem, 2.4cqh, 0.95rem);
+  line-height: 1.2;
+  text-align: center;
+  padding: var(--space-xs);
+  overflow: hidden;
+  /* Wraps between words, only splitting a word that's too long on its own. */
+  overflow-wrap: break-word;
+}
+
+/* The image fills the whole package (no box, see belt.css). */
+.stage-area .package.has-image {
+  padding: 0;
+}
+
+#screen-sorting [data-zone] {
+  height: clamp(64px, 24cqh, 180px);
+  font-size: clamp(0.85rem, 3.2cqh, 1.4rem);
+}
+
+/* Information card and tutorial, filling the stage height so opening them
+   never moves the packages - capped so they don't tower on a tall kiosk. */
+#screen-sorting .info-card {
+  height: min(calc(100% - var(--space-md) * 2), 640px);
+}
+
+/* Width-led on a narrow (phone) stage, so its tall shape doesn't stretch
+   the card art into a long strip. */
+@container (max-width: 600px) {
+  #screen-sorting .info-card {
+    width: 92%;
+    height: auto;
+  }
+}
+
+.sorting-feedback.is-correct .info-card-title {
+  color: color-mix(in srgb, var(--color-easy) 75%, #000);
+}
+
+.sorting-feedback.is-incorrect .info-card-title {
+  color: color-mix(in srgb, var(--color-hard) 85%, #000);
+}

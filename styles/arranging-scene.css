@@ -1,0 +1,74 @@
+/* arranging-scene.css
+   Layout for the arranging screen (js/game/arranging-scene.js). Slot and
+   artefact states are in arranging.css, the popup card art in
+   info-card.css. */
+
+/* The stage's own size is shared with sorting, in belt.css. It never grows
+   with the artefact count - getLayout() in arranging-scene.js shrinks the
+   boxes to fit instead. */
+
+/* Labels inside the boxes shrink along with them. */
+.arranging-item,
+.silhouette-slot {
+  font-size: clamp(0.55rem, calc(var(--arranging-item-size, 88px) * 0.2), 0.8rem);
+  line-height: 1.1;
+  text-align: center;
+}
+
+.arranging-item {
+  padding: 2px;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+/* Information card and tutorial. Height-led so they keep the card art's
+   proportions, capped so they don't tower over the stage on a tall kiosk
+   display. arranging-scene.js's capPopupToStage() also caps the
+   information card to the stage. */
+.arranging-feedback,
+#arranging-tutorial {
+  height: min(calc(100% - var(--space-md) * 2), 640px);
+}
+
+/* Shrinks on a short card, leaving the room to the blurb. */
+.arranging-feedback-image {
+  width: 120px;
+  height: 120px;
+  min-height: 48px;
+  flex-shrink: 1;
+  object-fit: contain;
+}
+
+.arranging-feedback-image.hidden {
+  display: none;
+}
+
+/* Hard-mode riddle popup: the same card on the riddle art, sized bigger
+   than a slot's own riddle card so opening it reads as picking it up. */
+.arranging-clue {
+  width: min(640px, 85%);
+  /* Matches assets/ui/riddle.avif's proportions. */
+  aspect-ratio: 1281 / 966;
+  background-image: url('../assets/ui/riddle.avif');
+  /* Keeps the text on the front sheet of the stack. */
+  padding: var(--space-lg) var(--space-xl);
+}
+
+/* On a narrow (phone) stage the art's own proportions leave the card too
+   short for the riddle, so it's stretched taller and a little wider. */
+@container (max-width: 600px) {
+  .arranging-clue {
+    width: 92%;
+    aspect-ratio: auto;
+    height: min(60%, 480px);
+    padding: var(--space-lg);
+  }
+
+  /* Width-led instead, so the tall phone stage doesn't stretch the card art
+     into a long strip. */
+  .arranging-feedback,
+  #arranging-tutorial {
+    width: 92%;
+    height: auto;
+  }
+}

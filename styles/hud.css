@@ -1,0 +1,70 @@
+/* hud.css
+   The row centred above a scene's stage: progress bar (js/ui/progress-bar.js)
+   with the countdown timer under it on the sorting screen. */
+
+.stage-hud {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 100%;
+}
+
+/* Progress bar on the volume slider's track art. The fill multiplies over
+   the white track, so it takes the fill colour while the art's outline
+   stays dark, and the mask clips it to the track's pointed ends. */
+.progress-bar {
+  --progress: 0%;
+  position: relative;
+  width: min(420px, 80%);
+  aspect-ratio: 4386 / 322; /* volume-slider.avif */
+  background: url('../assets/ui/volume-slider.avif') center / 100% 100% no-repeat;
+  -webkit-mask: url('../assets/ui/volume-slider.avif') center / 100% 100% no-repeat;
+  mask: url('../assets/ui/volume-slider.avif') center / 100% 100% no-repeat;
+}
+
+.progress-bar-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--progress);
+  background: var(--color-primary);
+  mix-blend-mode: multiply;
+  transition: width var(--transition-base);
+}
+
+/* Countdown on the timer plaque art: the stopwatch is drawn on the left,
+   so the time sits on the cream panel to its right. The text scales with
+   the plaque. */
+.hud-timer {
+  --timer-width: clamp(140px, 16vw, 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--timer-width);
+  aspect-ratio: 1148 / 547; /* timer.avif */
+  /* Left padding clears the stopwatch, the rest keeps the text inside the
+     frame. From --timer-width, as % padding would measure the parent. */
+  padding: 0 calc(var(--timer-width) * 0.08) 0 calc(var(--timer-width) * 0.34);
+  background: url('../assets/ui/timer.avif') center / 100% 100% no-repeat;
+  color: var(--color-ink);
+  font-size: calc(var(--timer-width) * 0.17);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums; /* digits don't shift as they change */
+  line-height: 1;
+  transition: color var(--transition-base);
+}
+
+/* Last few seconds: a steady colour change, nothing flashes (NFR05). */
+.hud-timer.is-low {
+  color: var(--color-hard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar-fill,
+  .hud-timer {
+    transition: none;
+  }
+}

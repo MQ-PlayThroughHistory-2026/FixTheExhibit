@@ -1,51 +1,100 @@
 /**
  * timer.js
  *
- * Minimal Stage 1 (sorting) countdown timer. This is a scaffold for
- * Development Team task D8 (Set up timer in sorting scene) - it already
- * reads its starting duration from the chosen difficulty (D6) so D8 can
- * plug in belt/pause logic without re-deriving the duration itself.
+ * Countdown timer for the sorting phase (D8). Counts real elapsed time
+ * rather than interval ticks, so pausing and resuming (pause menu,
+ * information cards) never gains or loses a partial second, and a
+ * throttled background tab still counts down correctly.
  *
- * Not wired to a pause menu or information-card interrupts yet - that
- * belongs to D7/D8 once those scenes exist.
+ *   const timer = new CountdownTimer(90, { onTick, onExpire });
+ *   timer.start();            // from the full duration
+ *   timer.pause(); timer.resume();
+ *   timer.stop();             // finished for good - resume() does nothing until start()
+ *
+ * onTick(secondsRemaining) fires on start and whenever the whole number of
+ * seconds left changes (rounded up, so it shows 1 until time is truly up).
  */
 
-export class Stage1Timer {
+const TICK_MS = 100;
+
+export class CountdownTimer {
   /**
    * @param {number} durationSeconds
-   * @param {(secondsRemaining: number) => void} onTick
-   * @param {() => void} onExpire
+   * @param {object} [callbacks]
+   * @param {(secondsRemaining: number) => void} [callbacks.onTick]
+   * @param {() => void} [callbacks.onExpire]
    */
-  constructor(durationSeconds, onTick, onExpire) {
-    this.durationSeconds = durationSeconds;
-    this.secondsRemaining = durationSeconds;
+  constructor(durationSeconds, { onTick, onExpire } = {}) {
+    this.durationMs = durationSeconds * 1000;
+    this.remainingMs = this.durationMs;
     this.onTick = onTick;
     this.onExpire = onExpire;
+    this.status = 'idle'; // idle | running | paused | stopped
     this.intervalId = null;
+    this.lastNow = 0;
+    this.lastShownSeconds = null;
+  }
+
+  get secondsRemaining() {
+    return Math.ceil(this.remainingMs / 1000);
   }
 
   start() {
-    this.stop();
-    this.onTick?.(this.secondsRemaining);
-    this.intervalId = setInterval(() => {
-      this.secondsRemaining -= 1;
-      this.onTick?.(this.secondsRemaining);
-      if (this.secondsRemaining <= 0) {
-        this.stop();
-        this.onExpire?.();
-      }
-    }, 1000);
+    this.clearTicker();
+    this.remainingMs = this.durationMs;
+    this.lastShownSeconds = null;
+    this.run();
+  }
+
+  pause() {
+    if (this.status !== 'running') return;
+    this.update();
+    // update() may have just expired the timer.
+    if (this.status !== 'running') return;
+    this.clearTicker();
+    this.status = 'paused';
+  }
+
+  resume() {
+    if (this.status !== 'paused') return;
+    this.run();
   }
 
   stop() {
+    this.clearTicker();
+    this.status = 'stopped';
+  }
+
+  run() {
+    this.status = 'running';
+    this.lastNow = performance.now();
+    this.emitTick();
+    this.intervalId = setInterval(() => this.update(), TICK_MS);
+  }
+
+  // Takes the time since the last update off the clock, and expires at 0.
+  update() {
+    const now = performance.now();
+    this.remainingMs = Math.max(0, this.remainingMs - (now - this.lastNow));
+    this.lastNow = now;
+    this.emitTick();
+    if (this.remainingMs === 0) {
+      this.stop();
+      this.onExpire?.();
+    }
+  }
+
+  emitTick() {
+    const seconds = this.secondsRemaining;
+    if (seconds === this.lastShownSeconds) return;
+    this.lastShownSeconds = seconds;
+    this.onTick?.(seconds);
+  }
+
+  clearTicker() {
     if (this.intervalId !== null) {
       clearInterval(this.intervalId);
       this.intervalId = null;
     }
-  }
-
-  reset() {
-    this.stop();
-    this.secondsRemaining = this.durationSeconds;
   }
 }

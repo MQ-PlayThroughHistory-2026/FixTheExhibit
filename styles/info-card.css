@@ -1,0 +1,71 @@
+/* info-card.css
+   The parchment popup cards shown over a stage: the information cards
+   (D3/D4) on assets/ui/info-card.avif, and the hard-mode riddle popup,
+   which swaps in assets/ui/riddle.avif (see arranging-scene.css). Each
+   scene sets its own card's size; this file styles the card itself. */
+
+.info-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10; /* above the draggable packages/artefacts */
+  /* Matches info-card.avif's proportions. */
+  aspect-ratio: 711 / 991;
+  max-width: calc(100% - var(--space-md) * 2);
+  display: flex;
+  /* stretch gives .info-card-content a definite height for its
+     max-height: 100% to resolve against, so long text scrolls. */
+  align-items: stretch;
+  padding: var(--space-lg) var(--space-md);
+  box-sizing: border-box;
+  overflow: hidden;
+  background: url('../assets/ui/info-card.avif') center / 100% 100% no-repeat;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.45));
+  color: var(--color-ink);
+}
+
+.info-card.hidden {
+  display: none;
+}
+
+.info-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* safe: when the text overflows, start at the top instead of cutting it off. */
+  justify-content: center;
+  justify-content: safe center;
+  gap: var(--space-sm);
+  width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+
+.info-card-title {
+  flex-shrink: 0;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+}
+
+/* Only the text scrolls when it's too long, so the title and Close button
+   always stay on the card. */
+.info-card-content p {
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  color: inherit;
+  max-width: none;
+}
+
+.info-card-content .btn-secondary {
+  flex-shrink: 0;
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+}
+
+.info-card-content .btn-secondary:hover {
+  border-color: #000;
+  color: #000;
+}

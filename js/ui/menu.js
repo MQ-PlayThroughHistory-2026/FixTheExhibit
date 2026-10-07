@@ -2,9 +2,8 @@
  * menu.js
  *
  * Development Team task D6: main menu + difficulty mode functionality.
- * Flow: Main Menu -> Level Select -> Difficulty Select -> Tutorial
- * (first time only) -> Stage 1 (currently a placeholder screen for D1/D8
- * to replace).
+ * Flow: Main Menu -> Level Select -> Difficulty Select -> the level itself
+ * (js/game/level.js), whose scenes show their own first-time tutorials.
  *
  * FR01 (Main Menu): start and instructions are covered here. No "Exit"
  * button - as a museum kiosk game, returning to idle/main menu after a
@@ -16,31 +15,9 @@
 import { showScreen, wireBackButtons } from './screens.js';
 import { initPauseMenu } from './pause-menu.js';
 import { initStageTransition } from './stage-transition.js';
-
-//remove or rename the imports to the true game once the real Stage 1 (D1) exists
-import { initSortingDemo } from '../game/prototypes/sorting-demo.js';
-import { initArrangingDemo } from '../game/prototypes/arranging-demo.js';
-import {
-  DIFFICULTIES,
-  setLevel,
-  getLevel,
-  setDifficulty,
-  getDifficulty,
-  getDifficultyConfig,
-  hasSeenTutorial,
-  markTutorialSeen,
-  resetSession,
-} from '../game/state.js';
-
-const LEVELS_URL = 'data/levels/index.json';
-
-async function loadLevels() {
-  const response = await fetch(LEVELS_URL);
-  if (!response.ok) {
-    throw new Error(`Failed to load levels.json: ${response.status}`);
-  }
-  return response.json();
-}
+import { startLevel } from '../game/level.js';
+import { loadLevelIndex } from '../game/level-data.js';
+import { setLevel, setDifficulty, resetSession } from '../game/state.js';
 
 function renderLevelCards(levels) {
   const list = document.getElementById('level-list');
@@ -63,41 +40,18 @@ function onLevelChosen(levelId) {
 
 function onDifficultyChosen(difficulty) {
   setDifficulty(difficulty);
-  if (hasSeenTutorial()) {
-    enterStage1();
-  } else {
-    showScreen('screen-tutorial');
-  }
+  enterLevel();
 }
 
-function onTutorialComplete() {
-  markTutorialSeen();
-  enterStage1();
-}
-
-/**
- * Stage 1 entry point. Gold Rush + Easy routes to the TEMPORARY sorting
- * demo (see the imports above); every other level/difficulty
- * combination still falls back to the plain summary stub until the real
- * Stage 1 (D1) exists.
- */
-function enterStage1() {
-  const level = getLevel();
-  const difficulty = getDifficulty();
-
-  if (level === 'gold-rush' && difficulty === DIFFICULTIES.EASY) {
-    showScreen('screen-stage1-prototype');
-    // After showScreen so the stage has a width to lay the packages out in.
-    initSortingDemo();
-    return;
+// Starts the selected level. If its data can't be loaded there's nothing to
+// play, so it goes back to the main menu.
+async function enterLevel() {
+  try {
+    await startLevel();
+  } catch (err) {
+    console.error(err);
+    onReturnToMainMenu();
   }
-
-  const config = getDifficultyConfig();
-  document.getElementById('summary-level').textContent = level;
-  document.getElementById('summary-difficulty').textContent = config.label;
-  document.getElementById('summary-timer').textContent = `${config.stage1TimerSeconds}s`;
-  document.getElementById('summary-hint-type').textContent = config.arrangementHintType;
-  showScreen('screen-game-stub');
 }
 
 function onReturnToMainMenu() {
@@ -118,40 +72,18 @@ function wireMainMenu() {
   document.getElementById('btn-instructions').addEventListener('click', () => {
     showScreen('screen-instructions');
   });
-  // TEMPORARY - delete together with screen-arranging-prototype and
-  // js/game/prototypes/arranging-demo.js when the real arranging scene
-  // (D2) is built. One button per hint type (state.js's
-  // arrangementHintType), skipping the full menu -> sorting flow.
-  document.getElementById('btn-dev-arranging-demo').addEventListener('click', () => {
-    setLevel('gold-rush');
-    setDifficulty(DIFFICULTIES.EASY);
-    showScreen('screen-arranging-prototype');
-    // After showScreen so the stage has a width to lay artefacts out in.
-    initArrangingDemo();
-  });
-  document.getElementById('btn-dev-arranging-hard-demo').addEventListener('click', () => {
-    setLevel('gold-rush');
-    setDifficulty(DIFFICULTIES.HARD);
-    showScreen('screen-arranging-prototype');
-    initArrangingDemo();
-  });
-}
-
-function wireTutorial() {
-  document.getElementById('btn-tutorial-done').addEventListener('click', onTutorialComplete);
 }
 
 export async function initMenu() {
   wireBackButtons();
   wireMainMenu();
   wireDifficultyCards();
-  wireTutorial();
   // The pause menu's Quit button is the way back from any game screen.
   initPauseMenu({ onQuit: onReturnToMainMenu });
   initStageTransition({ onExit: onReturnToMainMenu });
 
   try {
-    const levels = await loadLevels();
+    const levels = await loadLevelIndex();
     renderLevelCards(levels);
   } catch (err) {
     console.error(err);
@@ -161,5 +93,3 @@ export async function initMenu() {
 
   showScreen('screen-main-menu');
 }
-
-export { DIFFICULTIES };

@@ -1,10 +1,9 @@
-
 /* sorting.css
    States toggled by js/game/sorting.js. Stage and belt layout stay in
    belt.css. Tints are a single fade, nothing strobes (NFR05). */
 
-/* Any element inside the stage carrying data-zone is a drop target. In the
-   prototype these are the two zone labels inside .drop-zones. */
+/* Any element inside the stage carrying data-zone is a drop target - the
+   two zone labels inside .drop-zones on the sorting screen. */
 .stage-area [data-zone] {
   flex: 0 0 44%;
   height: 96px;

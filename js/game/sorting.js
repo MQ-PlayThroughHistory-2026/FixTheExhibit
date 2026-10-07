@@ -1,7 +1,7 @@
 /**
  * sorting.js
  *
- * Stage 1 sorting. Hit-tests a dragged package against the
+ * Sorting phase mechanics. Hit-tests a dragged package against the
  * display case and rejection bin, commits the drop, keeps the tally and
  * reports through callbacks.
  *

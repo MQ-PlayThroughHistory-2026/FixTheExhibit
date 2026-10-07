@@ -6,9 +6,8 @@
  * Plan: pointerdown/pointermove/pointerup handle mouse and touch through
  * one code path instead of separate mouse and touch handlers.
  *
- * This is a prototype slice of D1 (sorting scene). It currently only supports free
- * dragging within a bounding container. Optional hooks (onDragStart, onDragMove,
- * onDrop) let sorting.js react to the drag.
+ * Free dragging within a bounding container. Optional hooks (onDragStart,
+ * onDragMove, onDrop) let sorting.js and arranging.js react to the drag.
  */
 
 // Module-level so a popup covering the stage can stop every draggable at

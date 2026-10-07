@@ -1,14 +1,23 @@
 /* belt.css
-   Sorting-stage prototype visuals. The conveyor belt / display case /
-   rejection bin here are static placeholders for now - only the box
-   itself is interactive (see js/game/drag.js). Real belt motion and
-   drop-zone detection are later D1 work. */
+   Shared stage box, drop-zone labels, draggable boxes and the conveyor
+   belt (js/game/belt.js). Drop-zone states are in sorting.css. */
 
+/* The game stages need more room than #app's default 960px cap, so widen
+   #app while a screen with a stage is showing. Browsers without :has()
+   keep the default max-width. */
+#app:has(.screen:not(.hidden) .stage-area) {
+  max-width: min(1800px, 96vw);
+}
+
+/* Full width, and as tall as the viewport allows - js/game/stage-size.js
+   sets the height; the clamp(...) mirrors its bounds until it runs. A size
+   container, so what's inside can scale with it in cqw/cqh units. */
 .stage-area {
   position: relative;
   width: 100%;
-  max-width: 640px;
-  height: 320px;
+  height: clamp(320px, 68vh, 760px);
+  box-sizing: border-box;
+  container-type: size;
   background: var(--color-surface);
   border: 2px dashed var(--color-text-muted);
   border-radius: var(--radius-md);
@@ -23,14 +32,10 @@
   pointer-events: none; /* visual context only - must not intercept drag events */
 }
 
-.zone-label--belt {
-  top: var(--space-sm);
-  left: var(--space-sm);
-}
-
+/* Along the top of the stage, above the belt. */
 .drop-zones {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
   display: flex;
@@ -69,6 +74,19 @@
 .draggable-box.is-dragging {
   cursor: grabbing;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+}
+
+/* With an image there's no box behind it - just the image, which keeps
+   the lift shadow while dragged by following its outline instead. */
+.draggable-box.has-image {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.draggable-box.has-image.is-dragging {
+  box-shadow: none;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.45));
 }
 
 /* Conveyor belt. A dark band with a row of dots that scrolls left to right
