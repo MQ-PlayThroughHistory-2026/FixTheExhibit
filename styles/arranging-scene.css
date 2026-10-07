@@ -53,3 +53,22 @@
   /* Keeps the text on the front sheet of the stack. */
   padding: var(--space-lg) var(--space-xl);
 }
+
+/* On a narrow (phone) stage the art's own proportions leave the card too
+   short for the riddle, so it's stretched taller and a little wider. */
+@container (max-width: 600px) {
+  .arranging-clue {
+    width: 92%;
+    aspect-ratio: auto;
+    height: min(60%, 480px);
+    padding: var(--space-lg);
+  }
+
+  /* Width-led instead, so the tall phone stage doesn't stretch the card art
+     into a long strip. */
+  .arranging-feedback,
+  #arranging-tutorial {
+    width: 92%;
+    height: auto;
+  }
+}

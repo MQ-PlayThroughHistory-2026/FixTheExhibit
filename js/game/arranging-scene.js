@@ -76,23 +76,25 @@ function rowsNeeded(count, cols) {
   return Math.ceil(count / cols);
 }
 
-// Position for item `index` in a left-to-right, top-to-bottom grid that
-// wraps after `cols` columns, starting `topPx` down from the stage top and
-// `paddingPx` in from its left edge.
-function gridPosition(index, cols, sizePx, gapPx, topPx, paddingPx) {
-  const col = index % cols;
-  const row = Math.floor(index / cols);
+// Position for box `index` (sizePx square) in a left-to-right,
+// top-to-bottom grid that wraps after layout.cols columns, starting `topPx`
+// down from the stage top. Columns are the layout's evenly spaced slot
+// columns, and a box smaller than a slot is centred in its column, so the
+// artefacts line up under the slots.
+function gridPosition(index, layout, sizePx, topPx) {
+  const col = index % layout.cols;
+  const row = Math.floor(index / layout.cols);
   return {
-    left: col * (sizePx + gapPx) + paddingPx,
-    top: topPx + row * (sizePx + gapPx),
+    left: layout.colGap + col * (layout.slotSize + layout.colGap) + (layout.slotSize - sizePx) / 2,
+    top: topPx + row * (sizePx + layout.rowGap),
   };
 }
 
 // Finds the column count that allows the biggest boxes while the slot grid
 // and the item grid (stacked, with the gap between them) still fit inside
 // the stage. The best trade-off depends on the stage's shape and the
-// artefact count, so every column count is tried. The height sum mirrors
-// getLayout()'s neededHeight.
+// artefact count, so every column count is tried. The height sum is the
+// slot rows, the gap, then the item rows, as getLayout() places them.
 function getStageLayout(stageWidth, stageHeight, artefactCount, spacing) {
   const { padding, gap, sectionGap } = spacing;
   const availableWidth = stageWidth - (padding * 2);
@@ -112,13 +114,17 @@ function getStageLayout(stageWidth, stageHeight, artefactCount, spacing) {
   }
 
   const itemSize = Math.max(1, best.itemSize);
+  const slotSize = itemSize + SLOT_ITEM_SIZE_DIFF_PX;
   return {
     cols: best.cols,
     itemSize,
-    slotSize: itemSize + SLOT_ITEM_SIZE_DIFF_PX,
+    slotSize,
     padding,
-    slotGap: gap,
-    itemGap: gap,
+    rowGap: gap,
+    // Whatever width the columns don't use is shared out evenly between
+    // them and the two edges, so the grid spans the stage instead of
+    // leaving a gap on the right when the height is what limits the box size.
+    colGap: (stageWidth - best.cols * slotSize) / (best.cols + 1),
     sectionGap,
   };
 }
@@ -130,9 +136,8 @@ function getLayout(stage, artefactCount) {
   const spacing = stage.clientWidth < COMPACT_WIDTH_PX ? COMPACT_SPACING : ROOMY_SPACING;
   const base = getStageLayout(stage.clientWidth, stage.clientHeight, artefactCount, spacing);
   const rows = rowsNeeded(artefactCount, base.cols);
-  const itemsTop = base.padding + rows * (base.slotSize + base.slotGap) + base.sectionGap;
-  const neededHeight = itemsTop + rows * (base.itemSize + base.itemGap) + base.padding;
-  return { ...base, itemsTop, neededHeight };
+  const itemsTop = base.padding + rows * (base.slotSize + base.rowGap) + base.sectionGap;
+  return { ...base, itemsTop };
 }
 
 // Publishes the current box sizes as CSS custom properties for
@@ -211,9 +216,7 @@ function buildSlots(stage, artefacts, layout, hintType, onClueRequested) {
       stage.appendChild(slot);
     }
 
-    const { left, top } = gridPosition(
-      i, layout.cols, layout.slotSize, layout.slotGap, layout.padding, layout.padding,
-    );
+    const { left, top } = gridPosition(i, layout, layout.slotSize, layout.padding);
     slot.style.left = `${left}px`;
     slot.style.top = `${top}px`;
   });
@@ -223,9 +226,7 @@ function buildSlots(stage, artefacts, layout, hintType, onClueRequested) {
 // starting at the layout's itemsTop.
 function layoutItems(entries, layout) {
   entries.forEach(({ el }, i) => {
-    const { left, top } = gridPosition(
-      i, layout.cols, layout.itemSize, layout.itemGap, layout.itemsTop, layout.padding,
-    );
+    const { left, top } = gridPosition(i, layout, layout.itemSize, layout.itemsTop);
     el.style.left = `${left}px`;
     el.style.top = `${top}px`;
   });
