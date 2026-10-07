@@ -34,23 +34,32 @@
   transition: width var(--transition-base);
 }
 
+/* Countdown on the timer plaque art: the stopwatch is drawn on the left,
+   so the time sits on the cream panel to its right. The text scales with
+   the plaque. */
 .hud-timer {
-  min-width: 4.5ch;
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-sm);
-  background: rgba(0, 0, 0, 0.35);
-  color: var(--color-text);
-  font-size: 1.4rem;
+  --timer-width: clamp(140px, 16vw, 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--timer-width);
+  aspect-ratio: 1148 / 547; /* timer.avif */
+  /* Left padding clears the stopwatch, the rest keeps the text inside the
+     frame. From --timer-width, as % padding would measure the parent. */
+  padding: 0 calc(var(--timer-width) * 0.08) 0 calc(var(--timer-width) * 0.34);
+  background: url('../assets/ui/timer.avif') center / 100% 100% no-repeat;
+  color: var(--color-ink);
+  font-size: calc(var(--timer-width) * 0.17);
   font-weight: 700;
   font-variant-numeric: tabular-nums; /* digits don't shift as they change */
-  text-align: center;
-  transition: color var(--transition-base), background-color var(--transition-base);
+  line-height: 1;
+  transition: color var(--transition-base);
 }
 
 /* Last few seconds: a steady colour change, nothing flashes (NFR05). */
 .hud-timer.is-low {
-  color: #fff;
-  background: var(--color-hard);
+  color: var(--color-hard);
 }
 
 @media (prefers-reduced-motion: reduce) {
