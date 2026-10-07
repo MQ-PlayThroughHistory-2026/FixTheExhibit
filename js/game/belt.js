@@ -33,10 +33,15 @@ export function createBelt({ stage, laneTop, speedPxPerSec, minGapPx = 40, maxGa
   let lastTime = null;
   let paused = false;
 
-  track.style.top = `${laneTop}px`;
-  // One dot period per (period / speed) seconds keeps the dots in step with the packages.
-  track.style.setProperty('--belt-period-seconds', `${DOT_PERIOD_PX / speedPxPerSec}s`);
+  applyLane();
   updateTrack();
+
+  // Puts the band at laneTop and matches its dot speed to the packages'.
+  function applyLane() {
+    track.style.top = `${laneTop}px`;
+    // One dot period per (period / speed) seconds keeps the dots in step with the packages.
+    track.style.setProperty('--belt-period-seconds', `${DOT_PERIOD_PX / speedPxPerSec}s`);
+  }
 
   // Adds the belt band to the stage, behind the packages.
   function createTrack() {
@@ -143,11 +148,26 @@ export function createBelt({ stage, laneTop, speedPxPerSec, minGapPx = 40, maxGa
     updateTrack();
   }
 
+  /**
+   * Moves the band and changes the speed after the stage is resized, and
+   * re-seats every package riding on it (their height may have changed too).
+   * Horizontal positions are kept; anything now past the right edge loops
+   * round as usual.
+   */
+  function resize(options) {
+    ({ laneTop, speedPxPerSec } = { laneTop, speedPxPerSec, ...options });
+    applyLane();
+    positions.forEach((_x, el) => {
+      if (HELD_CLASSES.some((cls) => el.classList.contains(cls))) return;
+      el.style.top = `${restingTop(el)}px`;
+    });
+  }
+
   // Lets the belt move again.
   function resume() {
     paused = false;
     updateTrack();
   }
 
-  return { add, putBack, start, stop, pause, resume, step };
+  return { add, putBack, start, stop, pause, resume, resize, step };
 }

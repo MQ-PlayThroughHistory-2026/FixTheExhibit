@@ -3,24 +3,9 @@
    artefact states are in arranging.css, the popup card art in
    info-card.css. */
 
-/* Arranging needs more room than #app's default 960px cap, so widen #app
-   only while this screen is showing. Browsers without :has() keep the
-   default max-width. */
-#app:has(#screen-arranging:not(.hidden)) {
-  max-width: min(1800px, 96vw);
-}
-
-#screen-arranging .stage-area {
-  position: relative; /* Ensures absolute children position relative to stage */
-  /* Fixed height so the stage never grows with the artefact count -
-     getLayout() in arranging-scene.js shrinks the boxes to fit instead.
-     Overridden by sizeStageToViewport() once JS runs. */
-  height: clamp(320px, 68vh, 760px);
-  width: 100%;
-  max-width: 100%; /* overrides belt.css's 640px cap, shared via .stage-area */
-  box-sizing: border-box;
-  overflow: hidden;
-}
+/* The stage's own size is shared with sorting, in belt.css. It never grows
+   with the artefact count - getLayout() in arranging-scene.js shrinks the
+   boxes to fit instead. */
 
 /* Labels inside the boxes shrink along with them. */
 .arranging-item,

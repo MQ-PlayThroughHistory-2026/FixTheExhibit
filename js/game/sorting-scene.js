@@ -13,24 +13,35 @@
  * so reading a fun fact never costs time. When it runs out the belt stops,
  * dragging is blocked and the transition offers moving on with whatever
  * was sorted.
+ *
+ * The stage fills the viewport (stage-size.js) and the packages, drop
+ * zones and labels scale with it in CSS (sorting-scene.css). The belt
+ * speed scales with the stage width too, so a package takes the same time
+ * to cross on any screen and the difficulty doesn't change with it.
  */
 
 import { createSorter } from './sorting.js';
 import { createBelt } from './belt.js';
 import { setDragSuspended } from './drag.js';
 import { CountdownTimer } from './timer.js';
+import { sizeStageToViewport, watchViewport } from './stage-size.js';
 import { registerPauseHandlers } from '../ui/pause-menu.js';
 import { playSfx } from '../ui/audio.js';
 import { showStageTransition } from '../ui/stage-transition.js';
 import { setProgress } from '../ui/progress-bar.js';
 import { showTutorialOnce } from '../ui/tutorial.js';
 
-const BELT_TO_ZONES_GAP_PX = 40; // space between the belt line and the top of the drop zones
+// Space between the belt line and the top of the drop zones, as a share of the stage height.
+const BELT_TO_ZONES_GAP = 0.08;
+// Stage width that settings.beltSpeedPxPerSec is tuned for; other widths scale the speed.
+const REFERENCE_STAGE_WIDTH_PX = 640;
 const LOW_TIME_SECONDS = 10; // the countdown turns red from here
 
 let wired = false;
 let belt = null;
 let timer = null;
+// Stops the current run's viewport listener (stage-size.js).
+let unwatchViewport = null;
 // The ctx from level.js for the current run, kept so restarting reuses it.
 let ctx = null;
 // Set once every package is sorted; the transition opens when the last card closes.
@@ -48,10 +59,14 @@ function shuffle(list) {
   return out;
 }
 
-// Creates the belt for this run, its band sitting a little above the drop zones.
-function createStageBelt(stage, speedPxPerSec) {
-  const laneTop = stage.querySelector('.drop-zones').offsetTop - BELT_TO_ZONES_GAP_PX;
-  return createBelt({ stage, laneTop, speedPxPerSec });
+// Where the belt runs and how fast, for the stage's current size: the band
+// sits a little above the drop zones, and the speed keeps the crossing time
+// the same as on the reference width.
+function beltGeometry(stage) {
+  return {
+    laneTop: stage.querySelector('.drop-zones').offsetTop - stage.clientHeight * BELT_TO_ZONES_GAP,
+    speedPxPerSec: ctx.settings.beltSpeedPxPerSec * (stage.clientWidth / REFERENCE_STAGE_WIDTH_PX),
+  };
 }
 
 function restart() {
@@ -70,8 +85,11 @@ function spawnPackages(stage, items, sorter, runBelt) {
       const img = document.createElement('img');
       img.src = item.image;
       img.alt = item.name;
+      // No box behind an image; it comes back with the name if the image fails.
+      el.classList.add('has-image');
       img.onerror = () => {
         img.remove();
+        el.classList.remove('has-image');
         el.textContent = item.name;
       };
       el.appendChild(img);
@@ -115,10 +133,16 @@ function hideCard() {
   if (completedSummary) showSortingComplete(completedSummary);
 }
 
-// Stops the belt and countdown for good, e.g. before leaving the screen.
+// Stops the belt and countdown for good, e.g. once every package is sorted.
 function stopScene() {
   belt?.stop();
   timer?.stop();
+}
+
+// Stops everything including resize handling, before going back to the main menu.
+function leaveScene() {
+  stopScene();
+  unwatchViewport?.();
 }
 
 // Offers moving on to the next phase, sorting again, or going back to the main menu.
@@ -128,7 +152,7 @@ function showSortingComplete(summary) {
     message: `You sorted ${summary.correct} of ${summary.total} packages correctly. Next up: arranging the display case.`,
     onNext: ctx.onNext,
     onRestart: restart,
-    onExit: stopScene,
+    onExit: leaveScene,
   });
 }
 
@@ -144,7 +168,7 @@ function onTimeUp(sorter) {
     message: `You sorted ${summary.sorted} of ${summary.total} packages, ${summary.correct} correctly. Next up: arranging the display case.`,
     onNext: ctx.onNext,
     onRestart: restart,
-    onExit: stopScene,
+    onExit: leaveScene,
   });
 }
 
@@ -188,20 +212,23 @@ export function initSortingScene(runCtx) {
         setDragSuspended(false);
       },
       onRestart: restart,
-      onQuit: stopScene,
+      onQuit: leaveScene,
     });
     wired = true;
   }
 
   // Stop the previous run first, so hideCard() below has nothing to resume.
-  stopScene();
+  leaveScene();
   completedSummary = null;
   timeUp = false;
   hideCard();
+  // Everything above the stage is filled in before sizing it to what's left of the viewport.
   document.getElementById('sorting-heading').textContent = level.name;
+  renderTimer(settings.sortingTimerSeconds);
+  sizeStageToViewport(stage);
 
   const items = [...level.artefacts, ...level.fillers];
-  const runBelt = createStageBelt(stage, settings.beltSpeedPxPerSec);
+  const runBelt = createBelt({ stage, ...beltGeometry(stage) });
   belt = runBelt;
 
   const sorter = createSorter({
@@ -232,7 +259,15 @@ export function initSortingScene(runCtx) {
 
   spawnPackages(stage, shuffle(items), sorter, runBelt);
   renderProgress(sorter.getSummary());
-  renderTimer(settings.sortingTimerSeconds);
+
+  // Re-fits the stage on viewport change; CSS rescales the packages and
+  // zones, so the belt only needs its lane and speed re-measured.
+  unwatchViewport = watchViewport(() => {
+    if (stage.offsetParent === null) return; // screen hidden, nothing to measure
+    sizeStageToViewport(stage);
+    runBelt.resize(beltGeometry(stage));
+  });
+
   // The belt and countdown wait for the first-time tutorial to be closed.
   showTutorialOnce('sorting', document.getElementById('sorting-tutorial'), () => {
     runBelt.start();

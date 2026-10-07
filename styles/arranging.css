@@ -103,12 +103,6 @@
   transition: left 300ms ease, top 300ms ease;
 }
 
-.arranging-item.has-image {
-  background: transparent;
-  border: none;
-  box-shadow: none;
-}
-
 .arranging-item img {
   width: 100%;
   height: 100%;

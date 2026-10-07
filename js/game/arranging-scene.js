@@ -31,6 +31,7 @@
 
 import { createArranger } from './arranging.js';
 import { setDragSuspended } from './drag.js';
+import { sizeStageToViewport, watchViewport } from './stage-size.js';
 import { registerPauseHandlers } from '../ui/pause-menu.js';
 import { playSfx } from '../ui/audio.js';
 import { setProgress } from '../ui/progress-bar.js';
@@ -50,17 +51,12 @@ const COMPACT_WIDTH_PX = 600;
 const ROOMY_SPACING = { padding: 24, gap: 24, sectionGap: 32 };
 const COMPACT_SPACING = { padding: 12, gap: 8, sectionGap: 16 };
 
-// Bounds for sizeStageToViewport(). arranging-scene.css's height:clamp(...)
-// mirrors these as the fallback before JS runs.
-const STAGE_HEIGHT_MIN_PX = 320;
-const STAGE_HEIGHT_MAX_PX = 760;
-const STAGE_BOTTOM_MARGIN_PX = 16;
 // Space above/below a popup - see capPopupToStage().
 const POPUP_STAGE_MARGIN_PX = 16;
 
 let wired = false;
-let currentResizeHandler = null;
-let settleTimeoutId = null;
+// Stops the current run's viewport listener (stage-size.js).
+let unwatchViewport = null;
 // The slot the clue popup is currently open for.
 let openClueSlot = null;
 // The ctx from level.js for the current run, kept so restarting reuses it.
@@ -125,17 +121,6 @@ function getStageLayout(stageWidth, stageHeight, artefactCount, spacing) {
     itemGap: gap,
     sectionGap,
   };
-}
-
-// Sizes the stage to whatever's left of the viewport after the heading,
-// progress bar above it, so the page itself doesn't
-// scroll on a short viewport.
-function sizeStageToViewport(stage) {
-  const section = stage.closest('.screen');
-  const stageTop = stage.getBoundingClientRect().top;
-  const siblingsHeight = section.scrollHeight - stage.getBoundingClientRect().height;
-  const available = window.innerHeight - stageTop - siblingsHeight - STAGE_BOTTOM_MARGIN_PX;
-  stage.style.height = `${Math.max(STAGE_HEIGHT_MIN_PX, Math.min(STAGE_HEIGHT_MAX_PX, available))}px`;
 }
 
 // Picks the spacing preset for the current stage width and works out
@@ -355,12 +340,8 @@ export function initArrangingScene(runCtx) {
   const { level, settings } = ctx;
   const stage = document.getElementById('arranging-stage');
 
-  // Clean up previous event listeners on re-init
-  if (currentResizeHandler) {
-    window.removeEventListener('resize', currentResizeHandler);
-    window.visualViewport?.removeEventListener('resize', currentResizeHandler);
-  }
-  clearTimeout(settleTimeoutId);
+  // Stop the previous run's resize handling on re-init.
+  unwatchViewport?.();
 
   // Only remove the previous run's slots/items
   stage.querySelectorAll('.silhouette-slot, .arranging-item').forEach((el) => el.remove());
@@ -375,6 +356,7 @@ export function initArrangingScene(runCtx) {
       // An open clue/blurb popup suspends drag itself, so keep it suspended.
       onResume: () => setDragSuspended(isPopupOpen()),
       onRestart: () => initArrangingScene(ctx),
+      onQuit: () => unwatchViewport?.(),
     });
     wired = true;
   }
@@ -416,7 +398,8 @@ export function initArrangingScene(runCtx) {
   showTutorialOnce(`arranging-${hintType}`, document.getElementById('arranging-tutorial'), () => {});
 
   // Recalculates the column count and box sizes on viewport change.
-  currentResizeHandler = () => {
+  unwatchViewport = watchViewport(() => {
+    if (stage.offsetParent === null) return; // screen hidden, nothing to measure
     layout = getLayout(stage, artefacts.length);
     applyLayout(stage, layout);
 
@@ -429,14 +412,5 @@ export function initArrangingScene(runCtx) {
     // Keeps an open popup's height cap correct.
     capPopupToStage('arranging-feedback', '.arranging-feedback-content');
     capPopupToStage('arranging-clue', '.arranging-clue-content');
-  };
-
-  // Mobile address bar show/hide doesn't reliably fire a window resize
-  // event, so visualViewport is listened to as well.
-  window.addEventListener('resize', currentResizeHandler);
-  window.visualViewport?.addEventListener('resize', currentResizeHandler);
-
-  // Re-measures once shortly after the first layout in case the viewport
-  // was still settling.
-  settleTimeoutId = setTimeout(() => currentResizeHandler?.(), 400);
+  });
 }
