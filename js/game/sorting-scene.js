@@ -31,8 +31,8 @@ import { showStageTransition } from '../ui/stage-transition.js';
 import { setProgress } from '../ui/progress-bar.js';
 import { showTutorialOnce } from '../ui/tutorial.js';
 
-// Space between the belt line and the top of the drop zones, as a share of the stage height.
-const BELT_TO_ZONES_GAP = 0.08;
+// Space between the belt line and the bottom of the stage, as a share of the stage height.
+const BELT_BOTTOM_GAP = 0.08;
 // Stage width that settings.beltSpeedPxPerSec is tuned for; other widths scale the speed.
 const REFERENCE_STAGE_WIDTH_PX = 640;
 const LOW_TIME_SECONDS = 10; // the countdown turns red from here
@@ -60,11 +60,12 @@ function shuffle(list) {
 }
 
 // Where the belt runs and how fast, for the stage's current size: the band
-// sits a little above the drop zones, and the speed keeps the crossing time
-// the same as on the reference width.
+// runs a little above the bottom of the stage, under the drop zones along
+// the top, and the speed keeps the crossing time the same as on the
+// reference width.
 function beltGeometry(stage) {
   return {
-    laneTop: stage.querySelector('.drop-zones').offsetTop - stage.clientHeight * BELT_TO_ZONES_GAP,
+    laneTop: stage.clientHeight * (1 - BELT_BOTTOM_GAP),
     speedPxPerSec: ctx.settings.beltSpeedPxPerSec * (stage.clientWidth / REFERENCE_STAGE_WIDTH_PX),
   };
 }

@@ -32,9 +32,10 @@
   pointer-events: none; /* visual context only - must not intercept drag events */
 }
 
+/* Along the top of the stage, above the belt. */
 .drop-zones {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
   display: flex;
