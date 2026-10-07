@@ -15,6 +15,7 @@
 
 import { showScreen, wireBackButtons } from './screens.js';
 import { initPauseMenu } from './pause-menu.js';
+import { initStageTransition } from './stage-transition.js';
 
 //remove or rename the imports to the true game once the real Stage 1 (D1) exists
 import { initSortingDemo } from '../game/prototypes/sorting-demo.js';
@@ -147,6 +148,7 @@ export async function initMenu() {
   wireTutorial();
   // The pause menu's Quit button is the way back from any game screen.
   initPauseMenu({ onQuit: onReturnToMainMenu });
+  initStageTransition({ onExit: onReturnToMainMenu });
 
   try {
     const levels = await loadLevels();

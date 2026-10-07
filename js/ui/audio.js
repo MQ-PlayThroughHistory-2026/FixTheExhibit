@@ -81,11 +81,11 @@ function startBgm() {
  * (level cards, hard-mode clue slots) are covered too.
  */
 export function initAudio() {
-  ['pointerdown', 'keydown'].forEach((type) => {
+  ['pointerdown', 'keydown', 'click'].forEach((type) => {
     document.addEventListener(type, startBgm);
   });
   bgm.addEventListener('playing', () => {
-    ['pointerdown', 'keydown'].forEach((type) => {
+    ['pointerdown', 'keydown', 'click'].forEach((type) => {
       document.removeEventListener(type, startBgm);
     });
   }, { once: true });

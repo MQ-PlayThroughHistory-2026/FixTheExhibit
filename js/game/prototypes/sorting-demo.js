@@ -28,6 +28,9 @@ import { getLevel, getDifficultyConfig } from '../state.js';
 import { setDragSuspended } from '../drag.js';
 import { registerPauseHandlers } from '../../ui/pause-menu.js';
 import { playSfx } from '../../ui/audio.js';
+import { showScreen } from '../../ui/screens.js';
+import { showStageTransition } from '../../ui/stage-transition.js';
+import { initArrangingDemo } from './arranging-demo.js';
 
 //const BASE_BELT_SPEED_PX_PER_SEC = 60; // scaled by the difficulty's beltSpeedMultiplier
 const BASE_BELT_SPEED_PX_PER_SEC = 120; // *TEMP ADJUSTED FOR DEMO
@@ -35,6 +38,8 @@ const BELT_TO_ZONES_GAP_PX = 40; // space between the belt line and the top of t
 
 let wired = false;
 let belt = null;
+// Set once every package is sorted; the transition opens when the last card closes.
+let completedSummary = null;
 
 // Fetches one JSON file, throwing on a non-OK response.
 async function loadJson(url) {
@@ -125,6 +130,22 @@ function hideCard() {
   document.getElementById('sorting-feedback').classList.add('hidden');
   belt?.resume();
   setDragSuspended(false);
+  if (completedSummary) showSortingComplete(completedSummary);
+}
+
+// Offers moving on to arranging, sorting again, or going back to the main menu.
+function showSortingComplete(summary) {
+  showStageTransition({
+    title: 'Well Done!',
+    message: `You sorted ${summary.correct} of ${summary.total} packages correctly. Next up: arranging the display case.`,
+    onNext() {
+      showScreen('screen-arranging-prototype');
+      // After showScreen so the stage has a width to lay artefacts out in.
+      initArrangingDemo();
+    },
+    onRestart: initSortingDemo,
+    onExit: () => belt?.stop(),
+  });
 }
 
 // Writes the running tally line.
@@ -158,6 +179,7 @@ export async function initSortingDemo() {
   }
 
   belt?.stop();
+  completedSummary = null;
   hideCard();
   stage.querySelectorAll('.package').forEach((el) => el.remove());
   tally.textContent = 'Loading packages…';
@@ -188,6 +210,8 @@ export async function initSortingDemo() {
     },
     onComplete(summary) {
       runBelt.stop();
+      // onSorted has just opened this package's card; the transition waits for it to close.
+      completedSummary = summary;
       tally.textContent =
         `All ${summary.total} packages sorted, ${summary.correct} correct and ${summary.incorrect} incorrect.`;
     },

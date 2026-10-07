@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="styles/kiosk.css" />
   <link rel="stylesheet" href="styles/kiosk-refresh.css" />
   <link rel="stylesheet" href="styles/pause-menu.css" />
+  <link rel="stylesheet" href="styles/stage-transition.css" />
   <link rel="stylesheet" href="styles/prototypes/sorting-demo.css" />
   <link rel="stylesheet" href="styles/prototypes/arranging-demo.css" />
 </head>
@@ -207,6 +208,23 @@
         </button>
         <button type="button" id="btn-pause-restart" class="pause-action">Restart</button>
         <button type="button" id="btn-pause-quit" class="pause-action">Quit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage complete popup (js/ui/stage-transition.js). Reuses the pause
+       menu's panel and button art. -->
+  <div id="stage-transition" class="pause-overlay stage-transition hidden" role="dialog" aria-modal="true" aria-labelledby="stage-transition-title" aria-describedby="stage-transition-text">
+    <div class="pause-panel">
+      <h2 id="stage-transition-title" class="pause-title stage-transition-title">Well Done!</h2>
+      <p id="stage-transition-text" class="stage-transition-text"></p>
+
+      <div class="pause-actions">
+        <button type="button" id="btn-stage-restart" class="pause-action">Restart</button>
+        <button type="button" id="btn-stage-next" class="pause-resume" aria-label="Next stage">
+          <img src="assets/ui/resume-button.avif" alt="" />
+        </button>
+        <button type="button" id="btn-stage-exit" class="pause-action">Leave</button>
       </div>
     </div>
   </div>
