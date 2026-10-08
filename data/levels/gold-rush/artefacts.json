@@ -3,7 +3,7 @@
     "id": "example-artefact-1",
     "name": "Crab",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/old-gold-chocolate.avif",
+    "image": "assets/gold-rush/artefacts/example-artefact-1.avif",
     "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
     "longExplanation": [
       "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
@@ -29,7 +29,7 @@
     "id": "example-artefact-2",
     "name": "Example Artefact (replace with real name - task R2)",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/",
+    "image": "assets/gold-rush/artefacts/example-artefact-2.avif",
     "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
     "longExplanation": [
       "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
@@ -55,7 +55,7 @@
     "id": "example-artefact-3",
     "name": "Example Artefact (replace with real name - task R2)",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/",
+    "image": "assets/gold-rush/artefacts/example-artefact-3.avif",
     "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
     "longExplanation": [
       "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
@@ -81,7 +81,7 @@
     "id": "example-artefact-4",
     "name": "Example Artefact (replace with real name - task R2)",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/",
+    "image": "assets/gold-rush/artefacts/example-artefact-4.avif",
     "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
     "longExplanation": [
       "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
@@ -107,7 +107,7 @@
     "id": "example-artefact-5",
     "name": "Example Artefact (replace with real name - task R2)",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/",
+    "image": "assets/gold-rush/artefacts/example-artefact-5.avif",
     "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
     "longExplanation": [
       "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
@@ -133,7 +133,7 @@
     "id": "example-artefact-6",
     "name": "Example Artefact (replace with real name - task R2)",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/",
+    "image": "assets/gold-rush/artefacts/example-artefact-6.avif",
     "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
     "longExplanation": [
       "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
@@ -159,7 +159,7 @@
     "id": "example-artefact-7",
     "name": "Example Artefact (replace with real name - task R2)",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/",
+    "image": "assets/gold-rush/artefacts/example-artefact-7.avif",
     "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
     "longExplanation": [
       "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
@@ -185,7 +185,7 @@
     "id": "example-artefact-8",
     "name": "Example Artefact (replace with real name - task R2)",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/",
+    "image": "assets/gold-rush/artefacts/example-artefact-8.avif",
     "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
     "longExplanation": [
       "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
@@ -211,7 +211,7 @@
     "id": "example-artefact-9",
     "name": "Example Artefact (replace with real name - task R2)",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/",
+    "image": "assets/gold-rush/artefacts/example-artefact-9.avif",
     "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
     "longExplanation": [
       "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
@@ -237,7 +237,7 @@
     "id": "example-artefact-10",
     "name": "Example Artefact (replace with real name - task R2)",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/",
+    "image": "assets/gold-rush/artefacts/example-artefact-10.avif",
     "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
     "longExplanation": [
       "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",

@@ -78,9 +78,10 @@ export async function initMenu() {
   wireBackButtons();
   wireMainMenu();
   wireDifficultyCards();
-  // The pause menu's Quit button is the way back from any game screen.
-  initPauseMenu({ onQuit: onReturnToMainMenu });
-  initStageTransition({ onExit: onReturnToMainMenu });
+  // The pause menu's Quit (and the stage popup's Leave) reload the page,
+  // which is the way back from any game screen.
+  initPauseMenu();
+  initStageTransition();
 
   try {
     const levels = await loadLevelIndex();

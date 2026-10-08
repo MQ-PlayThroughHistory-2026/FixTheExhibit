@@ -23,7 +23,7 @@
   <div id="app">
 
     <!-- FR01: Main Menu -->
-    <section id="screen-main-menu" class="screen">
+    <section id="screen-main-menu" class="screen" data-settings>
       <h1>Fix the Exhibit</h1>
       <div class="menu-actions">
         <button id="btn-start" class="btn-primary">Start</button>
@@ -48,7 +48,7 @@
     </section>
 
     <!-- Level select -->
-    <section id="screen-level-select" class="screen hidden">
+    <section id="screen-level-select" class="screen hidden" data-settings>
       <h2>Choose a level</h2>
       <p>Pick which exhibit you'll be sorting today.</p>
       <div id="level-list" class="card-grid">Loading levels&hellip;</div>
@@ -56,7 +56,7 @@
     </section>
 
     <!-- Difficulty select (D6) -->
-    <section id="screen-difficulty-select" class="screen hidden">
+    <section id="screen-difficulty-select" class="screen hidden" data-settings>
       <h2>Choose difficulty</h2>
       <p>This changes the sorting timer, belt speed, and arrangement hints.</p>
       <div class="card-grid">
@@ -156,15 +156,22 @@
 
   </div>
 
-  <!-- Pause button + menu (js/ui/pause-menu.js). The button only shows on
-       screens marked data-pausable above. -->
+  <!-- Pause/settings button + menu (js/ui/pause-menu.js). Shows as a pause
+       button on screens marked data-pausable above, and as a burger menu
+       (settings only, no Restart/Quit) on screens marked data-settings. -->
   <button id="btn-pause" class="pause-button hidden" aria-label="Pause" aria-haspopup="dialog" aria-controls="pause-menu">
     <img src="assets/ui/pause-button.avif" alt="" />
   </button>
 
   <div id="pause-menu" class="pause-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pause-menu-title">
     <div class="pause-panel">
-      <h2 id="pause-menu-title" class="pause-title">Settings</h2>
+      <div class="pause-title-row">
+        <h2 id="pause-menu-title" class="pause-title">Settings</h2>
+        <!-- Settings mode only, replaces the Restart / Resume / Quit row. -->
+        <button type="button" id="btn-pause-close" class="pause-close hidden" aria-label="Close settings">
+          <img src="assets/ui/menu-close.avif" alt="" />
+        </button>
+      </div>
 
       <div class="pause-volume-row">
         <span id="pause-bgm-label" class="pause-label">Background Music</span>
@@ -183,10 +190,10 @@
       </div>
 
       <div class="pause-actions">
+        <button type="button" id="btn-pause-restart" class="pause-action">Restart</button>
         <button type="button" id="btn-pause-resume" class="pause-resume" aria-label="Resume">
           <img src="assets/ui/resume-button.avif" alt="" />
         </button>
-        <button type="button" id="btn-pause-restart" class="pause-action">Restart</button>
         <button type="button" id="btn-pause-quit" class="pause-action">Quit</button>
       </div>
     </div>
@@ -201,10 +208,8 @@
 
       <div class="pause-actions">
         <button type="button" id="btn-stage-restart" class="pause-action">Restart</button>
-        <button type="button" id="btn-stage-next" class="pause-resume" aria-label="Next stage">
-          <img src="assets/ui/resume-button.avif" alt="" />
-        </button>
         <button type="button" id="btn-stage-exit" class="pause-action">Leave</button>
+        <button type="button" id="btn-stage-next" class="pause-action stage-next" aria-label="Next stage"></button>
       </div>
     </div>
   </div>

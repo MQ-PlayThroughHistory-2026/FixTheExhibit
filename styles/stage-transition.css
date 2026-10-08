@@ -3,8 +3,9 @@
    Everything else (overlay, backplate, title card, buttons) comes from
    pause-menu.css - this file only adds what that one doesn't have. */
 
-.stage-transition .pause-resume.hidden {
-  display: none;
+/* Next: the button art with the arrow drawn on, so no text. */
+.stage-next {
+  background-image: url('../assets/ui/next.avif');
 }
 
 /* Title card is wider than the pause menu's so "Well Done!"-length titles fit. */
@@ -36,8 +37,14 @@
     font-size: 6cqw;
   }
 
-  /* "Main Menu" is longer than the pause menu's "Quit". */
+  /* Three full-width buttons in a row, so a bit narrower than the
+     pause menu's (which has the small square Resume in the middle). */
+  .stage-transition .pause-actions {
+    gap: 3cqw;
+  }
+
   .stage-transition .pause-action {
+    width: 29cqw;
     font-size: 5.5cqw;
   }
 }

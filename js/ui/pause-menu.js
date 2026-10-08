@@ -1,20 +1,27 @@
 /**
  * pause-menu.js
  *
- * The in-game pause button and pause menu: background music and sound
- * effects volume, plus Resume / Restart / Quit. Replaces the per-screen
- * "Restart" and "Return to main menu" buttons.
+ * The pause button and pause menu: background music and sound effects
+ * volume, plus Restart / Resume / Quit. Replaces the per-screen "Restart"
+ * and "Return to main menu" buttons.
  *
- * The pause button only shows on screens marked `data-pausable` in
- * index.html. Each game screen tells this module how to pause, resume and
- * restart itself via registerPauseHandlers(), so this file doesn't need
- * to know anything about belts, drag or popups:
+ * The same button and menu work in two modes, picked by attributes on the
+ * screen's <section> in index.html:
+ *   - `data-pausable` (the game screens): pause button, and the menu has
+ *     Restart / Resume / Quit.
+ *   - `data-settings` (title, level and difficulty select): burger button,
+ *     and the menu is volume only, closed with the X in its corner.
+ * Neither shows anywhere else.
+ *
+ * Quit reloads the page, so the next visitor starts from a clean slate
+ * (tutorials included). Each game screen tells this module how to pause,
+ * resume and restart itself via registerPauseHandlers(), so this file
+ * doesn't need to know anything about belts, drag or popups:
  *
  *   registerPauseHandlers('screen-id', {
  *     onPause,   // freeze the scene (belt, drag, timers...)
  *     onResume,  // undo onPause
  *     onRestart, // start the scene over - Restart is hidden if omitted
- *     onQuit,    // clean-up before returning to the main menu
  *   });
  */
 
@@ -22,6 +29,12 @@ import { getBgmVolume, setBgmVolume, getSfxVolume, setSfxVolume, playSfx } from 
 
 const ICON_VOLUME = 'assets/ui/menu-volume.avif';
 const ICON_MUTED = 'assets/ui/volume-mute.avif';
+
+// Per mode: the button's art and label.
+const BUTTONS = {
+  pause: { icon: 'assets/ui/pause-button.avif', label: 'Pause' },
+  settings: { icon: 'assets/ui/burg-menu.avif', label: 'Settings' },
+};
 
 // Per channel: how to read/write its volume, and its label for aria text.
 const CHANNELS = {
@@ -36,7 +49,6 @@ const volumeBeforeMute = { bgm: null, sfx: null };
 let activeScreenId = null;
 let isOpen = false;
 let isBlocked = false;
-let quitToMainMenu = () => {};
 
 export function registerPauseHandlers(screenId, handlers) {
   handlersByScreen.set(screenId, handlers);
@@ -56,12 +68,21 @@ function activeHandlers() {
   return handlersByScreen.get(activeScreenId) ?? {};
 }
 
-function isPausableScreen(screenId) {
-  return document.getElementById(screenId)?.hasAttribute('data-pausable') ?? false;
+// 'pause', 'settings', or null if the screen has no menu.
+function menuMode(screenId) {
+  const screen = document.getElementById(screenId);
+  if (screen?.hasAttribute('data-pausable')) return 'pause';
+  if (screen?.hasAttribute('data-settings')) return 'settings';
+  return null;
 }
 
 function syncPauseButton() {
-  document.getElementById('btn-pause').classList.toggle('hidden', isBlocked || !isPausableScreen(activeScreenId));
+  const mode = menuMode(activeScreenId);
+  const button = document.getElementById('btn-pause');
+  button.classList.toggle('hidden', isBlocked || !mode);
+  if (!mode) return;
+  button.querySelector('img').src = BUTTONS[mode].icon;
+  button.setAttribute('aria-label', BUTTONS[mode].label);
 }
 
 // Syncs one channel's slider position and speaker icon to its current volume.
@@ -91,14 +112,18 @@ function toggleMute(channel) {
 }
 
 function openMenu() {
-  if (isOpen || isBlocked || !isPausableScreen(activeScreenId)) return;
+  const mode = menuMode(activeScreenId);
+  if (isOpen || isBlocked || !mode) return;
   isOpen = true;
   activeHandlers().onPause?.();
   Object.keys(CHANNELS).forEach(renderChannel);
+  const isSettings = mode === 'settings';
+  document.querySelector('#pause-menu .pause-actions').classList.toggle('hidden', isSettings);
+  document.getElementById('btn-pause-close').classList.toggle('hidden', !isSettings);
   document.getElementById('btn-pause-restart').classList.toggle('hidden', !activeHandlers().onRestart);
   document.getElementById('pause-menu').classList.remove('hidden');
   document.getElementById('btn-pause').classList.add('hidden');
-  document.getElementById('btn-pause-resume').focus();
+  document.getElementById(isSettings ? 'btn-pause-close' : 'btn-pause-resume').focus();
 }
 
 // Hides the menu without resuming the scene - callers decide what happens next.
@@ -122,11 +147,10 @@ function restart() {
   onRestart?.();
 }
 
+// A full reload rather than going back to the main menu, so nothing from
+// this visitor (e.g. tutorials already seen) carries over to the next.
 function quit() {
-  const { onQuit } = activeHandlers();
-  hideMenu();
-  onQuit?.();
-  quitToMainMenu();
+  window.location.reload();
 }
 
 function onScreenChange(event) {
@@ -152,22 +176,18 @@ function wireVolumeControls() {
   });
 }
 
-/**
- * @param {object} options
- * @param {() => void} options.onQuit  returns to the main menu (after the screen's own onQuit)
- */
-export function initPauseMenu({ onQuit }) {
-  quitToMainMenu = onQuit;
+export function initPauseMenu() {
   const overlay = document.getElementById('pause-menu');
 
   document.addEventListener('screenchange', onScreenChange);
   document.getElementById('btn-pause').addEventListener('click', openMenu);
   document.getElementById('btn-pause-resume').addEventListener('click', resume);
+  document.getElementById('btn-pause-close').addEventListener('click', resume);
   document.getElementById('btn-pause-restart').addEventListener('click', restart);
   document.getElementById('btn-pause-quit').addEventListener('click', quit);
   wireVolumeControls();
 
-  // Tapping the dimmed area around the panel resumes, same as Resume.
+  // Tapping the dimmed area around the panel resumes, same as Resume / X.
   overlay.addEventListener('click', (event) => {
     if (event.target === overlay) resume();
   });
@@ -175,6 +195,8 @@ export function initPauseMenu({ onQuit }) {
   // Escape toggles the menu on keyboard setups.
   document.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
+    // The staff exit modal (js/ui/kiosk.js) handles its own Escape.
+    if (event.target.closest?.('.modal')) return;
     if (isOpen) resume();
     else openMenu();
   });

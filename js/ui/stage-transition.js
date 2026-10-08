@@ -1,8 +1,10 @@
 /**
  * stage-transition.js
  *
- * The "stage complete" popup shown between stages: Next stage / Restart /
- * Main Menu. Styled like the pause menu (same backplate and button art).
+ * The "stage complete" popup shown between stages: Restart / Leave / Next
+ * stage. Styled like the pause menu (same backplate and button art).
+ * Leave reloads the page, same as the pause menu's Quit, so the next
+ * visitor starts from a clean slate.
  *
  * Like pause-menu.js, this file knows nothing about any particular scene.
  * The scene that just finished opens it and says what each choice does:
@@ -12,14 +14,12 @@
  *     message,   // line under it, e.g. a score summary
  *     onNext,    // go to the next stage - the Next button is hidden if omitted
  *     onRestart, // start this stage over
- *     onExit,    // scene clean-up before returning to the main menu
  *   });
  */
 
 import { setPauseBlocked } from './pause-menu.js';
 
 let current = null;
-let exitToMainMenu = () => {};
 
 function isOpen() {
   return current !== null;
@@ -46,12 +46,11 @@ function restart() {
 
 function exit() {
   if (!isOpen()) return;
-  close().onExit?.();
-  exitToMainMenu();
+  window.location.reload();
 }
 
-export function showStageTransition({ title = 'Well Done!', message = '', onNext, onRestart, onExit } = {}) {
-  current = { onNext, onRestart, onExit };
+export function showStageTransition({ title = 'Well Done!', message = '', onNext, onRestart } = {}) {
+  current = { onNext, onRestart };
   document.getElementById('stage-transition-title').textContent = title;
   document.getElementById('stage-transition-text').textContent = message;
   document.getElementById('btn-stage-next').classList.toggle('hidden', !onNext);
@@ -62,12 +61,7 @@ export function showStageTransition({ title = 'Well Done!', message = '', onNext
   document.getElementById(onNext ? 'btn-stage-next' : 'btn-stage-exit').focus();
 }
 
-/**
- * @param {object} options
- * @param {() => void} options.onExit  returns to the main menu (after the scene's own onExit)
- */
-export function initStageTransition({ onExit }) {
-  exitToMainMenu = onExit;
+export function initStageTransition() {
   document.getElementById('btn-stage-next').addEventListener('click', next);
   document.getElementById('btn-stage-restart').addEventListener('click', restart);
   document.getElementById('btn-stage-exit').addEventListener('click', exit);
