@@ -24,10 +24,24 @@
 
     <!-- FR01: Main Menu -->
     <section id="screen-main-menu" class="screen" data-settings>
-      <h1>Fix the Exhibit</h1>
-      <div class="menu-actions">
-        <button id="btn-start" class="btn-primary">Start</button>
-        <button id="btn-instructions" class="btn-secondary">Instructions</button>
+      <!-- Reuses the pause menu's backplate, title card and button art. -->
+      <div class="pause-panel title-panel">
+        <h1 class="pause-title title-panel-title">Fix the Exhibit</h1>
+        <button id="btn-start" class="pause-action title-panel-start">Start</button>
+      </div>
+
+      <!-- Instructions (FR01): shown once, the first time Start is pressed
+           (js/ui/tutorial.js). -->
+      <div id="intro-tutorial" class="info-card tutorial-card intro-card hidden" role="dialog" aria-labelledby="intro-tutorial-title">
+        <div class="info-card-content">
+          <strong id="intro-tutorial-title" class="info-card-title">Instructions</strong>
+          <p>
+            You're the new intern and the delivery labels are mixed up. Sort
+            real artefacts from filler packages before time runs out, then
+            arrange the exhibit and answer a short quiz about what you learned.
+          </p>
+          <button class="info-card-action">Got it, let's start</button>
+        </div>
       </div>
 
       <!-- Exit Fullscreen function -->
@@ -92,7 +106,7 @@
           <div class="info-card-content">
             <strong id="sorting-tutorial-title" class="info-card-title">How to Play</strong>
             <p>Drag each package into the display case if it belongs in the exhibit, or into storage if it doesn't. Sort everything before the timer runs out!</p>
-            <button class="btn-secondary">Got it, let's start</button>
+            <button class="info-card-action">Got it, let's start</button>
           </div>
         </div>
         <!-- Information card (D3), shown after each drop -->
@@ -100,21 +114,12 @@
           <div class="info-card-content">
             <strong id="sorting-feedback-title" class="info-card-title"></strong>
             <p id="sorting-feedback-text"></p>
-            <button id="btn-sorting-feedback-close" class="btn-secondary">Close</button>
+            <button id="btn-sorting-feedback-close" class="info-card-close" aria-label="Close">
+              <img src="assets/ui/menu-close.avif" alt="" />
+            </button>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- Instructions (FR01) -->
-    <section id="screen-instructions" class="screen hidden">
-      <h2>Instructions</h2>
-      <p>
-        You're the new intern and the delivery labels are mixed up. Sort
-        real artefacts from filler packages before time runs out, then
-        arrange the exhibit and answer a short quiz about what you learned.
-      </p>
-      <button class="btn-back" data-target="screen-main-menu">&larr; Back</button>
     </section>
 
     <!-- Arranging phase (D2), built by js/game/arranging-scene.js -->
@@ -131,7 +136,7 @@
           <div class="info-card-content">
             <strong id="arranging-tutorial-title" class="info-card-title">How to Play</strong>
             <p id="arranging-tutorial-text"></p>
-            <button class="btn-secondary">Got it, let's start</button>
+            <button class="info-card-action">Got it, let's start</button>
           </div>
         </div>
         <!-- Information card (D4), shown after each correct placement -->
@@ -140,7 +145,9 @@
             <img id="arranging-feedback-image" class="arranging-feedback-image hidden" alt="" />
             <strong id="arranging-feedback-title" class="info-card-title"></strong>
             <p id="arranging-feedback-text"></p>
-            <button id="btn-arranging-feedback-close" class="btn-secondary">Close</button>
+            <button id="btn-arranging-feedback-close" class="info-card-close" aria-label="Close">
+              <img src="assets/ui/menu-close.avif" alt="" />
+            </button>
           </div>
         </div>
         <!-- Hard-mode riddle popup, opened by tapping an empty slot's riddle card -->
@@ -148,7 +155,9 @@
           <div class="info-card-content arranging-clue-content">
             <strong class="info-card-title">Clue</strong>
             <p id="arranging-clue-text"></p>
-            <button id="btn-arranging-clue-close" class="btn-secondary">Close</button>
+            <button id="btn-arranging-clue-close" class="info-card-close" aria-label="Close">
+              <img src="assets/ui/menu-close.avif" alt="" />
+            </button>
           </div>
         </div>
       </div>
