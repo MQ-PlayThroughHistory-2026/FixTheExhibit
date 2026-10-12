@@ -3,8 +3,8 @@
  *
  * The "stage complete" popup shown between stages: Restart / Leave / Next
  * stage. Styled like the pause menu (same backplate and button art).
- * Leave reloads the page, same as the pause menu's Quit, so the next
- * visitor starts from a clean slate.
+ * Leave goes back to the main menu, same as the pause menu's Quit, without
+ * reloading so kiosk fullscreen stays on.
  *
  * Like pause-menu.js, this file knows nothing about any particular scene.
  * The scene that just finished opens it and says what each choice does:
@@ -20,6 +20,7 @@
 import { setPauseBlocked } from './pause-menu.js';
 
 let current = null;
+let exitToMainMenu = () => {};
 
 function isOpen() {
   return current !== null;
@@ -46,7 +47,8 @@ function restart() {
 
 function exit() {
   if (!isOpen()) return;
-  window.location.reload();
+  close();
+  exitToMainMenu();
 }
 
 export function showStageTransition({ title = 'Well Done!', message = '', onNext, onRestart } = {}) {
@@ -61,7 +63,12 @@ export function showStageTransition({ title = 'Well Done!', message = '', onNext
   document.getElementById(onNext ? 'btn-stage-next' : 'btn-stage-exit').focus();
 }
 
-export function initStageTransition() {
+/**
+ * @param {object} options
+ * @param {() => void} options.onExit  returns to the main menu (menu.js)
+ */
+export function initStageTransition({ onExit }) {
+  exitToMainMenu = onExit;
   document.getElementById('btn-stage-next').addEventListener('click', next);
   document.getElementById('btn-stage-restart').addEventListener('click', restart);
   document.getElementById('btn-stage-exit').addEventListener('click', exit);

@@ -21,6 +21,9 @@
  * A correct placement opens the information card (#arranging-feedback)
  * with item.image (hidden if absent or broken) and item.blurb.
  *
+ * Once every artefact is placed and the last card is closed, the stage
+ * transition (js/ui/stage-transition.js) offers moving on to the quiz.
+ *
  * The stage never grows to fit its content, at any screen size - its
  * height comes from sizeStageToViewport(). getLayout() below always
  * shrinks the artefact/slot boxes (and, past a certain count, adds more
@@ -34,6 +37,7 @@ import { setDragSuspended } from './drag.js';
 import { sizeStageToViewport, watchViewport } from './stage-size.js';
 import { registerPauseHandlers } from '../ui/pause-menu.js';
 import { playSfx } from '../ui/audio.js';
+import { showStageTransition } from '../ui/stage-transition.js';
 import { setProgress } from '../ui/progress-bar.js';
 import { showTutorialOnce } from '../ui/tutorial.js';
 
@@ -61,6 +65,8 @@ let unwatchViewport = null;
 let openClueSlot = null;
 // The ctx from level.js for the current run, kept so restarting reuses it.
 let ctx = null;
+// Set once every artefact is placed. The transition opens when the last card closes.
+let completedSummary = null;
 
 // Returns a shuffled copy of the list.
 function shuffle(list) {
@@ -331,6 +337,17 @@ function renderProgress(summary) {
   setProgress(document.getElementById('arranging-progress'), summary.placed, summary.total);
 }
 
+// Runs after the information card's Close. Once everything is placed it offers moving on to the quiz.
+function showCompleteIfDone() {
+  if (!completedSummary) return;
+  showStageTransition({
+    title: 'Well Done!',
+    message: `All ${completedSummary.total} artefacts are on display. Next, answer the visitors' questions in a short quiz.`,
+    onNext: ctx.onNext,
+    onRestart: () => initArrangingScene(ctx),
+  });
+}
+
 /**
  * Builds a fresh arranging stage. Safe to call again, it starts over.
  *
@@ -346,11 +363,13 @@ export function initArrangingScene(runCtx) {
 
   // Only remove the previous run's slots/items
   stage.querySelectorAll('.silhouette-slot, .arranging-item').forEach((el) => el.remove());
+  completedSummary = null;
   hideFeedback();
   hideCluePopup();
 
   if (!wired) {
     document.getElementById('btn-arranging-feedback-close').addEventListener('click', hideFeedback);
+    document.getElementById('btn-arranging-feedback-close').addEventListener('click', showCompleteIfDone);
     document.getElementById('btn-arranging-clue-close').addEventListener('click', hideCluePopup);
     registerPauseHandlers('screen-arranging', {
       onPause: () => setDragSuspended(true),
@@ -388,6 +407,10 @@ export function initArrangingScene(runCtx) {
       showFeedback(item);
     },
     onMisplaced: () => playSfx('incorrect'),
+    // onPlaced has just opened the last artefact's card, the transition waits for it to close.
+    onComplete(summary) {
+      completedSummary = summary;
+    },
   });
 
   itemEntries = buildItems(stage, artefacts, arranger);

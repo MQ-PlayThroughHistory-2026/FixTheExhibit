@@ -146,7 +146,7 @@ function leaveScene() {
   unwatchViewport?.();
 }
 
-// Offers moving on to the next phase, sorting again, or leaving (reloads the page).
+// Offers moving on to the next phase, sorting again, or leaving (back to the main menu).
 function showSortingComplete(summary) {
   showStageTransition({
     title: 'Well Done!',
@@ -211,6 +211,11 @@ export function initSortingScene(runCtx) {
         setDragSuspended(false);
       },
       onRestart: restart,
+    });
+    // Leaving this screen by any route (Quit, Leave, the next stage) stops the
+    // belt and countdown, so the timer can't run out behind the main menu.
+    document.addEventListener('screenchange', (event) => {
+      if (event.detail.screenId !== 'screen-sorting') leaveScene();
     });
     wired = true;
   }

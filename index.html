@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="styles/hud.css" />
   <link rel="stylesheet" href="styles/sorting-scene.css" />
   <link rel="stylesheet" href="styles/arranging-scene.css" />
+  <link rel="stylesheet" href="styles/quiz.css" />
 </head>
 <body>
   <div id="app">
@@ -159,6 +160,46 @@
               <img src="assets/ui/menu-close.avif" alt="" />
             </button>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz phase (D5), built by js/quiz/quiz-scene.js -->
+    <section id="screen-quiz" class="screen hidden" data-pausable>
+      <h2 id="quiz-heading"></h2>
+      <div class="stage-hud">
+        <div id="quiz-progress" class="progress-bar" role="progressbar" aria-label="Questions answered" aria-valuemin="0">
+          <div class="progress-bar-fill"></div>
+        </div>
+      </div>
+      <div id="quiz-stage" class="quiz-stage">
+        <div class="quiz-card">
+          <!-- tabindex="-1" lets quiz-scene.js move focus here for each new question -->
+          <h3 id="quiz-question" class="quiz-question" tabindex="-1">
+            <span id="quiz-question-number" class="quiz-question-number"></span>
+            <span id="quiz-question-text"></span>
+          </h3>
+          <div id="quiz-answers" class="quiz-answers" role="group" aria-labelledby="quiz-question">
+            <button type="button" class="quiz-answer">
+              <img class="quiz-answer-letter" src="assets/ui/button-a.avif" alt="A" />
+              <span class="quiz-answer-text"></span>
+            </button>
+            <button type="button" class="quiz-answer">
+              <img class="quiz-answer-letter" src="assets/ui/button-b.avif" alt="B" />
+              <span class="quiz-answer-text"></span>
+            </button>
+            <button type="button" class="quiz-answer">
+              <img class="quiz-answer-letter" src="assets/ui/button-c.avif" alt="C" />
+              <span class="quiz-answer-text"></span>
+            </button>
+            <button type="button" class="quiz-answer">
+              <img class="quiz-answer-letter" src="assets/ui/button-d.avif" alt="D" />
+              <span class="quiz-answer-text"></span>
+            </button>
+          </div>
+          <p id="quiz-feedback" class="quiz-feedback" role="status" aria-live="polite"></p>
+          <!-- next.avif has the arrow drawn on, so the button needs no text -->
+          <button type="button" id="btn-quiz-next" class="quiz-next" aria-label="Next question" disabled></button>
         </div>
       </div>
     </section>

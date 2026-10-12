@@ -80,6 +80,8 @@ export function markTutorialSeen(id) {
 export function resetSession() {
   state.levelId = null;
   state.difficulty = null;
-  // Tutorials intentionally stay seen for the rest of the session (until
-  // the page reloads), so they aren't reset here.
+  // Back at the main menu means the next visitor, who should see the
+  // instructions and how-to-play cards again. Quit and Leave used to reload
+  // the page for this, which also dropped kiosk fullscreen.
+  state.tutorialsSeen.clear();
 }
