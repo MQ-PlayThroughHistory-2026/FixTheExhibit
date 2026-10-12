@@ -56,9 +56,6 @@ async function enterLevel() {
   }
 }
 
-// The way back from any game screen (pause menu Quit, stage popup Leave).
-// No page reload, so kiosk fullscreen stays on. resetSession() clears the
-// level, difficulty and seen tutorials, so the next visitor starts fresh.
 function onReturnToMainMenu() {
   resetSession();
   showScreen('screen-main-menu');
@@ -83,9 +80,10 @@ export async function initMenu() {
   wireBackButtons();
   wireMainMenu();
   wireDifficultyCards();
-  // The pause menu's Quit and the stage popup's Leave both come back here.
-  initPauseMenu({ onQuit: onReturnToMainMenu });
-  initStageTransition({ onExit: onReturnToMainMenu });
+  // The pause menu's Quit (and the stage popup's Leave) reload the page,
+  // which is the way back from any game screen.
+  initPauseMenu();
+  initStageTransition();
 
   try {
     const levels = await loadLevelIndex();

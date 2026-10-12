@@ -13,12 +13,10 @@
  *     and the menu is volume only, closed with the X in its corner.
  * Neither shows anywhere else.
  *
- * Quit goes back to the main menu without reloading, so kiosk fullscreen
- * stays on. menu.js resets the session there, so the next visitor still
- * starts from a clean slate (tutorials included). Each game screen tells
- * this module how to pause, resume and restart itself via
- * registerPauseHandlers(), so this file doesn't need to know anything about
- * belts, drag or popups:
+ * Quit reloads the page, so the next visitor starts from a clean slate
+ * (tutorials included). Each game screen tells this module how to pause,
+ * resume and restart itself via registerPauseHandlers(), so this file
+ * doesn't need to know anything about belts, drag or popups:
  *
  *   registerPauseHandlers('screen-id', {
  *     onPause,   // freeze the scene (belt, drag, timers...)
@@ -51,7 +49,6 @@ const volumeBeforeMute = { bgm: null, sfx: null };
 let activeScreenId = null;
 let isOpen = false;
 let isBlocked = false;
-let quitToMainMenu = () => {};
 
 export function registerPauseHandlers(screenId, handlers) {
   handlersByScreen.set(screenId, handlers);
@@ -150,11 +147,10 @@ function restart() {
   onRestart?.();
 }
 
-// Back to the main menu rather than a reload, which would drop kiosk
-// fullscreen. The scene stops itself when its screen is left.
+// A full reload rather than going back to the main menu, so nothing from
+// this visitor (e.g. tutorials already seen) carries over to the next.
 function quit() {
-  hideMenu();
-  quitToMainMenu();
+  window.location.reload();
 }
 
 function onScreenChange(event) {
@@ -180,12 +176,9 @@ function wireVolumeControls() {
   });
 }
 
-/**
- * @param {object} options
- * @param {() => void} options.onQuit  returns to the main menu (menu.js)
- */
-export function initPauseMenu({ onQuit }) {
-  quitToMainMenu = onQuit;
+export function initPauseMenu() {
+  const overlay = document.getElementById('pause-menu');
+
   document.addEventListener('screenchange', onScreenChange);
   document.getElementById('btn-pause').addEventListener('click', openMenu);
   document.getElementById('btn-pause-resume').addEventListener('click', resume);
@@ -194,9 +187,10 @@ export function initPauseMenu({ onQuit }) {
   document.getElementById('btn-pause-quit').addEventListener('click', quit);
   wireVolumeControls();
 
-  // Tapping the dimmed area around the panel does nothing on purpose. Only
-  // the X (settings) or Resume (pause) closes the menu, so a stray tap on a
-  // kiosk screen doesn't.
+  // Tapping the dimmed area around the panel resumes, same as Resume / X.
+  overlay.addEventListener('click', (event) => {
+    if (event.target === overlay) resume();
+  });
 
   // Escape toggles the menu on keyboard setups.
   document.addEventListener('keydown', (event) => {

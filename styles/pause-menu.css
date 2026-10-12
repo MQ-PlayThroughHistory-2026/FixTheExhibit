@@ -44,9 +44,7 @@
    Plain % padding can't be used on the panel: it resolves against the
    overlay's width, which squashed the contents on wide screens. */
 
-/* Below the inactivity timeout (z-index 9999) so that stays reachable.
-   Dims in the page's own brown rather than black, so the title screen stays
-   the same brown behind settings and game screens fade towards it. */
+/* Below the inactivity timeout (z-index 9999) so that stays reachable. */
 .pause-overlay {
   position: fixed;
   inset: 0;
@@ -54,7 +52,7 @@
   container: pause-overlay / size;
   display: flex;
   padding: var(--space-md);
-  background: color-mix(in srgb, var(--color-bg) 65%, transparent);
+  background: rgba(0, 0, 0, 0.65);
   overflow-y: auto;
 }
 
@@ -207,34 +205,12 @@
 }
 
 /* Settings mode (title / level / difficulty select): next to the title,
-   in place of the bottom button row. The same size as the speaker
-   buttons, which also fits the margin beside the menu-sized title card. */
+   in place of the bottom button row. */
 .pause-close {
   grid-column: 3;
   justify-self: start;
-  width: 10cqw;
-}
-
-/* Settings mode opens right on top of the title page's panel (menu.css), so
-   it copies that panel. Same panel size, the same title card size and text
-   size, and the title in the same spot, so opening settings only swaps
-   what's under the title. The padding-top is where the title page's centred
-   title starts (its frame padding plus half the room its title, gap and
-   Start button leave). The volume rows keep their own sizes, with a little
-   extra space under the title, as much as still fits inside the frame. */
-.pause-panel:has(.pause-close:not(.hidden)) {
-  --panel-width: min(880px, 100cqw - 2rem, (100cqh - 2rem) * 4961 / 4008);
-  justify-content: flex-start;
-  padding-top: calc(var(--panel-width) * 0.171);
-}
-
-.pause-panel:has(.pause-close:not(.hidden)) .pause-title-row {
-  margin-bottom: calc(var(--panel-width) * 0.012);
-}
-
-.pause-panel:has(.pause-close:not(.hidden)) .pause-title {
-  width: 72cqw;
-  font-size: 7.6cqw;
+  width: 12cqw;
+  margin-left: 4cqw;
 }
 
 .pause-mute:hover,
@@ -295,28 +271,15 @@
     gap: 2cqw;
   }
 
-  /* Settings mode on a phone. The same width as the title page's panel
-     there and the same title text size, but centred top to bottom, as the
-     panel grows taller than the art here. The title card is a little
-     narrower than the title page's to leave room for a tappable X. */
-  .pause-panel:has(.pause-close:not(.hidden)) {
-    --panel-width: min(520px, 100cqw - 2rem);
-    justify-content: center;
-    padding-top: calc(var(--panel-width) * 0.15);
-    gap: calc(var(--panel-width) * 0.032);
-  }
-
-  .pause-panel:has(.pause-close:not(.hidden)) .pause-title-row {
-    margin-bottom: 0;
-  }
-
+  /* Settings mode: a smaller title card leaves room for a tappable X. */
   .pause-title-row:has(.pause-close:not(.hidden)) .pause-title {
-    width: 60cqw;
-    font-size: 7.6cqw;
+    width: 56cqw;
+    font-size: 11cqw;
   }
 
   .pause-close {
     width: 17cqw;
+    margin-left: 2cqw; /* all the room left before the panel edge */
   }
 
   .pause-action {
