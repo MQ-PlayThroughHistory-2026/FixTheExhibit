@@ -357,7 +357,6 @@ export function initArrangingScene(runCtx) {
       // An open clue/blurb popup suspends drag itself, so keep it suspended.
       onResume: () => setDragSuspended(isPopupOpen()),
       onRestart: () => initArrangingScene(ctx),
-      onQuit: () => unwatchViewport?.(),
     });
     wired = true;
   }

@@ -23,11 +23,25 @@
   <div id="app">
 
     <!-- FR01: Main Menu -->
-    <section id="screen-main-menu" class="screen">
-      <h1>Fix the Exhibit</h1>
-      <div class="menu-actions">
-        <button id="btn-start" class="btn-primary">Start</button>
-        <button id="btn-instructions" class="btn-secondary">Instructions</button>
+    <section id="screen-main-menu" class="screen" data-settings>
+      <!-- Reuses the pause menu's backplate, title card and button art. -->
+      <div class="pause-panel title-panel">
+        <h1 class="pause-title title-panel-title">Fix the Exhibit</h1>
+        <button id="btn-start" class="pause-action title-panel-start">Start</button>
+      </div>
+
+      <!-- Instructions (FR01): shown once, the first time Start is pressed
+           (js/ui/tutorial.js). -->
+      <div id="intro-tutorial" class="info-card tutorial-card intro-card hidden" role="dialog" aria-labelledby="intro-tutorial-title">
+        <div class="info-card-content">
+          <strong id="intro-tutorial-title" class="info-card-title">Instructions</strong>
+          <p>
+            You're the new intern and the delivery labels are mixed up. Sort
+            real artefacts from filler packages before time runs out, then
+            arrange the exhibit and answer a short quiz about what you learned.
+          </p>
+          <button class="info-card-action">Got it, let's start</button>
+        </div>
       </div>
 
       <!-- Exit Fullscreen function -->
@@ -48,7 +62,7 @@
     </section>
 
     <!-- Level select -->
-    <section id="screen-level-select" class="screen hidden">
+    <section id="screen-level-select" class="screen hidden" data-settings>
       <h2>Choose a level</h2>
       <p>Pick which exhibit you'll be sorting today.</p>
       <div id="level-list" class="card-grid">Loading levels&hellip;</div>
@@ -56,7 +70,7 @@
     </section>
 
     <!-- Difficulty select (D6) -->
-    <section id="screen-difficulty-select" class="screen hidden">
+    <section id="screen-difficulty-select" class="screen hidden" data-settings>
       <h2>Choose difficulty</h2>
       <p>This changes the sorting timer, belt speed, and arrangement hints.</p>
       <div class="card-grid">
@@ -92,7 +106,7 @@
           <div class="info-card-content">
             <strong id="sorting-tutorial-title" class="info-card-title">How to Play</strong>
             <p>Drag each package into the display case if it belongs in the exhibit, or into storage if it doesn't. Sort everything before the timer runs out!</p>
-            <button class="btn-secondary">Got it, let's start</button>
+            <button class="info-card-action">Got it, let's start</button>
           </div>
         </div>
         <!-- Information card (D3), shown after each drop -->
@@ -100,21 +114,12 @@
           <div class="info-card-content">
             <strong id="sorting-feedback-title" class="info-card-title"></strong>
             <p id="sorting-feedback-text"></p>
-            <button id="btn-sorting-feedback-close" class="btn-secondary">Close</button>
+            <button id="btn-sorting-feedback-close" class="info-card-close" aria-label="Close">
+              <img src="assets/ui/menu-close.avif" alt="" />
+            </button>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- Instructions (FR01) -->
-    <section id="screen-instructions" class="screen hidden">
-      <h2>Instructions</h2>
-      <p>
-        You're the new intern and the delivery labels are mixed up. Sort
-        real artefacts from filler packages before time runs out, then
-        arrange the exhibit and answer a short quiz about what you learned.
-      </p>
-      <button class="btn-back" data-target="screen-main-menu">&larr; Back</button>
     </section>
 
     <!-- Arranging phase (D2), built by js/game/arranging-scene.js -->
@@ -131,7 +136,7 @@
           <div class="info-card-content">
             <strong id="arranging-tutorial-title" class="info-card-title">How to Play</strong>
             <p id="arranging-tutorial-text"></p>
-            <button class="btn-secondary">Got it, let's start</button>
+            <button class="info-card-action">Got it, let's start</button>
           </div>
         </div>
         <!-- Information card (D4), shown after each correct placement -->
@@ -140,7 +145,9 @@
             <img id="arranging-feedback-image" class="arranging-feedback-image hidden" alt="" />
             <strong id="arranging-feedback-title" class="info-card-title"></strong>
             <p id="arranging-feedback-text"></p>
-            <button id="btn-arranging-feedback-close" class="btn-secondary">Close</button>
+            <button id="btn-arranging-feedback-close" class="info-card-close" aria-label="Close">
+              <img src="assets/ui/menu-close.avif" alt="" />
+            </button>
           </div>
         </div>
         <!-- Hard-mode riddle popup, opened by tapping an empty slot's riddle card -->
@@ -148,7 +155,9 @@
           <div class="info-card-content arranging-clue-content">
             <strong class="info-card-title">Clue</strong>
             <p id="arranging-clue-text"></p>
-            <button id="btn-arranging-clue-close" class="btn-secondary">Close</button>
+            <button id="btn-arranging-clue-close" class="info-card-close" aria-label="Close">
+              <img src="assets/ui/menu-close.avif" alt="" />
+            </button>
           </div>
         </div>
       </div>
@@ -156,15 +165,22 @@
 
   </div>
 
-  <!-- Pause button + menu (js/ui/pause-menu.js). The button only shows on
-       screens marked data-pausable above. -->
+  <!-- Pause/settings button + menu (js/ui/pause-menu.js). Shows as a pause
+       button on screens marked data-pausable above, and as a burger menu
+       (settings only, no Restart/Quit) on screens marked data-settings. -->
   <button id="btn-pause" class="pause-button hidden" aria-label="Pause" aria-haspopup="dialog" aria-controls="pause-menu">
     <img src="assets/ui/pause-button.avif" alt="" />
   </button>
 
   <div id="pause-menu" class="pause-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pause-menu-title">
     <div class="pause-panel">
-      <h2 id="pause-menu-title" class="pause-title">Settings</h2>
+      <div class="pause-title-row">
+        <h2 id="pause-menu-title" class="pause-title">Settings</h2>
+        <!-- Settings mode only, replaces the Restart / Resume / Quit row. -->
+        <button type="button" id="btn-pause-close" class="pause-close hidden" aria-label="Close settings">
+          <img src="assets/ui/menu-close.avif" alt="" />
+        </button>
+      </div>
 
       <div class="pause-volume-row">
         <span id="pause-bgm-label" class="pause-label">Background Music</span>
@@ -183,10 +199,10 @@
       </div>
 
       <div class="pause-actions">
+        <button type="button" id="btn-pause-restart" class="pause-action">Restart</button>
         <button type="button" id="btn-pause-resume" class="pause-resume" aria-label="Resume">
           <img src="assets/ui/resume-button.avif" alt="" />
         </button>
-        <button type="button" id="btn-pause-restart" class="pause-action">Restart</button>
         <button type="button" id="btn-pause-quit" class="pause-action">Quit</button>
       </div>
     </div>
@@ -201,10 +217,8 @@
 
       <div class="pause-actions">
         <button type="button" id="btn-stage-restart" class="pause-action">Restart</button>
-        <button type="button" id="btn-stage-next" class="pause-resume" aria-label="Next stage">
-          <img src="assets/ui/resume-button.avif" alt="" />
-        </button>
         <button type="button" id="btn-stage-exit" class="pause-action">Leave</button>
+        <button type="button" id="btn-stage-next" class="pause-action stage-next" aria-label="Next stage"></button>
       </div>
     </div>
   </div>

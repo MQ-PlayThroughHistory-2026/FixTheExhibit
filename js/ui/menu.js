@@ -5,7 +5,8 @@
  * Flow: Main Menu -> Level Select -> Difficulty Select -> the level itself
  * (js/game/level.js), whose scenes show their own first-time tutorials.
  *
- * FR01 (Main Menu): start and instructions are covered here. No "Exit"
+ * FR01 (Main Menu): start and instructions are covered here - the
+ * instructions are a card shown once, the first time Start is pressed. No "Exit"
  * button - as a museum kiosk game, returning to idle/main menu after a
  * period of inactivity (FR10/FR11 in the SRS) matters more than letting a
  * visitor close the game outright, so that's the pattern to build instead
@@ -15,6 +16,7 @@
 import { showScreen, wireBackButtons } from './screens.js';
 import { initPauseMenu } from './pause-menu.js';
 import { initStageTransition } from './stage-transition.js';
+import { showTutorialOnce } from './tutorial.js';
 import { startLevel } from '../game/level.js';
 import { loadLevelIndex } from '../game/level-data.js';
 import { setLevel, setDifficulty, resetSession } from '../game/state.js';
@@ -66,11 +68,11 @@ function wireDifficultyCards() {
 }
 
 function wireMainMenu() {
+  const intro = document.getElementById('intro-tutorial');
   document.getElementById('btn-start').addEventListener('click', () => {
-    showScreen('screen-level-select');
-  });
-  document.getElementById('btn-instructions').addEventListener('click', () => {
-    showScreen('screen-instructions');
+    // Already showing the instructions - its own button moves on.
+    if (!intro.classList.contains('hidden')) return;
+    showTutorialOnce('intro', intro, () => showScreen('screen-level-select'));
   });
 }
 
@@ -78,9 +80,10 @@ export async function initMenu() {
   wireBackButtons();
   wireMainMenu();
   wireDifficultyCards();
-  // The pause menu's Quit button is the way back from any game screen.
-  initPauseMenu({ onQuit: onReturnToMainMenu });
-  initStageTransition({ onExit: onReturnToMainMenu });
+  // The pause menu's Quit (and the stage popup's Leave) reload the page,
+  // which is the way back from any game screen.
+  initPauseMenu();
+  initStageTransition();
 
   try {
     const levels = await loadLevelIndex();

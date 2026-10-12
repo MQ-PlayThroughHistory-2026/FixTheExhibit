@@ -146,14 +146,13 @@ function leaveScene() {
   unwatchViewport?.();
 }
 
-// Offers moving on to the next phase, sorting again, or going back to the main menu.
+// Offers moving on to the next phase, sorting again, or leaving (reloads the page).
 function showSortingComplete(summary) {
   showStageTransition({
     title: 'Well Done!',
     message: `You sorted ${summary.correct} of ${summary.total} packages correctly. Next up: arranging the display case.`,
     onNext: ctx.onNext,
     onRestart: restart,
-    onExit: leaveScene,
   });
 }
 
@@ -169,7 +168,6 @@ function onTimeUp(sorter) {
     message: `You sorted ${summary.sorted} of ${summary.total} packages, ${summary.correct} correctly. Next up: arranging the display case.`,
     onNext: ctx.onNext,
     onRestart: restart,
-    onExit: leaveScene,
   });
 }
 
@@ -213,7 +211,6 @@ export function initSortingScene(runCtx) {
         setDragSuspended(false);
       },
       onRestart: restart,
-      onQuit: leaveScene,
     });
     wired = true;
   }
