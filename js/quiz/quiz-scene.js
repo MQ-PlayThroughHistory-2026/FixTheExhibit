@@ -9,7 +9,10 @@
  * on, and stays disabled until the question is answered.
  *
  * After the last question the stage transition (js/ui/stage-transition.js)
- * shows the score. Restart replays the whole level from sorting
+ * shows the quiz result with a single arrow button, which opens the
+ * certificate (js/ui/certificate.js) with the level's score and title
+ * (js/game/score.js). Restart and Leave live on the certificate, so the
+ * player always reaches it: Restart replays the whole level from sorting
  * (ctx.onRestartLevel) and Leave reloads the page back to the title
  * screen. The score is only shown, never stored (NFR08).
  *
@@ -24,10 +27,12 @@
 
 import { buildQuestions, createQuiz } from './quiz.js';
 import { getDifficulty } from '../game/state.js';
+import { calculateScore, getTitle } from '../game/score.js';
 import { sizeStageToViewport, watchViewport } from '../game/stage-size.js';
 import { registerPauseHandlers } from '../ui/pause-menu.js';
 import { playSfx } from '../ui/audio.js';
 import { showStageTransition } from '../ui/stage-transition.js';
+import { showCertificate } from '../ui/certificate.js';
 import { setProgress } from '../ui/progress-bar.js';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
@@ -105,18 +110,34 @@ function leaveScene() {
   unwatchViewport = null;
 }
 
-// End of the level. Shows the score and offers replaying the whole level, or Leave.
-// Stands in for the end of level screen (task D10, Yuyang's "Finished screen"
-// card) until that exists. Swap this call for it, quiz.getSummary() has the score.
-function showLevelComplete() {
-  const { correct, total } = quiz.getSummary();
-  showStageTransition({
-    title: 'Well Done!',
-    message: `Level complete! You answered ${correct} of ${total} questions correctly. Restart to play the whole level again.`,
+// The end of level screen (task D10). Shows the score and title earned
+// across all three phases, and offers replaying the whole level, or Leave.
+function showLevelCertificate() {
+  const score = calculateScore(ctx.results);
+  playSfx('congratulations');
+  showCertificate({
+    levelName: ctx.level.name,
+    score,
+    ...getTitle(score, getDifficulty()),
     onRestart: () => {
       leaveScene();
       ctx.onRestartLevel();
     },
+  });
+}
+
+// End of the quiz. Only the arrow is offered, so the popup doesn't read as
+// one more stage to get through and the player goes on to see their certificate.
+function showLevelComplete() {
+  const { correct, total } = quiz.getSummary();
+  ctx.results.quiz = { correct, total };
+  playSfx('wellDone');
+  showStageTransition({
+    title: 'Well Done!',
+    message: `Level complete! You answered ${correct} of ${total} questions correctly. Let's see how you did.`,
+    nextLabel: 'See your certificate',
+    canLeave: false,
+    onNext: showLevelCertificate,
   });
 }
 
@@ -134,7 +155,7 @@ function goNext() {
 /**
  * Builds this level's questions for the chosen difficulty and shows the first. Safe to call again, it starts over.
  *
- * @param {object} runCtx  { level, settings, onNext, onRestartLevel } from js/game/level.js
+ * @param {object} runCtx  { level, settings, results, onNext, onRestartLevel } from js/game/level.js
  */
 export function initQuizScene(runCtx) {
   ctx = runCtx;

@@ -67,6 +67,8 @@ let openClueSlot = null;
 let ctx = null;
 // Set once every artefact is placed. The transition opens when the last card closes.
 let completedSummary = null;
+// Drops onto the wrong slot this run, for the score (score.js).
+let misplacedCount = 0;
 
 // Returns a shuffled copy of the list.
 function shuffle(list) {
@@ -340,6 +342,9 @@ function renderProgress(summary) {
 // Runs after the information card's Close. Once everything is placed it offers moving on to the quiz.
 function showCompleteIfDone() {
   if (!completedSummary) return;
+  const { total } = completedSummary;
+  ctx.results.arranging = { correct: total, total: total + misplacedCount };
+  playSfx('wellDone');
   showStageTransition({
     title: 'Well Done!',
     message: `All ${completedSummary.total} artefacts are on display. Next, answer the visitors' questions in a short quiz.`,
@@ -351,7 +356,7 @@ function showCompleteIfDone() {
 /**
  * Builds a fresh arranging stage. Safe to call again, it starts over.
  *
- * @param {object} runCtx  { level, settings, onNext } from js/game/level.js
+ * @param {object} runCtx  { level, settings, results, onNext } from js/game/level.js
  */
 export function initArrangingScene(runCtx) {
   ctx = runCtx;
@@ -364,6 +369,7 @@ export function initArrangingScene(runCtx) {
   // Only remove the previous run's slots/items
   stage.querySelectorAll('.silhouette-slot, .arranging-item').forEach((el) => el.remove());
   completedSummary = null;
+  misplacedCount = 0;
   hideFeedback();
   hideCluePopup();
 
@@ -406,7 +412,10 @@ export function initArrangingScene(runCtx) {
       renderProgress(arranger.getSummary());
       showFeedback(item);
     },
-    onMisplaced: () => playSfx('incorrect'),
+    onMisplaced() {
+      misplacedCount += 1;
+      playSfx('incorrect');
+    },
     // onPlaced has just opened the last artefact's card, the transition waits for it to close.
     onComplete(summary) {
       completedSummary = summary;

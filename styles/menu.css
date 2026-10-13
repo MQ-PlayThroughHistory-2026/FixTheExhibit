@@ -3,11 +3,12 @@
    screens. Shared tokens/layout live in variables.css / base.css. */
 
 /* Title page: the pause menu's panel (pause-menu.css) holding just the
-   title and Start. It isn't inside .pause-overlay, so it sizes itself to
-   the viewport here instead. */
+   title and Start, without the backplate art. It isn't inside
+   .pause-overlay, so it sizes itself to the viewport here instead. */
 .pause-panel.title-panel {
   --panel-width: min(880px, 100vw - var(--space-lg) * 2, (100vh - var(--space-lg) * 2) * 4961 / 4008);
   gap: calc(var(--panel-width) * 0.06);
+  background: none;
 }
 
 /* Wider than the pause menu's so "Fix the Exhibit" fits. */

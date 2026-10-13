@@ -15,6 +15,9 @@ const SFX_URLS = {
   click: 'assets/sounds/effects/button-click.mp3',
   correct: 'assets/sounds/effects/correct.mp3',
   incorrect: 'assets/sounds/effects/incorrect.mp3',
+  timesUp: 'assets/sounds/effects/times-up.mp3',
+  wellDone: 'assets/sounds/effects/well-done.mp3',
+  congratulations: 'assets/sounds/effects/congratuations.mp3',
 };
 
 const DEFAULT_BGM_VOLUME = 0.25;
@@ -26,6 +29,8 @@ bgm.preload = 'auto';
 bgm.volume = DEFAULT_BGM_VOLUME;
 
 let sfxVolume = DEFAULT_SFX_VOLUME;
+// True once the click being handled has played an effect of its own, see initAudio().
+let clickPlayedSfx = false;
 
 // One preloaded element per effect. playSfx() plays a clone of it so rapid
 // repeats (e.g. several quick button taps) overlap instead of cutting off.
@@ -59,6 +64,7 @@ export function setSfxVolume(volume) {
 
 /** Plays one of SFX_URLS' effects at the current sound effects volume. */
 export function playSfx(name) {
+  clickPlayedSfx = true;
   const sample = sfxSamples[name];
   if (!sample || sfxVolume === 0) return;
   const sound = sample.cloneNode();
@@ -78,7 +84,9 @@ function startBgm() {
 /**
  * Starts the music on the first interaction and plays the click effect for
  * every button press. Delegated on the document so buttons created later
- * (level cards, hard-mode clue slots) are covered too.
+ * (level cards, hard-mode clue slots) are covered too. A press whose own
+ * handler already played an effect (a quiz answer's correct / incorrect,
+ * the button that opens a Well Done popup) gets no click on top of it.
  */
 export function initAudio() {
   ['pointerdown', 'keydown', 'click'].forEach((type) => {
@@ -90,7 +98,12 @@ export function initAudio() {
     });
   }, { once: true });
 
+  // Capture runs before the button's own handlers, the listener below after them.
+  document.addEventListener('click', () => {
+    clickPlayedSfx = false;
+  }, true);
   document.addEventListener('click', (event) => {
+    if (clickPlayedSfx) return;
     if (event.target.closest('button, [role="button"]')) playSfx('click');
   });
 }
