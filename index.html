@@ -95,13 +95,20 @@
         <div id="sorting-progress" class="progress-bar" role="progressbar" aria-label="Packages sorted" aria-valuemin="0">
           <div class="progress-bar-fill"></div>
         </div>
-        <!-- Countdown (D8), length set by the difficulty -->
-        <span id="sorting-timer" class="hud-timer" role="timer" aria-label="Time remaining"></span>
       </div>
       <div id="stage-area" class="stage-area">
+        <!-- Countdown (D8), length set by the difficulty -->
+        <span id="sorting-timer" class="hud-timer" role="timer" aria-label="Time remaining"></span>
         <div class="drop-zones">
-          <span class="zone-label zone-label--case" data-zone="display-case">Display case</span>
-          <span class="zone-label zone-label--bin" data-zone="rejection-bin">Storage</span>
+          <!-- has-image hides the box behind the art; sorting-scene.js brings it back if the image fails -->
+          <span class="zone-label zone-label--case has-image" data-zone="display-case">
+            <span class="zone-name">Display</span>
+            <img class="zone-art" src="assets/sort-scene/display.avif" alt="" />
+          </span>
+          <span class="zone-label zone-label--bin has-image" data-zone="rejection-bin">
+            <span class="zone-name">Storage</span>
+            <img class="zone-art" src="assets/sort-scene/storage.avif" alt="" />
+          </span>
         </div>
         <!-- First-time tutorial (js/ui/tutorial.js) -->
         <div id="sorting-tutorial" class="info-card tutorial-card hidden" role="dialog" aria-labelledby="sorting-tutorial-title">

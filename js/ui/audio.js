@@ -16,6 +16,8 @@ const SFX_URLS = {
   correct: 'assets/sounds/effects/correct.mp3',
   incorrect: 'assets/sounds/effects/incorrect.mp3',
   timesUp: 'assets/sounds/effects/times-up.mp3',
+  clueUp: 'assets/sounds/effects/clue-up.mp3',
+  clueDown: 'assets/sounds/effects/clue-down.mp3',
   wellDone: 'assets/sounds/effects/well-done.mp3',
   congratulations: 'assets/sounds/effects/congratulations.mp3',
 };
@@ -74,6 +76,16 @@ export function playSfx(name) {
   });
 }
 
+/**
+ * Call while handling a click that should make no sound at all: the click
+ * effect is skipped for it (see initAudio()). For a press that does
+ * nothing (a riddle card behind an open popup) or that is better silent
+ * (closing an information card).
+ */
+export function skipClickSfx() {
+  clickPlayedSfx = true;
+}
+
 function startBgm() {
   if (!bgm.paused) return;
   bgm.play().catch(() => {
@@ -86,7 +98,8 @@ function startBgm() {
  * every button press. Delegated on the document so buttons created later
  * (level cards, hard-mode clue slots) are covered too. A press whose own
  * handler already played an effect (a quiz answer's correct / incorrect,
- * the button that opens a Well Done popup) gets no click on top of it.
+ * the button that opens a Well Done popup) gets no click on top of it, and
+ * neither does one whose handler called skipClickSfx().
  */
 export function initAudio() {
   ['pointerdown', 'keydown', 'click'].forEach((type) => {

@@ -36,7 +36,7 @@ import { createArranger } from './arranging.js';
 import { setDragSuspended } from './drag.js';
 import { sizeStageToViewport, watchViewport } from './stage-size.js';
 import { registerPauseHandlers } from '../ui/pause-menu.js';
-import { playSfx } from '../ui/audio.js';
+import { playSfx, skipClickSfx } from '../ui/audio.js';
 import { showStageTransition } from '../ui/stage-transition.js';
 import { setProgress } from '../ui/progress-bar.js';
 import { showTutorialOnce } from '../ui/tutorial.js';
@@ -170,10 +170,12 @@ function wireClueSlot(slot, item, onClueRequested) {
   slot.setAttribute('aria-label', 'Read the riddle for this spot');
 
   const activate = () => {
-    // No clue once the slot is filled (is-filled is set by arranging.js).
-    if (slot.classList.contains('is-filled')) return;
-    // Only one popup at a time - close the open clue/blurb first.
-    if (isPopupOpen()) return;
+    // No clue once the slot is filled (is-filled is set by arranging.js),
+    // and only one popup at a time - close the open clue/blurb first.
+    if (slot.classList.contains('is-filled') || isPopupOpen()) {
+      skipClickSfx(); // nothing happens, so nothing should sound like it did
+      return;
+    }
     onClueRequested(item, slot);
   };
   slot.addEventListener('click', activate);
@@ -310,8 +312,9 @@ function hideFeedback() {
   setDragSuspended(false);
 }
 
-// Hard mode only. Shows item.riddle (task R9, Project Plan 6.2.1).
+// Hard mode only. Picks up a slot's riddle card: shows item.riddle (task R9, Project Plan 6.2.1).
 function showCluePopup(item, slot) {
+  playSfx('clueUp');
   hideFeedback();
   if (openClueSlot && openClueSlot !== slot) {
     openClueSlot.classList.remove('is-clue-open');
@@ -332,6 +335,12 @@ function hideCluePopup() {
     openClueSlot = null;
   }
   setDragSuspended(false);
+}
+
+// The clue popup's Close: puts the riddle card back down.
+function closeCluePopup() {
+  playSfx('clueDown');
+  hideCluePopup();
 }
 
 // Fills the progress bar by how many artefacts have been placed.
@@ -374,9 +383,11 @@ export function initArrangingScene(runCtx) {
   hideCluePopup();
 
   if (!wired) {
+    // The information card closes quietly.
+    document.getElementById('btn-arranging-feedback-close').addEventListener('click', skipClickSfx);
     document.getElementById('btn-arranging-feedback-close').addEventListener('click', hideFeedback);
     document.getElementById('btn-arranging-feedback-close').addEventListener('click', showCompleteIfDone);
-    document.getElementById('btn-arranging-clue-close').addEventListener('click', hideCluePopup);
+    document.getElementById('btn-arranging-clue-close').addEventListener('click', closeCluePopup);
     registerPauseHandlers('screen-arranging', {
       onPause: () => setDragSuspended(true),
       // An open clue/blurb popup suspends drag itself, so keep it suspended.
