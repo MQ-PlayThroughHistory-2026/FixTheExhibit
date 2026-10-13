@@ -18,7 +18,7 @@
   align-items: center;
   justify-content: center;
   gap: calc(var(--panel-width) * 0.016);
-  background: url('../assets/ui/certificate.png') center / 100% 100% no-repeat;
+  background: url('../assets/ui/certificate.avif') center / 100% 100% no-repeat;
   color: var(--color-ink);
   text-align: center;
 }

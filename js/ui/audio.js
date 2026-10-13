@@ -17,7 +17,7 @@ const SFX_URLS = {
   incorrect: 'assets/sounds/effects/incorrect.mp3',
   timesUp: 'assets/sounds/effects/times-up.mp3',
   wellDone: 'assets/sounds/effects/well-done.mp3',
-  congratulations: 'assets/sounds/effects/congratuations.mp3',
+  congratulations: 'assets/sounds/effects/congratulations.mp3',
 };
 
 const DEFAULT_BGM_VOLUME = 0.25;
