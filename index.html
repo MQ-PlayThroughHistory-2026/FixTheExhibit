@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="styles/kiosk-refresh.css" />
   <link rel="stylesheet" href="styles/pause-menu.css" />
   <link rel="stylesheet" href="styles/stage-transition.css" />
+  <link rel="stylesheet" href="styles/certificate.css" />
   <link rel="stylesheet" href="styles/info-card.css" />
   <link rel="stylesheet" href="styles/hud.css" />
   <link rel="stylesheet" href="styles/sorting-scene.css" />
@@ -260,6 +261,23 @@
         <button type="button" id="btn-stage-restart" class="pause-action">Restart</button>
         <button type="button" id="btn-stage-exit" class="pause-action">Leave</button>
         <button type="button" id="btn-stage-next" class="pause-action stage-next" aria-label="Next stage"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- End of level certificate (js/ui/certificate.js). Reuses the pause
+       menu's overlay and button art. -->
+  <div id="certificate" class="pause-overlay certificate hidden" role="dialog" aria-modal="true" aria-labelledby="certificate-title" aria-describedby="certificate-description">
+    <div class="certificate-panel">
+      <p class="certificate-heading">Congratulations!</p>
+      <p id="certificate-level" class="certificate-level"></p>
+      <h2 id="certificate-title" class="certificate-title"></h2>
+      <p id="certificate-description" class="certificate-description"></p>
+      <p id="certificate-score" class="certificate-score"></p>
+
+      <div class="pause-actions">
+        <button type="button" id="btn-certificate-restart" class="pause-action">Restart</button>
+        <button type="button" id="btn-certificate-exit" class="pause-action">Leave</button>
       </div>
     </div>
   </div>

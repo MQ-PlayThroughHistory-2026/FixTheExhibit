@@ -13,7 +13,9 @@
  *     title,     // heading on the title card (default "Well Done!")
  *     message,   // line under it, e.g. a score summary
  *     onNext,    // go to the next stage - the Next button is hidden if omitted
- *     onRestart, // start this stage over
+ *     onRestart, // start this stage over - the Restart button is hidden if omitted
+ *     nextLabel, // what the Next arrow says to screen readers (default "Next stage")
+ *     canLeave,  // false hides Leave, for a popup that only moves on (default true)
  *   });
  */
 
@@ -49,12 +51,21 @@ function exit() {
   window.location.reload();
 }
 
-export function showStageTransition({ title = 'Well Done!', message = '', onNext, onRestart } = {}) {
+export function showStageTransition({
+  title = 'Well Done!',
+  message = '',
+  onNext,
+  onRestart,
+  nextLabel = 'Next stage',
+  canLeave = true,
+} = {}) {
   current = { onNext, onRestart };
   document.getElementById('stage-transition-title').textContent = title;
   document.getElementById('stage-transition-text').textContent = message;
   document.getElementById('btn-stage-next').classList.toggle('hidden', !onNext);
+  document.getElementById('btn-stage-next').setAttribute('aria-label', nextLabel);
   document.getElementById('btn-stage-restart').classList.toggle('hidden', !onRestart);
+  document.getElementById('btn-stage-exit').classList.toggle('hidden', !canLeave);
   // The stage is over, so there's nothing left to pause.
   setPauseBlocked(true);
   document.getElementById('stage-transition').classList.remove('hidden');

@@ -16,6 +16,7 @@
 import { showScreen, wireBackButtons } from './screens.js';
 import { initPauseMenu } from './pause-menu.js';
 import { initStageTransition } from './stage-transition.js';
+import { initCertificate } from './certificate.js';
 import { showTutorialOnce } from './tutorial.js';
 import { startLevel } from '../game/level.js';
 import { loadLevelIndex } from '../game/level-data.js';
@@ -80,10 +81,11 @@ export async function initMenu() {
   wireBackButtons();
   wireMainMenu();
   wireDifficultyCards();
-  // The pause menu's Quit (and the stage popup's Leave) reload the page,
+  // The pause menu's Quit (and the stage popup's and certificate's Leave) reload the page,
   // which is the way back from any game screen.
   initPauseMenu();
   initStageTransition();
+  initCertificate();
 
   try {
     const levels = await loadLevelIndex();

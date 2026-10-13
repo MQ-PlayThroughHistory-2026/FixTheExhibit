@@ -148,6 +148,8 @@ function leaveScene() {
 
 // Offers moving on to the next phase, sorting again, or leaving (reloads the page).
 function showSortingComplete(summary) {
+  ctx.results.sorting = { correct: summary.correct, total: summary.total };
+  playSfx('wellDone');
   showStageTransition({
     title: 'Well Done!',
     message: `You sorted ${summary.correct} of ${summary.total} packages correctly. Next up: arranging the display case.`,
@@ -161,8 +163,10 @@ function onTimeUp(sorter) {
   timeUp = true;
   belt?.stop();
   setDragSuspended(true);
-  playSfx('incorrect');
+  playSfx('timesUp');
   const summary = sorter.getSummary();
+  // Whatever was left on the belt counts against the score (score.js).
+  ctx.results.sorting = { correct: summary.correct, total: summary.total };
   showStageTransition({
     title: "Time's Up!",
     message: `You sorted ${summary.sorted} of ${summary.total} packages, ${summary.correct} correctly. Next up: arranging the display case.`,
@@ -188,7 +192,7 @@ function renderProgress(summary) {
 /**
  * Builds the belt, the packages and a new sorter. Safe to call again, it starts over.
  *
- * @param {object} runCtx  { level, settings, onNext } from js/game/level.js
+ * @param {object} runCtx  { level, settings, results, onNext } from js/game/level.js
  */
 export function initSortingScene(runCtx) {
   ctx = runCtx;
