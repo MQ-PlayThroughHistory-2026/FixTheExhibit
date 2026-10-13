@@ -1,0 +1,239 @@
+/* quiz.css
+   Layout for the quiz screen (js/quiz/quiz-scene.js), drawn on the
+   assets/ui art. The card is menu-backplate.avif, the question sits on
+   button.avif, the answers use button-a to button-d.avif and the arrow
+   button is next.avif, as in the quiz reference mockup.
+
+   The stage is a size container (sized by js/game/stage-size.js) so the
+   card can fit itself to the room left on screen. The card is an
+   inline-size container, so everything on it is sized in cqw and the
+   whole card scales as one piece. Marks are a steady colour plus a tick or
+   cross, nothing flashes (NFR05). */
+
+.quiz-stage {
+  width: 100%;
+  height: clamp(320px, 68vh, 760px); /* stage-size.js sets the real height */
+  container: quiz-stage / size;
+  display: flex;
+  overflow-y: auto;
+}
+
+/* The backplate is drawn as a nine-slice frame (border-image), so its cut
+   corners keep their shape when the card grows taller than the art, e.g.
+   on a phone or with a long question. The card's own sizes come from
+   --card-width because its cqw would measure the stage, not itself. The
+   frame is a whole number of pixels, and the same art stretched whole sits
+   underneath, so a hairline seam between the slices shows matching colour
+   instead of the page. The stretched copy's cut corners are always at
+   least as big as the sliced ones, so it never pokes out past them. */
+.quiz-card {
+  --card-width: min(900px, 100cqw, 100cqh * 1024 / 828);
+  --frame: round(down, var(--card-width) * 0.1, 1px);
+  --quiz-cream: #f2eccc; /* button.avif centre */
+  --quiz-gold: #fce000; /* the frames' yellow */
+  container: quiz-card / inline-size;
+  width: var(--card-width);
+  min-height: calc(var(--card-width) * 828 / 1024);
+  margin: auto; /* centres, and stays scrollable from the top if it overflows */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: calc(var(--card-width) * 0.012);
+  padding: calc(var(--card-width) * 0.012) calc(var(--card-width) * 0.015);
+  border: var(--frame) solid transparent;
+  border-image: url('../assets/ui/menu-backplate.avif') 15% 12% fill / var(--frame) stretch;
+  background: url('../assets/ui/menu-backplate.avif') center / 100% 100% no-repeat border-box;
+  color: var(--color-text);
+  text-align: left;
+}
+
+/* Question plate on button.avif, also nine-sliced so the frame stays the
+   same thickness however many lines the question takes. */
+.quiz-question {
+  --frame: 3.4cqw;
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  min-height: 13cqw;
+  margin: 0;
+  padding: 0.3cqw 1.4cqw;
+  border: var(--frame) solid transparent;
+  border-image: url('../assets/ui/button.avif') 20.5% 10% fill / var(--frame) stretch;
+  color: var(--color-ink);
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 3.2cqw, 1.9rem);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+/* Only focused from code when a new question appears, never by tabbing. */
+.quiz-question:focus {
+  outline: none;
+}
+
+.quiz-question-number {
+  flex-shrink: 0;
+}
+
+.quiz-answers {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2cqw;
+}
+
+/* Each answer is one wide button, letter art plus text on a cream panel
+   edged in the frames' yellow, so the text stays readable on the grey card
+   and the whole row is the hit area (UR06). */
+.quiz-answer {
+  display: flex;
+  align-items: center;
+  gap: 2.5cqw;
+  width: 100%;
+  min-height: 48px;
+  padding: 0.5cqw 1.5cqw 0.5cqw 0.5cqw;
+  background: var(--quiz-cream);
+  border: 3px solid var(--quiz-gold);
+  border-radius: var(--radius-md);
+  color: var(--color-ink);
+  text-align: left;
+  font-size: clamp(0.95rem, 2.9cqw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    opacity var(--transition-base);
+}
+
+.quiz-answer-letter {
+  flex-shrink: 0;
+  width: clamp(44px, 7.5cqw, 90px);
+  aspect-ratio: 1298 / 1282; /* button-a.avif */
+  pointer-events: none;
+}
+
+.quiz-answer-text {
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.quiz-answer:hover:not([aria-disabled='true']) {
+  filter: brightness(1.06);
+}
+
+/* Answered. The buttons stay focusable for screen readers but take no
+   more input (quiz.js ignores a second answer). */
+.quiz-answer[aria-disabled='true'] {
+  cursor: default;
+}
+
+.quiz-answer[aria-disabled='true']:active {
+  transform: none;
+}
+
+.quiz-answer.is-correct {
+  background: color-mix(in srgb, var(--color-easy) 35%, var(--quiz-cream));
+  border-color: var(--color-easy);
+}
+
+.quiz-answer.is-incorrect {
+  background: color-mix(in srgb, var(--color-hard) 30%, var(--quiz-cream));
+  border-color: var(--color-hard);
+}
+
+.quiz-answer.is-dimmed {
+  opacity: 0.6;
+}
+
+/* A tick or cross as well as the colour, so the marking doesn't rely on
+   colour alone. The "/ ''" keeps screen readers from announcing it, the
+   live feedback line already says the result. */
+.quiz-answer.is-correct::after,
+.quiz-answer.is-incorrect::after {
+  flex-shrink: 0;
+  font-size: 1.4em;
+  font-weight: 700;
+}
+
+.quiz-answer.is-correct::after {
+  content: '\2713';
+  content: '\2713' / '';
+  color: color-mix(in srgb, var(--color-easy) 70%, #000);
+}
+
+.quiz-answer.is-incorrect::after {
+  content: '\2717';
+  content: '\2717' / '';
+  color: color-mix(in srgb, var(--color-hard) 85%, #000);
+}
+
+/* Light bold text on the grey card, at least 1.2rem so it meets the large
+   text contrast level. Holds its line even when empty, so the arrow doesn't
+   jump on answering. */
+.quiz-feedback {
+  min-height: 1.3em;
+  max-width: none;
+  margin: 0;
+  text-align: center;
+  color: var(--color-text);
+  font-size: clamp(1.2rem, 3cqw, 1.6rem);
+  font-weight: 700;
+  line-height: 1.3;
+  text-wrap: balance; /* no lone "A." on a second line on a phone */
+}
+
+/* Arrow button. next.avif has the arrow drawn on, shown at its own proportions. */
+.quiz-next {
+  align-self: center;
+  width: clamp(110px, 18cqw, 200px);
+  aspect-ratio: 1280 / 616; /* next.avif */
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
+  background: url('../assets/ui/next.avif') center / 100% 100% no-repeat;
+}
+
+.quiz-next:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.quiz-next:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+/* Narrow (phone) stage. The card fills the width, grows as tall as its
+   content and sits just under the progress bar, with everything sized up
+   so it stays readable and tappable. */
+@container quiz-stage (max-width: 600px) {
+  .quiz-card {
+    --card-width: 100cqw;
+    min-height: 0;
+    margin: 0 auto auto;
+  }
+
+  .quiz-question {
+    --frame: 4.5cqw;
+    min-height: 0;
+    font-size: clamp(1rem, 5cqw, 1.4rem);
+  }
+
+  .quiz-answer {
+    gap: 3cqw;
+    font-size: clamp(0.95rem, 4.6cqw, 1.2rem);
+  }
+
+  .quiz-answer-letter {
+    width: clamp(44px, 13cqw, 72px);
+  }
+
+  .quiz-next {
+    width: clamp(110px, 34cqw, 160px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quiz-answer {
+    transition: none;
+  }
+}

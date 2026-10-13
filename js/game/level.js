@@ -11,6 +11,7 @@
  *   level     { id, name, artefacts, fillers } from level-data.js
  *   settings  state.js's getDifficultyConfig() for the chosen difficulty
  *   onNext    call to move on to the next phase; undefined on the last one
+ *   onRestartLevel  call to play the whole level again from its first phase
  * A phase that restarts itself should call start again with the same ctx.
  */
 
@@ -19,11 +20,12 @@ import { loadLevelData } from './level-data.js';
 import { showScreen } from '../ui/screens.js';
 import { initSortingScene } from './sorting-scene.js';
 import { initArrangingScene } from './arranging-scene.js';
+import { initQuizScene } from '../quiz/quiz-scene.js';
 
 const PHASES = [
   { screen: 'screen-sorting', start: initSortingScene },
   { screen: 'screen-arranging', start: initArrangingScene },
-  // { screen: 'screen-quiz', start: initQuizScene },
+  { screen: 'screen-quiz', start: initQuizScene },
 ];
 
 let level = null;
@@ -38,6 +40,8 @@ function runPhase(index) {
     level,
     settings,
     onNext: hasNext ? () => runPhase(index + 1) : undefined,
+    // Used by the quiz's level complete popup to replay from sorting.
+    onRestartLevel: () => runPhase(0),
   });
 }
 
