@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="styles/kiosk-refresh.css" />
   <link rel="stylesheet" href="styles/pause-menu.css" />
   <link rel="stylesheet" href="styles/stage-transition.css" />
+  <link rel="stylesheet" href="styles/certificate.css" />
   <link rel="stylesheet" href="styles/info-card.css" />
   <link rel="stylesheet" href="styles/hud.css" />
   <link rel="stylesheet" href="styles/sorting-scene.css" />
@@ -94,13 +95,20 @@
         <div id="sorting-progress" class="progress-bar" role="progressbar" aria-label="Packages sorted" aria-valuemin="0">
           <div class="progress-bar-fill"></div>
         </div>
-        <!-- Countdown (D8), length set by the difficulty -->
-        <span id="sorting-timer" class="hud-timer" role="timer" aria-label="Time remaining"></span>
       </div>
       <div id="stage-area" class="stage-area">
+        <!-- Countdown (D8), length set by the difficulty -->
+        <span id="sorting-timer" class="hud-timer" role="timer" aria-label="Time remaining"></span>
         <div class="drop-zones">
-          <span class="zone-label zone-label--case" data-zone="display-case">Display case</span>
-          <span class="zone-label zone-label--bin" data-zone="rejection-bin">Storage</span>
+          <!-- has-image hides the box behind the art; sorting-scene.js brings it back if the image fails -->
+          <span class="zone-label zone-label--case has-image" data-zone="display-case">
+            <span class="zone-name">Display</span>
+            <img class="zone-art" src="assets/sort-scene/display.avif" alt="" />
+          </span>
+          <span class="zone-label zone-label--bin has-image" data-zone="rejection-bin">
+            <span class="zone-name">Storage</span>
+            <img class="zone-art" src="assets/sort-scene/storage.avif" alt="" />
+          </span>
         </div>
         <!-- First-time tutorial (js/ui/tutorial.js) -->
         <div id="sorting-tutorial" class="info-card tutorial-card hidden" role="dialog" aria-labelledby="sorting-tutorial-title">
@@ -260,6 +268,23 @@
         <button type="button" id="btn-stage-restart" class="pause-action">Restart</button>
         <button type="button" id="btn-stage-exit" class="pause-action">Leave</button>
         <button type="button" id="btn-stage-next" class="pause-action stage-next" aria-label="Next stage"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- End of level certificate (js/ui/certificate.js). Reuses the pause
+       menu's overlay and button art. -->
+  <div id="certificate" class="pause-overlay certificate hidden" role="dialog" aria-modal="true" aria-labelledby="certificate-title" aria-describedby="certificate-description">
+    <div class="certificate-panel">
+      <p class="certificate-heading">Congratulations!</p>
+      <p id="certificate-level" class="certificate-level"></p>
+      <h2 id="certificate-title" class="certificate-title"></h2>
+      <p id="certificate-description" class="certificate-description"></p>
+      <p id="certificate-score" class="certificate-score"></p>
+
+      <div class="pause-actions">
+        <button type="button" id="btn-certificate-restart" class="pause-action">Restart</button>
+        <button type="button" id="btn-certificate-exit" class="pause-action">Leave</button>
       </div>
     </div>
   </div>

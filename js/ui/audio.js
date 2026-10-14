@@ -15,6 +15,11 @@ const SFX_URLS = {
   click: 'assets/sounds/effects/button-click.mp3',
   correct: 'assets/sounds/effects/correct.mp3',
   incorrect: 'assets/sounds/effects/incorrect.mp3',
+  timesUp: 'assets/sounds/effects/times-up.mp3',
+  clueUp: 'assets/sounds/effects/clue-up.mp3',
+  clueDown: 'assets/sounds/effects/clue-down.mp3',
+  wellDone: 'assets/sounds/effects/well-done.mp3',
+  congratulations: 'assets/sounds/effects/congratulations.mp3',
 };
 
 const DEFAULT_BGM_VOLUME = 0.25;
@@ -26,6 +31,8 @@ bgm.preload = 'auto';
 bgm.volume = DEFAULT_BGM_VOLUME;
 
 let sfxVolume = DEFAULT_SFX_VOLUME;
+// True once the click being handled has played an effect of its own, see initAudio().
+let clickPlayedSfx = false;
 
 // One preloaded element per effect. playSfx() plays a clone of it so rapid
 // repeats (e.g. several quick button taps) overlap instead of cutting off.
@@ -59,6 +66,7 @@ export function setSfxVolume(volume) {
 
 /** Plays one of SFX_URLS' effects at the current sound effects volume. */
 export function playSfx(name) {
+  clickPlayedSfx = true;
   const sample = sfxSamples[name];
   if (!sample || sfxVolume === 0) return;
   const sound = sample.cloneNode();
@@ -66,6 +74,16 @@ export function playSfx(name) {
   sound.play().catch(() => {
     // Blocked before the first interaction, or the file failed - not worth interrupting play over.
   });
+}
+
+/**
+ * Call while handling a click that should make no sound at all: the click
+ * effect is skipped for it (see initAudio()). For a press that does
+ * nothing (a riddle card behind an open popup) or that is better silent
+ * (closing an information card).
+ */
+export function skipClickSfx() {
+  clickPlayedSfx = true;
 }
 
 function startBgm() {
@@ -78,7 +96,10 @@ function startBgm() {
 /**
  * Starts the music on the first interaction and plays the click effect for
  * every button press. Delegated on the document so buttons created later
- * (level cards, hard-mode clue slots) are covered too.
+ * (level cards, hard-mode clue slots) are covered too. A press whose own
+ * handler already played an effect (a quiz answer's correct / incorrect,
+ * the button that opens a Well Done popup) gets no click on top of it, and
+ * neither does one whose handler called skipClickSfx().
  */
 export function initAudio() {
   ['pointerdown', 'keydown', 'click'].forEach((type) => {
@@ -90,7 +111,12 @@ export function initAudio() {
     });
   }, { once: true });
 
+  // Capture runs before the button's own handlers, the listener below after them.
+  document.addEventListener('click', () => {
+    clickPlayedSfx = false;
+  }, true);
   document.addEventListener('click', (event) => {
+    if (clickPlayedSfx) return;
     if (event.target.closest('button, [role="button"]')) playSfx('click');
   });
 }

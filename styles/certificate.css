@@ -1,0 +1,102 @@
+/* certificate.css
+   The end of level certificate. Goes together with js/ui/certificate.js.
+   The overlay and the Restart / Leave buttons come from pause-menu.css -
+   this file adds the certificate itself. */
+
+/* Sized like .pause-panel: as big as the viewport allows at the art's own
+   aspect ratio, with everything inside in cqw so it scales as one piece. */
+.certificate-panel {
+  --panel-width: min(960px, 100cqw, 100cqh * 2000 / 1414);
+  container-type: inline-size;
+  width: var(--panel-width);
+  aspect-ratio: 2000 / 1414;
+  margin: auto;
+  /* Keeps the text clear of the corner and side ornaments. */
+  padding: calc(var(--panel-width) * 0.09) calc(var(--panel-width) * 0.14);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--panel-width) * 0.016);
+  background: url('../assets/ui/certificate.avif') center / 100% 100% no-repeat;
+  color: var(--color-ink);
+  text-align: center;
+}
+
+/* base.css mutes <p> and caps its width, neither suits the parchment. */
+.certificate-panel p {
+  max-width: none;
+  margin: 0;
+  color: inherit;
+  line-height: 1.3;
+}
+
+.certificate-heading {
+  font-family: var(--font-heading);
+  font-size: 4.6cqw;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.certificate-level {
+  font-size: 3.2cqw;
+}
+
+.certificate-title {
+  margin: 0;
+  font-size: 9cqw;
+  line-height: 1.1;
+}
+
+.certificate-description {
+  font-size: 3.4cqw;
+  font-style: italic;
+}
+
+.certificate-score {
+  font-weight: 600;
+  font-size: 3.8cqw;
+}
+
+.certificate .pause-actions {
+  margin-top: 1cqw;
+}
+
+.certificate .pause-action {
+  width: 24cqw;
+  font-size: 4.2cqw;
+}
+
+/* Narrow layout (portrait phones): like the pause menu, the certificate
+   grows taller than the art's aspect ratio instead of shrinking the text
+   past readable. */
+@container pause-overlay (max-width: 600px) {
+  .certificate-panel {
+    --panel-width: min(520px, 100cqw);
+    aspect-ratio: auto;
+    padding: calc(var(--panel-width) * 0.2) calc(var(--panel-width) * 0.13);
+    gap: calc(var(--panel-width) * 0.03);
+  }
+
+  .certificate-heading {
+    font-size: 6.4cqw;
+  }
+
+  .certificate-level,
+  .certificate-description {
+    font-size: 5.4cqw;
+  }
+
+  .certificate-title {
+    font-size: 12cqw;
+  }
+
+  .certificate-score {
+    font-size: 6cqw;
+  }
+
+  .certificate .pause-action {
+    width: 38cqw;
+    font-size: 6.5cqw;
+  }
+}

@@ -30,13 +30,19 @@
  * rows within that fixed height) to fit whatever the stage's current
  * width and height are; a level with 20+ artefacts fits by getting
  * smaller, not by growing the page into a long scroll.
+ *
+ * The slots stand on the shelves of a display cabinet, pieced together
+ * from assets/arrange-scene/ with one shelf per row of slots, so the
+ * cabinet grows a shelf as the row count goes up and scales with the
+ * slots. The loose artefacts wait in a tray beside the cabinet or under
+ * it, whichever lets everything be bigger on the current stage.
  */
 
 import { createArranger } from './arranging.js';
 import { setDragSuspended } from './drag.js';
 import { sizeStageToViewport, watchViewport } from './stage-size.js';
 import { registerPauseHandlers } from '../ui/pause-menu.js';
-import { playSfx } from '../ui/audio.js';
+import { playSfx, skipClickSfx } from '../ui/audio.js';
 import { showStageTransition } from '../ui/stage-transition.js';
 import { setProgress } from '../ui/progress-bar.js';
 import { showTutorialOnce } from '../ui/tutorial.js';
@@ -67,6 +73,8 @@ let openClueSlot = null;
 let ctx = null;
 // Set once every artefact is placed. The transition opens when the last card closes.
 let completedSummary = null;
+// Drops onto the wrong slot this run, for the score (score.js).
+let misplacedCount = 0;
 
 // Returns a shuffled copy of the list.
 function shuffle(list) {
@@ -78,79 +86,363 @@ function shuffle(list) {
   return out;
 }
 
+// The display cabinet (assets/arrange-scene/), measured in pixels of its
+// art, which was drawn as a 657px wide, two-shelf cabinet. The pieces are
+// drawn at `artScale` (see getStageLayout), so these become screen pixels
+// once multiplied by it. The cabinet gets one compartment per slot row:
+// the top rail, then each row's slots standing on a shelf (Mid.avif, or
+// Bottom.avif under the last row), with the sides stretched to the total
+// height. Piece insets are mirrored in arranging-scene.css.
+const CABINET_ART = {
+  topHeight: 40, // Top.avif
+  midHeight: 111, // Mid.avif
+  bottomHeight: 135, // Bottom.avif
+  // Room between the sides' inner faces and the outermost slots.
+  innerInset: 80,
+  slotGap: 24,
+  // Room between a compartment's ceiling and the top of its slots.
+  headroom: 24,
+  // How far down a shelf's top face an artefact's base stands - shelves are
+  // drawn in perspective, so their top face shows above the front edge.
+  midStand: 72,
+  bottomStand: 90,
+  // The row's back panel (Background.avif's top half) starts this far
+  // above the compartment and runs this far under the shelf.
+  backAbove: 10,
+  backBelow: 54,
+  // One slot is drawn this many art pixels across. Ties the frame's
+  // thickness to the slot size, so a cabinet of small slots has a thin
+  // frame rather than one that's all wood.
+  slotSize: 200,
+};
+
+// Where the pieces join, measured on the art. buildCabinet() uses these to
+// fit the pieces together at any size; see the CSS for the piece order.
+const CABINET_JOINTS = {
+  // The sides' tops tuck under the top rail, their outer corners on its
+  // outer corners (Top.avif's left corner is at x 3, y 17; Left.avif's at
+  // x 2, y 33).
+  leftSide: { left: 1, top: -16 },
+  // Right.avif's outer corner is 4px in from its right edge, at y 34.
+  rightSide: { right: -2, top: -17 },
+  // The sides' bottom tips are this far above their images' bottom edges.
+  sideTipAbove: 3,
+  // The sides lean in towards the bottom (the art's perspective): their
+  // outer edges are this far in from their images' edges at the top...
+  sideOuterTop: 3,
+  // ...and move this much further in over the stretched middle, between
+  // the unstretched end slices (sideSliceTop/Bottom, also in the CSS).
+  sideLean: 18,
+  sideSliceTop: 60,
+  sideSliceBottom: 50,
+  // Width of the sides' front faces, which the shelves butt up against.
+  sideFront: 22,
+  // Mid.avif's front face corners are 1px in from its ends, on row 100.
+  midCornerIn: 1,
+  midCornerRow: 100,
+  // Bottom.avif sits behind the sides with its front corners (row 127) on
+  // the sides' bottom tips.
+  bottomCornerRow: 127,
+  bottomLeft: 21,
+  bottomRight: 20,
+};
+
 function rowsNeeded(count, cols) {
   return Math.ceil(count / cols);
 }
 
-// Position for box `index` (sizePx square) in a left-to-right,
-// top-to-bottom grid that wraps after layout.cols columns, starting `topPx`
-// down from the stage top. Columns are the layout's evenly spaced slot
-// columns, and a box smaller than a slot is centred in its column, so the
-// artefacts line up under the slots.
-function gridPosition(index, layout, sizePx, topPx) {
-  const col = index % layout.cols;
-  const row = Math.floor(index / layout.cols);
+// The cabinet's width and height per pixel of slot size, for a cabinet of
+// `cols` x `rows` slots. Everything in it scales with the slot size, so
+// width = slotSize * w and height = slotSize * h.
+function cabinetFactors(cols, rows) {
+  const a = CABINET_ART;
+  const midRow = a.headroom - a.midStand + a.midHeight;
+  const bottomRow = a.headroom - a.bottomStand + a.bottomHeight;
   return {
-    left: layout.colGap + col * (layout.slotSize + layout.colGap) + (layout.slotSize - sizePx) / 2,
-    top: topPx + row * (sizePx + layout.rowGap),
+    w: cols + (a.innerInset * 2 + a.slotGap * (cols - 1)) / a.slotSize,
+    h: rows + (a.topHeight + midRow * (rows - 1) + bottomRow) / a.slotSize,
   };
 }
 
-// Finds the column count that allows the biggest boxes while the slot grid
-// and the item grid (stacked, with the gap between them) still fit inside
-// the stage. The best trade-off depends on the stage's shape and the
-// artefact count, so every column count is tried. The height sum is the
-// slot rows, the gap, then the item rows, as getLayout() places them.
+// Biggest item size for one candidate layout, or -Infinity if none fits.
+// `mode` is 'stacked' (the tray of loose artefacts under the cabinet) or
+// 'side' (the tray beside it). The cabinet is cols x rows slots, the tray
+// trayCols x trayRows items. Every constraint is linear in the item size
+// (slots are SLOT_ITEM_SIZE_DIFF_PX bigger), so each one is solved for it
+// directly and the smallest wins.
+function maxItemSizeFor(mode, cab, trayCols, trayRows, avail, spacing) {
+  const d = SLOT_ITEM_SIZE_DIFF_PX;
+  const { gap, sectionGap } = spacing;
+  const trayGapsX = gap * (trayCols - 1);
+  const trayGapsY = gap * (trayRows - 1);
+  const limits =
+    mode === 'stacked'
+      ? [
+          avail.width / cab.w - d,
+          (avail.width - trayGapsX) / trayCols,
+          (avail.height - d * cab.h - sectionGap - trayGapsY) / (cab.h + trayRows),
+        ]
+      : [
+          (avail.width - d * cab.w - sectionGap - trayGapsX) / (cab.w + trayCols),
+          avail.height / cab.h - d,
+          (avail.height - trayGapsY) / trayRows,
+        ];
+  return Math.min(ITEM_SIZE_MAX_PX, ...limits);
+}
+
+// Tries every cabinet column count, tray column count and both
+// arrangements, keeping whichever allows the biggest boxes. Ties (usually
+// at ITEM_SIZE_MAX_PX, on a big stage) go to the squarest cabinet - the
+// shape of the art - then to the tray beside the cabinet on a landscape
+// stage, under it on a portrait one.
+function pickArrangement(count, avail, spacing) {
+  const preferredMode = avail.width >= avail.height ? 'side' : 'stacked';
+  let best = null;
+  for (const mode of ['stacked', 'side']) {
+    for (let cols = 1; cols <= count; cols += 1) {
+      const cab = cabinetFactors(cols, rowsNeeded(count, cols));
+      const squareness = Math.abs(Math.log(cab.w / cab.h));
+      for (let trayCols = 1; trayCols <= count; trayCols += 1) {
+        const itemSize = maxItemSizeFor(mode, cab, trayCols, rowsNeeded(count, trayCols), avail, spacing);
+        const candidate = { mode, cols, itemSize, squareness };
+        if (!best || isBetterArrangement(candidate, best, preferredMode)) best = candidate;
+      }
+    }
+  }
+  return best;
+}
+
+function isBetterArrangement(a, b, preferredMode) {
+  // Half a pixel either way is a tie, not worth a lopsided cabinet.
+  if (Math.abs(a.itemSize - b.itemSize) > 0.5) return a.itemSize > b.itemSize;
+  if (Math.abs(a.squareness - b.squareness) > 0.01) return a.squareness < b.squareness;
+  return a.mode === preferredMode && b.mode !== preferredMode;
+}
+
+// Tray column count for a chosen item size: as few tray rows as fit
+// (stacked) or as few columns (side), then evened out so the last row
+// isn't left nearly empty.
+function trayColsFor(mode, count, itemSize, avail, spacing) {
+  const { gap } = spacing;
+  const fitting = (span) => Math.max(1, Math.floor((span + gap) / (itemSize + gap)));
+  if (mode === 'stacked') {
+    const cols = Math.min(count, fitting(avail.width));
+    return Math.ceil(count / rowsNeeded(count, cols));
+  }
+  const rows = Math.min(count, fitting(avail.height));
+  return Math.ceil(count / rows);
+}
+
+// Works out the cabinet (one compartment per row of slots), the tray of
+// loose artefacts and where both go on the stage. Whatever room is left
+// over is shared evenly between the two edges and the gap between them.
 function getStageLayout(stageWidth, stageHeight, artefactCount, spacing) {
   const { padding, gap, sectionGap } = spacing;
-  const availableWidth = stageWidth - (padding * 2);
-  let best = null;
+  const avail = { width: stageWidth - padding * 2, height: stageHeight - padding * 2 };
+  const { mode, cols, itemSize: rawItemSize } = pickArrangement(artefactCount, avail, spacing);
 
-  for (let cols = 1; cols <= artefactCount; cols += 1) {
-    const rows = rowsNeeded(artefactCount, cols);
-    // Slots are the wider grid, so they decide how big the boxes can be across.
-    const maxByWidth = (availableWidth - gap * (cols - 1)) / cols - SLOT_ITEM_SIZE_DIFF_PX;
-    // Slot rows + item rows + section gap + padding top and bottom.
-    const maxByHeight =
-      (stageHeight - padding * 2 - sectionGap - rows * (SLOT_ITEM_SIZE_DIFF_PX + gap * 2)) / (rows * 2);
-    const itemSize = Math.min(ITEM_SIZE_MAX_PX, maxByWidth, maxByHeight);
-    // ">=" so ties at the size cap prefer more columns, spreading the grid
-    // across the stage width.
-    if (!best || itemSize >= best.itemSize) best = { cols, itemSize };
+  const itemSize = Math.max(1, rawItemSize);
+  const slotSize = itemSize + SLOT_ITEM_SIZE_DIFF_PX;
+  const artScale = slotSize / CABINET_ART.slotSize;
+  const rows = rowsNeeded(artefactCount, cols);
+  const factors = cabinetFactors(cols, rows);
+  const cabinet = { cols, width: slotSize * factors.w, height: slotSize * factors.h };
+
+  const trayCols = trayColsFor(mode, artefactCount, itemSize, avail, spacing);
+  const trayRows = rowsNeeded(artefactCount, trayCols);
+  const tray = {
+    cols: trayCols,
+    width: trayCols * itemSize + gap * (trayCols - 1),
+    height: trayRows * itemSize + gap * (trayRows - 1),
+  };
+
+  if (mode === 'stacked') {
+    const spare = Math.max(0, avail.height - cabinet.height - sectionGap - tray.height) / 3;
+    cabinet.left = (stageWidth - cabinet.width) / 2;
+    cabinet.top = padding + spare;
+    tray.left = (stageWidth - tray.width) / 2;
+    tray.top = cabinet.top + cabinet.height + sectionGap + spare;
+  } else {
+    const spare = Math.max(0, avail.width - cabinet.width - sectionGap - tray.width) / 3;
+    // Both stand on the same stretch of floor in the background art, so
+    // their bottoms line up, with the taller of the two centred.
+    const floorY = (stageHeight + Math.max(cabinet.height, tray.height)) / 2;
+    cabinet.left = padding + spare;
+    cabinet.top = floorY - cabinet.height;
+    tray.left = cabinet.left + cabinet.width + sectionGap + spare;
+    tray.top = floorY - tray.height;
   }
 
-  const itemSize = Math.max(1, best.itemSize);
-  const slotSize = itemSize + SLOT_ITEM_SIZE_DIFF_PX;
+  cabinet.rows = cabinetRows(rows, slotSize, artScale);
+  return { stageWidth, stageHeight, itemSize, slotSize, artScale, gap, cabinet, tray };
+}
+
+// The background is the sorting scene's storeroom art (1920x1080), zoomed
+// in. It's placed so the cabinet stands on the floor under the left-hand
+// ceiling light, and zoomed (past BACKDROP_ZOOM_MIN x "cover" if need be)
+// so the loose artefacts land under the right-hand one. Kept covering the
+// stage, which can pull the lights off-centre on an unusually shaped stage.
+const BACKDROP_ART = { width: 1920, height: 1080, leftLightX: 610, rightLightX: 1367, floorY: 850 };
+const BACKDROP_ZOOM_MIN = 1.2;
+
+function getBackdrop(layout) {
+  const a = BACKDROP_ART;
+  const { stageWidth, stageHeight, cabinet, tray } = layout;
+  const cabinetCentre = cabinet.left + cabinet.width / 2;
+  const trayCentre = tray.left + tray.width / 2;
+  const cover = Math.max(stageWidth / a.width, stageHeight / a.height);
+  const scale = Math.max(cover * BACKDROP_ZOOM_MIN, (trayCentre - cabinetCentre) / (a.rightLightX - a.leftLightX));
+  const floor = Math.max(cabinet.top + cabinet.height, tray.top + tray.height);
+  const clamp = (value, min) => Math.min(0, Math.max(min, value));
   return {
-    cols: best.cols,
-    itemSize,
-    slotSize,
-    padding,
-    rowGap: gap,
-    // Whatever width the columns don't use is shared out evenly between
-    // them and the two edges, so the grid spans the stage instead of
-    // leaving a gap on the right when the height is what limits the box size.
-    colGap: (stageWidth - best.cols * slotSize) / (best.cols + 1),
-    sectionGap,
+    width: a.width * scale,
+    height: a.height * scale,
+    left: clamp(cabinetCentre - a.leftLightX * scale, stageWidth - a.width * scale),
+    top: clamp(floor - a.floorY * scale, stageHeight - a.height * scale),
   };
 }
 
-// Picks the spacing preset for the current stage width and works out
-// where the item grid starts (below the slot grid).
+// Each row's compartment, top to bottom, in px from the cabinet's top:
+// where its slots start, where its shelf starts, and its back panel.
+function cabinetRows(rowCount, slotSize, artScale) {
+  const a = CABINET_ART;
+  const rows = [];
+  let ceiling = a.topHeight * artScale;
+  for (let r = 0; r < rowCount; r += 1) {
+    const last = r === rowCount - 1;
+    const slotTop = ceiling + a.headroom * artScale;
+    const shelfTop = slotTop + slotSize - (last ? a.bottomStand : a.midStand) * artScale;
+    rows.push({
+      last,
+      slotTop,
+      shelfTop,
+      backTop: ceiling - a.backAbove * artScale,
+      backHeight: shelfTop - ceiling + (a.backAbove + a.backBelow) * artScale,
+    });
+    ceiling = shelfTop + (last ? a.bottomHeight : a.midHeight) * artScale;
+  }
+  return rows;
+}
+
+// Picks the spacing preset for the current stage width.
 function getLayout(stage, artefactCount) {
   sizeStageToViewport(stage);
   const spacing = stage.clientWidth < COMPACT_WIDTH_PX ? COMPACT_SPACING : ROOMY_SPACING;
-  const base = getStageLayout(stage.clientWidth, stage.clientHeight, artefactCount, spacing);
-  const rows = rowsNeeded(artefactCount, base.cols);
-  const itemsTop = base.padding + rows * (base.slotSize + base.rowGap) + base.sectionGap;
-  return { ...base, itemsTop };
+  return getStageLayout(stage.clientWidth, stage.clientHeight, artefactCount, spacing);
+}
+
+// Position for box `index` (sizePx square) in a left-to-right,
+// top-to-bottom grid of `cols` columns, with the last row centred if it
+// isn't full.
+function gridPosition(index, count, cols, sizePx, gapPx) {
+  const col = index % cols;
+  const row = Math.floor(index / cols);
+  const inRow = Math.min(cols, count - row * cols);
+  return {
+    left: ((cols - inRow) * (sizePx + gapPx)) / 2 + col * (sizePx + gapPx),
+    top: row * (sizePx + gapPx),
+  };
+}
+
+// Where slot `index` goes on the stage: in its row's compartment, its base
+// standing on that row's shelf.
+function slotPosition(index, count, layout) {
+  const { cabinet, slotSize, artScale } = layout;
+  const { left } = gridPosition(index, count, cabinet.cols, slotSize, CABINET_ART.slotGap * artScale);
+  const row = cabinet.rows[Math.floor(index / cabinet.cols)];
+  return {
+    left: cabinet.left + CABINET_ART.innerInset * artScale + left,
+    top: cabinet.top + row.slotTop,
+  };
 }
 
 // Publishes the current box sizes as CSS custom properties for
-// .silhouette-slot / .arranging-item in arranging.css.
+// .silhouette-slot / .arranging-item in arranging.css, and the cabinet's
+// art scale for the pieces in arranging-scene.css. Also places the
+// background art (getBackdrop).
 function applyLayout(stage, layout) {
   stage.style.setProperty('--arranging-item-size', `${layout.itemSize}px`);
   stage.style.setProperty('--arranging-slot-size', `${layout.slotSize}px`);
+  stage.style.setProperty('--cabinet-scale', layout.artScale);
+  const backdrop = getBackdrop(layout);
+  stage.style.backgroundSize = `${backdrop.width}px ${backdrop.height}px`;
+  stage.style.backgroundPosition = `${backdrop.left}px ${backdrop.top}px`;
+}
+
+// (Re)draws the cabinet for the current layout, behind the slots and
+// artefacts. Rebuilt on every layout, since the row count can change.
+// Pieces are stacked back to front: its shadow on the floor, back panels,
+// the bottom shelf, the sides, the middle shelves (whose ends lie over the
+// sides' inner faces), then the top rail over the sides' tops.
+function buildCabinet(stage, layout) {
+  stage.querySelector('.arranging-cabinet')?.remove();
+  const { cabinet, artScale: k } = layout;
+  const j = CABINET_JOINTS;
+  const el = document.createElement('div');
+  el.className = 'arranging-cabinet';
+  el.setAttribute('aria-hidden', 'true'); // scenery only
+  el.style.left = `${cabinet.left}px`;
+  el.style.top = `${cabinet.top}px`;
+  el.style.width = `${cabinet.width}px`;
+  el.style.height = `${cabinet.height}px`;
+
+  const addPiece = (className, box) => {
+    const piece = document.createElement('div');
+    piece.className = className;
+    Object.entries(box).forEach(([prop, px]) => {
+      piece.style[prop] = `${px}px`;
+    });
+    el.appendChild(piece);
+  };
+
+  // The sides run from under the top rail down to tips level with the
+  // bottom shelf's front corners.
+  const lastRow = cabinet.rows[cabinet.rows.length - 1];
+  const tipY = lastRow.shelfTop + j.bottomCornerRow * k;
+  const sideHeight = (side) => tipY - side.top * k + j.sideTipAbove * k;
+  const leftHeight = sideHeight(j.leftSide);
+  const rightHeight = sideHeight(j.rightSide);
+  // How far a side's outer edge has leaned in at height y (cabinet px),
+  // from the stretched middle's top (lean 0) to its bottom (full lean).
+  const leanAt = (y, side, height) => {
+    const middleTop = side.top * k + j.sideSliceTop * k;
+    const middleHeight = height - (j.sideSliceTop + j.sideSliceBottom) * k;
+    const t = Math.min(1, Math.max(0, (y - middleTop) / middleHeight));
+    return (j.sideOuterTop + j.sideLean * t) * k;
+  };
+
+  addPiece('cabinet-shadow', {});
+  cabinet.rows.forEach((row) => addPiece('cabinet-back', { top: row.backTop, height: row.backHeight }));
+  addPiece('cabinet-bottom', {
+    top: lastRow.shelfTop,
+    left: j.bottomLeft * k,
+    right: j.bottomRight * k,
+  });
+  addPiece('cabinet-side cabinet-left', {
+    top: j.leftSide.top * k,
+    left: j.leftSide.left * k,
+    height: leftHeight,
+  });
+  addPiece('cabinet-side cabinet-right', {
+    top: j.rightSide.top * k,
+    right: j.rightSide.right * k,
+    height: rightHeight,
+  });
+  // Each middle shelf's front corners butt up against the inside of the
+  // sides' front faces, wherever the sides' lean has them at that height.
+  cabinet.rows.filter((row) => !row.last).forEach((row) => {
+    const cornerY = row.shelfTop + j.midCornerRow * k;
+    const inset = (side, height, edge) =>
+      edge * k + leanAt(cornerY, side, height) + j.sideFront * k - j.midCornerIn * k;
+    addPiece('cabinet-mid', {
+      top: row.shelfTop,
+      left: inset(j.leftSide, leftHeight, j.leftSide.left),
+      right: inset(j.rightSide, rightHeight, j.rightSide.right),
+    });
+  });
+  addPiece('cabinet-top', {});
+
+  stage.prepend(el);
 }
 
 function isPopupOpen() {
@@ -168,10 +460,12 @@ function wireClueSlot(slot, item, onClueRequested) {
   slot.setAttribute('aria-label', 'Read the riddle for this spot');
 
   const activate = () => {
-    // No clue once the slot is filled (is-filled is set by arranging.js).
-    if (slot.classList.contains('is-filled')) return;
-    // Only one popup at a time - close the open clue/blurb first.
-    if (isPopupOpen()) return;
+    // No clue once the slot is filled (is-filled is set by arranging.js),
+    // and only one popup at a time - close the open clue/blurb first.
+    if (slot.classList.contains('is-filled') || isPopupOpen()) {
+      skipClickSfx(); // nothing happens, so nothing should sound like it did
+      return;
+    }
     onClueRequested(item, slot);
   };
   slot.addEventListener('click', activate);
@@ -222,20 +516,31 @@ function buildSlots(stage, artefacts, layout, hintType, onClueRequested) {
       stage.appendChild(slot);
     }
 
-    const { left, top } = gridPosition(i, layout, layout.slotSize, layout.padding);
+    const { left, top } = slotPosition(i, artefacts.length, layout);
     slot.style.left = `${left}px`;
     slot.style.top = `${top}px`;
   });
 }
 
-// Repositions each entry (in current array order) into a packed grid
-// starting at the layout's itemsTop.
+// Repositions each entry (in current array order) into a packed grid in
+// the layout's tray.
 function layoutItems(entries, layout) {
+  const { tray, itemSize, gap } = layout;
   entries.forEach(({ el }, i) => {
-    const { left, top } = gridPosition(i, layout, layout.itemSize, layout.itemsTop);
-    el.style.left = `${left}px`;
-    el.style.top = `${top}px`;
+    const { left, top } = gridPosition(i, entries.length, tray.cols, itemSize, gap);
+    el.style.left = `${tray.left + left}px`;
+    el.style.top = `${tray.top + top}px`;
   });
+}
+
+// Shows the artefact's name on a box with no image (or a broken one). In
+// its own element so a long name is clipped to the box while the floor
+// shadow (arranging-scene.css) still hangs out below it.
+function showName(el, name) {
+  const label = document.createElement('span');
+  label.className = 'arranging-item-name';
+  label.textContent = name;
+  el.appendChild(label);
 }
 
 // Creates one draggable box per artefact
@@ -252,11 +557,11 @@ function buildItems(stage, artefacts, arranger) {
       img.onerror = () => {
         img.remove();
         el.classList.remove('has-image');
-        el.textContent = item.name;
+        showName(el, item.name);
       };
       el.appendChild(img);
     } else {
-      el.textContent = item.name;
+      showName(el, item.name);
     }
 
     stage.appendChild(el);
@@ -308,8 +613,9 @@ function hideFeedback() {
   setDragSuspended(false);
 }
 
-// Hard mode only. Shows item.riddle (task R9, Project Plan 6.2.1).
+// Hard mode only. Picks up a slot's riddle card: shows item.riddle (task R9, Project Plan 6.2.1).
 function showCluePopup(item, slot) {
+  playSfx('clueUp');
   hideFeedback();
   if (openClueSlot && openClueSlot !== slot) {
     openClueSlot.classList.remove('is-clue-open');
@@ -332,6 +638,12 @@ function hideCluePopup() {
   setDragSuspended(false);
 }
 
+// The clue popup's Close: puts the riddle card back down.
+function closeCluePopup() {
+  playSfx('clueDown');
+  hideCluePopup();
+}
+
 // Fills the progress bar by how many artefacts have been placed.
 function renderProgress(summary) {
   setProgress(document.getElementById('arranging-progress'), summary.placed, summary.total);
@@ -340,6 +652,9 @@ function renderProgress(summary) {
 // Runs after the information card's Close. Once everything is placed it offers moving on to the quiz.
 function showCompleteIfDone() {
   if (!completedSummary) return;
+  const { total } = completedSummary;
+  ctx.results.arranging = { correct: total, total: total + misplacedCount };
+  playSfx('wellDone');
   showStageTransition({
     title: 'Well Done!',
     message: `All ${completedSummary.total} artefacts are on display. Next, answer the visitors' questions in a short quiz.`,
@@ -351,7 +666,7 @@ function showCompleteIfDone() {
 /**
  * Builds a fresh arranging stage. Safe to call again, it starts over.
  *
- * @param {object} runCtx  { level, settings, onNext } from js/game/level.js
+ * @param {object} runCtx  { level, settings, results, onNext } from js/game/level.js
  */
 export function initArrangingScene(runCtx) {
   ctx = runCtx;
@@ -364,13 +679,16 @@ export function initArrangingScene(runCtx) {
   // Only remove the previous run's slots/items
   stage.querySelectorAll('.silhouette-slot, .arranging-item').forEach((el) => el.remove());
   completedSummary = null;
+  misplacedCount = 0;
   hideFeedback();
   hideCluePopup();
 
   if (!wired) {
+    // The information card closes quietly.
+    document.getElementById('btn-arranging-feedback-close').addEventListener('click', skipClickSfx);
     document.getElementById('btn-arranging-feedback-close').addEventListener('click', hideFeedback);
     document.getElementById('btn-arranging-feedback-close').addEventListener('click', showCompleteIfDone);
-    document.getElementById('btn-arranging-clue-close').addEventListener('click', hideCluePopup);
+    document.getElementById('btn-arranging-clue-close').addEventListener('click', closeCluePopup);
     registerPauseHandlers('screen-arranging', {
       onPause: () => setDragSuspended(true),
       // An open clue/blurb popup suspends drag itself, so keep it suspended.
@@ -390,6 +708,7 @@ export function initArrangingScene(runCtx) {
   const { artefacts } = level;
   let layout = getLayout(stage, artefacts.length);
   applyLayout(stage, layout);
+  buildCabinet(stage, layout);
   buildSlots(stage, artefacts, layout, hintType, showCluePopup);
 
   let itemEntries;
@@ -406,7 +725,10 @@ export function initArrangingScene(runCtx) {
       renderProgress(arranger.getSummary());
       showFeedback(item);
     },
-    onMisplaced: () => playSfx('incorrect'),
+    onMisplaced() {
+      misplacedCount += 1;
+      playSfx('incorrect');
+    },
     // onPlaced has just opened the last artefact's card, the transition waits for it to close.
     onComplete(summary) {
       completedSummary = summary;
@@ -425,6 +747,7 @@ export function initArrangingScene(runCtx) {
     if (stage.offsetParent === null) return; // screen hidden, nothing to measure
     layout = getLayout(stage, artefacts.length);
     applyLayout(stage, layout);
+    buildCabinet(stage, layout);
 
     buildSlots(stage, artefacts, layout, hintType, showCluePopup);
     layoutItems(itemEntries, layout);

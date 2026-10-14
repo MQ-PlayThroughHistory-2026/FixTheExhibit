@@ -12,6 +12,8 @@
  *   settings  state.js's getDifficultyConfig() for the chosen difficulty
  *   onNext    call to move on to the next phase; undefined on the last one
  *   onRestartLevel  call to play the whole level again from its first phase
+ *   results   each phase leaves its { correct, total } here under its own
+ *             name when it finishes, for the final score (score.js)
  * A phase that restarts itself should call start again with the same ctx.
  */
 
@@ -30,17 +32,21 @@ const PHASES = [
 
 let level = null;
 let settings = null;
+// This playthrough's results so far, see ctx.results above.
+let results = {};
 
 function runPhase(index) {
   const phase = PHASES[index];
   const hasNext = index + 1 < PHASES.length;
+  if (index === 0) results = {};
   showScreen(phase.screen);
   // After showScreen so the phase's stage has a size to lay things out in.
   phase.start({
     level,
     settings,
+    results,
     onNext: hasNext ? () => runPhase(index + 1) : undefined,
-    // Used by the quiz's level complete popup to replay from sorting.
+    // Used by the certificate's Restart to replay from sorting.
     onRestartLevel: () => runPhase(0),
   });
 }
