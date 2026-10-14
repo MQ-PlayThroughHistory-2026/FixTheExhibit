@@ -89,6 +89,16 @@ function restart() {
   initSortingScene(ctx);
 }
 
+// Shows the item's name on a package with no image (or a broken one). In its
+// own element so a long name is clipped to the box while the package's floor
+// shadow (sorting-scene.css) still hangs out below it.
+function showName(el, name) {
+  const label = document.createElement('span');
+  label.className = 'package-name';
+  label.textContent = name;
+  el.appendChild(label);
+}
+
 // Creates one element per item, puts it on the belt and registers it with the sorter.
 function spawnPackages(stage, items, sorter, runBelt) {
   stage.querySelectorAll('.package').forEach((el) => el.remove());
@@ -106,11 +116,11 @@ function spawnPackages(stage, items, sorter, runBelt) {
       img.onerror = () => {
         img.remove();
         el.classList.remove('has-image');
-        el.textContent = item.name;
+        showName(el, item.name);
       };
       el.appendChild(img);
     } else {
-      el.textContent = item.name;
+      showName(el, item.name);
     }
 
     stage.appendChild(el);
