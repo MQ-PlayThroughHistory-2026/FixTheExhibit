@@ -8,12 +8,12 @@
     "funFactIncorrect": "While the creator of Old Gold Chocolate was born in Ballarat during the gold rush, the chocolate itself was not produced until 1916."
   },
   {
-    "id": "thylacine-skull",
-    "name": "Thylacine Skull",
+    "id": "toy-soldier",
+    "name": "Green Army Man Toy",
     "correctZone": "rejection-bin",
-    "image": "assets/gold-rush/fillers/thylacine-skull.avif",
-    "funFactCorrect": "This skull belongs to a Thylacine, also known as the Tasmanian Tiger, which were officially declared extinct in 1986.",
-    "funFactIncorrect": "This skull belongs to a Thylacine, and while some were still living in Tasmania during the gold rush, they didn't have a big role in it."
+    "image": "assets/gold-rush/fillers/toy-soldier.avif",
+    "funFactCorrect": "Green army men toys were originally made out of metals like lead, and were only made of plastic after a lead poisoning scare in the 1960s.",
+    "funFactIncorrect": "These green army men toys were first released in 1938 by the Bergen Toy and Novelty company, well after the gold rush ended."
   },
   {
     "id": "gregorian-telescope",
@@ -24,12 +24,12 @@
     "funFactIncorrect": "This is a Gregorian reflector astronomical telescope which was invented in 1661, long before the Australian gold rush."
   },
   {
-    "id": "trilobite",
-    "name": "Trilobite",
+    "id": "rubiks-cube",
+    "name": "Rubik's Cube",
     "correctZone": "rejection-bin",
-    "image": "assets/gold-rush/fillers/trilobite.avif",
-    "funFactCorrect": "This is a fossilised Trilobite, which is a group of prehistoric animals with over 20,000 different species that have been found all over the world.",
-    "funFactIncorrect": "This is a fossilised Trilobite, which is a type of animal that lived between 521 million years ago and 251 million years ago."
+    "image": "assets/gold-rush/fillers/rubiks-cube.avif",
+    "funFactCorrect": "The Rubik's Cube was originally called the Magic Cube when it was first released in 1977 in Budapest, Hungary.",
+    "funFactIncorrect": "The Rubik's Cube was invented after the gold rush ended in 1974 by a Hungarian professor of architecture called Erno Rubik."
   },
   {
     "id": "monopoly",
@@ -57,11 +57,11 @@
   },
   {
     "id": "miner-helmet",
-    "name": "Miner's Helmet",
+    "name": "Hard Hat",
     "correctZone": "rejection-bin",
     "image": "assets/gold-rush/fillers/miner-helmet.avif",
-    "funFactCorrect": "This miner's helmet was manufactured by Protector Safety in 1989, and includes fittings for an electric cap lamp and battery cable.",
-    "funFactIncorrect": "This miner's safety helmet would have looked out of place on the goldfields, where the main form of head protection was cloth hats."
+    "funFactCorrect": "Hard hats were originally made of canvas and leather, and were coated with shellac (a type of resin) to make the hat stiff and durable.",
+    "funFactIncorrect": "This hardhat would have looked out of place on the goldfields, where the main form of head protection was cloth hats."
   },  
   {
     "id": "box-camera",
@@ -72,11 +72,11 @@
     "funFactIncorrect": "While photography was around during the gold rush, this particular type of box camera wasn't sold until the early 1900s."
   },
   {
-    "id": "backpack",
-    "name": "Modern Backpack",
+    "id": "xylophone",
+    "name": "Xylophone",
     "correctZone": "rejection-bin",
-    "image": "assets/gold-rush/fillers/backpack.avif",
-    "funFactCorrect": "This is a modern backpack, with features like padded shoulder straps and zippers which were not invented until after the gold rush.",
-    "funFactIncorrect": "While prospectors may have found this modern backpack useful, they would have carried their belongings in swags or other types of luggage from that time."
+    "image": "assets/gold-rush/fillers/xylophone.avif",
+    "funFactCorrect": "We're not sure exactly when or where xylophones were first developed, but they've been part of the musical culture in both Africa and south-east Asia for centuries.",
+    "funFactIncorrect": "Xylophones have been around since well before the gold rush, with evidence that they existed as far back as the 9th century in south-east Asia."
   }
 ]

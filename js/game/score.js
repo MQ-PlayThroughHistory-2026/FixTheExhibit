@@ -29,22 +29,22 @@ const TITLES = [
   {
     title: 'Master Historian',
     description: "You've mastered the exhibit and proven your knowledge of history!",
-    cutoff: { [DIFFICULTIES.EASY]: 90, [DIFFICULTIES.HARD]: 85 },
+    cutoff: { [DIFFICULTIES.EASY]: 85, [DIFFICULTIES.HARD]: 90 },
   },
   {
     title: 'Museum Curator',
     description: 'You know how to build an exhibit worthy of a museum!',
-    cutoff: { [DIFFICULTIES.EASY]: 75, [DIFFICULTIES.HARD]: 70 },
+    cutoff: { [DIFFICULTIES.EASY]: 70, [DIFFICULTIES.HARD]: 75 },
   },
   {
     title: 'Artefact Investigator',
     description: "You've developed a sharp eye for historical artefacts!",
-    cutoff: { [DIFFICULTIES.EASY]: 55, [DIFFICULTIES.HARD]: 50 },
+    cutoff: { [DIFFICULTIES.EASY]: 50, [DIFFICULTIES.HARD]: 55 },
   },
   {
     title: 'History Explorer',
     description: "You're starting to uncover the stories of the past!",
-    cutoff: { [DIFFICULTIES.EASY]: 35, [DIFFICULTIES.HARD]: 30 },
+    cutoff: { [DIFFICULTIES.EASY]: 30, [DIFFICULTIES.HARD]: 35 },
   },
   {
     title: 'Curious Visitor',

@@ -270,7 +270,7 @@ export function initSortingScene(runCtx) {
       playSfx(result.correct ? 'correct' : 'incorrect');
       renderProgress(sorter.getSummary());
       showCard(
-        result.correct ? `Correct, ${result.item.name} sorted` : `Not quite, ${result.item.name}`,
+        result.correct ? `That's Right!` : `Not Quite!`,
         result.funFact ?? '',
         result.correct,
       );
