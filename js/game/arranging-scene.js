@@ -19,8 +19,11 @@
  * how-to-play card (#arranging-tutorial, js/ui/tutorial.js).
  *
  * A correct placement opens the information card (#arranging-feedback)
- * with item.image (hidden if absent or broken) and item.blurb. Arrows in
- * its bottom corners page on to each item.longExplanation paragraph and back.
+ * with item.image (hidden if absent or broken) and item.blurb. It's a deck
+ * of cards, one per page: the blurb, then each item.longExplanation
+ * paragraph. The neighbouring pages peek out either side of the top card,
+ * and the arrows in its bottom corners, or tapping a side card, shuffle
+ * that page to the top.
  *
  * Once every artefact is placed and the last card is closed, the stage
  * transition (js/ui/stage-transition.js) offers moving on to the quiz.
@@ -580,53 +583,122 @@ function capPopupToStage(popupId, contentSelector) {
   const content = popup.querySelector(contentSelector);
   const available = Math.max(0, stage.clientHeight - POPUP_STAGE_MARGIN_PX * 2);
   popup.style.maxHeight = `${available}px`;
-  const popupStyle = getComputedStyle(popup);
-  const innerAvailable = Math.max(
-    0,
-    available - parseFloat(popupStyle.paddingTop) - parseFloat(popupStyle.paddingBottom),
-  );
-  content.style.maxHeight = `${innerAvailable}px`;
+  // The information card is a deck of cards, each with its own padding
+  // (the riddle popup's content sits straight in the popup).
+  popup.querySelectorAll(contentSelector).forEach((content) => {
+    const cardStyle = getComputedStyle(content.parentElement);
+    const innerAvailable = Math.max(
+      0,
+      available - parseFloat(cardStyle.paddingTop) - parseFloat(cardStyle.paddingBottom),
+    );
+    content.style.maxHeight = `${innerAvailable}px`;
+  });
 }
 
-// The information card's pages: the blurb, then each longExplanation paragraph.
-let feedbackPages = [];
+// The information card's deck: one card per page, the blurb then each
+// longExplanation paragraph. The current card sits on top with its
+// neighbours peeking out either side; the rest wait out of sight.
+let feedbackCards = [];
 let feedbackPage = 0;
 
-// Shows one page of the information card, with an arrow either side if
-// there's a page that way.
+// Moves the deck so the given page is on top. The cards' CSS transitions
+// do the shuffle. Only the top card's buttons can be reached; a side card
+// is one big button that brings it to the top.
 function showFeedbackPage(index) {
   feedbackPage = index;
-  const text = document.getElementById('arranging-feedback-text');
-  text.textContent = feedbackPages[index];
-  text.scrollTop = 0;
-  document.getElementById('btn-arranging-feedback-prev').classList.toggle('hidden', index === 0);
-  document
-    .getElementById('btn-arranging-feedback-next')
-    .classList.toggle('hidden', index >= feedbackPages.length - 1);
+  feedbackCards.forEach((card, i) => {
+    const offset = i - index;
+    const position = { '-1': 'is-left', 0: 'is-active', 1: 'is-right' }[offset] ?? 'is-away';
+    card.classList.remove('is-left', 'is-active', 'is-right', 'is-away');
+    card.classList.add(position);
+    const isSide = Math.abs(offset) === 1;
+    card.querySelector('.info-card-content').inert = offset !== 0;
+    if (isSide) {
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', offset < 0 ? 'Previous page' : 'Next page');
+      card.tabIndex = 0;
+    } else {
+      card.removeAttribute('role');
+      card.removeAttribute('aria-label');
+      card.removeAttribute('tabindex');
+    }
+  });
+}
+
+// Shuffles to another page with its own sound instead of the button click.
+function turnFeedbackPage(index) {
+  if (index < 0 || index >= feedbackCards.length || index === feedbackPage) return;
+  playSfx('next');
+  showFeedbackPage(index);
+}
+
+// Builds one card of the deck from the template in index.html.
+function buildFeedbackCard(item, text, index, count) {
+  const card = document.getElementById('arranging-feedback-card').content.firstElementChild.cloneNode(true);
+  card.dataset.page = String(index);
+  const image = card.querySelector('.arranging-feedback-image');
+  // Hidden when there's no image field or it fails to load.
+  if (item.image) {
+    image.src = item.image;
+    image.alt = item.name;
+    image.onerror = () => image.classList.add('hidden');
+  } else {
+    image.classList.add('hidden');
+  }
+  card.querySelector('.info-card-title').textContent = item.name;
+  card.querySelector('p').textContent = text;
+  if (index === 0) card.querySelector('.info-card-arrow.is-prev').remove();
+  if (index === count - 1) card.querySelector('.info-card-arrow.is-next').remove();
+  return card;
 }
 
 function showFeedback(item) {
   hideCluePopup(); // only one big popup on the stage at a time
   setDragSuspended(true); // stop dragging anything else underneath the popup
-  capPopupToStage('arranging-feedback', '.arranging-feedback-content');
-  const card = document.getElementById('arranging-feedback');
-  const image = document.getElementById('arranging-feedback-image');
-  // Hidden when there's no image field or it fails to load.
-  if (item.image) {
-    image.src = item.image;
-    image.alt = item.name;
-    image.classList.remove('hidden');
-    image.onerror = () => image.classList.add('hidden');
-  } else {
-    image.classList.add('hidden');
-  }
-  document.getElementById('arranging-feedback-title').textContent = item.name;
-  feedbackPages = [
+  const deck = document.getElementById('arranging-feedback');
+  const pages = [
     item.blurb ?? '[No blurb written yet for this artefact]',
     ...(item.longExplanation ?? []),
   ];
+  feedbackCards = pages.map((text, i) => buildFeedbackCard(item, text, i, pages.length));
+  deck.replaceChildren(...feedbackCards);
+  // Placed before the deck shows, so the cards start in place instead of shuffling in.
+  deck.classList.add('no-transition');
   showFeedbackPage(0);
-  card.classList.remove('hidden');
+  deck.classList.remove('hidden');
+  capPopupToStage('arranging-feedback', '.arranging-feedback-content');
+  deck.getBoundingClientRect(); // commits the starting positions before transitions come back
+  deck.classList.remove('no-transition');
+}
+
+// One listener for the whole deck, since its cards are rebuilt for every artefact.
+function wireFeedbackDeck() {
+  const deck = document.getElementById('arranging-feedback');
+  deck.addEventListener('click', (event) => {
+    if (event.target.closest('.info-card-close')) {
+      skipClickSfx(); // the information card closes quietly
+      hideFeedback();
+      showCompleteIfDone();
+      return;
+    }
+    if (event.target.closest('.info-card-arrow.is-prev')) {
+      turnFeedbackPage(feedbackPage - 1);
+      return;
+    }
+    if (event.target.closest('.info-card-arrow.is-next')) {
+      turnFeedbackPage(feedbackPage + 1);
+      return;
+    }
+    const card = event.target.closest('.arranging-feedback-card');
+    if (card && !card.classList.contains('is-active')) turnFeedbackPage(Number(card.dataset.page));
+  });
+  deck.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    const card = event.target.closest('.arranging-feedback-card[role="button"]');
+    if (!card) return;
+    event.preventDefault();
+    turnFeedbackPage(Number(card.dataset.page));
+  });
 }
 
 function hideFeedback() {
@@ -705,16 +777,7 @@ export function initArrangingScene(runCtx) {
   hideCluePopup();
 
   if (!wired) {
-    // The information card closes quietly.
-    document.getElementById('btn-arranging-feedback-close').addEventListener('click', skipClickSfx);
-    document.getElementById('btn-arranging-feedback-close').addEventListener('click', hideFeedback);
-    document.getElementById('btn-arranging-feedback-close').addEventListener('click', showCompleteIfDone);
-    document
-      .getElementById('btn-arranging-feedback-prev')
-      .addEventListener('click', () => showFeedbackPage(feedbackPage - 1));
-    document
-      .getElementById('btn-arranging-feedback-next')
-      .addEventListener('click', () => showFeedbackPage(feedbackPage + 1));
+    wireFeedbackDeck();
     document.getElementById('btn-arranging-clue-close').addEventListener('click', closeCluePopup);
     registerPauseHandlers('screen-arranging', {
       onPause: () => setDragSuspended(true),
