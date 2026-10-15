@@ -19,7 +19,8 @@
  * how-to-play card (#arranging-tutorial, js/ui/tutorial.js).
  *
  * A correct placement opens the information card (#arranging-feedback)
- * with item.image (hidden if absent or broken) and item.blurb.
+ * with item.image (hidden if absent or broken) and item.blurb. Arrows in
+ * its bottom corners page on to each item.longExplanation paragraph and back.
  *
  * Once every artefact is placed and the last card is closed, the stage
  * transition (js/ui/stage-transition.js) offers moving on to the quiz.
@@ -587,6 +588,23 @@ function capPopupToStage(popupId, contentSelector) {
   content.style.maxHeight = `${innerAvailable}px`;
 }
 
+// The information card's pages: the blurb, then each longExplanation paragraph.
+let feedbackPages = [];
+let feedbackPage = 0;
+
+// Shows one page of the information card, with an arrow either side if
+// there's a page that way.
+function showFeedbackPage(index) {
+  feedbackPage = index;
+  const text = document.getElementById('arranging-feedback-text');
+  text.textContent = feedbackPages[index];
+  text.scrollTop = 0;
+  document.getElementById('btn-arranging-feedback-prev').classList.toggle('hidden', index === 0);
+  document
+    .getElementById('btn-arranging-feedback-next')
+    .classList.toggle('hidden', index >= feedbackPages.length - 1);
+}
+
 function showFeedback(item) {
   hideCluePopup(); // only one big popup on the stage at a time
   setDragSuspended(true); // stop dragging anything else underneath the popup
@@ -603,8 +621,11 @@ function showFeedback(item) {
     image.classList.add('hidden');
   }
   document.getElementById('arranging-feedback-title').textContent = item.name;
-  document.getElementById('arranging-feedback-text').textContent =
-    item.blurb ?? '[No blurb written yet for this artefact]';
+  feedbackPages = [
+    item.blurb ?? '[No blurb written yet for this artefact]',
+    ...(item.longExplanation ?? []),
+  ];
+  showFeedbackPage(0);
   card.classList.remove('hidden');
 }
 
@@ -688,6 +709,12 @@ export function initArrangingScene(runCtx) {
     document.getElementById('btn-arranging-feedback-close').addEventListener('click', skipClickSfx);
     document.getElementById('btn-arranging-feedback-close').addEventListener('click', hideFeedback);
     document.getElementById('btn-arranging-feedback-close').addEventListener('click', showCompleteIfDone);
+    document
+      .getElementById('btn-arranging-feedback-prev')
+      .addEventListener('click', () => showFeedbackPage(feedbackPage - 1));
+    document
+      .getElementById('btn-arranging-feedback-next')
+      .addEventListener('click', () => showFeedbackPage(feedbackPage + 1));
     document.getElementById('btn-arranging-clue-close').addEventListener('click', closeCluePopup);
     registerPauseHandlers('screen-arranging', {
       onPause: () => setDragSuspended(true),
