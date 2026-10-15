@@ -1,12 +1,16 @@
 /* arranging.css
-   States toggled by js/game/arranging.js. Stage sizing/layout for the
-   prototype stays in prototypes/arranging-demo.css. Tints are a single
-   fade, nothing strobes (NFR05).
+   States toggled by js/game/arranging.js. Stage sizing/layout is in
+   arranging-scene.css. Tints are a single fade, nothing strobes (NFR05).
+
+   A slot showing art (an easy mode silhouette or a hard mode riddle card)
+   has no box around it, and its states glow around the outline of the art
+   instead. A slot without art (the "Spot N" fallback) keeps the dashed box
+   and shows its states on that. Either way a placed artefact glows green.
 
    Slot/item box sizes read --arranging-slot-size / --arranging-item-size,
-   set on the stage element by whatever screen builds the grid (currently
-   arranging-demo.js, computed responsively from stage width). The pixel
-   fallbacks here only apply if nothing sets those variables. */
+   set on the stage element by arranging-scene.js (computed responsively
+   from stage size). The pixel fallbacks here only apply if nothing sets
+   those variables. */
 
 .silhouette-slot {
   position: absolute;
@@ -35,14 +39,21 @@
   transition: opacity var(--transition-base), filter var(--transition-base);
 }
 
-/* Easy mode only - img.silhouette-img, set in arranging-demo.js. */
+/* Easy mode only - img.silhouette-img, set in arranging-scene.js. */
 .silhouette-slot img.silhouette-img {
   /* Turns image black and adds an outline effect */
   filter: brightness(0) drop-shadow(0 0 3px #ffffff);
   opacity: 0.35;
 }
 
+/* Dragging the artefact over its own silhouette. */
 .silhouette-slot.is-target img.silhouette-img {
+  filter: brightness(0) drop-shadow(0 0 3px var(--color-primary)) drop-shadow(0 0 8px var(--color-primary));
+  opacity: 1;
+}
+
+.silhouette-slot.flash-incorrect img.silhouette-img {
+  filter: brightness(0) drop-shadow(0 0 3px var(--color-hard-hover)) drop-shadow(0 0 8px var(--color-hard-hover));
   opacity: 0.7;
 }
 
@@ -50,14 +61,24 @@
   opacity: 0;
 }
 
-/* Hard mode only - img.clue-card-art, set in arranging-demo.js. */
+/* Hard mode only - img.riddle-card-art, set in arranging-scene.js. */
 .silhouette-slot.is-clue-slot:not(.is-filled) {
   cursor: pointer;
 }
 
+/* Dragging an artefact over any riddle card (right or wrong, see
+   revealCorrectSlot in arranging.js). */
+.silhouette-slot.is-target img.riddle-card-art {
+  filter: drop-shadow(0 0 3px var(--color-primary)) drop-shadow(0 0 8px var(--color-primary));
+}
+
+.silhouette-slot.flash-incorrect img.riddle-card-art {
+  filter: drop-shadow(0 0 3px var(--color-hard-hover)) drop-shadow(0 0 8px var(--color-hard-hover));
+}
+
 /* :not(.is-clue-open) stops the hover state fighting the fade to 0 below. */
-.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):hover img.clue-card-art,
-.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):focus-visible img.clue-card-art {
+.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):hover img.riddle-card-art,
+.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):focus-visible img.riddle-card-art {
   opacity: 0.8;
 }
 
@@ -67,7 +88,7 @@
 }
 
 /* Hide the slot's own card while its clue popup is open. */
-.silhouette-slot.is-clue-open img.clue-card-art {
+.silhouette-slot.is-clue-open img.riddle-card-art {
   opacity: 0;
 }
 
@@ -78,16 +99,24 @@
   transform: scale(1.05);
 }
 
-.silhouette-slot.is-filled {
-  border-style: solid;
-  border-color: var(--color-easy);
-  color: transparent; /* hide the "Spot N" label showing through a transparent artefact image */
-}
-
 .silhouette-slot.flash-incorrect {
   border-style: solid;
   border-color: var(--color-hard);
   background: color-mix(in srgb, var(--color-hard) 35%, transparent);
+}
+
+/* No box around a slot's art, in any state, nor around a filled slot - the
+   placed artefact's own glow (.arranging-item.is-placed) marks that. */
+.silhouette-slot:has(img),
+.silhouette-slot:has(img).is-target,
+.silhouette-slot:has(img).flash-incorrect,
+.silhouette-slot.is-filled {
+  border-color: transparent;
+  background: transparent;
+}
+
+.silhouette-slot.is-filled {
+  color: transparent; /* hide the "Spot N" label showing through a transparent artefact image */
 }
 
 /* Artefacts carry both classes, class="draggable-box arranging-item". */
@@ -101,13 +130,7 @@
   /* Matches the inside curve of a slot's 2px border, so a placed item doesn't
      poke past the slot's rounded corners. */
   border-radius: calc(var(--radius-md) - 2px);
-  transition: left 300ms ease, top 300ms ease;
-}
-
-.arranging-item.has-image {
-  background: transparent;
-  border: none;
-  box-shadow: none;
+  transition: left 300ms ease, top 300ms ease, filter var(--transition-base);
 }
 
 .arranging-item img {
@@ -124,9 +147,13 @@
   cursor: grabbing;
 }
 
+/* Correctly placed: a green glow around the artefact's outline (or around
+   its box, if it has no image). On the item rather than its <img>, which
+   the item's overflow: hidden would clip the glow of. */
 .arranging-item.is-placed {
   cursor: default;
   z-index: 1;
+  filter: drop-shadow(0 0 3px var(--color-easy-hover)) drop-shadow(0 0 8px var(--color-easy-hover));
 }
 
 @media (prefers-reduced-motion: reduce) {

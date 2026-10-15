@@ -1,0 +1,221 @@
+/* arranging-scene.css
+   Layout for the arranging screen (js/game/arranging-scene.js). Slot and
+   artefact states are in arranging.css, the popup card art in
+   info-card.css. */
+
+/* The stage's own size is shared with sorting, in belt.css. It never grows
+   with the artefact count - getLayout() in arranging-scene.js shrinks the
+   boxes to fit instead.
+
+   The background is the sorting scene's storeroom, in place of the plain
+   dashed stage. Its size and position are set inline by applyLayout() in
+   arranging-scene.js, zoomed in so the cabinet and the loose artefacts
+   stand on the floor under the two ceiling lights. */
+#arranging-stage {
+  border: none;
+  background: var(--color-surface) url('../assets/sort-scene/sort%20scene.avif') no-repeat;
+}
+
+/* The display cabinet, built and placed by buildCabinet() in
+   arranging-scene.js, which also sets each piece's position (the joints
+   are measured there, in CABINET_JOINTS). --cabinet-scale is how many
+   screen px one px of the assets/arrange-scene/ art is drawn at, so
+   --art-px * N is N px measured on the art. The ends of each piece are
+   kept at that scale with border-image, and only the middle stretches to
+   the cabinet's size, so the mitred corners and the shelves' perspective
+   ends keep their shape at any width or row count. */
+.arranging-cabinet {
+  --art-px: calc(var(--cabinet-scale, 1) * 1px);
+  position: absolute;
+  pointer-events: none;
+}
+
+.arranging-cabinet > * {
+  position: absolute;
+  box-sizing: border-box;
+}
+
+/* The cabinet's shadow on the floor, spreading a little past its feet. */
+.cabinet-shadow {
+  left: -9%;
+  right: -9%;
+  bottom: 0;
+  height: calc(var(--art-px) * 140);
+  translate: 0 42%;
+  background: url('../assets/sort-scene/dropshadow.png') center / 100% 100% no-repeat;
+  filter: brightness(0);
+}
+
+/* One per row, the top half of the back panel art (a compartment and its
+   light), stretched to the row. */
+.cabinet-back {
+  left: calc(var(--art-px) * 43);
+  right: calc(var(--art-px) * 43);
+  background: url('../assets/arrange-scene/Background.avif') top / 100% 200% no-repeat;
+}
+
+.cabinet-bottom {
+  height: calc(var(--art-px) * 135);
+  border-image: url('../assets/arrange-scene/Bottom.avif') 0 60 fill / 0 calc(var(--art-px) * 60) stretch;
+}
+
+/* Stretched only between their mitred ends (60 and 50 art px, matching
+   sideSliceTop/sideSliceBottom in arranging-scene.js). Their tops sit under
+   the top rail, and are clipped to its outline so the inner face doesn't
+   poke out above it. */
+.cabinet-left {
+  width: calc(var(--art-px) * 87);
+  border-image: url('../assets/arrange-scene/Left.avif') 60 0 50 fill / calc(var(--art-px) * 60) 0 calc(var(--art-px) * 50) stretch;
+  clip-path: polygon(
+    0 calc(var(--art-px) * 33),
+    calc(var(--art-px) * 46) calc(var(--art-px) * 18),
+    100% calc(var(--art-px) * 18),
+    100% 100%,
+    0 100%
+  );
+}
+
+.cabinet-right {
+  width: calc(var(--art-px) * 88);
+  border-image: url('../assets/arrange-scene/Right.avif') 60 0 50 fill / calc(var(--art-px) * 60) 0 calc(var(--art-px) * 50) stretch;
+  clip-path: polygon(
+    0 calc(var(--art-px) * 19.5),
+    calc(var(--art-px) * 49) calc(var(--art-px) * 19.5),
+    calc(var(--art-px) * 84) calc(var(--art-px) * 34),
+    100% calc(var(--art-px) * 34),
+    100% 100%,
+    0 100%
+  );
+}
+
+.cabinet-mid {
+  height: calc(var(--art-px) * 111);
+  border-image: url('../assets/arrange-scene/Mid.avif') 0 50 fill / 0 calc(var(--art-px) * 50) stretch;
+}
+
+/* 60 art px ends keep the whole mitre at each corner unstretched. */
+.cabinet-top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--art-px) * 40);
+  border-image: url('../assets/arrange-scene/Top.avif') 0 60 fill / 0 calc(var(--art-px) * 60) stretch;
+}
+
+/* Artefacts stand on the shelf (or the floor) rather than float in the
+   middle of their box - silhouettes, riddle cards and artefacts alike. */
+.silhouette-slot img,
+.arranging-item img {
+  object-position: center bottom;
+}
+
+/* Labels inside the boxes shrink along with them. */
+.arranging-item,
+.silhouette-slot {
+  font-size: clamp(0.55rem, calc(var(--arranging-item-size, 88px) * 0.2), 0.8rem);
+  line-height: 1.1;
+  text-align: center;
+}
+
+.arranging-item {
+  padding: 2px;
+  overflow-wrap: anywhere;
+  isolation: isolate; /* keeps the floor shadow below between the floor and the artefact */
+}
+
+/* A long name is clipped to the box (showName() in arranging-scene.js). */
+.arranging-item-name {
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.arranging-item.has-image {
+  padding: 0;
+}
+
+/* Shadow on the floor under each loose artefact, as on the sorting belt's
+   packages. It shrinks away while the artefact is picked up and once it's
+   on its shelf, where the cabinet's own shading takes over. */
+.arranging-item::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 2%;
+  right: 2%;
+  bottom: 0;
+  height: 26%;
+  translate: 0 50%;
+  background: url('../assets/sort-scene/dropshadow.png') center / 100% 100% no-repeat;
+  filter: brightness(0); /* black rather than the art's grey */
+  pointer-events: none;
+  transition: scale var(--transition-base), opacity var(--transition-base);
+}
+
+/* Under a box with no image the box itself hides the shadow's top half, so it sits a little lower. */
+.arranging-item:not(.has-image)::after {
+  translate: 0 70%;
+}
+
+.arranging-item.is-dragging::after,
+.arranging-item.is-placed::after {
+  scale: 0.3;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arranging-item::after {
+    transition: none;
+  }
+}
+
+/* Information card and tutorial. Height-led so they keep the card art's
+   proportions, capped so they don't tower over the stage on a tall kiosk
+   display. arranging-scene.js's capPopupToStage() also caps the
+   information card to the stage. */
+.arranging-feedback,
+#arranging-tutorial {
+  height: min(calc(100% - var(--space-md) * 2), 640px);
+}
+
+/* Shrinks on a short card, leaving the room to the blurb. */
+.arranging-feedback-image {
+  width: 120px;
+  height: 120px;
+  min-height: 48px;
+  flex-shrink: 1;
+  object-fit: contain;
+}
+
+.arranging-feedback-image.hidden {
+  display: none;
+}
+
+/* Hard-mode riddle popup: the same card on the riddle art, sized bigger
+   than a slot's own riddle card so opening it reads as picking it up. */
+.arranging-clue {
+  width: min(640px, 85%);
+  /* Matches assets/ui/riddle.avif's proportions. */
+  aspect-ratio: 1281 / 966;
+  background-image: url('../assets/ui/riddle.avif');
+  /* Keeps the text on the front sheet of the stack. */
+  padding: var(--space-lg) var(--space-xl);
+}
+
+/* On a narrow (phone) stage the art's own proportions leave the card too
+   short for the riddle, so it's stretched taller and a little wider. */
+@container (max-width: 600px) {
+  .arranging-clue {
+    width: 92%;
+    aspect-ratio: auto;
+    height: min(60%, 480px);
+    padding: var(--space-lg);
+  }
+
+  /* Width-led instead, so the tall phone stage doesn't stretch the card art
+     into a long strip. */
+  .arranging-feedback,
+  #arranging-tutorial {
+    width: 92%;
+    height: auto;
+  }
+}

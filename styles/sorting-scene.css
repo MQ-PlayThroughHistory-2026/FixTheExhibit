@@ -1,0 +1,222 @@
+/* sorting-scene.css
+   Layout for the sorting screen (js/game/sorting-scene.js). Drop-zone and
+   package states are in sorting.css, the belt and the stage's own size in
+   belt.css.
+
+   The stage is a size container (belt.css), so packages are sized in
+   cqh/cqw and scale with it, with px bounds so they stay usable on a phone
+   and don't balloon on a kiosk. The drop zones are placed against the
+   background art instead, see --art-px below. */
+
+/* Measurements shared by the background, the packages and the drop zones.
+   Only used inside the stage, where cq units measure the stage itself.
+     --art-px        one pixel of the 1920x1080 background art at its
+                     current "cover" size, so numbers multiplied by it are
+                     positions and sizes measured on the art itself.
+     --package-size  a package's width and height. 32cqw is what sizes
+                     them on a narrow (phone) stage, 20cqh everywhere else.
+     --art-drop      how far the art is pushed down past the stage's bottom
+                     edge. A stage wider than the art's 16:9 crops some of
+                     its height; pushing it down shows the ceiling lights at
+                     the top rather than more of the floor under the belt.
+                     Capped so the drop zones, which stand on the floor and
+                     move down with it, are covered by at most half a
+                     package as the packages pass in front of them. */
+#stage-area {
+  --art-px: max(100cqw / 1920, 100cqh / 1080);
+  --package-size: clamp(76px, min(20cqh, 32cqw), 150px);
+  --art-drop: clamp(0px, var(--art-px) * 1050 - 100cqh, var(--art-px) * 268 - var(--package-size) * 0.5);
+  background: var(--color-surface);
+  border: none;
+}
+
+/* The scene's background art in place of the plain dashed stage, at the
+   bottom of the stage less --art-drop. A pseudo-element rather than the
+   stage's own background, which couldn't use the cq units above. The belt
+   (js/game/belt.js) is drawn at the same "cover" scale along the bottom. */
+#stage-area::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('../assets/sort-scene/sort%20scene.avif') center calc(100% + var(--art-drop)) / cover no-repeat;
+  pointer-events: none;
+}
+
+/* Countdown, top centre of the stage. Under the information cards, and
+   never in the way of a drag. */
+#screen-sorting .hud-timer {
+  position: absolute;
+  top: var(--space-sm);
+  left: 50%;
+  translate: -50% 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.stage-area .package {
+  width: var(--package-size);
+  height: var(--package-size);
+  font-size: clamp(0.7rem, 2.4cqh, 0.95rem);
+  line-height: 1.2;
+  text-align: center;
+  padding: var(--space-xs);
+  /* Wraps between words, only splitting a word that's too long on its own. */
+  overflow-wrap: break-word;
+  isolation: isolate; /* keeps the floor shadow below between the belt and the package */
+}
+
+/* A long name is clipped to the box (.package-name, sorting-scene.js). */
+.stage-area .package-name {
+  max-height: 100%;
+  overflow: hidden;
+}
+
+/* Shadow on the belt under each package. It shrinks away while the
+   package is picked up and grows back when it's put down. */
+.stage-area .package::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 2%;
+  right: 2%;
+  bottom: 0;
+  height: 26%;
+  translate: 0 50%;
+  background: url('../assets/sort-scene/dropshadow.png') center / 100% 100% no-repeat;
+  filter: brightness(0); /* black rather than the art's grey, so it shows on the dark belt */
+  pointer-events: none;
+  transition: scale var(--transition-base), opacity var(--transition-base);
+}
+
+/* Under a package with no image the box itself hides the shadow's top half, so it sits a little lower. */
+.stage-area .package:not(.has-image)::after {
+  translate: 0 70%;
+}
+
+.stage-area .package.is-dragging::after,
+.stage-area .package.is-sorted::after {
+  scale: 0.3;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-area .package::after {
+    transition: none;
+  }
+}
+
+/* The image fills the whole package (no box, see belt.css). */
+.stage-area .package.has-image {
+  padding: 0;
+}
+
+/* Drop zones, sized and placed in art px (--art-px above). The storage box
+   is drawn 300 art px wide and the display case 486, so both stand 270
+   tall. On a narrow stage (a phone) most of the art's width is cropped
+   away and the two wouldn't fit side by side, so --zone-px shrinks them
+   both by the same amount to share 92% of the stage's width, keeping
+   their sizes in proportion. */
+#screen-sorting .drop-zones {
+  --zone-px: min(var(--art-px), 92cqw / 786);
+  --bin-width: calc(var(--zone-px) * 300);
+  --case-width: calc(var(--zone-px) * 486);
+  inset: 0;
+  display: block;
+  padding: 0;
+}
+
+/* Each zone stands on the art's floor, level with the crates on the
+   ground (358 art px up from the art's bottom edge), with its name
+   floating above it. */
+#screen-sorting [data-zone] {
+  position: absolute;
+  bottom: calc(var(--art-px) * 358 - var(--art-drop));
+  width: var(--zone-width);
+  height: auto;
+  min-height: 12cqh; /* for the labelled box, if the art fails to load */
+  flex-direction: column;
+  gap: calc(var(--art-px) * 16);
+  padding: 0;
+  isolation: isolate; /* keeps the drop shadow between the background and the art */
+}
+
+/* The middle value of each clamp() is the zone's centre on the art (457
+   and 1235 px across, i.e. 503 left and 275 right of the middle), and the
+   outer ones keep both inside the stage and clear of each other. Storage
+   stands on the left and the display case on the right. The --shadow-* values place each one's floor shadow: how far it
+   spreads past the art on each side, how tall it is (as a share of the
+   zone's width) and how far below the art's bottom edge its middle is (as
+   a share of its own height). The storage box stands on a corner with its
+   base reaching back behind it, so its shadow is wider, deeper and sits
+   further up, to show around the base. */
+#screen-sorting .zone-label--bin {
+  --zone-width: var(--bin-width);
+  --shadow-spread: 28%;
+  --shadow-height: 0.42;
+  left: clamp(2cqw, 50cqw - var(--art-px) * 503 - var(--zone-width) / 2, 96cqw - var(--case-width) - var(--zone-width));
+}
+
+/* Nudges the box down and right, onto the middle of its shadow. In % of the
+   art's own size, so it holds when the zone shrinks on a phone. */
+#screen-sorting .zone-label--bin .zone-art {
+  translate: 5% 8%;
+}
+
+#screen-sorting .zone-label--case {
+  --zone-width: var(--case-width);
+  left: clamp(6cqw + var(--bin-width), 50cqw + var(--art-px) * 275 - var(--zone-width) / 2, 98cqw - var(--zone-width));
+}
+
+/* The zone's name, on a soft dark backdrop so it reads over the busy art. */
+#screen-sorting .zone-name {
+  padding: 0.1em 0.7em;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 0.7em 0.4em rgba(0, 0, 0, 0.6);
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  /* Scales with the art, shrinking with the zones on a narrow stage. The same
+     size on both labels, small enough for "Display case" to fit its zone. */
+  font-size: clamp(0.75rem, min(var(--art-px) * 46, var(--zone-px) * 50), 2.2rem);
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+/* Shadow on the floor under the art. */
+#screen-sorting [data-zone].has-image::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: calc(-1 * var(--shadow-spread, 8%));
+  right: calc(-1 * var(--shadow-spread, 8%));
+  bottom: 0;
+  height: calc(var(--zone-width) * var(--shadow-height, 0.26));
+  translate: 0 var(--shadow-drop, 50%);
+  background: url('../assets/sort-scene/dropshadow.png') center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+
+/* Information card and tutorial, filling the stage height so opening them
+   never moves the packages - capped so they don't tower on a tall kiosk. */
+#screen-sorting .info-card {
+  height: min(calc(100% - var(--space-md) * 2), 640px);
+}
+
+/* Width-led on a narrow (phone) stage, so its tall shape doesn't stretch
+   the card art into a long strip. */
+@container (max-width: 600px) {
+  #screen-sorting .info-card {
+    width: 92%;
+    height: auto;
+  }
+}
+
+.sorting-feedback.is-correct .info-card-title {
+  color: color-mix(in srgb, var(--color-easy) 75%, #000);
+}
+
+.sorting-feedback.is-incorrect .info-card-title {
+  color: color-mix(in srgb, var(--color-hard) 85%, #000);
+}

@@ -2,6 +2,49 @@
    Styling specific to the main menu, level select, and difficulty select
    screens. Shared tokens/layout live in variables.css / base.css. */
 
+/* Title page: the pause menu's panel (pause-menu.css) holding just the
+   title and Start, without the backplate art. It isn't inside
+   .pause-overlay, so it sizes itself to the viewport here instead. */
+.pause-panel.title-panel {
+  --panel-width: min(880px, 100vw - var(--space-lg) * 2, (100vh - var(--space-lg) * 2) * 4961 / 4008);
+  gap: calc(var(--panel-width) * 0.06);
+  background: none;
+}
+
+/* Wider than the pause menu's so "Fix the Exhibit" fits. */
+.title-panel .title-panel-title {
+  width: 72cqw;
+  font-size: 7.6cqw;
+}
+
+.title-panel .title-panel-start {
+  align-self: center;
+  width: 36cqw;
+  font-size: 6cqw;
+}
+
+/* Instructions card: same card as the scene tutorials, but over the whole
+   page since the title page has no stage to sit in. */
+.intro-card {
+  position: fixed;
+  z-index: 1000;
+  height: min(100vh - var(--space-md) * 2, 640px);
+}
+
+/* Width-led on a narrow (phone) screen, like the scene cards. */
+@media (max-width: 600px) {
+  /* Keeps Start a comfortable tap target on the smaller panel. */
+  .title-panel .title-panel-start {
+    width: 48cqw;
+    font-size: 8cqw;
+  }
+
+  .intro-card {
+    width: 92%;
+    height: auto;
+  }
+}
+
 .level-card,
 .difficulty-card {
   background: var(--color-surface);
@@ -47,26 +90,4 @@
 
 .difficulty-card[data-difficulty='hard']:hover {
   background: color-mix(in srgb, var(--color-hard) 18%, var(--color-surface));
-}
-
-.summary-box {
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
-  padding: var(--space-md) var(--space-lg);
-  width: 100%;
-  max-width: 420px;
-  text-align: left;
-}
-
-.summary-box dt {
-  color: var(--color-text-muted);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-top: var(--space-sm);
-}
-
-.summary-box dd {
-  margin: 0;
-  font-size: 1.1rem;
 }

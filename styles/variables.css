@@ -17,6 +17,7 @@
   --color-hard: #a3453e;
   --color-hard-hover: #bd5851;
   --color-focus-ring: #f2c879;
+  --color-ink: #362a20; /* text on the parchment card art (info-card.css) */
 
   /* Typography */
   --font-heading: 'Georgia', 'Times New Roman', serif;

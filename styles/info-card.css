@@ -1,0 +1,108 @@
+/* info-card.css
+   The parchment popup cards shown over a stage: the information cards
+   (D3/D4) on assets/ui/info-card.avif, and the hard-mode riddle popup,
+   which swaps in assets/ui/riddle.avif (see arranging-scene.css). Each
+   scene sets its own card's size; this file styles the card itself. */
+
+.info-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10; /* above the draggable packages/artefacts */
+  /* Matches info-card.avif's proportions. */
+  aspect-ratio: 711 / 991;
+  max-width: calc(100% - var(--space-md) * 2);
+  display: flex;
+  /* stretch gives .info-card-content a definite height for its
+     max-height: 100% to resolve against, so long text scrolls. */
+  align-items: stretch;
+  padding: var(--space-lg) var(--space-md);
+  box-sizing: border-box;
+  overflow: hidden;
+  background: url('../assets/ui/info-card.avif') center / 100% 100% no-repeat;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.45));
+  color: var(--color-ink);
+}
+
+.info-card.hidden {
+  display: none;
+}
+
+.info-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* The button sits at the bottom of the card, and the title + text are
+   centred in the room above it: this empty item's auto margin and the
+   button's split the spare height evenly. When the text overflows there's
+   no spare height, so it starts at the top instead of being cut off. */
+.info-card-content::before {
+  content: '';
+  margin-top: auto;
+  margin-bottom: calc(var(--space-sm) * -1); /* cancels its flex gap */
+}
+
+.info-card-title {
+  flex-shrink: 0;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+}
+
+/* Only the text scrolls when it's too long, so the title and button
+   always stay on the card. */
+.info-card-content p {
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  color: inherit;
+  max-width: none;
+}
+
+.info-card-close,
+.info-card-action {
+  flex-shrink: 0;
+  margin-top: auto;
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* Close (X) on the information cards and the riddle popup. */
+.info-card-close {
+  width: 60px;
+  aspect-ratio: 1;
+  background: transparent;
+}
+
+.info-card-close img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* "Got it" on the tutorial cards, on the same art as the menu buttons. */
+.info-card-action {
+  width: 190px;
+  /* Matches button.avif's proportions. */
+  aspect-ratio: 4745 / 2284;
+  padding: 0 22px; /* keeps the text inside the art's frame */
+  background: url('../assets/ui/button.avif') center / 100% 100% no-repeat;
+  color: var(--color-bg);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.info-card-close:hover,
+.info-card-action:hover {
+  filter: brightness(1.08);
+}

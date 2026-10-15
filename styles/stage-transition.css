@@ -1,0 +1,50 @@
+/* stage-transition.css
+   The "stage complete" popup. Goes together with js/ui/stage-transition.js.
+   Everything else (overlay, backplate, title card, buttons) comes from
+   pause-menu.css - this file only adds what that one doesn't have. */
+
+/* Next: the button art with the arrow drawn on, so no text. */
+.stage-next {
+  background-image: url('../assets/ui/next.avif');
+}
+
+/* Title card is wider than the pause menu's so "Well Done!"-length titles fit. */
+.stage-transition-title {
+  width: 60cqw;
+  font-size: 8.5cqw;
+}
+
+.stage-transition-text {
+  margin: 0;
+  color: var(--color-bg); /* base.css mutes <p>, which disappears on the light backplate */
+  text-align: center;
+  font-weight: 600;
+  font-size: 4.2cqw;
+  line-height: 1.3;
+}
+
+.stage-transition-text:empty {
+  display: none;
+}
+
+@container pause-overlay (max-width: 600px) {
+  .stage-transition-title {
+    width: 80cqw;
+    font-size: 11cqw;
+  }
+
+  .stage-transition-text {
+    font-size: 6cqw;
+  }
+
+  /* Three full-width buttons in a row, so a bit narrower than the
+     pause menu's (which has the small square Resume in the middle). */
+  .stage-transition .pause-actions {
+    gap: 3cqw;
+  }
+
+  .stage-transition .pause-action {
+    width: 29cqw;
+    font-size: 5.5cqw;
+  }
+}

@@ -1,7 +1,7 @@
 /**
  * arranging.js
  *
- * Stage 2 arranging (D2). Each artefact has exactly one correct
+ * Arranging phase mechanics (D2). Each artefact has exactly one correct
  * silhouette slot. A correct drop snaps the artefact into place and
  * locks it there for good; a wrong drop (or a drop outside any slot)
  * snaps back to where it was picked up and stays draggable.
@@ -11,7 +11,7 @@
  * revealCorrectSlot (default true) controls the drag-over glow: true glows
  * only the artefact's own slot as a hint (easy mode); false glows whichever
  * slot is under the artefact regardless of correctness, so hovering can't
- * be used to find the right one (hard mode - see arranging-demo.js).
+ * be used to find the right one (hard mode - see arranging-scene.js).
  */
 
 import { makeDraggable } from './drag.js';
@@ -37,9 +37,11 @@ const SLOT_FEEDBACK_MS = 500; // one fade per wrong drop, nothing strobes (NFR05
  * @param {object} options
  * @param {HTMLElement} options.stage  holds the items and the [data-slot] elements
  * @param {(result: { item: ArtefactItem }) => void} [options.onPlaced]
+ * @param {(result: { item: ArtefactItem, slot: HTMLElement }) => void} [options.onMisplaced]
+ *   an artefact was dropped on a slot that isn't its own (not fired for drops outside every slot)
  * @param {(summary: ArrangeSummary) => void} [options.onComplete]
  */
-export function createArranger({ stage, onPlaced, onComplete, revealCorrectSlot = true }) {
+export function createArranger({ stage, onPlaced, onMisplaced, onComplete, revealCorrectSlot = true }) {
   const slots = Array.from(stage.querySelectorAll('[data-slot]'));
   if (slots.length === 0) {
     throw new Error('createArranger needs at least one [data-slot] element inside the stage');
@@ -151,7 +153,10 @@ export function createArranger({ stage, onPlaced, onComplete, revealCorrectSlot 
         if (isOwnSlot) {
           commitPlacement(target, item, under);
         } else {
-          if (under) flashWrongSlot(under);
+          if (under) {
+            flashWrongSlot(under);
+            onMisplaced?.({ item, slot: under });
+          }
           snapBack(target);
         }
       },

@@ -12,32 +12,38 @@
   <link rel="stylesheet" href="styles/arranging.css" />
   <link rel="stylesheet" href="styles/kiosk.css" />
   <link rel="stylesheet" href="styles/kiosk-refresh.css" />
-  <link rel="stylesheet" href="styles/prototypes/sorting-demo.css" />
-  <link rel="stylesheet" href="styles/prototypes/arranging-demo.css" />
+  <link rel="stylesheet" href="styles/pause-menu.css" />
+  <link rel="stylesheet" href="styles/stage-transition.css" />
+  <link rel="stylesheet" href="styles/certificate.css" />
+  <link rel="stylesheet" href="styles/info-card.css" />
+  <link rel="stylesheet" href="styles/hud.css" />
+  <link rel="stylesheet" href="styles/sorting-scene.css" />
+  <link rel="stylesheet" href="styles/arranging-scene.css" />
+  <link rel="stylesheet" href="styles/quiz.css" />
 </head>
 <body>
   <div id="app">
 
     <!-- FR01: Main Menu -->
-    <section id="screen-main-menu" class="screen">
-      <h1>Fix the Exhibit</h1>
-      <div class="menu-actions">
-        <button id="btn-start" class="btn-primary">Start</button>
-        <button id="btn-instructions" class="btn-secondary">Instructions</button>
-        <!-- TEMPORARY - delete together with screen-arranging-prototype
-             and js/game/prototypes/arranging-demo.js when the real
-             arranging scene (D2) is built. -->
-        <button id="btn-dev-arranging-demo" class="btn-secondary" style="position: relative; overflow: hidden; padding: 0; border: none;">
-          <img src="assets/ui/button.png" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; z-index: 1;" />
-          <span style="position: relative; z-index: 2; color: black;">[Dev] Arranging Prototype (Easy)</span>
-        </button>
-        <!-- TEMPORARY - delete together with screen-arranging-prototype
-             and js/game/prototypes/arranging-demo.js when the real
-             arranging scene (D2) is built. -->
-        <button id="btn-dev-arranging-hard-demo" class="btn-secondary" style="position: relative; overflow: hidden; padding: 0; border: none;">
-          <img src="assets/ui/button.png" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; z-index: 1;" />
-          <span style="position: relative; z-index: 2; color: black;">[Dev] Arranging Prototype (Hard)</span>
-        </button>
+    <section id="screen-main-menu" class="screen" data-settings>
+      <!-- Reuses the pause menu's backplate, title card and button art. -->
+      <div class="pause-panel title-panel">
+        <h1 class="pause-title title-panel-title">Fix the Exhibit</h1>
+        <button id="btn-start" class="pause-action title-panel-start">Start</button>
+      </div>
+
+      <!-- Instructions (FR01): shown once, the first time Start is pressed
+           (js/ui/tutorial.js). -->
+      <div id="intro-tutorial" class="info-card tutorial-card intro-card hidden" role="dialog" aria-labelledby="intro-tutorial-title">
+        <div class="info-card-content">
+          <strong id="intro-tutorial-title" class="info-card-title">Instructions</strong>
+          <p>
+            You're the new intern and the delivery labels are mixed up. Sort
+            real artefacts from filler packages before time runs out, then
+            arrange the exhibit and answer a short quiz about what you learned.
+          </p>
+          <button class="info-card-action">Got it, let's start</button>
+        </div>
       </div>
 
       <!-- Exit Fullscreen function -->
@@ -58,7 +64,7 @@
     </section>
 
     <!-- Level select -->
-    <section id="screen-level-select" class="screen hidden">
+    <section id="screen-level-select" class="screen hidden" data-settings>
       <h2>Choose a level</h2>
       <p>Pick which exhibit you'll be sorting today.</p>
       <div id="level-list" class="card-grid">Loading levels&hellip;</div>
@@ -66,7 +72,7 @@
     </section>
 
     <!-- Difficulty select (D6) -->
-    <section id="screen-difficulty-select" class="screen hidden">
+    <section id="screen-difficulty-select" class="screen hidden" data-settings>
       <h2>Choose difficulty</h2>
       <p>This changes the sorting timer, belt speed, and arrangement hints.</p>
       <div class="card-grid">
@@ -82,101 +88,205 @@
       <button class="btn-back" data-target="screen-level-select">&larr; Back</button>
     </section>
 
-    <!-- Tutorial (shown once per session, per D6) -->
-    <section id="screen-tutorial" class="screen hidden">
-      <h2>How to play</h2>
-      <p>
-        Packages will move along the conveyor belt. Drag each one into the
-        display case if it belongs to this exhibit, or the rejection bin if
-        it doesn't. Sort everything before the timer runs out.
-      </p>
-      <button id="btn-tutorial-done" class="btn-primary">Got it, let's start</button>
-    </section>
-
-    <!-- Placeholder for the real sorting scene (D1/D8 will replace this) -->
-    <section id="screen-game-stub" class="screen hidden">
-      <h2>Stage 1: Sorting</h2>
-      <p>This screen is a placeholder until the sorting scene (D1) and its timer (D8) are built.</p>
-      <dl class="summary-box">
-        <dt>Level</dt>
-        <dd id="summary-level">-</dd>
-        <dt>Difficulty</dt>
-        <dd id="summary-difficulty">-</dd>
-        <dt>Stage 1 timer</dt>
-        <dd id="summary-timer">-</dd>
-        <dt>Arrangement hint type</dt>
-        <dd id="summary-hint-type">-</dd>
-      </dl>
-      <button id="btn-stub-main-menu" class="btn-secondary">Return to main menu</button>
-    </section>
-
-    <!-- TEMPORARY prototype screen - delete together with
-         js/game/prototypes/sorting-demo.js when real Stage 1 (D1) work
-         starts. See sorting-demo.js's header comment for the full
-         checklist. -->
-    <section id="screen-stage1-prototype" class="screen hidden">
-      <h2>Stage 1 Prototype &mdash; Gold Rush (Easy)</h2>
-      <p>Drag each package with a mouse or your finger into the display case or rejection bin.</p>
+    <!-- Sorting phase (D1), built by js/game/sorting-scene.js -->
+    <section id="screen-sorting" class="screen hidden" data-pausable>
+      <h2 id="sorting-heading"></h2>
+      <div class="stage-hud">
+        <div id="sorting-progress" class="progress-bar" role="progressbar" aria-label="Packages sorted" aria-valuemin="0">
+          <div class="progress-bar-fill"></div>
+        </div>
+      </div>
       <div id="stage-area" class="stage-area">
-        <span class="zone-label zone-label--belt">Sorting demo</span>
+        <!-- Countdown (D8), length set by the difficulty -->
+        <span id="sorting-timer" class="hud-timer" role="timer" aria-label="Time remaining"></span>
         <div class="drop-zones">
-          <span class="zone-label zone-label--case" data-zone="display-case">Display case</span>
-          <span class="zone-label zone-label--bin" data-zone="rejection-bin">Rejection bin</span>
+          <!-- has-image hides the box behind the art; sorting-scene.js brings it back if the image fails -->
+          <span class="zone-label zone-label--case has-image" data-zone="display-case">
+            <span class="zone-name">Display</span>
+            <img class="zone-art" src="assets/sort-scene/display.avif" alt="" />
+          </span>
+          <span class="zone-label zone-label--bin has-image" data-zone="rejection-bin">
+            <span class="zone-name">Storage</span>
+            <img class="zone-art" src="assets/sort-scene/storage.avif" alt="" />
+          </span>
         </div>
-        <!-- Stand-in for the D3 information card, filled by sorting-demo.js -->
-        <div id="sorting-feedback" class="sorting-feedback hidden" role="status" aria-live="polite">
-          <strong id="sorting-feedback-title"></strong>
-          <p id="sorting-feedback-text"></p>
-          <button id="btn-sorting-feedback-close" class="btn-secondary">Close</button>
+        <!-- First-time tutorial (js/ui/tutorial.js) -->
+        <div id="sorting-tutorial" class="info-card tutorial-card hidden" role="dialog" aria-labelledby="sorting-tutorial-title">
+          <div class="info-card-content">
+            <strong id="sorting-tutorial-title" class="info-card-title">How to Play</strong>
+            <p>Drag each package into the display case if it belongs in the exhibit, or into storage if it doesn't. Sort everything before the timer runs out!</p>
+            <button class="info-card-action">Got it, let's start</button>
+          </div>
+        </div>
+        <!-- Information card (D3), shown after each drop -->
+        <div id="sorting-feedback" class="info-card sorting-feedback hidden" role="status" aria-live="polite">
+          <div class="info-card-content">
+            <strong id="sorting-feedback-title" class="info-card-title"></strong>
+            <p id="sorting-feedback-text"></p>
+            <button id="btn-sorting-feedback-close" class="info-card-close" aria-label="Close">
+              <img src="assets/ui/menu-close.avif" alt="" />
+            </button>
+          </div>
         </div>
       </div>
-      <p id="sorting-tally" class="sorting-tally"></p>
-      <button id="btn-stage1-restart" class="btn-primary">Restart sorting</button>
-      <button id="btn-stage1-main-menu" class="btn-secondary">Return to main menu</button>
     </section>
 
-    <!-- Instructions (FR01) -->
-    <section id="screen-instructions" class="screen hidden">
-      <h2>Instructions</h2>
-      <p>
-        You're the new intern and the delivery labels are mixed up. Sort
-        real artefacts from filler packages before time runs out, then
-        arrange the exhibit and answer a short quiz about what you learned.
-      </p>
-      <button class="btn-back" data-target="screen-main-menu">&larr; Back</button>
-    </section>
-
-    <!-- TEMPORARY prototype screen - delete together with
-         js/game/prototypes/arranging-demo.js and the [Dev] button on the
-         main menu when the real arranging scene (D2) is built. -->
-    <section id="screen-arranging-prototype" class="screen hidden">
-      <h2 id="arranging-heading">Arranging Prototype &mdash; Gold Rush</h2>
-      <p id="arranging-intro">Drag each artefact into its own spot in the display case.</p>
+    <!-- Arranging phase (D2), built by js/game/arranging-scene.js -->
+    <section id="screen-arranging" class="screen hidden" data-pausable>
+      <h2 id="arranging-heading"></h2>
+      <div class="stage-hud">
+        <div id="arranging-progress" class="progress-bar" role="progressbar" aria-label="Artefacts placed" aria-valuemin="0">
+          <div class="progress-bar-fill"></div>
+        </div>
+      </div>
       <div id="arranging-stage" class="stage-area">
-        <!-- Stand-in for the D4 information card, filled by arranging-demo.js -->
-        <div id="arranging-feedback" class="arranging-feedback hidden" role="status" aria-live="polite">
-          <img id="arranging-feedback-image" class="arranging-feedback-image hidden" alt="" />
-          <div class="arranging-feedback-content">
-            <strong id="arranging-feedback-title"></strong>
-            <p id="arranging-feedback-text"></p>
-            <button id="btn-arranging-feedback-close" class="btn-secondary">Close</button>
+        <!-- First-time tutorial (js/ui/tutorial.js), text set by the hint type -->
+        <div id="arranging-tutorial" class="info-card tutorial-card hidden" role="dialog" aria-labelledby="arranging-tutorial-title">
+          <div class="info-card-content">
+            <strong id="arranging-tutorial-title" class="info-card-title">How to Play</strong>
+            <p id="arranging-tutorial-text"></p>
+            <button class="info-card-action">Got it, let's start</button>
           </div>
         </div>
-        <!-- Hard-mode clue popup, stand-in for the D4 information card.
-             Opened by tapping an empty slot's info card. -->
-        <div id="arranging-clue" class="arranging-clue hidden" role="status" aria-live="polite">
-          <div class="arranging-clue-content">
-            <strong>Clue</strong>
+        <!-- Information card (D4), shown after each correct placement -->
+        <div id="arranging-feedback" class="info-card arranging-feedback hidden" role="status" aria-live="polite">
+          <div class="info-card-content arranging-feedback-content">
+            <img id="arranging-feedback-image" class="arranging-feedback-image hidden" alt="" />
+            <strong id="arranging-feedback-title" class="info-card-title"></strong>
+            <p id="arranging-feedback-text"></p>
+            <button id="btn-arranging-feedback-close" class="info-card-close" aria-label="Close">
+              <img src="assets/ui/menu-close.avif" alt="" />
+            </button>
+          </div>
+        </div>
+        <!-- Hard-mode riddle popup, opened by tapping an empty slot's riddle card -->
+        <div id="arranging-clue" class="info-card arranging-clue hidden" role="status" aria-live="polite">
+          <div class="info-card-content arranging-clue-content">
+            <strong class="info-card-title">Clue</strong>
             <p id="arranging-clue-text"></p>
-            <button id="btn-arranging-clue-close" class="btn-secondary">Close</button>
+            <button id="btn-arranging-clue-close" class="info-card-close" aria-label="Close">
+              <img src="assets/ui/menu-close.avif" alt="" />
+            </button>
           </div>
         </div>
       </div>
-      <p id="arranging-tally" class="arranging-tally"></p>
-      <button id="btn-arranging-restart" class="btn-primary">Restart arranging</button>
-      <button id="btn-dev-arranging-main-menu" class="btn-secondary">Return to main menu</button>
     </section>
 
+    <!-- Quiz phase (D5), built by js/quiz/quiz-scene.js -->
+    <section id="screen-quiz" class="screen hidden" data-pausable>
+      <h2 id="quiz-heading"></h2>
+      <div class="stage-hud">
+        <div id="quiz-progress" class="progress-bar" role="progressbar" aria-label="Questions answered" aria-valuemin="0">
+          <div class="progress-bar-fill"></div>
+        </div>
+      </div>
+      <div id="quiz-stage" class="quiz-stage">
+        <div class="quiz-card">
+          <!-- tabindex="-1" lets quiz-scene.js move focus here for each new question -->
+          <h3 id="quiz-question" class="quiz-question" tabindex="-1">
+            <span id="quiz-question-number" class="quiz-question-number"></span>
+            <span id="quiz-question-text"></span>
+          </h3>
+          <div id="quiz-answers" class="quiz-answers" role="group" aria-labelledby="quiz-question">
+            <button type="button" class="quiz-answer">
+              <img class="quiz-answer-letter" src="assets/ui/button-a.avif" alt="A" />
+              <span class="quiz-answer-text"></span>
+            </button>
+            <button type="button" class="quiz-answer">
+              <img class="quiz-answer-letter" src="assets/ui/button-b.avif" alt="B" />
+              <span class="quiz-answer-text"></span>
+            </button>
+            <button type="button" class="quiz-answer">
+              <img class="quiz-answer-letter" src="assets/ui/button-c.avif" alt="C" />
+              <span class="quiz-answer-text"></span>
+            </button>
+            <button type="button" class="quiz-answer">
+              <img class="quiz-answer-letter" src="assets/ui/button-d.avif" alt="D" />
+              <span class="quiz-answer-text"></span>
+            </button>
+          </div>
+          <p id="quiz-feedback" class="quiz-feedback" role="status" aria-live="polite"></p>
+          <!-- next.avif has the arrow drawn on, so the button needs no text -->
+          <button type="button" id="btn-quiz-next" class="quiz-next" aria-label="Next question" disabled></button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Pause/settings button + menu (js/ui/pause-menu.js). Shows as a pause
+       button on screens marked data-pausable above, and as a burger menu
+       (settings only, no Restart/Quit) on screens marked data-settings. -->
+  <button id="btn-pause" class="pause-button hidden" aria-label="Pause" aria-haspopup="dialog" aria-controls="pause-menu">
+    <img src="assets/ui/pause-button.avif" alt="" />
+  </button>
+
+  <div id="pause-menu" class="pause-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pause-menu-title">
+    <div class="pause-panel">
+      <div class="pause-title-row">
+        <h2 id="pause-menu-title" class="pause-title">Settings</h2>
+        <!-- Settings mode only, replaces the Restart / Resume / Quit row. -->
+        <button type="button" id="btn-pause-close" class="pause-close hidden" aria-label="Close settings">
+          <img src="assets/ui/menu-close.avif" alt="" />
+        </button>
+      </div>
+
+      <div class="pause-volume-row">
+        <span id="pause-bgm-label" class="pause-label">Background Music</span>
+        <button type="button" class="pause-mute" data-channel="bgm" aria-label="Mute background music">
+          <img src="assets/ui/menu-volume.avif" alt="" />
+        </button>
+        <input type="range" class="pause-slider" data-channel="bgm" min="0" max="100" step="1" aria-labelledby="pause-bgm-label" />
+      </div>
+
+      <div class="pause-volume-row">
+        <span id="pause-sfx-label" class="pause-label">Sound Effects</span>
+        <button type="button" class="pause-mute" data-channel="sfx" aria-label="Mute sound effects">
+          <img src="assets/ui/menu-volume.avif" alt="" />
+        </button>
+        <input type="range" class="pause-slider" data-channel="sfx" min="0" max="100" step="1" aria-labelledby="pause-sfx-label" />
+      </div>
+
+      <div class="pause-actions">
+        <button type="button" id="btn-pause-restart" class="pause-action">Restart</button>
+        <button type="button" id="btn-pause-resume" class="pause-resume" aria-label="Resume">
+          <img src="assets/ui/resume-button.avif" alt="" />
+        </button>
+        <button type="button" id="btn-pause-quit" class="pause-action">Quit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage complete popup (js/ui/stage-transition.js). Reuses the pause
+       menu's panel and button art. -->
+  <div id="stage-transition" class="pause-overlay stage-transition hidden" role="dialog" aria-modal="true" aria-labelledby="stage-transition-title" aria-describedby="stage-transition-text">
+    <div class="pause-panel">
+      <h2 id="stage-transition-title" class="pause-title stage-transition-title">Well Done!</h2>
+      <p id="stage-transition-text" class="stage-transition-text"></p>
+
+      <div class="pause-actions">
+        <button type="button" id="btn-stage-restart" class="pause-action">Restart</button>
+        <button type="button" id="btn-stage-exit" class="pause-action">Leave</button>
+        <button type="button" id="btn-stage-next" class="pause-action stage-next" aria-label="Next stage"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- End of level certificate (js/ui/certificate.js). Reuses the pause
+       menu's overlay and button art. -->
+  <div id="certificate" class="pause-overlay certificate hidden" role="dialog" aria-modal="true" aria-labelledby="certificate-title" aria-describedby="certificate-description">
+    <div class="certificate-panel">
+      <p class="certificate-heading">Congratulations!</p>
+      <p id="certificate-level" class="certificate-level"></p>
+      <h2 id="certificate-title" class="certificate-title"></h2>
+      <p id="certificate-description" class="certificate-description"></p>
+      <p id="certificate-score" class="certificate-score"></p>
+
+      <div class="pause-actions">
+        <button type="button" id="btn-certificate-restart" class="pause-action">Restart</button>
+        <button type="button" id="btn-certificate-exit" class="pause-action">Leave</button>
+      </div>
+    </div>
   </div>
 
   <!-- Timeout Modal -->
