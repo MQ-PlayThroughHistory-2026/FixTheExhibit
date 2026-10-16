@@ -121,6 +121,7 @@
         <!-- Information card (D3), shown after each drop -->
         <div id="sorting-feedback" class="info-card sorting-feedback hidden" role="status" aria-live="polite">
           <div class="info-card-content">
+            <img id="sorting-feedback-image" class="sorting-feedback-image hidden" alt="" />
             <strong id="sorting-feedback-title" class="info-card-title"></strong>
             <p id="sorting-feedback-text"></p>
             <button id="btn-sorting-feedback-close" class="info-card-close" aria-label="Close">
@@ -148,17 +149,31 @@
             <button class="info-card-action">Got it, let's start</button>
           </div>
         </div>
-        <!-- Information card (D4), shown after each correct placement -->
-        <div id="arranging-feedback" class="info-card arranging-feedback hidden" role="status" aria-live="polite">
-          <div class="info-card-content arranging-feedback-content">
-            <img id="arranging-feedback-image" class="arranging-feedback-image hidden" alt="" />
-            <strong id="arranging-feedback-title" class="info-card-title"></strong>
-            <p id="arranging-feedback-text"></p>
-            <button id="btn-arranging-feedback-close" class="info-card-close" aria-label="Close">
-              <img src="assets/ui/menu-close.avif" alt="" />
-            </button>
+        <!-- Information card (D4), shown after each correct placement: a deck
+             of cards, the blurb then each longExplanation paragraph, filled
+             from the template below by arranging-scene.js -->
+        <div id="arranging-feedback" class="arranging-feedback hidden" role="status" aria-live="polite"></div>
+        <template id="arranging-feedback-card">
+          <div class="info-card arranging-feedback-card">
+            <div class="info-card-content arranging-feedback-content">
+              <img class="arranging-feedback-image" alt="" />
+              <strong class="info-card-title"></strong>
+              <p></p>
+              <!-- The arrows page between the cards; a card with no page that way loses its arrow -->
+              <div class="arranging-feedback-nav">
+                <button class="info-card-arrow is-prev" aria-label="Previous page">
+                  <img src="assets/ui/arrow.avif" alt="" />
+                </button>
+                <button class="info-card-close" aria-label="Close">
+                  <img src="assets/ui/menu-close.avif" alt="" />
+                </button>
+                <button class="info-card-arrow is-next" aria-label="Next page">
+                  <img src="assets/ui/arrow.avif" alt="" />
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        </template>
         <!-- Hard-mode riddle popup, opened by tapping an empty slot's riddle card -->
         <div id="arranging-clue" class="info-card arranging-clue hidden" role="status" aria-live="polite">
           <div class="info-card-content arranging-clue-content">

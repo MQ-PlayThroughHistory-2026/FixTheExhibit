@@ -18,6 +18,7 @@ const SFX_URLS = {
   timesUp: 'assets/sounds/effects/times-up.mp3',
   clueUp: 'assets/sounds/effects/clue-up.mp3',
   clueDown: 'assets/sounds/effects/clue-down.mp3',
+  next: 'assets/sounds/effects/next.mp3', // shuffling the information card's pages
   wellDone: 'assets/sounds/effects/well-done.mp3',
   congratulations: 'assets/sounds/effects/congratulations.mp3',
 };

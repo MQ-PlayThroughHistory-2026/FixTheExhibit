@@ -130,8 +130,19 @@ function spawnPackages(stage, items, sorter, runBelt) {
 }
 
 // Shows the feedback card and holds the belt and countdown while it is open.
-function showCard(title, text, correct) {
+// Shows the item's image like the arranging card does; hidden with no
+// image field or if it fails to load.
+function showCard(title, text, correct, item) {
   const card = document.getElementById('sorting-feedback');
+  const image = document.getElementById('sorting-feedback-image');
+  if (item?.image) {
+    image.src = item.image;
+    image.alt = item.name;
+    image.classList.remove('hidden');
+    image.onerror = () => image.classList.add('hidden');
+  } else {
+    image.classList.add('hidden');
+  }
   document.getElementById('sorting-feedback-title').textContent = title;
   document.getElementById('sorting-feedback-text').textContent = text;
   card.classList.toggle('is-correct', correct);
@@ -270,9 +281,10 @@ export function initSortingScene(runCtx) {
       playSfx(result.correct ? 'correct' : 'incorrect');
       renderProgress(sorter.getSummary());
       showCard(
-        result.correct ? `Correct, ${result.item.name} sorted` : `Not quite, ${result.item.name}`,
+        result.correct ? `That's Right!` : `Not Quite!`,
         result.funFact ?? '',
         result.correct,
+        result.item,
       );
     },
     onComplete(summary) {

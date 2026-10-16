@@ -1,261 +1,261 @@
 [
   {
-    "id": "example-artefact-1",
-    "name": "Crab",
+    "id": "gold-cradle",
+    "name": "Gold Cradle",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/toy-soldier.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
+    "image": "assets/gold-rush/artefacts/gold-cradle.avif",
+    "blurb": "This tool was often used in the gold rush to search for gold around bodies of water like creeks and rivers. Cradles were mostly made of wood and had sheets of metal with holes in them that acted as sieves. Miners would shovel dirt and water on the top of the cradle, then rock the cradle back and forth to push the mixture through the sieves. Gold is denser than soil and water, so it would sink and get caught in small grooves in the base of the cradle while normal dirt and water flowed out of the box.",
     "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
+      "The first Australian gold cradle was made by William Tom Jr. in early 1851, before the Australian gold rush started. William made the cradle under the instruction of Edward Hargraves, who had seen similar gold cradles being used in Californian goldfields. After it was built, the cradle was used to search for gold in Lewis Ponds Creek, located in what would soon be known as the Ophir goldfields, and quickly found four ounces of gold. This discovery was published in the Sydney Morning Herald, which led to the start of the Australian gold rushes.",
+      "By the end of 1851, there were over a thousand cradles in large goldfields like Ballarat. At the time some cradles were finding 2 ounces of gold every day, making gold cradles one of the most efficient mining options for gold prospectors. However, while using the cradle was efficient, it was hard work. Most miners worked in groups of three or more to use a gold cradle, with one person to shovel dirt into the top of the cradle, another person to pour water over the dirt, and a third person to rock the cradle."
     ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "riddle": "Placeholder riddle/clue used for hard-mode arrangement instead of a silhouette (task R9).",
+    "funFactCorrect": "Australia's first gold cradle was made by William Tom Jr. in 1851 to be used in the Ophir goldfields and is now displayed in the Powerhouse Museum.",
+    "funFactIncorrect": "Gold cradles were often used to mine gold, and Australia's first cradle found the gold nugget that led to the start of the Australian gold rush.",
+    "riddle": "This artefact shares part of its name with a type of bed made for babies.",
     "quiz": {
       "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "Where were gold cradles used to search for gold?",
+        "options": ["In the mines", "Under trees", "In the desert", "Next to creeks"],
+        "correctIndex": 3
       },
       "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "Where was the gold cradle first used in Australia?",
+        "options": ["Ballarat", "California", "Ophir", "Bendigo"],
+        "correctIndex": 2
       }
     }
   }, 
   {
-    "id": "example-artefact-2",
-    "name": "Example Artefact (replace with real name - task R2)",
+    "id": "race-to-diggings",
+    "name": "Race to the Gold Diggings of Australia",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/toy-soldier.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
+    "image": "assets/gold-rush/artefacts/race-to-diggings.avif",
+    "blurb": "This board game was made in England in 1855. Players board their boat in England, then navigate the ocean to eventually land in Australia and join the gold rush. The first person to reach Australia wins the game and is rewarded with a trip to nearby goldfields where they soon find gold. The game made it seem like finding gold was easy, with pictures of prospectors finding large nuggets of gold a short walk from their anchored boats. This encouraged people to make the journey to the Australian goldfields, where they believed they could quickly build a fortune.",
     "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
+      "Race to the Gold Diggings of Australia is the first known boardgame to have an Australian theme. It came in a painted wooden box with a sliding lid that held the game board, a printed instruction sheet, six ship counters, and a teetotum - a spinning top marked with numbers that is used like dice. The ship counters were made of either wood or metal and were painted to look like sailing ships, and the game board was made from lithographic paper that was stuck to a piece of linen.",
+      "The hand-coloured image on the game board depicted an oval track that represented the ocean and five illustrations that showed different aspects of the gold-prospector journey - including travelling, digging, and finding bags of gold. The game used real places to guide the players' journey, with players starting the game by boarding their ships at Plymouth in England, which was positioned at the start of the track. They would then move across the 80 sections around the oval, passing by an area representing the Cape of Good Hope in Africa before landing at Port Phillip Bay in Australia."
     ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "riddle": "Placeholder riddle/clue used for hard-mode arrangement instead of a silhouette (task R9).",
+    "funFactCorrect": "Race to the Gold Diggings of Australia is the earliest known Australian-themed boardgame and encouraged people to join the gold rush.",
+    "funFactIncorrect": "Race to the Gold Diggings of Australia was first made in 1855 and encouraged people to join the Australian gold rush by making it seem easy to find gold in the goldfields.",
+    "riddle": "This artefact was mostly used by children.",
     "quiz": {
       "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
+        "question": "Where did players first board their boat when playing Race to the Gold Diggings of Australia?",
+        "options": ["Plymouth, England", "Port Phillip, Australia", "Cape of Good Hope, Africa", "California, USA"],
         "correctIndex": 0
       },
       "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
+        "question": "Which of the following was not included in the Race to the Gold Diggings of Australia board game?",
+        "options": ["Ship counters", "Dice", "Instructions", "Game Board"],
+        "correctIndex": 1
+      }
+    }
+  },
+  {
+    "id": "gold-licence",
+    "name": "Gold Licence",
+    "correctZone": "display-case",
+    "image": "assets/gold-rush/artefacts/gold-licence.avif",
+    "blurb": "During the gold rush, the governments of the time made anyone who wanted to dig for gold pay a fee to get a gold licence. If a miner was found without their licence, they could be fined or put in gaol. However, these gold licences usually only lasted for a month, so miners had to keep paying the licence fee if they wanted to continue mining, even if they hadn't found any gold. Miners often complained that these licences and fees were very expensive and unfair, which eventually led them to organise petitions against the licences.",
+    "longExplanation": [
+      "As the gold rush took place before Australia's Federation in 1901, the country was divided into multiple British colonies that each had their own governments and laws. Gold licences were first issued by the New South Wales colonial government on the 23rd of May 1851, which governed both the New South Wales and Victorian colonies at the time. Once a separate Victorian government was established on the 1st of July in 1851, they quickly began issuing their own gold licences from the 1st of September.",
+      "The monthly fee for gold licences in these colonies was usually either 20 or 30 shillings. These prices were expensive at the time, and miners felt that it was unfair that they were essentially paying taxes but were unable to vote or join the government. After petitions with over 5,000 signatures, large rallies attended by over 10,000 miners, and the Eureka stockade, the Victorian government eventually abolished the miner's licence in April of 1855 and introduced the miner's right which only cost a yearly fee of 1 pound and gave the miner the right to vote."
+    ],
+    "funFactCorrect": "Colonial governments introduced these expensive month-long gold licences early in the gold rush, which led to miner petitions, protests, and the Eureka Stockade.",
+    "funFactIncorrect": "Whether they found gold or not, miners had to pay monthly fees for gold licences like this to avoid fines during most of the Australian gold rush.",
+    "riddle": "Miners had to regularly pay fees for this artefact.",
+    "quiz": {
+      "easy": {
+        "question": "How often did most gold licences last?",
+        "options": ["A year", "A week", "A month", "A day"],
+        "correctIndex": 2
+      },
+      "hard": {
+        "question": "When were gold licences abolished in Victoria?",
+        "options": ["May 1851", "April 1855", "March 1853", "June 1856"],
+        "correctIndex": 1
+      }
+    }
+  },
+  {
+    "id": "puddling",
+    "name": "Puddling by ST Gill",
+    "correctZone": "display-case",
+    "image": "assets/gold-rush/artefacts/puddling.avif",
+    "blurb": "This artwork was created by ST Gill, who was one of the best-known artists from the time of the Australian gold rush. Gill created many sketches and watercolours that depicted the daily life of prospectors during the gold rush, including many illustrations of different processes used to mine surface gold. This image shows a process called puddling, which involved mixing dirt and water in a circular trough. Gold would sink and fall to the base of the trough during mixing and could be collected once the dirt and water was removed.",
+    "longExplanation": [
+      "Samuel Thomas Gill was born in England in 1818 and moved to Australia when he was 21, where he lived until his death in 1880. He first settled in Adelaide and soon began working as a portrait painter. Gill's artwork soon grew in popularity, and he was often praised for his ability to portray the distinctive characteristics of the Australian landscape. In 1852, he moved to the Mount Alexander goldfield in Victoria. Gill drew many scenes of life in the goldfields, many of which show women and other family members as active participants in mining activities.",
+      "While living at the goldfields Gill also drew many detailed depictions of mining processes, including this image of puddling. Puddling machines were first used in Victorian goldfields in 1854 and grew in popularity until popular goldfields like Bendigo had at least 3,000 puddling machines operating every day in 1856. Unfortunately using these machines produced a lot of sludge, which was often dumped in nearby water sources and could contaminate drinking water. The 3,000 machines used in 1856 are estimated to have dumped 15 megalitres of water and 39,916 tonnes of dirt into the Bendigo Creek each day."
+    ],
+    "funFactCorrect": "ST Gill created many artworks showing gold-rush mining activities like puddling, which often showed women and children as active participants.",
+    "funFactIncorrect": "This artwork was created during the gold rush by the well-known artist ST Gill and shows a miner looking for gold using a method called puddling.",
+    "riddle": "You might find this artefact in an art gallery.",
+    "quiz": {
+      "easy": {
+        "question": "What is puddling?",
+        "options": ["Mining gold by mixing dirt and water in a trough", "Looking for gold in muddy puddles", "Pouring water in dirt holes to collect floating gold", "Searching for gold in the wet season"],
+        "correctIndex": 0
+      },
+      "hard": {
+        "question": "How many puddling machines were used in Bendigo in 1856?",
+        "options": ["500", "10,000", "3,000", "20"],
+        "correctIndex": 2
+      }
+    }
+  },
+  {
+    "id": "eureka-flag",
+    "name": "Eureka Flag",
+    "correctZone": "display-case",
+    "image": "assets/gold-rush/artefacts/eureka-flag.avif",
+    "blurb": "This flag, often referred to as the flag of the Southern Cross, was raised at the Eureka Stockade in 1854. The stockade was a wooden fort erected at Eureka in Ballarat as part of the miners' rebellion against expensive gold licences. Government forces attacked the rebels and dismantled the stockade soon after it was built, but the battle eventually led to the abolishment of monthly miners' licences and is often said to be the birth of Australia's democracy. While the original flag has not been used again, its image is often associated with trade unions.",
+    "longExplanation": [
+      "The Eureka flag is currently housed at the Museum of Australian Democracy in Ballarat, though about 40% of the flag is missing. The original flag was 2.6 metres tall and 4 metres wide, but sections of it were cut off after the Eureka Stockade and given to people as souvenirs. Most of the flag was likely taken home by the police trooper John King after the battle at the stockade, and his family donated the flag to the Art Gallery of Ballarat in 2001. Missing pieces of the flag still reappear occasionally, having been passed down through family members.",
+      "The Eureka flag was first raised at a meeting of the Ballarat Reform League at Bakery Hill on the 29th of November in 1854, and despite its fame, there are still debates about who designed and created the flag. Oral histories seem to show that the flag was sewn by three women at a Catholic Parish – Anne Duke, Anastasia Hayes, and Anastasia Withers. There is also evidence that the Canadian miner Henry Ross was involved in the design of the flag, which was inspired by the Southern Cross constellation."
+    ],
+    "funFactCorrect": "The Eureka flag was made in 1854 by gold miners rebelling against gold licences and is now displayed at the Museum of Australian Democracy in Ballarat.",
+    "funFactIncorrect": "The Eureka flag was raised at the Eureka Stockade, which was a wooden fort built by gold miners in 1854 as part of their protests about unfair regulations.",
+    "riddle": "40% of this artefact is missing because it was cut apart and distributed during the gold rush.",
+    "quiz": {
+      "easy": {
+        "question": "What is another name often used to refer to the Eureka Flag?",
+        "options": ["The Ballarat Reform League Flag", "The Bendigo Miner Flag", "The Gold Licence Rebellion Flag", "The Flag of the Southern Cross"],
+        "correctIndex": 3
+      },
+      "hard": {
+        "question": "When was the Eureka Flag first raised?",
+        "options": ["At a meeting on Bakery Hill", "At the Eureka Stockade", "At a Catholic Parish", "At a rally in Bendigo"],
         "correctIndex": 0
       }
     }
   },
   {
-    "id": "example-artefact-3",
-    "name": "Example Artefact (replace with real name - task R2)",
+    "id": "gold-pan",
+    "name": "Gold Pan",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-3.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
+    "image": "assets/gold-rush/artefacts/gold-pan.avif",
+    "blurb": "The gold pan was one of the simplest and most accessible tools used by prospectors during the Australian gold rush. Miners would fill the pan with water and potentially gold-bearing sediment before gently swirling it. Due to gold being much denser than these other materials, the lighter sediment would be washed away while the heavier gold would be left at the bottom. The affordability, portability, and ease of use of the gold pan made it popular among prospectors, especially those who were just starting their search for gold.",
     "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
+      "Gold panning was mainly used for alluvial mining, where gold could be found amongst sand, gravel, and other sediment that had been deposited by moving water. Prospectors would place sediment and water into the pan, then repeatedly rock or swirl it. This allowed lighter materials to be washed away while denser particles like gold were left at the bottom. Due to the simplicity and low costs of this method, panning was also particularly useful for determining whether an area might contain enough gold to investigate further.",
+      "Although panning was simple, it could also be slow and labour intensive when processing large amounts of material. Techniques like cradling allowed miners to process much larger quantities of dirt, however panning still remained valuable because it was cheap, portable, and easy to use alone. Pans could also be used to recover fine gold particles that can remain in material already processed by other tools like cradles and puddling tubs. These advantages helped make gold panning one of the most enduring symbols of the gold rush."
     ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "riddle": "Placeholder riddle/clue used for hard-mode arrangement instead of a silhouette (task R9).",
+    "funFactCorrect": "Prospectors used gold pans to collect gold, and to test whether an area contained gold before setting up more complicated methods of mining.",
+    "funFactIncorrect": "Even after dirt was processed by larger mining equipment, gold pans were still used to recover smaller pieces of gold that had been left behind.",
+    "riddle": "This artefact was sometimes used to recover gold left behind by other mining methods.",
     "quiz": {
       "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "What was the main purpose of a gold pan?",
+        "options": ["To weigh gold before selling it", "To separate gold from sand and gravel", "To melt gold and shape it into bars", "To transport gold between settlements"],
+        "correctIndex": 1
       },
       "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
+        "question": "Why did gold remain at the bottom of the pan when miners washed away the surrounding sediment?",
+        "options": ["Gold absorbed more water than other materials", "Gold was attracted to the metal pan", "Gold was denser than the surrounding sediment", "Gold took longer to dissolve in water than sand"],
+        "correctIndex": 2
+      }
+    }
+  },
+  {
+    "id": "gold-scale",
+    "name": "Gold Scale",
+    "correctZone": "display-case",
+    "image": "assets/gold-rush/artefacts/gold-scale.avif",
+    "blurb": "Gold scales allowed miners and gold buyers to accurately measure gold discovered on the goldfields. These portable balance scales typically consisted of two small brass pans suspended from a balance beam, along with a set of weights and a storage case. These scales traditionally measured gold using the troy weight system, which included ounces, pennyweights, and grains. Their small size made gold scales easy to transport and provided a practical way of determining the weight and value of a miner's gold.",
+    "longExplanation": [
+      "Once gold was found by a miner, it needed to be accurately weighed. Portable balance scales provided a simple solution on the goldfields. Gold could be placed into one of the scale's brass pans, while weights were added to the other. When the two sides balanced, the miner or buyer could determine how much the gold weighed. The storage cases these scales came in made them easy to carry around and use around goldfield settlements, providing a convenient method of measuring gold as it was found.",
+      "Instead of the metric system used in Australia today, which measures weight in grams and kilograms, gold was traditionally weighed with the troy weight system that used measurements like troy ounces, pennyweights and grains. This system allowed for relatively small quantities of gold to be weighed precisely, which was important when determining its value. Surviving gold scale sets demonstrate that gold prospecting was about more than just digging for treasure. Accurately measuring any gold found was an important step before it could be valued, bought, sold, or otherwise exchanged within and beyond the goldfields."
+    ],
+    "funFactCorrect": "During the gold rush, gold was measured using the troy weight system - one troy ounce equaled approximately 31.1 grams.",
+    "funFactIncorrect": "Some gold scales were small enough to fit into portable cases that allowed miners and buyers to weigh gold on the goldfields.",
+    "riddle": "This artefact was often kept in a small portable case so it could be carried around the goldfields.",
+    "quiz": {
+      "easy": {
+        "question": "What was the primary purpose of gold scales during the gold rush?",
+        "options": ["To determine the purity of gold", "To separate gold from other minerals", "To accurately measure the weight of gold", "To determine where gold could be found"],
+        "correctIndex": 2
+      },
+      "hard": {
+        "question": "Which of the following units was traditionally used to measure gold during the Australian gold rush?",
+        "options": ["Kilograms", "Litres", "Pennyweights", "Carats"],
+        "correctIndex": 2
+      }
+    }
+  },
+  {
+    "id": "gold-nugget",
+    "name": "Maitland Bar Gold Nugget",
+    "correctZone": "display-case",
+    "image": "assets/gold-rush/artefacts/gold-nugget.avif",
+    "blurb": "The Maitland Bar nugget, also known as the Jubilee Nugget, is one of Australia's most significant surviving large gold nuggets. It was discovered later in the gold rush at Meroo Creek near Hargraves, New South Wales. The nugget was found roughly 3.4 metres underground in an abandoned mine shaft. Measuring approximately 24 by 16 by 9 centimetres and weighing around 10.7 kilograms, the nugget's impressive size made it an important example of the gold that could be discovered in Australia.",
+    "longExplanation": [
+      "The Maitland Bar nugget was discovered by Jonathan Thorpe, Isaac Holmes, and Frederick Leader on the 15th of June in 1887. Despite its golden appearance, the nugget is not entirely gold, but also contains distinctive patches of milky quartz on its surface. This combination of gold and quartz was quite common, as most gold found through underground mining practices was found around quartz. This means that while the Maitland Bar nugget was an alluvial nugget that had been deposited by water, it may have originally formed in an underground quartz vein.",
+      "The Jubilee Nugget was more than just a valuable piece of gold, it was said to be one of the purest nuggets ever found. The New South Wales Colonial Government purchased the nugget soon after it was found for 1236 pounds, 14 shillings, and 1 penny. It was then displayed within exhibitions both in Australia and overseas where it was used to showcase New South Wales's mineral wealth. The Maitland Bar nugget's discovery late into the 1800s shows that major gold finds continued in Australia long after the initial gold rush excitement of the 1850s."
+    ],
+    "funFactCorrect": "The Maitland Bar nugget was discovered approximately 3.4 metres underground in an abandoned shaft, and weighed 10.7 kilograms.",
+    "funFactIncorrect": "The Maitland Bar nugget is also known as the Jubilee Nugget because it was discovered in 1887, the year Queen Victoria celebrated 50 years on the throne.",
+    "riddle": "This artefact was discovered in the same year that Queen Victoria celebrated her Golden Jubilee.",
+    "quiz": {
+      "easy": {
+        "question": "Approximately how much did the Maitland Bar gold nugget weigh?",
+        "options": ["1.7 kilograms", "5.7 kilograms", "10.7 kilograms", "20.7 kilograms"],
+        "correctIndex": 2
+      },
+      "hard": {
+        "question": "Why was the Maitland Bar gold nugget also known as the Jubilee Nugget?",
+        "options": ["It was discovered during Queen Victoria's 50th year on the throne", "It was presented to Queen Victoria as a gift", "It was discovered on the 100th anniversary of the Australian gold rush", "It was named after the mining company that discovered it"],
         "correctIndex": 0
       }
     }
   },
   {
-    "id": "example-artefact-4",
-    "name": "Example Artefact (replace with real name - task R2)",
+    "id": "goldfields-brooch",
+    "name": "Goldfields Brooch",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-4.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
+    "image": "assets/gold-rush/artefacts/goldfields-brooch.avif",
+    "blurb": "Goldfields brooches were a distinctive form of Australian jewellery created during the gold rush era. Often made from Australian gold, they would feature miniature representations of objects and scenes associated with life on the goldfields. Designs would include tiny picks, shovels, gold pans, buckets, sieves, windlasses, and even pieces of gold. They were purchased by miners and other members of goldfield communities, and were often given as gifts and souvenirs. These decorative brooches allowed people to commemorate their personal experiences in the gold rush.",
     "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
+      "Not every surviving gold rush artefact was a tool used to find gold. Goldfields jewellery transformed the experiences of mining into decorative pieces that people could wear. Brooches could incorporate miniature versions of familiar goldfield objects, and some designs also featured miners and revolvers. These details made the jewellery easily recognisable as being connected to Australia's goldfield communities, and showed how the everyday objects and activities from the goldfields, and the gold they produced, could be transformed into meaningful decorative accessories.",
+      "Goldfields brooches could be purchased by miners and merchants,usually to be presented as gifts or kept as souvenirs. Unlike other gold rush artefacts, the brooches allowed people to remember and display their connection to the gold rush rather than serve a practical mining purpose. Their designs provide a different perspective on the period, showing how the gold rush influenced Australian culture and personal possessions as well as mining. Surviving examples preserve miniature representations of the tools, people and symbols associated with life on the goldfields."
     ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "riddle": "Placeholder riddle/clue used for hard-mode arrangement instead of a silhouette (task R9).",
+    "funFactCorrect": "Goldfields brooches sometimes featured tiny versions of mining tools including picks, shovels, buckets, and even windlasses, which were used to lift materials from mining shafts.",
+    "funFactIncorrect": "Goldfields brooches were often purchased as souvenirs or given as gifts to commemorate someone's connection to the Australian gold rush.",
+    "riddle": "This artefact often featured miniature versions of objects that miners used in their everyday work.",
     "quiz": {
       "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "What was the main purpose of goldfields brooches?",
+        "options": ["To identify licensed gold prospectors", "To commemorate goldfield experiences", "To measure the purity of gold", "To store small pieces of gold on the goldfield"],
+        "correctIndex": 1
       },
       "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "Which of the following objects could commonly be found in goldfields brooch designs?",
+        "options": ["Railway signals and train wheels", "Compasses and telescopes", "Picks, shovels and windlasses", "Coins and banknotes"],
+        "correctIndex": 2
       }
     }
   },
   {
-    "id": "example-artefact-5",
-    "name": "Example Artefact (replace with real name - task R2)",
+    "id": "pepperbox-revolver",
+    "name": "Pepperbox Revolver",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-5.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
+    "image": "assets/gold-rush/artefacts/pepperbox-revolver.avif",
+    "blurb": "The pepperbox revolver was a compact, multi barrel firearm used during the nineteenth century. A conventional revolver used one barrel with a rotating cylinder, while the pepperbox revolver featured several barrels that rotated together. The cluster of barrels resembled a pepper shaker, which is what gave the weapon its unusual name. The revolver was designed primarily for close-range personal defence, and they were present during the Australian gold rush. Miners at the time would carry these firearms to protect themselves from dangers like thieves and bush rangers.",
     "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
+      "*temp* Pepperbox revolvers were distinctive firearms made with several barrels arranged in a rotating cluster. This was different from the design of a conventional revolver, which has a single barrel and a separate rotating cylinder containing its ammunition. The unusual cluster gave the pepperbox its name because it resembled the shape of a pepper shaker. The revolver was compact and intended mainly for close range personal defence, pepperboxes were one of the types of firearm that could be encountered during the nineteenth century Australian gold rush period.",
+      "Firearms became part of life on the Australian goldfields as miners faced threats such as theft and bushranging. However, the presence of firearms created dangers of its own. Contemporary accounts indicate that guns were common enough around goldfield camps for accidental and reckless gunfire to become a concern. A surviving pepperbox pistol associated with the period was excavated from an old mining shaft on the Eureka Lead at Ballarat, providing a physical connection between this distinctive type of firearm and Victoria's goldfields."
     ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "riddle": "Placeholder riddle/clue used for hard-mode arrangement instead of a silhouette (task R9).",
+    "funFactCorrect": "The pepperbox revolver earned its unusual name because its cluster of rotating barrels resembled an old fashioned pepper shaker.",
+    "funFactIncorrect": "A pepperbox revolver dating to around 1850 was discovered in an old mining shaft in Ballarat, providing evidence of firearms on the Victorian goldfields.",
+    "riddle": "This artefact earned its unusual name from its resemblance to a common kitchen item.",
     "quiz": {
       "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "Why might miners have carried pepperbox revolvers during the gold rush?",
+        "options": ["To break apart rocks containing gold", "To signal the beginning of the working day", "To protect themselves and their possessions", "To scare wildlife away from mining equipment"],
+        "correctIndex": 2
       },
       "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
-      }
-    }
-  },
-  {
-    "id": "example-artefact-6",
-    "name": "Example Artefact (replace with real name - task R2)",
-    "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-6.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
-    "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
-    ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "riddle": "Placeholder riddle/clue used for hard-mode arrangement instead of a silhouette (task R9).",
-    "quiz": {
-      "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
-      },
-      "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
-      }
-    }
-  },
-  {
-    "id": "example-artefact-7",
-    "name": "Example Artefact (replace with real name - task R2)",
-    "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-7.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
-    "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
-    ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "riddle": "Placeholder riddle/clue used for hard-mode arrangement instead of a silhouette (task R9).",
-    "quiz": {
-      "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
-      },
-      "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
-      }
-    }
-  },
-  {
-    "id": "example-artefact-8",
-    "name": "Example Artefact (replace with real name - task R2)",
-    "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-8.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
-    "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
-    ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "riddle": "Placeholder riddle/clue used for hard-mode arrangement instead of a silhouette (task R9).",
-    "quiz": {
-      "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
-      },
-      "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
-      }
-    }
-  },
-  {
-    "id": "example-artefact-9",
-    "name": "Example Artefact (replace with real name - task R2)",
-    "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-9.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
-    "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
-    ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "riddle": "Placeholder riddle/clue used for hard-mode arrangement instead of a silhouette (task R9).",
-    "quiz": {
-      "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
-      },
-      "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
-      }
-    }
-  },
-  {
-    "id": "example-artefact-10",
-    "name": "Example Artefact (replace with real name - task R2)",
-    "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-10.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
-    "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
-    ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "riddle": "Placeholder riddle/clue used for hard-mode arrangement instead of a silhouette (task R9).",
-    "quiz": {
-      "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
-      },
-      "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "What distinguishes a pepperbox revolver from a conventional revolver?",
+        "options": ["It used compressed air instead of gunpowder ", "It featured multiple barrels that rotated together ", "It could only fire one shot before being reloaded ", "It used a single barrel with a rotating cylinder"],
+        "correctIndex": 1
       }
     }
   }
