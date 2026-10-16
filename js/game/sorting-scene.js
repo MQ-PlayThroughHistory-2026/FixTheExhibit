@@ -238,7 +238,6 @@ export function initSortingScene(runCtx) {
   if (!wired) {
     wireZoneArt(stage);
     document.getElementById('btn-sorting-feedback-close').addEventListener('click', () => {
-      skipClickSfx(); // the card closes quietly
       hideCard();
     });
     registerPauseHandlers('screen-sorting', {
