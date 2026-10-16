@@ -1,135 +1,5 @@
 [
   {
-    "id": "gold-cradle",
-    "name": "Gold Cradle",
-    "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/gold-cradle.avif",
-    "blurb": "This tool was often used in the gold rush to search for gold around bodies of water like creeks and rivers. Cradles were mostly made of wood and had sheets of metal with holes in them that acted as sieves. Miners would shovel dirt and water on the top of the cradle, then rock the cradle back and forth to push the mixture through the sieves. Gold is denser than soil and water, so it would sink and get caught in small grooves in the base of the cradle while normal dirt and water flowed out of the box.",
-    "longExplanation": [
-      "The first Australian gold cradle was made by William Tom Jr. in early 1851, before the Australian gold rush started. William made the cradle under the instruction of Edward Hargraves, who had seen similar gold cradles being used in Californian goldfields. After it was built, the cradle was used to search for gold in Lewis Ponds Creek, located in what would soon be known as the Ophir goldfields, and quickly found four ounces of gold. This discovery was published in the Sydney Morning Herald, which led to the start of the Australian gold rushes.",
-      "By the end of 1851, there were over a thousand cradles in large goldfields like Ballarat. At the time some cradles were finding 2 ounces of gold every day, making gold cradles one of the most efficient mining options for gold prospectors. However, while using the cradle was efficient, it was hard work. Most miners worked in groups of three or more to use a gold cradle, with one person to shovel dirt into the top of the cradle, another person to pour water over the dirt, and a third person to rock the cradle."
-    ],
-    "funFactCorrect": "Australia's first gold cradle was made by William Tom Jr. in 1851 to be used in the Ophir goldfields and is now displayed in the Powerhouse Museum.",
-    "funFactIncorrect": "Gold cradles were often used to mine gold, and Australia's first cradle found the gold nugget that led to the start of the Australian gold rush.",
-    "riddle": "This artefact shares part of its name with a type of bed made for babies.",
-    "quiz": {
-      "easy": {
-        "question": "Where were gold cradles used to search for gold?",
-        "options": ["In the mines", "Under trees", "In the desert", "Next to creeks"],
-        "correctIndex": 3
-      },
-      "hard": {
-        "question": "Where was the gold cradle first used in Australia?",
-        "options": ["Ballarat", "California", "Ophir", "Bendigo"],
-        "correctIndex": 2
-      }
-    }
-  }, 
-  {
-    "id": "race-to-diggings",
-    "name": "Race to the Gold Diggings of Australia",
-    "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/race-to-diggings.avif",
-    "blurb": "This board game was made in England in 1855. Players board their boat in England, then navigate the ocean to eventually land in Australia and join the gold rush. The first person to reach Australia wins the game and is rewarded with a trip to nearby goldfields where they soon find gold. The game made it seem like finding gold was easy, with pictures of prospectors finding large nuggets of gold a short walk from their anchored boats. This encouraged people to make the journey to the Australian goldfields, where they believed they could quickly build a fortune.",
-    "longExplanation": [
-      "Race to the Gold Diggings of Australia is the first known boardgame to have an Australian theme. It came in a painted wooden box with a sliding lid that held the game board, a printed instruction sheet, six ship counters, and a teetotum - a spinning top marked with numbers that is used like dice. The ship counters were made of either wood or metal and were painted to look like sailing ships, and the game board was made from lithographic paper that was stuck to a piece of linen.",
-      "The hand-coloured image on the game board depicted an oval track that represented the ocean and five illustrations that showed different aspects of the gold-prospector journey - including travelling, digging, and finding bags of gold. The game used real places to guide the players' journey, with players starting the game by boarding their ships at Plymouth in England, which was positioned at the start of the track. They would then move across the 80 sections around the oval, passing by an area representing the Cape of Good Hope in Africa before landing at Port Phillip Bay in Australia."
-    ],
-    "funFactCorrect": "Race to the Gold Diggings of Australia is the earliest known Australian-themed boardgame and encouraged people to join the gold rush.",
-    "funFactIncorrect": "Race to the Gold Diggings of Australia was first made in 1855 and encouraged people to join the Australian gold rush by making it seem easy to find gold in the goldfields.",
-    "riddle": "This artefact was mostly used by children.",
-    "quiz": {
-      "easy": {
-        "question": "Where did players first board their boat when playing Race to the Gold Diggings of Australia?",
-        "options": ["Plymouth, England", "Port Phillip, Australia", "Cape of Good Hope, Africa", "California, USA"],
-        "correctIndex": 0
-      },
-      "hard": {
-        "question": "Which of the following was not included in the Race to the Gold Diggings of Australia board game?",
-        "options": ["Ship counters", "Dice", "Instructions", "Game Board"],
-        "correctIndex": 1
-      }
-    }
-  },
-  {
-    "id": "gold-licence",
-    "name": "Gold Licence",
-    "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/gold-licence.avif",
-    "blurb": "During the gold rush, the governments of the time made anyone who wanted to dig for gold pay a fee to get a gold licence. If a miner was found without their licence, they could be fined or put in gaol. However, these gold licences usually only lasted for a month, so miners had to keep paying the licence fee if they wanted to continue mining, even if they hadn't found any gold. Miners often complained that these licences and fees were very expensive and unfair, which eventually led them to organise petitions against the licences.",
-    "longExplanation": [
-      "As the gold rush took place before Australia's Federation in 1901, the country was divided into multiple British colonies that each had their own governments and laws. Gold licences were first issued by the New South Wales colonial government on the 23rd of May 1851, which governed both the New South Wales and Victorian colonies at the time. Once a separate Victorian government was established on the 1st of July in 1851, they quickly began issuing their own gold licences from the 1st of September.",
-      "The monthly fee for gold licences in these colonies was usually either 20 or 30 shillings. These prices were expensive at the time, and miners felt that it was unfair that they were essentially paying taxes but were unable to vote or join the government. After petitions with over 5,000 signatures, large rallies attended by over 10,000 miners, and the Eureka stockade, the Victorian government eventually abolished the miner's licence in April of 1855 and introduced the miner's right which only cost a yearly fee of 1 pound and gave the miner the right to vote."
-    ],
-    "funFactCorrect": "Colonial governments introduced these expensive month-long gold licences early in the gold rush, which led to miner petitions, protests, and the Eureka Stockade.",
-    "funFactIncorrect": "Whether they found gold or not, miners had to pay monthly fees for gold licences like this to avoid fines during most of the Australian gold rush.",
-    "riddle": "Miners had to regularly pay fees for this artefact.",
-    "quiz": {
-      "easy": {
-        "question": "How often did most gold licences last?",
-        "options": ["A year", "A week", "A month", "A day"],
-        "correctIndex": 2
-      },
-      "hard": {
-        "question": "When were gold licences abolished in Victoria?",
-        "options": ["May 1851", "April 1855", "March 1853", "June 1856"],
-        "correctIndex": 1
-      }
-    }
-  },
-  {
-    "id": "puddling",
-    "name": "Puddling by ST Gill",
-    "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/puddling.avif",
-    "blurb": "This artwork was created by ST Gill, who was one of the best-known artists from the time of the Australian gold rush. Gill created many sketches and watercolours that depicted the daily life of prospectors during the gold rush, including many illustrations of different processes used to mine surface gold. This image shows a process called puddling, which involved mixing dirt and water in a circular trough. Gold would sink and fall to the base of the trough during mixing and could be collected once the dirt and water was removed.",
-    "longExplanation": [
-      "Samuel Thomas Gill was born in England in 1818 and moved to Australia when he was 21, where he lived until his death in 1880. He first settled in Adelaide and soon began working as a portrait painter. Gill's artwork soon grew in popularity, and he was often praised for his ability to portray the distinctive characteristics of the Australian landscape. In 1852, he moved to the Mount Alexander goldfield in Victoria. Gill drew many scenes of life in the goldfields, many of which show women and other family members as active participants in mining activities.",
-      "While living at the goldfields Gill also drew many detailed depictions of mining processes, including this image of puddling. Puddling machines were first used in Victorian goldfields in 1854 and grew in popularity until popular goldfields like Bendigo had at least 3,000 puddling machines operating every day in 1856. Unfortunately using these machines produced a lot of sludge, which was often dumped in nearby water sources and could contaminate drinking water. The 3,000 machines used in 1856 are estimated to have dumped 15 megalitres of water and 39,916 tonnes of dirt into the Bendigo Creek each day."
-    ],
-    "funFactCorrect": "ST Gill created many artworks showing gold-rush mining activities like puddling, which often showed women and children as active participants.",
-    "funFactIncorrect": "This artwork was created during the gold rush by the well-known artist ST Gill and shows a miner looking for gold using a method called puddling.",
-    "riddle": "You might find this artefact in an art gallery.",
-    "quiz": {
-      "easy": {
-        "question": "What is puddling?",
-        "options": ["Mining gold by mixing dirt and water in a trough", "Looking for gold in muddy puddles", "Pouring water in dirt holes to collect floating gold", "Searching for gold in the wet season"],
-        "correctIndex": 0
-      },
-      "hard": {
-        "question": "How many puddling machines were used in Bendigo in 1856?",
-        "options": ["500", "10,000", "3,000", "20"],
-        "correctIndex": 2
-      }
-    }
-  },
-  {
-    "id": "eureka-flag",
-    "name": "Eureka Flag",
-    "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/eureka-flag.avif",
-    "blurb": "This flag, often referred to as the flag of the Southern Cross, was raised at the Eureka Stockade in 1854. The stockade was a wooden fort erected at Eureka in Ballarat as part of the miners' rebellion against expensive gold licences. Government forces attacked the rebels and dismantled the stockade soon after it was built, but the battle eventually led to the abolishment of monthly miners' licences and is often said to be the birth of Australia's democracy. While the original flag has not been used again, its image is often associated with trade unions.",
-    "longExplanation": [
-      "The Eureka flag is currently housed at the Museum of Australian Democracy in Ballarat, though about 40% of the flag is missing. The original flag was 2.6 metres tall and 4 metres wide, but sections of it were cut off after the Eureka Stockade and given to people as souvenirs. Most of the flag was likely taken home by the police trooper John King after the battle at the stockade, and his family donated the flag to the Art Gallery of Ballarat in 2001. Missing pieces of the flag still reappear occasionally, having been passed down through family members.",
-      "The Eureka flag was first raised at a meeting of the Ballarat Reform League at Bakery Hill on the 29th of November in 1854, and despite its fame, there are still debates about who designed and created the flag. Oral histories seem to show that the flag was sewn by three women at a Catholic Parish – Anne Duke, Anastasia Hayes, and Anastasia Withers. There is also evidence that the Canadian miner Henry Ross was involved in the design of the flag, which was inspired by the Southern Cross constellation."
-    ],
-    "funFactCorrect": "The Eureka flag was made in 1854 by gold miners rebelling against gold licences and is now displayed at the Museum of Australian Democracy in Ballarat.",
-    "funFactIncorrect": "The Eureka flag was raised at the Eureka Stockade, which was a wooden fort built by gold miners in 1854 as part of their protests about unfair regulations.",
-    "riddle": "40% of this artefact is missing because it was cut apart and distributed during the gold rush.",
-    "quiz": {
-      "easy": {
-        "question": "What is another name often used to refer to the Eureka Flag?",
-        "options": ["The Ballarat Reform League Flag", "The Bendigo Miner Flag", "The Gold Licence Rebellion Flag", "The Flag of the Southern Cross"],
-        "correctIndex": 3
-      },
-      "hard": {
-        "question": "When was the Eureka Flag first raised?",
-        "options": ["At a meeting on Bakery Hill", "At the Eureka Stockade", "At a Catholic Parish", "At a rally in Bendigo"],
-        "correctIndex": 0
-      }
-    }
-  },
-  {
     "id": "gold-pan",
     "name": "Gold Pan",
     "correctZone": "display-case",
@@ -151,6 +21,32 @@
       "hard": {
         "question": "Why did gold remain at the bottom of the pan when miners washed away the surrounding sediment?",
         "options": ["Gold absorbed more water than other materials", "Gold was attracted to the metal pan", "Gold was denser than the surrounding sediment", "Gold took longer to dissolve in water than sand"],
+        "correctIndex": 2
+      }
+    }
+  },
+  {
+    "id": "gold-cradle",
+    "name": "Gold Cradle",
+    "correctZone": "display-case",
+    "image": "assets/gold-rush/artefacts/gold-cradle.avif",
+    "blurb": "This tool was often used in the gold rush to search for gold around bodies of water like creeks and rivers. Cradles were mostly made of wood and had sheets of metal with holes in them that acted as sieves. Miners would shovel dirt and water on the top of the cradle, then rock the cradle back and forth to push the mixture through the sieves. Gold is denser than soil and water, so it would sink and get caught in small grooves in the base of the cradle while normal dirt and water flowed out of the box.",
+    "longExplanation": [
+      "The first Australian gold cradle was made by William Tom Jr. in early 1851, before the Australian gold rush started. William made the cradle under the instruction of Edward Hargraves, who had seen similar gold cradles being used in Californian goldfields. After it was built, the cradle was used to search for gold in Lewis Ponds Creek, located in what would soon be known as the Ophir goldfields, and quickly found four ounces of gold. This discovery was published in the Sydney Morning Herald, which led to the start of the Australian gold rushes.",
+      "By the end of 1851, there were over a thousand cradles in large goldfields like Ballarat. At the time some cradles were finding 2 ounces of gold every day, making gold cradles one of the most efficient mining options for gold prospectors. However, while using the cradle was efficient, it was hard work. Most miners worked in groups of three or more to use a gold cradle, with one person to shovel dirt into the top of the cradle, another person to pour water over the dirt, and a third person to rock the cradle."
+    ],
+    "funFactCorrect": "Australia's first gold cradle was made by William Tom Jr. in 1851 to be used in the Ophir goldfields and is now displayed in the Powerhouse Museum.",
+    "funFactIncorrect": "Gold cradles were often used to mine gold, and Australia's first cradle found the gold nugget that led to the start of the Australian gold rush.",
+    "riddle": "This artefact shares part of its name with a type of bed made for babies.",
+    "quiz": {
+      "easy": {
+        "question": "Where were gold cradles used to search for gold?",
+        "options": ["In the mines", "Under trees", "In the desert", "Next to creeks"],
+        "correctIndex": 3
+      },
+      "hard": {
+        "question": "Where was the gold cradle first used in Australia?",
+        "options": ["Ballarat", "California", "Ophir", "Bendigo"],
         "correctIndex": 2
       }
     }
@@ -208,6 +104,32 @@
     }
   },
   {
+    "id": "race-to-diggings",
+    "name": "Race to the Gold Diggings of Australia",
+    "correctZone": "display-case",
+    "image": "assets/gold-rush/artefacts/race-to-diggings.avif",
+    "blurb": "This board game was made in England in 1855. Players board their boat in England, then navigate the ocean to eventually land in Australia and join the gold rush. The first person to reach Australia wins the game and is rewarded with a trip to nearby goldfields where they soon find gold. The game made it seem like finding gold was easy, with pictures of prospectors finding large nuggets of gold a short walk from their anchored boats. This encouraged people to make the journey to the Australian goldfields, where they believed they could quickly build a fortune.",
+    "longExplanation": [
+      "Race to the Gold Diggings of Australia is the first known boardgame to have an Australian theme. It came in a painted wooden box with a sliding lid that held the game board, a printed instruction sheet, six ship counters, and a teetotum - a spinning top marked with numbers that is used like dice. The ship counters were made of either wood or metal and were painted to look like sailing ships, and the game board was made from lithographic paper that was stuck to a piece of linen.",
+      "The hand-coloured image on the game board depicted an oval track that represented the ocean and five illustrations that showed different aspects of the gold-prospector journey - including travelling, digging, and finding bags of gold. The game used real places to guide the players' journey, with players starting the game by boarding their ships at Plymouth in England, which was positioned at the start of the track. They would then move across the 80 sections around the oval, passing by an area representing the Cape of Good Hope in Africa before landing at Port Phillip Bay in Australia."
+    ],
+    "funFactCorrect": "Race to the Gold Diggings of Australia is the earliest known Australian-themed boardgame and encouraged people to join the gold rush.",
+    "funFactIncorrect": "Race to the Gold Diggings of Australia was first made in 1855 and encouraged people to join the Australian gold rush by making it seem easy to find gold in the goldfields.",
+    "riddle": "This artefact was mostly used by children.",
+    "quiz": {
+      "easy": {
+        "question": "Where did players first board their boat when playing Race to the Gold Diggings of Australia?",
+        "options": ["Plymouth, England", "Port Phillip, Australia", "Cape of Good Hope, Africa", "California, USA"],
+        "correctIndex": 0
+      },
+      "hard": {
+        "question": "Which of the following was not included in the Race to the Gold Diggings of Australia board game?",
+        "options": ["Ship counters", "Dice", "Instructions", "Game Board"],
+        "correctIndex": 1
+      }
+    }
+  },
+  {
     "id": "goldfields-brooch",
     "name": "Goldfields Brooch",
     "correctZone": "display-case",
@@ -234,14 +156,92 @@
     }
   },
   {
+    "id": "puddling",
+    "name": "Puddling by ST Gill",
+    "correctZone": "display-case",
+    "image": "assets/gold-rush/artefacts/puddling.avif",
+    "blurb": "This artwork was created by ST Gill, who was one of the best-known artists from the time of the Australian gold rush. Gill created many sketches and watercolours that depicted the daily life of prospectors during the gold rush, including many illustrations of different processes used to mine surface gold. This image shows a process called puddling, which involved mixing dirt and water in a circular trough. Gold would sink and fall to the base of the trough during mixing and could be collected once the dirt and water was removed.",
+    "longExplanation": [
+      "Samuel Thomas Gill was born in England in 1818 and moved to Australia when he was 21, where he lived until his death in 1880. He first settled in Adelaide and soon began working as a portrait painter. Gill's artwork soon grew in popularity, and he was often praised for his ability to portray the distinctive characteristics of the Australian landscape. In 1852, he moved to the Mount Alexander goldfield in Victoria. Gill drew many scenes of life in the goldfields, many of which show women and other family members as active participants in mining activities.",
+      "While living at the goldfields Gill also drew many detailed depictions of mining processes, including this image of puddling. Puddling machines were first used in Victorian goldfields in 1854 and grew in popularity until popular goldfields like Bendigo had at least 3,000 puddling machines operating every day in 1856. Unfortunately using these machines produced a lot of sludge, which was often dumped in nearby water sources and could contaminate drinking water. The 3,000 machines used in 1856 are estimated to have dumped 15 megalitres of water and 39,916 tonnes of dirt into the Bendigo Creek each day."
+    ],
+    "funFactCorrect": "ST Gill created many artworks showing gold-rush mining activities like puddling, which often showed women and children as active participants.",
+    "funFactIncorrect": "This artwork was created during the gold rush by the well-known artist ST Gill and shows a miner looking for gold using a method called puddling.",
+    "riddle": "You might find this artefact in an art gallery.",
+    "quiz": {
+      "easy": {
+        "question": "What is puddling?",
+        "options": ["Mining gold by mixing dirt and water in a trough", "Looking for gold in muddy puddles", "Pouring water in dirt holes to collect floating gold", "Searching for gold in the wet season"],
+        "correctIndex": 0
+      },
+      "hard": {
+        "question": "How many puddling machines were used in Bendigo in 1856?",
+        "options": ["500", "10,000", "3,000", "20"],
+        "correctIndex": 2
+      }
+    }
+  },
+  {
+    "id": "gold-licence",
+    "name": "Gold Licence",
+    "correctZone": "display-case",
+    "image": "assets/gold-rush/artefacts/gold-licence.avif",
+    "blurb": "During the gold rush, the governments of the time made anyone who wanted to dig for gold pay a fee to get a gold licence. If a miner was found without their licence, they could be fined or put in gaol. However, these gold licences usually only lasted for a month, so miners had to keep paying the licence fee if they wanted to continue mining, even if they hadn't found any gold. Miners often complained that these licences and fees were very expensive and unfair, which eventually led them to organise petitions against the licences.",
+    "longExplanation": [
+      "As the gold rush took place before Australia's Federation in 1901, the country was divided into multiple British colonies that each had their own governments and laws. Gold licences were first issued by the New South Wales colonial government on the 23rd of May 1851, which governed both the New South Wales and Victorian colonies at the time. Once a separate Victorian government was established on the 1st of July in 1851, they quickly began issuing their own gold licences from the 1st of September.",
+      "The monthly fee for gold licences in these colonies was usually either 20 or 30 shillings. These prices were expensive at the time, and miners felt that it was unfair that they were essentially paying taxes but were unable to vote or join the government. After petitions with over 5,000 signatures, large rallies attended by over 10,000 miners, and the Eureka stockade, the Victorian government eventually abolished the miner's licence in April of 1855 and introduced the miner's right which only cost a yearly fee of 1 pound and gave the miner the right to vote."
+    ],
+    "funFactCorrect": "Colonial governments introduced these expensive month-long gold licences early in the gold rush, which led to miner petitions, protests, and the Eureka Stockade.",
+    "funFactIncorrect": "Whether they found gold or not, miners had to pay monthly fees for gold licences like this to avoid fines during most of the Australian gold rush.",
+    "riddle": "Miners had to regularly pay fees for this artefact.",
+    "quiz": {
+      "easy": {
+        "question": "How often did most gold licences last?",
+        "options": ["A year", "A week", "A month", "A day"],
+        "correctIndex": 2
+      },
+      "hard": {
+        "question": "When were gold licences abolished in Victoria?",
+        "options": ["May 1851", "April 1855", "March 1853", "June 1856"],
+        "correctIndex": 1
+      }
+    }
+  },
+  {
+    "id": "eureka-flag",
+    "name": "Eureka Flag",
+    "correctZone": "display-case",
+    "image": "assets/gold-rush/artefacts/eureka-flag.avif",
+    "blurb": "This flag, often referred to as the flag of the Southern Cross, was raised at the Eureka Stockade in 1854. The stockade was a wooden fort erected at Eureka in Ballarat as part of the miners' rebellion against expensive gold licences. Government forces attacked the rebels and dismantled the stockade soon after it was built, but the battle eventually led to the abolishment of monthly miners' licences and is often said to be the birth of Australia's democracy. While the original flag has not been used again, its image is often associated with trade unions.",
+    "longExplanation": [
+      "The Eureka flag is currently housed at the Museum of Australian Democracy in Ballarat, though about 40% of the flag is missing. The original flag was 2.6 metres tall and 4 metres wide, but sections of it were cut off after the Eureka Stockade and given to people as souvenirs. Most of the flag was likely taken home by the police trooper John King after the battle at the stockade, and his family donated the flag to the Art Gallery of Ballarat in 2001. Missing pieces of the flag still reappear occasionally, having been passed down through family members.",
+      "The Eureka flag was first raised at a meeting of the Ballarat Reform League at Bakery Hill on the 29th of November in 1854, and despite its fame, there are still debates about who designed and created the flag. Oral histories seem to show that the flag was sewn by three women at a Catholic Parish – Anne Duke, Anastasia Hayes, and Anastasia Withers. There is also evidence that the Canadian miner Henry Ross was involved in the design of the flag, which was inspired by the Southern Cross constellation."
+    ],
+    "funFactCorrect": "The Eureka flag was made in 1854 by gold miners rebelling against gold licences and is now displayed at the Museum of Australian Democracy in Ballarat.",
+    "funFactIncorrect": "The Eureka flag was raised at the Eureka Stockade, which was a wooden fort built by gold miners in 1854 as part of their protests about unfair regulations.",
+    "riddle": "40% of this artefact is missing because it was cut apart and distributed during the gold rush.",
+    "quiz": {
+      "easy": {
+        "question": "What is another name often used to refer to the Eureka Flag?",
+        "options": ["The Ballarat Reform League Flag", "The Bendigo Miner Flag", "The Gold Licence Rebellion Flag", "The Flag of the Southern Cross"],
+        "correctIndex": 3
+      },
+      "hard": {
+        "question": "When was the Eureka Flag first raised?",
+        "options": ["At a meeting on Bakery Hill", "At the Eureka Stockade", "At a Catholic Parish", "At a rally in Bendigo"],
+        "correctIndex": 0
+      }
+    }
+  },
+  {
     "id": "pepperbox-revolver",
     "name": "Pepperbox Revolver",
     "correctZone": "display-case",
     "image": "assets/gold-rush/artefacts/pepperbox-revolver.avif",
     "blurb": "The pepperbox revolver was a compact, multi barrel firearm used during the nineteenth century. A conventional revolver used one barrel with a rotating cylinder, while the pepperbox revolver featured several barrels that rotated together. The cluster of barrels resembled a pepper shaker, which is what gave the weapon its unusual name. The revolver was designed primarily for close-range personal defence, and they were present during the Australian gold rush. Miners at the time would carry these firearms to protect themselves from dangers like thieves and bush rangers.",
     "longExplanation": [
-      "*temp* Pepperbox revolvers were distinctive firearms made with several barrels arranged in a rotating cluster. This was different from the design of a conventional revolver, which has a single barrel and a separate rotating cylinder containing its ammunition. The unusual cluster gave the pepperbox its name because it resembled the shape of a pepper shaker. The revolver was compact and intended mainly for close range personal defence, pepperboxes were one of the types of firearm that could be encountered during the nineteenth century Australian gold rush period.",
-      "Firearms became part of life on the Australian goldfields as miners faced threats such as theft and bushranging. However, the presence of firearms created dangers of its own. Contemporary accounts indicate that guns were common enough around goldfield camps for accidental and reckless gunfire to become a concern. A surviving pepperbox pistol associated with the period was excavated from an old mining shaft on the Eureka Lead at Ballarat, providing a physical connection between this distinctive type of firearm and Victoria's goldfields."
+      "During the nineteenth century Australian gold rush, firearms were used for personal protection as miners travelled to remote goldfields in search of wealth. The discovery of gold attracted large populations to mining settlements, where valuable possessions and gold could make miners targets for theft. Compact firearms such as the pepperbox revolver provided a means of self defence especially in situations where a larger weapon would be impractical. Their smaller size made them easier to carry, providing a more practical option for self defence.",
+      "Firearms became part of life on the Australian goldfields as large groups of miners congregated with their possessions and gold finds. Although the firearms offered protection, their presence also created dangers on the goldfields. Contemporary accounts indicate that guns were common enough around goldfield camps for accidental and reckless gunfire to become a concern. A surviving pepperbox pistol associated with the period was excavated from an old mining shaft on the Eureka Lead at Ballarat, providing a physical connection between this distinctive type of firearm and Victoria's goldfields."
     ],
     "funFactCorrect": "The pepperbox revolver earned its unusual name because its cluster of rotating barrels resembled an old fashioned pepper shaker.",
     "funFactIncorrect": "A pepperbox revolver dating to around 1850 was discovered in an old mining shaft in Ballarat, providing evidence of firearms on the Victorian goldfields.",
