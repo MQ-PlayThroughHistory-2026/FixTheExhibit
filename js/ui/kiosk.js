@@ -29,10 +29,26 @@
  * a special gesture, or Alt + F4 on keyboard) to leave fullscreen. 
  * This passphrase modal is just for testing in a normal browser 
  * to simulate kiosk mode.
+ *
+ * KIOSK LAUNCH MODE: when the page is opened with `?kiosk` in its address
+ * (e.g. .../FixTheExhibit/?kiosk, as the start-game.bat launcher in the
+ * Help/Training Document does), the browser is already locked fullscreen
+ * and staff exit with its own mechanism (Alt + F4). The staff exit trigger
+ * and modal are then removed from the page entirely. That matters for
+ * security, not just tidiness: typing into the modal's password field makes
+ * Chrome offer to save the password, and that popup can be used to reach
+ * the OS from a locked kiosk. No password field on the page, no popup.
+ * window.location.reload() (inactivity reset, Quit, Leave) keeps the query
+ * string, so the page stays in kiosk launch mode after every reset.
  */
 
 //TODO: staff to set a real value before deployment
 const STAFF_PASSPHRASE = 'exit';
+
+/** True when the page was opened by a kiosk launcher (`?kiosk` in the URL). */
+export function isKioskLaunch() {
+  return new URLSearchParams(window.location.search).has('kiosk');
+}
 
 function requestFullscreen() {
   const el = document.documentElement;
@@ -64,8 +80,17 @@ export function initFullscreenOnFirstInteraction() {
   document.addEventListener('click', requestFullscreen, { once: true });
 }
 
-/** Wires the staff-only exit trigger + passphrase modal. */
+/**
+ * Wires the staff-only exit trigger + passphrase modal. In kiosk launch
+ * mode (see isKioskLaunch) it removes them from the page instead.
+ */
 export function initStaffExit() {
+  if (isKioskLaunch()) {
+    document.getElementById('btn-staff-exit')?.remove();
+    document.getElementById('staff-exit-modal')?.remove();
+    return;
+  }
+
   const trigger = document.getElementById('btn-staff-exit');
   const modal = document.getElementById('staff-exit-modal');
   const input = document.getElementById('staff-exit-passphrase');
