@@ -13,7 +13,7 @@
    stand on the floor under the two ceiling lights. */
 #arranging-stage {
   border: none;
-  background: var(--color-surface) url('../assets/sort-scene/sort%20scene.avif') no-repeat;
+  background: url('../assets/arrange-scene/arrange-scene.avif') center 100% / cover no-repeat;
 }
 
 /* The display cabinet, built and placed by buildCabinet() in

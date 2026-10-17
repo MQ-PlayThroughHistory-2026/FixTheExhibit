@@ -80,8 +80,7 @@ export function playSfx(name) {
 /**
  * Call while handling a click that should make no sound at all: the click
  * effect is skipped for it (see initAudio()). For a press that does
- * nothing (a riddle card behind an open popup) or that is better silent
- * (closing an information card).
+ * nothing (a riddle card behind an open popup) or that is better silent.
  */
 export function skipClickSfx() {
   clickPlayedSfx = true;

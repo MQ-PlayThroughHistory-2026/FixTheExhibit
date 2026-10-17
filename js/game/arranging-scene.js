@@ -676,7 +676,6 @@ function wireFeedbackDeck() {
   const deck = document.getElementById('arranging-feedback');
   deck.addEventListener('click', (event) => {
     if (event.target.closest('.info-card-close')) {
-      skipClickSfx(); // the information card closes quietly
       hideFeedback();
       showCompleteIfDone();
       return;
