@@ -62,7 +62,7 @@
 }
 
 /* Hard mode only - img.riddle-card-art, set in arranging-scene.js. */
-.silhouette-slot.is-clue-slot:not(.is-filled) {
+.silhouette-slot.is-clue-slot {
   cursor: pointer;
 }
 
@@ -117,6 +117,7 @@
 
 .silhouette-slot.is-filled {
   color: transparent; /* hide the "Spot N" label showing through a transparent artefact image */
+  z-index: 2;
 }
 
 /* Artefacts carry both classes, class="draggable-box arranging-item". */

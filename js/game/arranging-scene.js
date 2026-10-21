@@ -466,8 +466,13 @@ function wireClueSlot(slot, item, onClueRequested) {
   const activate = () => {
     // No clue once the slot is filled (is-filled is set by arranging.js),
     // and only one popup at a time - close the open clue/blurb first.
-    if (slot.classList.contains('is-filled') || isPopupOpen()) {
+    if (isPopupOpen()) {
       skipClickSfx(); // nothing happens, so nothing should sound like it did
+      return;
+    }
+    if (slot.classList.contains('is-filled')) {
+      playSfx('clueUp');
+      showFeedback(item);
       return;
     }
     onClueRequested(item, slot);
