@@ -26,7 +26,8 @@ const DIFFICULTY_CONFIG = {
     description:
       'A longer timer and a slower conveyor belt. Silhouettes guide artefact placement.',
     arrangementHintType: 'silhouette',
-    sortingTimerSeconds: 90,
+    sortingTimerSecondsPerObject: 4,
+    sortingTimerSecondsBuffer: 10,
     beltSpeedPxPerSec: 90,
   },
   [DIFFICULTIES.HARD]: {
@@ -34,7 +35,8 @@ const DIFFICULTY_CONFIG = {
     description:
       'A shorter timer and a faster conveyor belt. Riddles and clues guide artefact placement.',
     arrangementHintType: 'riddle',
-    sortingTimerSeconds: 45,
+    sortingTimerSecondsPerObject: 2,
+    sortingTimerSecondsBuffer: 5,
     beltSpeedPxPerSec: 150,
   },
 };

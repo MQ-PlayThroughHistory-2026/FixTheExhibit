@@ -265,12 +265,13 @@ export function initSortingScene(runCtx) {
   hideCard();
   // Everything above the stage is filled in before sizing it to what's left of the viewport.
   document.getElementById('sorting-heading').textContent = level.name;
-  renderTimer(settings.sortingTimerSeconds);
   sizeStageToViewport(stage);
 
   const items = [...level.artefacts, ...level.fillers];
   const runBelt = createBelt({ stage, speedPxPerSec: beltSpeed(stage) });
   belt = runBelt;
+
+  renderTimer((settings.sortingTimerSecondsPerObject * items.length) + settings.sortingTimerSecondsBuffer);
 
   const sorter = createSorter({
     stage,
@@ -294,7 +295,7 @@ export function initSortingScene(runCtx) {
     },
   });
 
-  timer = new CountdownTimer(settings.sortingTimerSeconds, {
+  timer = new CountdownTimer((settings.sortingTimerSecondsPerObject * items.length) + settings.sortingTimerSecondsBuffer, {
     onTick: renderTimer,
     onExpire: () => onTimeUp(sorter),
   });
