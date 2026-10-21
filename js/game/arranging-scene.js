@@ -2,7 +2,7 @@
  * arranging-scene.js
  *
  * The arranging phase (D2) for js/game/level.js. Wires the level's
- * artefacts - fillers never reach arranging, they're rejected during
+ * artefacts - fillers never reach arranging, they're stored during
  * sorting - to arranging.js.
  *
  * Renders each artefact's `image` if the field is present, falling back to
@@ -11,8 +11,8 @@
  * Reads settings.arrangementHintType (from the chosen difficulty, see
  * state.js) to decide what an empty slot shows: easy mode shows the
  * artefact's silhouette (or a "Spot N" label until silhouette art exists,
- * VA10), hard mode shows assets/ui/riddle.avif on every slot, and tapping
- * an unfilled one opens the riddle popup with the artefact's `riddle`
+ * VA10), hard mode shows assets/ui/clue.avif on every slot, and tapping
+ * an unfilled one opens the clue popup with the artefact's `clue`
  * field (task R9). Neither ever reveals the artefact's name.
  *
  * The first time each hint type comes up this session, it opens on the
@@ -461,7 +461,7 @@ function wireClueSlot(slot, item, onClueRequested) {
   slot.setAttribute('role', 'button');
   slot.tabIndex = 0;
   // Doesn't name the artefact, or it would give the answer away.
-  slot.setAttribute('aria-label', 'Read the riddle for this spot');
+  slot.setAttribute('aria-label', 'Read the clue for this spot');
 
   const activate = () => {
     // No clue once the slot is filled (is-filled is set by arranging.js),
@@ -487,7 +487,7 @@ function wireClueSlot(slot, item, onClueRequested) {
 
 // One labelled slot per artefact, in data order (not shuffled) so the
 // display case layout stays stable across restarts. hintType picks what
-// an empty slot shows: 'riddle' (hard mode) gets a clickable riddle card
+// an empty slot shows: 'clue' (hard mode) gets a clickable clue card
 // wired through onClueRequested instead of easy mode's silhouette/label.
 function buildSlots(stage, artefacts, layout, hintType, onClueRequested) {
   artefacts.forEach((item, i) => {
@@ -497,11 +497,11 @@ function buildSlots(stage, artefacts, layout, hintType, onClueRequested) {
       slot.className = 'silhouette-slot';
       slot.dataset.slot = item.id;
 
-      if (hintType === 'riddle') {
+      if (hintType === 'clue') {
         const img = document.createElement('img');
-        img.src = 'assets/ui/riddle.avif';
+        img.src = 'assets/ui/clue.avif';
         img.alt = ''; // decorative - the slot's own aria-label carries the meaning
-        img.className = 'riddle-card-art';
+        img.className = 'clue-card-art';
         slot.appendChild(img);
         wireClueSlot(slot, item, onClueRequested);
       } else if (item.image) {
@@ -589,7 +589,7 @@ function capPopupToStage(popupId, contentSelector) {
   const available = Math.max(0, stage.clientHeight - POPUP_STAGE_MARGIN_PX * 2);
   popup.style.maxHeight = `${available}px`;
   // The information card is a deck of cards, each with its own padding
-  // (the riddle popup's content sits straight in the popup).
+  // (the clue popup's content sits straight in the popup).
   popup.querySelectorAll(contentSelector).forEach((content) => {
     const cardStyle = getComputedStyle(content.parentElement);
     const innerAvailable = Math.max(
@@ -710,7 +710,7 @@ function hideFeedback() {
   setDragSuspended(false);
 }
 
-// Hard mode only. Picks up a slot's riddle card: shows item.riddle (task R9, Project Plan 6.2.1).
+// Hard mode only. Picks up a slot's clue card: shows item.clue (task R9, Project Plan 6.2.1).
 function showCluePopup(item, slot) {
   playSfx('clueUp');
   hideFeedback();
@@ -722,7 +722,7 @@ function showCluePopup(item, slot) {
   setDragSuspended(true); // stop dragging anything else underneath the popup
   capPopupToStage('arranging-clue', '.arranging-clue-content');
   document.getElementById('arranging-clue-text').textContent =
-    item.riddle ?? '[No clue written yet for this artefact]';
+    item.clue ?? '[No clue written yet for this artefact]';
   document.getElementById('arranging-clue').classList.remove('hidden');
 }
 
@@ -735,7 +735,7 @@ function hideCluePopup() {
   setDragSuspended(false);
 }
 
-// The clue popup's Close: puts the riddle card back down.
+// The clue popup's Close: puts the clue card back down.
 function closeCluePopup() {
   playSfx('clueDown');
   hideCluePopup();
@@ -795,8 +795,8 @@ export function initArrangingScene(runCtx) {
   const hintType = settings.arrangementHintType;
   document.getElementById('arranging-heading').textContent = level.name;
   document.getElementById('arranging-tutorial-text').textContent =
-    hintType === 'riddle'
-      ? 'Tap a riddle card to work out which artefact belongs there, then drag that artefact into place.'
+    hintType === 'clue'
+      ? 'Tap a clue card to work out which artefact belongs there, then drag that artefact into place.'
       : 'Drag each artefact onto its matching silhouette in the display case.';
 
   const { artefacts } = level;
@@ -811,7 +811,7 @@ export function initArrangingScene(runCtx) {
     stage,
     // Hard mode: don't let the drag-over glow single out the correct slot -
     // that would give the answer away for free and skip the clue entirely.
-    revealCorrectSlot: hintType !== 'riddle',
+    revealCorrectSlot: hintType !== 'clue',
     onPlaced({ item }) {
       playSfx('correct');
       itemEntries = itemEntries.filter((entry) => entry.item.id !== item.id);
@@ -832,7 +832,7 @@ export function initArrangingScene(runCtx) {
   itemEntries = buildItems(stage, artefacts, arranger);
   layoutItems(itemEntries, layout);
   renderProgress(arranger.getSummary());
-  // Separate ids per hint type, so hard mode's riddles get explained even
+  // Separate ids per hint type, so hard mode's clues get explained even
   // after easy mode's tutorial has been seen.
   showTutorialOnce(`arranging-${hintType}`, document.getElementById('arranging-tutorial'), () => {});
 

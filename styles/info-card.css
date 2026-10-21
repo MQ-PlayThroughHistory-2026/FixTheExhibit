@@ -1,7 +1,7 @@
 /* info-card.css
    The parchment popup cards shown over a stage: the information cards
-   (D3/D4) on assets/ui/info-card.avif, and the hard-mode riddle popup,
-   which swaps in assets/ui/riddle.avif (see arranging-scene.css). Each
+   (D3/D4) on assets/ui/info-card.avif, and the hard-mode clue popup,
+   which swaps in assets/ui/clue.avif (see arranging-scene.css). Each
    scene sets its own card's size; this file styles the card itself. */
 
 .info-card {
@@ -75,7 +75,7 @@
   border-radius: 0;
 }
 
-/* Close (X) on the information cards and the riddle popup. */
+/* Close (X) on the information cards and the clue popup. */
 .info-card-close {
   width: 60px;
   aspect-ratio: 1;

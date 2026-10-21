@@ -22,7 +22,7 @@ This doc covers the day-to-day mechanics of contributing - branching, commits, P
 Follow [Conventional Commits](https://www.conventionalcommits.org/): concise, present-tense, prefixed by type.
 
 ```
-feat: add rejection bin drag logic
+feat: add storage vault drag logic
 fix: correct timer offset on level restart
 docs: update tech stack table
 style: reformat belt.css

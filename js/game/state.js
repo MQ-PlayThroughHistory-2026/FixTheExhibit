@@ -33,8 +33,8 @@ const DIFFICULTY_CONFIG = {
   [DIFFICULTIES.HARD]: {
     label: 'Hard',
     description:
-      'A shorter timer and a faster conveyor belt. Riddles and clues guide artefact placement.',
-    arrangementHintType: 'riddle',
+      'A shorter timer and a faster conveyor belt. Clues guide artefact placement.',
+    arrangementHintType: 'clue',
     sortingTimerSecondsPerObject: 2,
     sortingTimerSecondsBuffer: 5,
     beltSpeedPxPerSec: 150,

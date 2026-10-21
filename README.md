@@ -43,7 +43,7 @@ The game covers two levels, the Australian gold rush and ancient Egypt, each bui
 
 ## Core Gameplay
 
-- **Conveyor belt sorting:** packages move across the screen under a countdown timer; players drag-and-drop each one into the display case or rejection bin, judging whether it belongs to the level's time period. Correct and incorrect sorts each get a quick audio-visual response and a short fun fact.
+- **Conveyor belt sorting:** packages move across the screen under a countdown timer; players drag-and-drop each one into the display case or storage vault, judging whether it belongs to the level's time period. Correct and incorrect sorts each get a quick audio-visual response and a short fun fact.
 - **Timer:** if the timer runs out before all packages are sorted, the level restarts. Mistakes don't cost time or end the level, they only affect the final rank.
 - **Micro-feedback:** placing an artefact correctly reveals a short blurb about it, with an option to open a longer explanation.
 - **End-of-level quiz:** one multiple-choice question per artefact, shown after arranging is complete. Results are shown to the player immediately but are not stored.
@@ -121,7 +121,7 @@ fix-the-exhibit/
 │           └── fillers.json
 ├── js/
 │   ├── game/                     # game loop, conveyor belt, scoring, timer, drag interactions
-│   ├── ui/                       # display case, rejection bin, HUD rendering
+│   ├── ui/                       # display case, storage vault, HUD rendering
 │   ├── quiz/                     # end-of-level quiz logic
 │   └── main.js                   # entry point
 ├── styles/
