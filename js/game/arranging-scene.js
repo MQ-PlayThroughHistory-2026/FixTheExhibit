@@ -754,7 +754,7 @@ function showCompleteIfDone() {
   playSfx('wellDone');
   showStageTransition({
     title: 'Well Done!',
-    message: `All ${completedSummary.total} artefacts are on display. Next, answer the visitors' questions in a short quiz.`,
+    message: `All ${completedSummary.total} artefacts are on display. Next, take a short quiz to see what you've learnt.`,
     onNext: ctx.onNext,
     onRestart: () => initArrangingScene(ctx),
   });
@@ -796,7 +796,7 @@ export function initArrangingScene(runCtx) {
   document.getElementById('arranging-heading').textContent = level.name;
   document.getElementById('arranging-tutorial-text').textContent =
     hintType === 'clue'
-      ? 'Tap a clue card to work out which artefact belongs there, then drag that artefact into place.'
+      ? 'Tap a clue card in the display case, work out which artefact belongs there, then drag that artefact into place.'
       : 'Drag each artefact onto its matching silhouette in the display case.';
 
   const { artefacts } = level;

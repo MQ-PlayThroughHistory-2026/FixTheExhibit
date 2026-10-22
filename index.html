@@ -38,9 +38,12 @@
         <div class="info-card-content">
           <strong id="intro-tutorial-title" class="info-card-title">Instructions</strong>
           <p>
-            You're the new intern and the delivery labels are mixed up. Sort
-            real artefacts from filler packages before time runs out, then
-            arrange the exhibit and answer a short quiz about what you learned.
+            It's your first day as an intern and it's opening day for the museum's latest exibit,
+            but the delivery labels have been mixed up!
+          </p>
+          <p>
+            Find the real artefacts that belong in the exhibit before time runs out,
+            then arrange the exhibit and complete a short quiz about what you've learnt.
           </p>
           <button class="info-card-action">Got it, let's start</button>
         </div>
@@ -66,7 +69,7 @@
     <!-- Level select -->
     <section id="screen-level-select" class="screen hidden" data-settings>
       <h2>Choose a level</h2>
-      <p>Pick which exhibit you'll be sorting today.</p>
+      <p>Pick which exhibit you'll be putting together today.</p>
       <div id="level-list" class="card-grid">Loading levels&hellip;</div>
       <button class="btn-back" data-target="screen-main-menu">&larr; Back</button>
     </section>
@@ -74,15 +77,15 @@
     <!-- Difficulty select (D6) -->
     <section id="screen-difficulty-select" class="screen hidden" data-settings>
       <h2>Choose difficulty</h2>
-      <p>This changes the sorting timer, belt speed, and arrangement hints.</p>
+      <p>This changes the sorting timer, belt speed, arrangement hints, and quiz difficulty.</p>
       <div class="card-grid">
         <button type="button" class="difficulty-card" data-difficulty="easy">
           <h3>Easy</h3>
-          <p>Longer timer, slower belt, silhouettes to guide arrangement.</p>
+          <p>Longer timer, slower belt, silhouettes to guide arrangement, and simpler questions.</p>
         </button>
         <button type="button" class="difficulty-card" data-difficulty="hard">
           <h3>Hard</h3>
-          <p>Shorter timer, faster belt, clues instead of silhouettes.</p>
+          <p>Shorter timer, faster belt, clues to guide arrangement, and trickier questions.</p>
         </button>
       </div>
       <button class="btn-back" data-target="screen-level-select">&larr; Back</button>
@@ -114,7 +117,17 @@
         <div id="sorting-tutorial" class="info-card tutorial-card hidden" role="dialog" aria-labelledby="sorting-tutorial-title">
           <div class="info-card-content">
             <strong id="sorting-tutorial-title" class="info-card-title">How to Play</strong>
-            <p>Drag each package into the display case if it belongs in the exhibit, or into storage if it doesn't. When a card pops up, everything will stop until you close it. Sort everything before the timer runs out!</p>
+            <p>
+              Drag each package into the display case if it belongs in this exhibit, or into storage if it doesn't.
+            </p>
+            <p id="sorting-tutorial-text"></p>
+            <p>
+              As you sort the packages, cards will pop up with fun facts about the object. 
+              When the fun fact card is open, everything in the level will stop - including the timer.
+            </p>
+            <p>
+              Sort everything before the timer runs out, and have fun learning!
+            </p>
             <button class="info-card-action">Got it, let's start</button>
           </div>
         </div>
@@ -146,6 +159,11 @@
           <div class="info-card-content">
             <strong id="arranging-tutorial-title" class="info-card-title">How to Play</strong>
             <p id="arranging-tutorial-text"></p>
+            <p>
+              When an artefact is placed in the correct spot, cards will pop up with the exhibit information about the artefact.
+              You can choose how much you want to learn about the artefact, but remember that what you read in this exhibit will help
+              you answer questions in the quiz.
+            </p>
             <button class="info-card-action">Got it, let's start</button>
           </div>
         </div>

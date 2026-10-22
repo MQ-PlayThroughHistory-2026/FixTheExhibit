@@ -188,7 +188,7 @@ function showSortingComplete(summary) {
   playSfx('wellDone');
   showStageTransition({
     title: 'Well Done!',
-    message: `You sorted ${summary.correct} of ${summary.total} packages correctly. Next up: arranging the display case.`,
+    message: `You sorted ${summary.correct} of ${summary.total} packages correctly. Next, you get to arrange the display case.`,
     onNext: ctx.onNext,
     onRestart: restart,
   });
@@ -202,11 +202,11 @@ function onTimeUp(sorter) {
   playSfx('timesUp');
   const summary = sorter.getSummary();
   // Whatever was left on the belt counts against the score (score.js).
-  ctx.results.sorting = { correct: summary.correct, total: summary.total };
+  //ctx.results.sorting = { correct: summary.correct, total: summary.total };
   showStageTransition({
     title: "Time's Up!",
-    message: `You sorted ${summary.sorted} of ${summary.total} packages, ${summary.correct} correctly. Next up: arranging the display case.`,
-    onNext: ctx.onNext,
+    message: `You sorted ${summary.sorted} of ${summary.total} packages. Try again to sort all of the packages!`,
+    //onNext: ctx.onNext,
     onRestart: restart,
   });
 }
@@ -234,6 +234,10 @@ export function initSortingScene(runCtx) {
   ctx = runCtx;
   const { level, settings } = ctx;
   const stage = document.getElementById('stage-area');
+
+  document.getElementById('sorting-tutorial-text').textContent =
+    `Don't be fooled by some of the packages - you're not just looking for something that could go in a museum, 
+    you're looking for artefacts that belong to the ${level.name} exhibit.`;
 
   if (!wired) {
     wireZoneArt(stage);
