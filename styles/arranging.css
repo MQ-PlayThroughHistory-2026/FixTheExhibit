@@ -118,6 +118,7 @@
 .silhouette-slot.is-filled {
   color: transparent; /* hide the "Spot N" label showing through a transparent artefact image */
   z-index: 2;
+  cursor: pointer;
 }
 
 /* Artefacts carry both classes, class="draggable-box arranging-item". */

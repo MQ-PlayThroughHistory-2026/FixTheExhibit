@@ -827,6 +827,21 @@ export function initArrangingScene(runCtx) {
     onComplete(summary) {
       completedSummary = summary;
     },
+    showInfo(slot, item) {
+      if (hintType !== 'clue') {
+        slot.setAttribute('role', 'button');
+        slot.addEventListener('click', (event) => {
+          // only one popup at a time - close the open clue/blurb first.
+          if (isPopupOpen()) {
+            skipClickSfx(); // nothing happens, so nothing should sound like it did
+            return;
+          }
+          playSfx('clueUp');
+          showFeedback(item);
+          return;
+        });
+      }
+    }
   });
 
   itemEntries = buildItems(stage, artefacts, arranger);
