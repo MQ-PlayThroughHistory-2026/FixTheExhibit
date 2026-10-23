@@ -103,7 +103,7 @@
 }
 
 /* Artefacts stand on the shelf (or the floor) rather than float in the
-   middle of their box - silhouettes, riddle cards and artefacts alike. */
+   middle of their box - silhouettes, clue cards and artefacts alike. */
 .silhouette-slot img,
 .arranging-item img {
   object-position: center bottom;
@@ -342,19 +342,19 @@
   filter: brightness(1.08);
 }
 
-/* Hard-mode riddle popup: the same card on the riddle art, sized bigger
-   than a slot's own riddle card so opening it reads as picking it up. */
+/* Hard-mode clue popup: the same card on the clue art, sized bigger
+   than a slot's own clue card so opening it reads as picking it up. */
 .arranging-clue {
   width: min(640px, 85%);
-  /* Matches assets/ui/riddle.avif's proportions. */
+  /* Matches assets/ui/clue.avif's proportions. */
   aspect-ratio: 1281 / 966;
-  background-image: url('../assets/ui/riddle.avif');
+  background-image: url('../assets/ui/clue.avif');
   /* Keeps the text on the front sheet of the stack. */
   padding: var(--space-lg) var(--space-xl);
 }
 
 /* On a narrow (phone) stage the art's own proportions leave the card too
-   short for the riddle, so it's stretched taller and a little wider. */
+   short for the clue, so it's stretched taller and a little wider. */
 @container (max-width: 600px) {
   .arranging-clue {
     width: 92%;

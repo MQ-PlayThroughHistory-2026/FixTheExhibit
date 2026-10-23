@@ -69,6 +69,12 @@
   font-family: var(--font-heading);
 }
 
+.level-card h5 {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-text);
+}
+
 .level-card p,
 .difficulty-card p {
   margin: 0;
