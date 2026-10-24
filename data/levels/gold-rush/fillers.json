@@ -2,7 +2,7 @@
   {
     "id": "old-gold-chocolate",
     "name": "Old Gold Chocolate",
-    "correctZone": "rejection-bin",
+    "correctZone": "storage-vault",
     "image": "assets/gold-rush/fillers/old-gold-chocolate.avif",
     "funFactCorrect": "Sir Macpherson Robertson created many classic chocolates after the gold rush ended, including Old Gold Chocolate, Cherry Ripe, and Freddo Frogs.",
     "funFactIncorrect": "While the creator of Old Gold Chocolate was born in Ballarat during the gold rush, the chocolate itself was not produced until 1916."
@@ -10,7 +10,7 @@
   {
     "id": "toy-soldier",
     "name": "Green Army Man Toy",
-    "correctZone": "rejection-bin",
+    "correctZone": "storage-vault",
     "image": "assets/gold-rush/fillers/toy-soldier.avif",
     "funFactCorrect": "Green army men toys were originally made out of metals like lead, and were only made of plastic after a lead poisoning scare in the 1960s.",
     "funFactIncorrect": "These green army men toys were first released in 1938 by the Bergen Toy and Novelty company, well after the gold rush ended."
@@ -18,7 +18,7 @@
   {
     "id": "gregorian-telescope",
     "name": "Gregorian Astronomical Reflector Telescope",
-    "correctZone": "rejection-bin",
+    "correctZone": "storage-vault",
     "image": "assets/gold-rush/fillers/gregorian-telescope.avif", 
     "funFactCorrect": "This type of telescope was invented in the 1600s by James Gregory, and makes things appear larger by reflecting light off two metal mirrors.",
     "funFactIncorrect": "This is a Gregorian reflector astronomical telescope which was invented in 1661, long before the Australian gold rush."
@@ -26,7 +26,7 @@
   {
     "id": "rubiks-cube",
     "name": "Rubik's Cube",
-    "correctZone": "rejection-bin",
+    "correctZone": "storage-vault",
     "image": "assets/gold-rush/fillers/rubiks-cube.avif",
     "funFactCorrect": "The Rubik's Cube was originally called the Magic Cube when it was first released in 1977 in Budapest, Hungary.",
     "funFactIncorrect": "The Rubik's Cube was invented after the gold rush ended in 1974 by a Hungarian professor of architecture called Erno Rubik."
@@ -34,7 +34,7 @@
   {
     "id": "monopoly",
     "name": "Monopoly",
-    "correctZone": "rejection-bin",
+    "correctZone": "storage-vault",
     "image": "assets/gold-rush/fillers/monopoly.avif",
     "funFactCorrect": "The first version of Monopoly was called “The Landlord's Game” and included two sets of rules - one known as Monopoly, and the other known as Prosperity.",
     "funFactIncorrect": "The first version of Monopoly was called “The Landlord's Game”, and was created by Lizzie Magie in 1903."
@@ -42,7 +42,7 @@
   {
     "id": "awa-television",
     "name": "AWA Radiola Deep Image Television",
-    "correctZone": "rejection-bin",
+    "correctZone": "storage-vault",
     "image": "assets/gold-rush/fillers/awa-television.avif",
     "funFactCorrect": "Television did not begin regular broadcasting in Australia until 1956, and this particular AWA Radiola Deep Image Television was made in 1958.",
     "funFactIncorrect": "While this AWA Radiola television was made by an Australian company it wasn't produced until 1958, so most gold rush miners would not have lived to see it."
@@ -50,7 +50,7 @@
   {
     "id": "mining-safety-lamp",
     "name": "Mining Safety Lamp",
-    "correctZone": "rejection-bin",
+    "correctZone": "storage-vault",
     "image": "assets/gold-rush/fillers/mining-safety-lamp.avif",
     "funFactCorrect": "These safety lamps were designed to prevent explosions in coal mines, and this particular type of lamp was used at Cooranbong Colliery in the 1990s.",
     "funFactIncorrect": "While this safety lamp may look like something a gold rush miner would carry, it was designed to be used in enclosed coal mines, not the open goldfields."
@@ -58,7 +58,7 @@
   {
     "id": "miner-helmet",
     "name": "Hard Hat",
-    "correctZone": "rejection-bin",
+    "correctZone": "storage-vault",
     "image": "assets/gold-rush/fillers/miner-helmet.avif",
     "funFactCorrect": "Hard hats were originally made of canvas and leather, and were coated with shellac (a type of resin) to make the hat stiff and durable.",
     "funFactIncorrect": "This hardhat would have looked out of place on the goldfields, where the main form of head protection was cloth hats."
@@ -66,7 +66,7 @@
   {
     "id": "box-camera",
     "name": "Box Camera",
-    "correctZone": "rejection-bin",
+    "correctZone": "storage-vault",
     "image": "assets/gold-rush/fillers/box-camera.avif",
     "funFactCorrect": "This is an Austral No 1A Film & Plate camera, which was sold by Baker & Rouse Pty Ltd in the early 1900s.",
     "funFactIncorrect": "While photography was around during the gold rush, this particular type of box camera wasn't sold until the early 1900s."
@@ -74,7 +74,7 @@
   {
     "id": "xylophone",
     "name": "Xylophone",
-    "correctZone": "rejection-bin",
+    "correctZone": "storage-vault",
     "image": "assets/gold-rush/fillers/xylophone.avif",
     "funFactCorrect": "We're not sure exactly when or where xylophones were first developed, but they've been part of the musical culture in both Africa and south-east Asia for centuries.",
     "funFactIncorrect": "Xylophones have been around since well before the gold rush, with evidence that they existed as far back as the 9th century in south-east Asia."

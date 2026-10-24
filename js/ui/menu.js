@@ -30,7 +30,7 @@ function renderLevelCards(levels) {
     card.type = 'button';
     card.className = 'level-card';
     card.dataset.levelId = level.id;
-    card.innerHTML = `<h3>${level.name}</h3><p>${level.description}</p>`;
+    card.innerHTML = `<h3>${level.name}</h3><h5>${level.time}</h5><p>${level.description}</p>`;
     card.addEventListener('click', () => onLevelChosen(level.id));
     list.appendChild(card);
   });
