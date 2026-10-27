@@ -2,11 +2,11 @@
  * sorting.js
  *
  * Sorting phase mechanics. Hit-tests a dragged package against the
- * display case and rejection bin, commits the drop, keeps the tally and
+ * display case and storage vault, commits the drop, keeps the tally and
  * reports through callbacks.
  *
  * Zones are elements inside the stage with data-zone="display-case" or
- * data-zone="rejection-bin". A drop counts when the package centre is
+ * data-zone="storage-vault". A drop counts when the package centre is
  * inside a zone box.
  */
 
@@ -14,7 +14,7 @@ import { makeDraggable } from './drag.js';
 
 export const ZONES = Object.freeze({
   DISPLAY_CASE: 'display-case',
-  REJECTION_BIN: 'rejection-bin',
+  STORAGE_VAULT: 'storage-vault',
 });
 
 const ZONE_FEEDBACK_MS = 600; // one fade per drop, nothing strobes (NFR05)
@@ -24,7 +24,7 @@ const PACKAGE_SETTLE_MS = 350; // matches the transitions in sorting.css
  * @typedef {object} PackageItem   entry from artefacts.json or fillers.json
  * @property {string} id
  * @property {string} name
- * @property {'display-case'|'rejection-bin'} correctZone
+ * @property {'display-case'|'storage-vault'} correctZone
  * @property {string} [funFactCorrect]
  * @property {string} [funFactIncorrect]
  *

@@ -11,7 +11,7 @@
     ],
     "funFactCorrect": "Prospectors used gold pans to collect gold, and to test whether an area contained gold before setting up more complicated methods of mining.",
     "funFactIncorrect": "Even after dirt was processed by larger mining equipment, gold pans were still used to recover smaller pieces of gold that had been left behind.",
-    "riddle": "This artefact was sometimes used to recover gold left behind by other mining methods.",
+    "clue": "This artefact was sometimes used to recover gold left behind by other mining methods.",
     "quiz": {
       "easy": {
         "question": "What was the main purpose of a gold pan?",
@@ -37,7 +37,7 @@
     ],
     "funFactCorrect": "Australia's first gold cradle was made by William Tom Jr. in 1851 to be used in the Ophir goldfields and is now displayed in the Powerhouse Museum.",
     "funFactIncorrect": "Gold cradles were often used to mine gold, and Australia's first cradle found the gold nugget that led to the start of the Australian gold rush.",
-    "riddle": "This artefact shares part of its name with a type of bed made for babies.",
+    "clue": "This artefact shares part of its name with a type of bed made for babies.",
     "quiz": {
       "easy": {
         "question": "Where were gold cradles used to search for gold?",
@@ -63,7 +63,7 @@
     ],
     "funFactCorrect": "During the gold rush, gold was measured using the troy weight system - one troy ounce equaled approximately 31.1 grams.",
     "funFactIncorrect": "Some gold scales were small enough to fit into portable cases that allowed miners and buyers to weigh gold on the goldfields.",
-    "riddle": "This artefact was often kept in a small portable case so it could be carried around the goldfields.",
+    "clue": "This artefact was often kept in a small portable case so it could be carried around the goldfields.",
     "quiz": {
       "easy": {
         "question": "What was the primary purpose of gold scales during the gold rush?",
@@ -89,7 +89,7 @@
     ],
     "funFactCorrect": "The Maitland Bar nugget was discovered approximately 3.4 metres underground in an abandoned shaft, and weighed 10.7 kilograms.",
     "funFactIncorrect": "The Maitland Bar nugget is also known as the Jubilee Nugget because it was discovered in 1887, the year Queen Victoria celebrated 50 years on the throne.",
-    "riddle": "This artefact was discovered in the same year that Queen Victoria celebrated her Golden Jubilee.",
+    "clue": "This artefact was discovered in the same year that Queen Victoria celebrated her Golden Jubilee.",
     "quiz": {
       "easy": {
         "question": "Approximately how much did the Maitland Bar gold nugget weigh?",
@@ -115,7 +115,7 @@
     ],
     "funFactCorrect": "Race to the Gold Diggings of Australia is the earliest known Australian-themed boardgame and encouraged people to join the gold rush.",
     "funFactIncorrect": "Race to the Gold Diggings of Australia was first made in 1855 and encouraged people to join the Australian gold rush by making it seem easy to find gold in the goldfields.",
-    "riddle": "This artefact was mostly used by children.",
+    "clue": "This artefact was mostly used by children.",
     "quiz": {
       "easy": {
         "question": "Where did players first board their boat when playing Race to the Gold Diggings of Australia?",
@@ -141,7 +141,7 @@
     ],
     "funFactCorrect": "Goldfields brooches sometimes featured tiny versions of mining tools including picks, shovels, buckets, and even windlasses, which were used to lift materials from mining shafts.",
     "funFactIncorrect": "Goldfields brooches were often purchased as souvenirs or given as gifts to commemorate someone's connection to the Australian gold rush.",
-    "riddle": "This artefact often featured miniature versions of objects that miners used in their everyday work.",
+    "clue": "This artefact often featured miniature versions of objects that miners used in their everyday work.",
     "quiz": {
       "easy": {
         "question": "What was the main purpose of goldfields brooches?",
@@ -167,7 +167,7 @@
     ],
     "funFactCorrect": "ST Gill created many artworks showing gold-rush mining activities like puddling, which often showed women and children as active participants.",
     "funFactIncorrect": "This artwork was created during the gold rush by the well-known artist ST Gill and shows a miner looking for gold using a method called puddling.",
-    "riddle": "You might find this artefact in an art gallery.",
+    "clue": "You might find this artefact in an art gallery.",
     "quiz": {
       "easy": {
         "question": "What is puddling?",
@@ -193,7 +193,7 @@
     ],
     "funFactCorrect": "Colonial governments introduced these expensive month-long gold licences early in the gold rush, which led to miner petitions, protests, and the Eureka Stockade.",
     "funFactIncorrect": "Whether they found gold or not, miners had to pay monthly fees for gold licences like this to avoid fines during most of the Australian gold rush.",
-    "riddle": "Miners had to regularly pay fees for this artefact.",
+    "clue": "Miners had to regularly pay fees for this artefact.",
     "quiz": {
       "easy": {
         "question": "How often did most gold licences last?",
@@ -219,7 +219,7 @@
     ],
     "funFactCorrect": "The Eureka flag was made in 1854 by gold miners rebelling against gold licences and is now displayed at the Museum of Australian Democracy in Ballarat.",
     "funFactIncorrect": "The Eureka flag was raised at the Eureka Stockade, which was a wooden fort built by gold miners in 1854 as part of their protests about unfair regulations.",
-    "riddle": "40% of this artefact is missing because it was cut apart and distributed during the gold rush.",
+    "clue": "40% of this artefact is missing because it was cut apart and distributed during the gold rush.",
     "quiz": {
       "easy": {
         "question": "What is another name often used to refer to the Eureka Flag?",
@@ -227,7 +227,7 @@
         "correctIndex": 3
       },
       "hard": {
-        "question": "When was the Eureka Flag first raised?",
+        "question": "Where was the Eureka Flag first raised?",
         "options": ["At a meeting on Bakery Hill", "At the Eureka Stockade", "At a Catholic Parish", "At a rally in Bendigo"],
         "correctIndex": 0
       }
@@ -245,7 +245,7 @@
     ],
     "funFactCorrect": "The pepperbox revolver earned its unusual name because its cluster of rotating barrels resembled an old fashioned pepper shaker.",
     "funFactIncorrect": "A pepperbox revolver dating to around 1850 was discovered in an old mining shaft in Ballarat, providing evidence of firearms on the Victorian goldfields.",
-    "riddle": "This artefact earned its unusual name from its resemblance to a common kitchen item.",
+    "clue": "This artefact earned its unusual name from its resemblance to a common kitchen item.",
     "quiz": {
       "easy": {
         "question": "Why might miners have carried pepperbox revolvers during the gold rush?",

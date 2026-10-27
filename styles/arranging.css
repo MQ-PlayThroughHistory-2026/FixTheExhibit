@@ -2,7 +2,7 @@
    States toggled by js/game/arranging.js. Stage sizing/layout is in
    arranging-scene.css. Tints are a single fade, nothing strobes (NFR05).
 
-   A slot showing art (an easy mode silhouette or a hard mode riddle card)
+   A slot showing art (an easy mode silhouette or a hard mode clue card)
    has no box around it, and its states glow around the outline of the art
    instead. A slot without art (the "Spot N" fallback) keeps the dashed box
    and shows its states on that. Either way a placed artefact glows green.
@@ -61,24 +61,24 @@
   opacity: 0;
 }
 
-/* Hard mode only - img.riddle-card-art, set in arranging-scene.js. */
-.silhouette-slot.is-clue-slot:not(.is-filled) {
+/* Hard mode only - img.clue-card-art, set in arranging-scene.js. */
+.silhouette-slot.is-clue-slot {
   cursor: pointer;
 }
 
-/* Dragging an artefact over any riddle card (right or wrong, see
+/* Dragging an artefact over any clue card (right or wrong, see
    revealCorrectSlot in arranging.js). */
-.silhouette-slot.is-target img.riddle-card-art {
+.silhouette-slot.is-target img.clue-card-art {
   filter: drop-shadow(0 0 3px var(--color-primary)) drop-shadow(0 0 8px var(--color-primary));
 }
 
-.silhouette-slot.flash-incorrect img.riddle-card-art {
+.silhouette-slot.flash-incorrect img.clue-card-art {
   filter: drop-shadow(0 0 3px var(--color-hard-hover)) drop-shadow(0 0 8px var(--color-hard-hover));
 }
 
 /* :not(.is-clue-open) stops the hover state fighting the fade to 0 below. */
-.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):hover img.riddle-card-art,
-.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):focus-visible img.riddle-card-art {
+.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):hover img.clue-card-art,
+.silhouette-slot.is-clue-slot:not(.is-filled):not(.is-clue-open):focus-visible img.clue-card-art {
   opacity: 0.8;
 }
 
@@ -88,7 +88,7 @@
 }
 
 /* Hide the slot's own card while its clue popup is open. */
-.silhouette-slot.is-clue-open img.riddle-card-art {
+.silhouette-slot.is-clue-open img.clue-card-art {
   opacity: 0;
 }
 
@@ -117,6 +117,8 @@
 
 .silhouette-slot.is-filled {
   color: transparent; /* hide the "Spot N" label showing through a transparent artefact image */
+  z-index: 2;
+  cursor: pointer;
 }
 
 /* Artefacts carry both classes, class="draggable-box arranging-item". */

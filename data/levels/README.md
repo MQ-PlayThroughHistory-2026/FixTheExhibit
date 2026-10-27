@@ -35,7 +35,7 @@ R2/R5-R10 for gold-rush, R11-R19 for ancient-egypt):
 | `blurb` | R6 | ~150 words, shown when arranged correctly |
 | `longExplanation` | R7 | Array of ~150-word paragraphs, plus sources, for the "read more" panel |
 | `funFactCorrect` / `funFactIncorrect` | R8 | Shown immediately after sorting |
-| `riddle` | R9 | Hard-mode arrangement clue (easy mode uses a silhouette instead - no data needed for that) |
+| `clue` | R9 | Hard-mode arrangement clue (easy mode uses a silhouette instead - no data needed for that) |
 | `quiz.easy` / `quiz.hard` | R10 | Each has `question`, 4 `options`, and `correctIndex` |
 
 ## `<level-id>/fillers.json`
@@ -46,7 +46,7 @@ equivalent tasks for ancient-egypt):
 | Field | Notes |
 |---|---|
 | `id`, `name` | Stable id + display name |
-| `correctZone` | Always `"rejection-bin"` for fillers |
+| `correctZone` | Always `"storage-vault"` for fillers |
 | `funFactCorrect` / `funFactIncorrect` | Shown immediately after sorting |
 
 ## Before merging real content
