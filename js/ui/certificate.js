@@ -4,7 +4,8 @@
  * The end of level certificate (task D10): congratulates the player, shows
  * their score and the title it earned (js/game/score.js), and is where the
  * level ends, with Restart (the whole level again) and Leave. Leave
- * reloads the page, same as the stage transition's.
+ * reloads the page, same as the stage transition's. Both ask for
+ * confirmation first (js/ui/confirm-dialog.js).
  *
  * Like stage-transition.js, this file knows nothing about any particular
  * scene. The scene that ends the level opens it:
@@ -19,6 +20,7 @@
  */
 
 import { setPauseBlocked } from './pause-menu.js';
+import { confirmAction } from './confirm-dialog.js';
 
 let current = null;
 
@@ -35,13 +37,21 @@ function close() {
   return handlers ?? {};
 }
 
-function restart() {
+async function restart() {
   if (!isOpen()) return;
+  const shown = current;
+  if (!(await confirmAction('restart-level'))) return;
+  if (current !== shown) return;
   close().onRestart?.();
 }
 
-function exit() {
+// The score and title aren't stored anywhere, so leaving is the one place
+// they're lost for good - the wording says so.
+async function exit() {
   if (!isOpen()) return;
+  const shown = current;
+  if (!(await confirmAction('leave-results'))) return;
+  if (current !== shown) return;
   window.location.reload();
 }
 

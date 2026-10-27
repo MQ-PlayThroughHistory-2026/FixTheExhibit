@@ -13,8 +13,9 @@
  *     and the menu is volume only, closed with the X in its corner.
  * Neither shows anywhere else.
  *
- * Quit reloads the page, so the next visitor starts from a clean slate
- * (tutorials included). Each game screen tells this module how to pause,
+ * Restart and Quit both ask for confirmation first (js/ui/confirm-dialog.js),
+ * since they throw progress away. Quit reloads the page, so the next visitor
+ * starts from a clean slate (tutorials included). Each game screen tells this module how to pause,
  * resume and restart itself via registerPauseHandlers(), so this file
  * doesn't need to know anything about belts, drag or popups:
  *
@@ -26,6 +27,7 @@
  */
 
 import { getBgmVolume, setBgmVolume, getSfxVolume, setSfxVolume, playSfx } from './audio.js';
+import { confirmAction, isConfirmOpen } from './confirm-dialog.js';
 
 const ICON_VOLUME = 'assets/ui/menu-volume.avif';
 const ICON_MUTED = 'assets/ui/volume-mute.avif';
@@ -140,7 +142,12 @@ function resume() {
   document.getElementById('btn-pause').focus();
 }
 
-function restart() {
+// Asks first. The menu stays open (and the scene paused) behind the question,
+// so Cancel just lands back on the pause menu.
+async function restart() {
+  if (!(await confirmAction('restart-stage'))) return;
+  // The screen changed while the question was open, so there's nothing to restart.
+  if (!isOpen) return;
   const { onResume, onRestart } = activeHandlers();
   hideMenu();
   onResume?.();
@@ -149,7 +156,9 @@ function restart() {
 
 // A full reload rather than going back to the main menu, so nothing from
 // this visitor (e.g. tutorials already seen) carries over to the next.
-function quit() {
+async function quit() {
+  if (!(await confirmAction('leave'))) return;
+  if (!isOpen) return;
   window.location.reload();
 }
 
@@ -197,6 +206,8 @@ export function initPauseMenu() {
     if (event.key !== 'Escape') return;
     // The staff exit modal (js/ui/kiosk.js) handles its own Escape.
     if (event.target.closest?.('.modal')) return;
+    // The confirmation dialog handles its own Escape (it cancels).
+    if (isConfirmOpen()) return;
     if (isOpen) resume();
     else openMenu();
   });
