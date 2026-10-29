@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="styles/pause-menu.css" />
   <link rel="stylesheet" href="styles/stage-transition.css" />
   <link rel="stylesheet" href="styles/certificate.css" />
+  <link rel="stylesheet" href="styles/confirm-dialog.css" />
   <link rel="stylesheet" href="styles/info-card.css" />
   <link rel="stylesheet" href="styles/hud.css" />
   <link rel="stylesheet" href="styles/sorting-scene.css" />
@@ -321,6 +322,20 @@
       <div class="pause-actions">
         <button type="button" id="btn-certificate-restart" class="pause-action">Restart</button>
         <button type="button" id="btn-certificate-exit" class="pause-action">Leave</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Restart / leave confirmation (js/ui/confirm-dialog.js). Sits above the
+       pause menu, stage popup and certificate that open it. -->
+  <div id="confirm-dialog" class="pause-overlay confirm-dialog hidden" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-text">
+    <div class="pause-panel">
+      <h2 id="confirm-title" class="pause-title confirm-title"></h2>
+      <p id="confirm-text" class="confirm-text"></p>
+
+      <div class="pause-actions">
+        <button type="button" id="btn-confirm-cancel" class="pause-action">Cancel</button>
+        <button type="button" id="btn-confirm-yes" class="pause-action"></button>
       </div>
     </div>
   </div>

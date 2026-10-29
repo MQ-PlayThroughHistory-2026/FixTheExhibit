@@ -208,6 +208,8 @@ function onTimeUp(sorter) {
     message: `You sorted ${summary.sorted} of ${summary.total} packages. Try again to sort all of the packages!`,
     //onNext: ctx.onNext,
     onRestart: restart,
+    // The stage has already failed, so a restart here loses nothing worth asking about.
+    confirmRestart: false,
   });
 }
 

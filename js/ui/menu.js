@@ -15,6 +15,7 @@
 
 import { showScreen, wireBackButtons } from './screens.js';
 import { initPauseMenu } from './pause-menu.js';
+import { initConfirmDialog } from './confirm-dialog.js';
 import { initStageTransition } from './stage-transition.js';
 import { initCertificate } from './certificate.js';
 import { showTutorialOnce } from './tutorial.js';
@@ -83,6 +84,7 @@ export async function initMenu() {
   wireDifficultyCards();
   // The pause menu's Quit (and the stage popup's and certificate's Leave) reload the page,
   // which is the way back from any game screen.
+  initConfirmDialog();
   initPauseMenu();
   initStageTransition();
   initCertificate();

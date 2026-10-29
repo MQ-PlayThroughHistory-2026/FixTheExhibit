@@ -4,7 +4,8 @@
  * The "stage complete" popup shown between stages: Restart / Leave / Next
  * stage. Styled like the pause menu (same backplate and button art).
  * Leave reloads the page, same as the pause menu's Quit, so the next
- * visitor starts from a clean slate.
+ * visitor starts from a clean slate. Restart and Leave both ask for
+ * confirmation first (js/ui/confirm-dialog.js).
  *
  * Like pause-menu.js, this file knows nothing about any particular scene.
  * The scene that just finished opens it and says what each choice does:
@@ -16,10 +17,13 @@
  *     onRestart, // start this stage over - the Restart button is hidden if omitted
  *     nextLabel, // what the Next arrow says to screen readers (default "Next stage")
  *     canLeave,  // false hides Leave, for a popup that only moves on (default true)
+ *     confirmRestart, // false makes Restart act at once, for a popup where the stage
+ *                     // has already failed so there's nothing to lose (default true)
  *   });
  */
 
 import { setPauseBlocked } from './pause-menu.js';
+import { confirmAction } from './confirm-dialog.js';
 
 let current = null;
 
@@ -41,13 +45,20 @@ function next() {
   close().onNext?.();
 }
 
-function restart() {
+async function restart() {
   if (!isOpen()) return;
+  const popup = current;
+  if (popup.confirmRestart && !(await confirmAction('restart-stage'))) return;
+  // The popup went away while the question was open (e.g. the inactivity reset).
+  if (current !== popup) return;
   close().onRestart?.();
 }
 
-function exit() {
+async function exit() {
   if (!isOpen()) return;
+  const popup = current;
+  if (!(await confirmAction('leave'))) return;
+  if (current !== popup) return;
   window.location.reload();
 }
 
@@ -58,8 +69,9 @@ export function showStageTransition({
   onRestart,
   nextLabel = 'Next stage',
   canLeave = true,
+  confirmRestart = true,
 } = {}) {
-  current = { onNext, onRestart };
+  current = { onNext, onRestart, confirmRestart };
   document.getElementById('stage-transition-title').textContent = title;
   document.getElementById('stage-transition-text').textContent = message;
   document.getElementById('btn-stage-next').classList.toggle('hidden', !onNext);
