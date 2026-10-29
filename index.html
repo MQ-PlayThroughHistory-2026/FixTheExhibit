@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="styles/sorting-scene.css" />
   <link rel="stylesheet" href="styles/arranging-scene.css" />
   <link rel="stylesheet" href="styles/quiz.css" />
+  <link rel="stylesheet" href="styles/credits.css" />
 </head>
 <body>
   <div id="app">
@@ -50,6 +51,18 @@
         </div>
       </div>
 
+      <!-- Credits, a team icon bottom left, mirroring the staff exit gear.
+           data-target opens the credits screen through wireBackButtons()
+           in screens.js. -->
+      <button id="btn-credits" class="credits-trigger" data-target="screen-credits" aria-label="Credits">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="9" cy="8" r="3.25" />
+          <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+          <circle cx="17" cy="8.5" r="2.5" />
+          <path d="M16.5 14.1c2.6.3 4.5 2.6 4.5 5.4" />
+        </svg>
+      </button>
+
       <!-- Exit Fullscreen function -->
       <button id="btn-staff-exit" class="staff-exit-trigger" aria-label="Staff exit">&#9881;</button>
 
@@ -68,6 +81,49 @@
     </section>
 
     <!-- Level select -->
+    <!-- Credits, opened from the team icon on the title page. Laid out like
+         the settings panel (grey backplate, title card, red X to close) with
+         a parchment card per team on the information card art. No
+         data-settings, the panel is its own page and the X is the way back. -->
+    <section id="screen-credits" class="screen hidden">
+      <div class="credits-panel">
+        <div class="pause-title-row">
+          <h2 class="pause-title">Credits</h2>
+          <button type="button" class="pause-close" data-target="screen-main-menu" aria-label="Close credits">
+            <img src="assets/ui/menu-close.avif" alt="" />
+          </button>
+        </div>
+        <p class="credits-intro">Fix the Exhibit was made by a team of six, working across research, art and development.</p>
+        <div class="credits-grid">
+          <div class="credits-team">
+            <h3>Research</h3>
+            <p class="credits-blurb">Chose the artefacts and wrote and checked the history behind them.</p>
+            <ul class="credits-members">
+              <li><span class="credits-name">Samantha Hamilton</span> <span class="credits-role">Researcher and Producer</span></li>
+              <li><span class="credits-name">Cody Huang</span> <span class="credits-role">Research Lead</span></li>
+            </ul>
+          </div>
+          <div class="credits-team">
+            <h3>Visual Arts</h3>
+            <p class="credits-blurb">Created the artwork, buttons and menus that bring the museum to life.</p>
+            <ul class="credits-members">
+              <li><span class="credits-name">Leon Vasington</span> <span class="credits-role">Visual Lead</span></li>
+              <li><span class="credits-name">Nathan Wu</span> <span class="credits-role">Artist and UI Designer</span></li>
+            </ul>
+          </div>
+          <div class="credits-team">
+            <h3>Development</h3>
+            <p class="credits-blurb">Built the game and tested it from start to finish.</p>
+            <ul class="credits-members">
+              <li><span class="credits-name">Yuyang Su</span> <span class="credits-role">Development Lead</span></li>
+              <li><span class="credits-name">Arjun Gupta</span> <span class="credits-role">Developer and QA Tester</span></li>
+            </ul>
+          </div>
+        </div>
+        <p class="credits-thanks">Thanks for playing!</p>
+      </div>
+    </section>
+
     <section id="screen-level-select" class="screen hidden" data-settings>
       <h2>Choose a level</h2>
       <p>Pick which exhibit you'll be putting together today.</p>

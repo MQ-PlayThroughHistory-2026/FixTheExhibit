@@ -146,6 +146,7 @@ For design docs, research protocol, and client notes, see [`docs/`](./docs/).
 | Name | Role | Contributions | Related Source Code |
 |---|---|---|---|
 | [Yuyang Su](https://github.com/VnKnpwN) | Fullstack Dev, Docs | - Authored README.md<br>- Authored CONTRIBUTING.md<br>- Managed Github operations<br> | - **README.md:** `FixTheExhibit/README.md`<br>- **CONTRIBUTING.md:** `FixTheExhibit/CONTRIBUTING.md`<br> |
+| [Arjun Gupta](https://github.com/Arjung952) | Frontend Dev, QA Engineer | - Authored README.md<br>- Authored CONTRIBUTING.md<br>- Managed Github operations<br> | - **README.md:** `FixTheExhibit/README.md`<br>- **CONTRIBUTING.md:** `FixTheExhibit/CONTRIBUTING.md`<br> |
 
 ### Visuals Team
 | Name | Role | Contributions | Related Assets |
