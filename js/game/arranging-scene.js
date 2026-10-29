@@ -21,9 +21,10 @@
  * A correct placement opens the information card (#arranging-feedback)
  * with item.image (hidden if absent or broken) and item.blurb. It's a deck
  * of cards, one per page: the blurb, then each item.longExplanation
- * paragraph. The neighbouring pages peek out either side of the top card,
- * and the arrows in its bottom corners, or tapping a side card, shuffle
- * that page to the top.
+ * paragraph, then (only if assets/<level-id>/qr-code/<artefact-id>.png
+ * exists) a final card with that QR code. The neighbouring pages peek out
+ * either side of the top card, and the arrows in its bottom corners, or
+ * tapping a side card, shuffle that page to the top.
  *
  * Once every artefact is placed and the last card is closed, the stage
  * transition (js/ui/stage-transition.js) offers moving on to the quiz.
@@ -68,6 +69,9 @@ const COMPACT_SPACING = { padding: 12, gap: 8, sectionGap: 16 };
 // Space above/below a popup - see capPopupToStage().
 const POPUP_STAGE_MARGIN_PX = 16;
 
+// Shown on the information card deck's optional last page, above the QR code.
+const QR_MESSAGE = 'Want to find out more about this artefact? Scan the QR code below.';
+
 let wired = false;
 // Stops the current run's viewport listener (stage-size.js).
 let unwatchViewport = null;
@@ -79,6 +83,14 @@ let ctx = null;
 let completedSummary = null;
 // Drops onto the wrong slot this run, for the score (score.js).
 let misplacedCount = 0;
+// Which artefacts have a QR code image (artefact id -> image path). A browser
+// can't list a folder, so each possible file is tried when the stage is built.
+// `qrProbes` holds the checks still running, so a card opened before its
+// check finishes can add the QR page as soon as it does.
+let qrCodeUrls = new Map();
+let qrProbes = new Map();
+// The artefact whose deck is open, null when it's closed.
+let openFeedbackItem = null;
 
 // Returns a shuffled copy of the list.
 function shuffle(list) {
@@ -600,8 +612,8 @@ function capPopupToStage(popupId, contentSelector) {
   });
 }
 
-// The information card's deck: one card per page, the blurb then each
-// longExplanation paragraph. The current card sits on top with its
+// The information card's deck: one card per page, the blurb, each
+// longExplanation paragraph, then the QR code if the artefact has one. The current card sits on top with its
 // neighbours peeking out either side; the rest wait out of sight.
 let feedbackCards = [];
 let feedbackPage = 0;
@@ -637,13 +649,52 @@ function turnFeedbackPage(index) {
   showFeedbackPage(index);
 }
 
-// Builds one card of the deck from the template in index.html.
-function buildFeedbackCard(item, text, index, count) {
+// Where an artefact's QR code image would be: assets/<level-id>/qr-code/<artefact-id>.png
+function qrCodePath(levelId, item) {
+  return `assets/${levelId}/qr-code/${item.id}.png`;
+}
+
+// Checks (once per stage build) which artefacts have a QR code image. Missing
+// ones just mean no QR page. Any that are found are remembered in qrCodeUrls.
+function probeQrCodes(level) {
+  qrCodeUrls = new Map();
+  qrProbes = new Map();
+  level.artefacts.forEach((item) => {
+    const url = qrCodePath(level.id, item);
+    const probe = new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        qrCodeUrls.set(item.id, url);
+        resolve();
+      };
+      img.onerror = () => resolve();
+      img.src = url;
+    }).then(() => {
+      qrProbes.delete(item.id);
+      // This artefact's card was opened before the check finished: add the page now.
+      if (openFeedbackItem === item && qrCodeUrls.has(item.id)) {
+        showFeedback(item, feedbackPage);
+      }
+    });
+    qrProbes.set(item.id, probe);
+  });
+}
+
+// Builds one card of the deck from the template in index.html. Pass qrUrl to
+// make it the QR code page: the QR image replaces the artefact picture and sits
+// below the message.
+function buildFeedbackCard(item, text, index, count, qrUrl = null) {
   const card = document.getElementById('arranging-feedback-card').content.firstElementChild.cloneNode(true);
   card.dataset.page = String(index);
   const image = card.querySelector('.arranging-feedback-image');
-  // Hidden when there's no image field or it fails to load.
-  if (item.image) {
+  const paragraph = card.querySelector('p');
+  if (qrUrl) {
+    card.classList.add('is-qr');
+    image.src = qrUrl;
+    image.alt = `QR code with more information about ${item.name}`;
+    paragraph.after(image); // "...scan the QR code below" - so the code goes under the text
+  } else if (item.image) {
+    // Hidden when there's no image field or it fails to load.
     image.src = item.image;
     image.alt = item.name;
     image.onerror = () => image.classList.add('hidden');
@@ -651,25 +702,29 @@ function buildFeedbackCard(item, text, index, count) {
     image.classList.add('hidden');
   }
   card.querySelector('.info-card-title').textContent = item.name;
-  card.querySelector('p').textContent = text;
+  paragraph.textContent = text;
   if (index === 0) card.querySelector('.info-card-arrow.is-prev').remove();
   if (index === count - 1) card.querySelector('.info-card-arrow.is-next').remove();
   return card;
 }
 
-function showFeedback(item) {
+// Opens the deck for an artefact, on the given page (rebuilding an open deck keeps its page).
+function showFeedback(item, startPage = 0) {
   hideCluePopup(); // only one big popup on the stage at a time
   setDragSuspended(true); // stop dragging anything else underneath the popup
+  openFeedbackItem = item;
   const deck = document.getElementById('arranging-feedback');
   const pages = [
-    item.blurb ?? '[No blurb written yet for this artefact]',
-    ...(item.longExplanation ?? []),
+    { text: item.blurb ?? '[No blurb written yet for this artefact]' },
+    ...(item.longExplanation ?? []).map((text) => ({ text })),
   ];
-  feedbackCards = pages.map((text, i) => buildFeedbackCard(item, text, i, pages.length));
+  // The QR page goes at the very end, and only if the image exists.
+  if (qrCodeUrls.has(item.id)) pages.push({ text: QR_MESSAGE, qrUrl: qrCodeUrls.get(item.id) });
+  feedbackCards = pages.map((page, i) => buildFeedbackCard(item, page.text, i, pages.length, page.qrUrl));
   deck.replaceChildren(...feedbackCards);
   // Placed before the deck shows, so the cards start in place instead of shuffling in.
   deck.classList.add('no-transition');
-  showFeedbackPage(0);
+  showFeedbackPage(Math.min(startPage, pages.length - 1));
   deck.classList.remove('hidden');
   capPopupToStage('arranging-feedback', '.arranging-feedback-content');
   deck.getBoundingClientRect(); // commits the starting positions before transitions come back
@@ -706,6 +761,7 @@ function wireFeedbackDeck() {
 }
 
 function hideFeedback() {
+  openFeedbackItem = null;
   document.getElementById('arranging-feedback').classList.add('hidden');
   setDragSuspended(false);
 }
@@ -800,6 +856,7 @@ export function initArrangingScene(runCtx) {
       : 'Drag each artefact onto its matching silhouette in the display case.';
 
   const { artefacts } = level;
+  probeQrCodes(level);
   let layout = getLayout(stage, artefacts.length);
   applyLayout(stage, layout);
   buildCabinet(stage, layout);
