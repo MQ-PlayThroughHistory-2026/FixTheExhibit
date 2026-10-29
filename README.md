@@ -146,7 +146,7 @@ For design docs, research protocol, and client notes, see [`docs/`](./docs/).
 | Name | Role | Contributions | Related Source Code |
 |---|---|---|---|
 | [Yuyang Su](https://github.com/VnKnpwN) | Fullstack Dev, Docs | - Authored README.md<br>- Authored CONTRIBUTING.md<br>- Managed Github operations<br> | - **README.md:** `FixTheExhibit/README.md`<br>- **CONTRIBUTING.md:** `FixTheExhibit/CONTRIBUTING.md`<br> |
-| [Arjun Gupta](https://github.com/Arjung952) | Frontend Dev, QA Engineer | - Authored README.md<br>- Authored CONTRIBUTING.md<br>- Managed Github operations<br> | - **README.md:** `FixTheExhibit/README.md`<br>- **CONTRIBUTING.md:** `FixTheExhibit/CONTRIBUTING.md`<br> |
+| [Arjun Gupta](https://github.com/Arjung952) | Developer, QA Tester | - Developed the sorting stage and conveyor belt<br>- Developed the end-of-level quiz<br>- Developed the credits page<br>- Tested the game across desktop, tablet and mobile<br>- Authored the test specification and help guide<br>- Reviewed and merged pull requests<br> | - **Sorting** `FixTheExhibit/js/game/sorting.js`<br>- **Conveyor belt** `FixTheExhibit/js/game/belt.js`<br>- **Quiz** `FixTheExhibit/js/quiz/`<br>- **Credits** `FixTheExhibit/styles/credits.css`<br> |
 
 ### Visuals Team
 | Name | Role | Contributions | Related Assets |
