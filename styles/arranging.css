@@ -121,6 +121,14 @@
   cursor: pointer;
 }
 
+/* What a placed artefact gets: the green "correct" glow, then a soft dark
+   shadow cast down onto the shelf, following the artefact's own outline.
+   Last in the chain so the shadow also sits under the glow. */
+:root {
+  --placed-glow: drop-shadow(0 0 3px var(--color-easy-hover)) drop-shadow(0 0 8px var(--color-easy-hover));
+  --placed-shadow: drop-shadow(0 7px 5px rgba(0, 0, 0, 0.75));
+}
+
 /* Artefacts carry both classes, class="draggable-box arranging-item". */
 .arranging-item {
   position: absolute;
@@ -150,12 +158,22 @@
 }
 
 /* Correctly placed: a green glow around the artefact's outline (or around
-   its box, if it has no image). On the item rather than its <img>, which
-   the item's overflow: hidden would clip the glow of. */
+   its box, if it has no image). With an image the glow goes on the <img>
+   rather than the item, because a filter on the item would also tint the
+   shelf shadow under it (.arranging-item::after in arranging-scene.css)
+   green. A box with no image has nothing else to hold the glow, so it
+   keeps it on the item. */
 .arranging-item.is-placed {
   cursor: default;
   z-index: 1;
-  filter: drop-shadow(0 0 3px var(--color-easy-hover)) drop-shadow(0 0 8px var(--color-easy-hover));
+}
+
+.arranging-item.is-placed:not(.has-image) {
+  filter: var(--placed-glow) var(--placed-shadow);
+}
+
+.arranging-item.is-placed.has-image img {
+  filter: var(--placed-glow) var(--placed-shadow);
 }
 
 @media (prefers-reduced-motion: reduce) {
