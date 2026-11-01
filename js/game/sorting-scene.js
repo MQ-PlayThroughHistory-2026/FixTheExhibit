@@ -67,7 +67,7 @@ function shuffle(list) {
 // crossing time the same as on the reference width. Where it runs is up to
 // belt.js, which follows the scene's art.
 function beltSpeed(stage) {
-  return ctx.settings.beltSpeedPxPerSec * (stage.clientWidth / REFERENCE_STAGE_WIDTH_PX);
+  return ctx.settings.beltSpeedPxPerSec * Math.max(stage.clientWidth / REFERENCE_STAGE_WIDTH_PX, 1);
 }
 
 // No box behind a drop zone's art (index.html starts them as has-image);
