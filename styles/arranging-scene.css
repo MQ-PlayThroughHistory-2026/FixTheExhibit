@@ -282,6 +282,33 @@
   display: none;
 }
 
+/* The QR code page (last card, only when the artefact has a QR code image).
+   The code sits under the message, kept square and on a white background so
+   it stays scannable. The text stays its natural
+   height instead of stretching like the longer explanation pages. */
+.arranging-feedback-card.is-qr .arranging-feedback-content p {
+  flex: 0 0 auto;
+}
+
+.arranging-feedback-card.is-qr .arranging-feedback-image {
+  /* Height leads (280px, shrinking on a short card) and the width follows
+     from the aspect ratio, so the white backing stays square. */
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  aspect-ratio: 1;
+  min-height: 80px;
+  flex: 0 1 280px;
+  /* Splits the spare height above and below the code, so it's centred between
+     the text and the buttons, which stay at the card's bottom like the others. */
+  margin-block: auto;
+  padding: var(--space-xs);
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
 /* The image and name sit at the top of the card instead of being centred,
    and the text takes all the room down to the buttons, for the longer
    longExplanation pages. */
