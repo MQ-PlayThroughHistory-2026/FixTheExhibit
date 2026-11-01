@@ -1,14 +1,11 @@
-> Flag anything still open. 🚩
-
->Insert Team name/logo or Fix The Exhibit in cool font (replacing the title) to make it look more professional. e.g. `<img src="assets/logo.png" style="width:1000px;"/>`
-
-
 # Fix The Exhibit
 
 A browser game where you're the new intern at a museum, and the artefact's shipping labels got mixed up. Sort real artefacts from the fakes before the delivery driver leaves, then build the exhibit and see how much history you picked up along the way.
 
-**Live demo:** [link once deployed] 🚩
-<br>**Status:** In development 🚩
+*This project was developed for educational purposes as part of the COMP3850 course at Macquarie University (2026).*
+
+**Live demo:** https://mq-playthroughhistory-2026.github.io/FixTheExhibit/
+<br>**Status:** Closed
 
 ---
 
@@ -160,8 +157,5 @@ For design docs, research protocol, and client notes, see [`docs/`](./docs/).
 ^just follow the table format to add ur contributions. 🚩
 
 ## License
-*This project is developed for educational purposes as part of the COMP3850 course at Macquarie University (2026).*
 
-© No rights reserved. 
-
->but really: check with client on IP ownership before adding a license. 🚩
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
