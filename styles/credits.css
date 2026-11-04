@@ -1,0 +1,219 @@
+/* credits.css
+   The Credits icon on the title page and the credits screen it opens.
+   The screen is drawn like the settings panel (pause-menu.css), the grey
+   backplate with the dark title card and the red X, and each team sits on
+   the parchment information card art (info-card.avif). */
+
+/* Team icon bottom left of the title page, a mirror of the staff exit
+   gear on the right (.staff-exit-trigger in kiosk.css). Same size, colour
+   and low-contrast look, brightening on hover or keyboard focus. */
+.credits-trigger {
+  position: fixed;
+  bottom: var(--space-sm);
+  left: var(--space-sm);
+  min-height: 40px;
+  min-width: 40px;
+  padding: var(--space-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--color-text-muted);
+  opacity: 0.15;
+  font-size: 1.1rem;
+  z-index: 1000;
+}
+
+.credits-trigger:hover,
+.credits-trigger:focus-visible {
+  opacity: 1;
+}
+
+/* Two people drawn in outline, a little larger than 1em so the line
+   weight and size match the gear glyph. */
+.credits-trigger svg {
+  width: 1.25em;
+  height: 1.25em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+/* Hidden while the first-time instructions card is up, so the card's own
+   button is the only way on from there. */
+#screen-main-menu:has(#intro-tutorial:not(.hidden)) .credits-trigger {
+  display: none;
+}
+
+
+/* The panel. Same backplate as the settings panel, nine-sliced like the
+   quiz card (quiz.css) so the cut corners keep their shape when the panel
+   grows taller than the art on a phone. The stretched copy underneath
+   hides any hairline seam between the slices. Its own sizes come from
+   --panel-width, everything inside is sized in cqw of the panel. */
+.credits-panel {
+  --panel-width: min(880px, 100vw - var(--space-lg) * 2, (100vh - var(--space-lg) * 2) * 1024 / 828);
+  --frame: round(down, var(--panel-width) * 0.1, 1px);
+  container-type: inline-size;
+  width: var(--panel-width);
+  min-height: calc(var(--panel-width) * 828 / 1024);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: calc(var(--panel-width) * 0.014);
+  padding: calc(var(--panel-width) * 0.01);
+  border: var(--frame) solid transparent;
+  border-image: url('../assets/ui/menu-backplate.avif') 15% 12% fill / var(--frame) stretch;
+  background: url('../assets/ui/menu-backplate.avif') center / 100% 100% no-repeat border-box;
+  color: var(--color-text);
+}
+
+/* Smaller title card and X than the settings panel, leaving room for the cards. */
+.credits-panel .pause-title {
+  width: 32cqw;
+  font-size: 6cqw;
+}
+
+.credits-panel .pause-close {
+  width: 9cqw;
+  margin-left: 2cqw;
+}
+
+/* White bold text straight on the grey backplate, at least 19.2px so it
+   counts as large text, with a tight dark outline-like shadow so the
+   letters stand clear of the grey. */
+.credits-intro,
+.credits-thanks {
+  margin: 0;
+  max-width: none;
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+  text-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.75),
+    0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.credits-intro {
+  font-size: clamp(1.2rem, 2.8cqw, 1.4rem);
+  text-wrap: balance; /* evens out the two lines instead of leaving one word alone */
+}
+
+.credits-thanks {
+  font-family: var(--font-heading);
+  font-size: clamp(1.2rem, 3.2cqw, 1.5rem);
+}
+
+/* Three equal columns. Every card spans three shared rows (team name,
+   line, members) through subgrid, so the headings, lines and dividers sit
+   level across all three cards whatever the text length. */
+.credits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 2.5cqw;
+  row-gap: 0;
+}
+
+/* One team per parchment card, like the information cards in the scenes. */
+.credits-team {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  justify-items: center;
+  row-gap: 1.2cqw;
+  padding: 2.4cqw 2.4cqw;
+  background: url('../assets/ui/info-card.avif') center / 100% 100% no-repeat;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+  color: var(--color-ink);
+  text-align: center;
+}
+
+.credits-team h3 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 3.4cqw, 1.6rem);
+}
+
+/* Centred in its shared row, so a shorter line sits evenly between the
+   team name and the divider. */
+.credits-blurb {
+  align-self: center;
+  margin: 0;
+  max-width: none;
+  color: inherit;
+  font-style: italic;
+  font-size: clamp(0.9rem, 2.2cqw, 1.05rem);
+  line-height: 1.35;
+  text-wrap: balance; /* no single word left alone on the last line */
+}
+
+/* A thin ink rule between the team's line and its members. */
+.credits-members {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4cqw;
+  width: 100%;
+  margin: 0;
+  padding: 1.4cqw 0 0;
+  border-top: 1px solid color-mix(in srgb, var(--color-ink) 40%, transparent);
+  list-style: none;
+  align-self: start;
+}
+
+/* Name on one line, role under it. */
+.credits-name,
+.credits-role {
+  display: block;
+}
+
+.credits-name {
+  font-weight: 700;
+  font-size: clamp(1rem, 2.5cqw, 1.2rem);
+}
+
+/* Full ink and medium weight, so the smaller role line reads as easily as the name. */
+.credits-role {
+  color: var(--color-ink);
+  font-weight: 500;
+  font-size: clamp(0.85rem, 2.1cqw, 1rem);
+}
+
+/* Phone. The panel fills the width and grows as tall as its content, the
+   cards stack, and the title and X are sized up to stay readable and
+   tappable. */
+@media (max-width: 600px) {
+  .credits-panel {
+    --panel-width: calc(100vw - var(--space-lg) * 2);
+    --frame: round(down, var(--panel-width) * 0.09, 1px);
+    min-height: 0;
+    gap: calc(var(--panel-width) * 0.04);
+  }
+
+  .credits-panel .pause-title {
+    width: 52cqw;
+    font-size: 10cqw;
+  }
+
+  /* At least 44px so it stays an easy tap (UR06). */
+  .credits-panel .pause-close {
+    width: max(44px, 17cqw);
+  }
+
+  .credits-grid {
+    grid-template-columns: 1fr;
+    row-gap: 5cqw;
+  }
+
+  .credits-team {
+    row-gap: 2.5cqw;
+    padding: 6cqw 5cqw;
+  }
+
+  .credits-members {
+    gap: 2.5cqw;
+    padding-top: 2.5cqw;
+  }
+}
