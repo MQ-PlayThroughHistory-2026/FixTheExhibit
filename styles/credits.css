@@ -63,7 +63,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: calc(var(--panel-width) * 0.014);
+  gap: calc(var(--panel-width) * 0.011);
   padding: calc(var(--panel-width) * 0.01);
   border: var(--frame) solid transparent;
   border-image: url('../assets/ui/menu-backplate.avif') 15% 12% fill / var(--frame) stretch;
@@ -73,8 +73,8 @@
 
 /* Smaller title card and X than the settings panel, leaving room for the cards. */
 .credits-panel .pause-title {
-  width: 32cqw;
-  font-size: 6cqw;
+  width: 29cqw;
+  font-size: 5.4cqw;
 }
 
 .credits-panel .pause-close {
@@ -181,6 +181,45 @@
   font-size: clamp(0.85rem, 2.1cqw, 1rem);
 }
 
+/* Music credit. A slim parchment strip under the team cards, heading on
+   the left and the three licence lines on the right, each kept whole. */
+.credits-music {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 2.4cqw;
+  padding: 0.9cqw 3cqw;
+  background: url('../assets/ui/info-card.avif') center / 100% 100% no-repeat;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+  color: var(--color-ink);
+}
+
+.credits-music h3 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 2.6cqw, 1.3rem);
+  line-height: 1.15;
+  text-align: center;
+  max-width: 7em; /* two even lines, "Attribution / for Music" */
+  text-wrap: balance;
+}
+
+.credits-music-lines {
+  margin: 0;
+  max-width: none;
+  padding-left: 2.4cqw;
+  border-left: 1px solid color-mix(in srgb, var(--color-ink) 40%, transparent);
+  color: var(--color-ink);
+  font-size: clamp(0.8rem, 1.9cqw, 0.95rem);
+  line-height: 1.35;
+  text-align: left;
+}
+
+.credits-music-lines span {
+  display: block;
+  overflow-wrap: anywhere; /* last resort, the address breaks at its slashes first (<wbr> in index.html) */
+}
+
 /* Phone. The panel fills the width and grows as tall as its content, the
    cards stack, and the title and X are sized up to stay readable and
    tappable. */
@@ -215,5 +254,23 @@
   .credits-members {
     gap: 2.5cqw;
     padding-top: 2.5cqw;
+  }
+
+  /* Heading above the licence lines, all centred, like the team cards. */
+  .credits-music {
+    grid-template-columns: 1fr;
+    row-gap: 2.5cqw;
+    padding: 5cqw 5cqw;
+  }
+
+  .credits-music h3 {
+    max-width: none;
+  }
+
+  .credits-music-lines {
+    padding: 2.5cqw 0 0;
+    border-left: none;
+    border-top: 1px solid color-mix(in srgb, var(--color-ink) 40%, transparent);
+    text-align: center;
   }
 }
