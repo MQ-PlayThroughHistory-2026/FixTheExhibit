@@ -290,6 +290,12 @@
   flex: 0 0 auto;
 }
 
+/* The speaker button (tts.css) sits in the card's top-right corner, so the
+   name and message start below it instead of running underneath. */
+.arranging-feedback-card.is-qr .info-card-title {
+  margin-top: 36px;
+}
+
 .arranging-feedback-card.is-qr .arranging-feedback-image {
   /* Height leads (280px, shrinking on a short card) and the width follows
      from the aspect ratio, so the white backing stays square. */

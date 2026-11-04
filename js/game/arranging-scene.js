@@ -51,6 +51,7 @@ import { playSfx, skipClickSfx } from '../ui/audio.js';
 import { showStageTransition } from '../ui/stage-transition.js';
 import { setProgress } from '../ui/progress-bar.js';
 import { showTutorialOnce } from '../ui/tutorial.js';
+import { addTtsButton } from '../ui/tts.js';
 
 // Item size never grows past this, so boxes stay a comfortable size on a
 // wide kiosk display. There's no minimum - shrinking is what keeps a large
@@ -705,6 +706,7 @@ function buildFeedbackCard(item, text, index, count, qrUrl = null) {
   paragraph.textContent = text;
   if (index === 0) card.querySelector('.info-card-arrow.is-prev').remove();
   if (index === count - 1) card.querySelector('.info-card-arrow.is-next').remove();
+  addTtsButton(card); // reads this page: the artefact's name, then its text
   return card;
 }
 

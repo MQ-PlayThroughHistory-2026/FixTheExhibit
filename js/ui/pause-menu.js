@@ -28,6 +28,7 @@
 
 import { getBgmVolume, setBgmVolume, getSfxVolume, setSfxVolume, playSfx } from './audio.js';
 import { confirmAction, isConfirmOpen } from './confirm-dialog.js';
+import { getTtsVolume, setTtsVolume, speak, stopSpeaking } from './tts.js';
 
 const ICON_VOLUME = 'assets/ui/menu-volume.avif';
 const ICON_MUTED = 'assets/ui/volume-mute.avif';
@@ -42,11 +43,12 @@ const BUTTONS = {
 const CHANNELS = {
   bgm: { label: 'background music', get: getBgmVolume, set: setBgmVolume },
   sfx: { label: 'sound effects', get: getSfxVolume, set: setSfxVolume },
+  tts: { label: 'text to speech', get: getTtsVolume, set: setTtsVolume },
 };
 
 const handlersByScreen = new Map();
 // Volume to go back to when a channel is unmuted from the speaker button.
-const volumeBeforeMute = { bgm: null, sfx: null };
+const volumeBeforeMute = { bgm: null, sfx: null, tts: null };
 
 let activeScreenId = null;
 let isOpen = false;
@@ -103,6 +105,7 @@ function renderChannel(channel) {
 
 function toggleMute(channel) {
   const { get, set } = CHANNELS[channel];
+  if (channel === 'tts') stopSpeaking();
   if (get() > 0) {
     volumeBeforeMute[channel] = get();
     set(0);
@@ -178,6 +181,8 @@ function wireVolumeControls() {
     });
     // Lets the visitor hear the new effects volume once they let go.
     if (channel === 'sfx') slider.addEventListener('change', () => playSfx('click'));
+    // Same for the voice: a short sample, spoken at the new volume.
+    if (channel === 'tts') slider.addEventListener('change', () => speak('This is the text to speech volume.'));
   });
 
   document.querySelectorAll('.pause-mute').forEach((button) => {
