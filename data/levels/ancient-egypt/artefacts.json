@@ -26,54 +26,28 @@
     }
   },
   {
-    "id": "brewers-vat",
-    "name": "Brewer's Vat of Queen Mother Ankhenes-Pepi",
+    "id": "abusir-papyri",
+    "name": "Abusir Papyri",
     "correctZone": "display-case",
-    "image": "assets/ancient-egypt/artefacts/brewers-vat.avif",
-    "blurb": "The Brewer's Vat of Queen Mother Ankhenes-Pepi is a miniature stone model of a vessel used in ancient Egyptian beer production. Dating to the Sixth Dynasty of the Old Kingdom, it was probably created for the burial of Queen Mother Ankhenes-Pepi or her son, Pharaoh Pepi II. Beer was an important part of the Egyptian diet and was consumed by people from different social classes. This model was placed among funerary equipment to symbolically provide the deceased with beer in the afterlife.",
+    "image": "assets/ancient-egypt/artefacts/abusir-papyri.avif",
+    "blurb": "The Abusir papyri are a set of temple administration documents dating back to the late Fifth and early Sixth dynasties. The documents are written in a mixture of hieroglyphs and hieratic, which is a cursive ancient Egyptian writing system that developed alongside hieroglyphs. Though the papyri are now damaged and fragmented, the writing that we can make out gives us detailed information about the daily operation of ancient temples and can help us better understand the lives of the people who lived there.",
     "longExplanation": [
-      "Beer production had several stages during ancient Egypt. This included preparing the grain, combining ingredients with water, and then finally allowing the mixture to ferment. Large pottery vessels were used with woven reed stands to help support the containers with rounded or pointed bases throughout this process. The Brewer's Vat of Queen Mother Ankhenes-Pepi was 17 centimeters tall and was made from travertine, a type of stone also known as Egyptian alabaster. Although the vat was shaped to resemble real brewing equipment, the model was not intended for real beer production.",
-      "Beer was an important part of ancient Egyptian society as it served as a common drink and a significant part of daily food supplies. Beer was also connected to religious ceremonies and funerary offerings. The miniature vat was probably associated with Queen Mother Ankhenes-Pepi or her son, Pharaoh Pepi II. Egyptians believed that objects placed in tombs would continue to serve the deceased in the afterlife. By including a model brewing vessel in the tomb, they had hoped to ensure beer would still remain available to the deceased."
+      "Most of the papyri were found during an illegal excavation in 1893 and sold on the antiquities market. A later excavation by Ludwig Borchardt found more of the papyri and revealed that the document came from a mortuary temple attached to the Pyramid of Neferirkare. Originally a six-step step pyramid, the monument was later converted to an eight-layered true pyramid which made it the tallest structure in the Abusir necropolis. Later Abusir excavations in the 1980s also found more papyrus fragments in the temple of Khentkaues, who was the wife of both Neferirkare and his successor Neferefre.",
+      "The Abusir papyri document the organisation and running of the temple they were found in, including information about priest duty rosters, temple equipment inventories, lists of offerings, letters, and permits. They also showed how the Pharoah's pyramid complex was constantly exchanging goods, services, and offerings with state institutions and other temples, including Neferirkare's now lost sun temple built at Abu Ghurob. These types of documents can help us identify the locations of other excavation sites where we might uncover more ancient Egyptian temples."
     ],
-    "funFactCorrect": "Although this artefact resembles a brewing vessel, it is actually a miniature stone model rather than a full-sized vat used to produce beer.",
-    "funFactIncorrect": "Beer was an important part of everyday life in ancient Egypt, so miniature versions of brewer's vats were sometimes included in burial chambers.",
-    "clue": "This artefact represents equipment used to produce a drink that was commonly consumed in ancient Egypt.",
+    "funFactCorrect": "The Abusir Papyri were written in a combination of hieroglyphs and hieratic, which was an ancient cursive writing system.",
+    "funFactIncorrect": "The Abusir Papyri are a collection of documents from temples in the Abusir pyramid complex that operated in the late 5th and early 6th dynasties.",
+    "clue": "This artefact was found in the Abusir pyramid complex.",
     "quiz": {
       "easy": {
-        "question": "What was the Brewer's Vat of Queen Mother Ankhenes-Pepi intended to represent?",
-        "options": ["A container used for storing jewellery", "A bowl used for preparing cosmetics", "A vessel used in beer production", "A container used to preserve organs"],
-        "correctIndex": 2
-      },
-      "hard": {
-        "question": "Why was a miniature brewing vat included among funerary equipment?",
-        "options": ["To record the quantity of beer produced by the royal family", "To symbolically provide beer for the deceased in the afterlife", "To mark the deceased's occupation as a brewer", "To identify the tomb's builders"],
+        "question": "What were the Abusir papyri?",
+        "options": ["Temple prayer books", "Administrative documents", "Priest diaries", "Pharaoh travel documents"],
         "correctIndex": 1
-      }
-    }
-  },
-  {
-    "id": "great-sphinx",
-    "name": "The Great Sphinx of Giza",
-    "correctZone": "display-case",
-    "image": "assets/ancient-egypt/artefacts/great-sphinx.avif",
-    "blurb": "The Great Sphinx of Giza is one of the most recognisable monuments from ancient Egypt. Carved from natural limestone, the sculpture has the body of a lion and the head of a human, believed by many historians to represent Pharaoh Khafre. The Sphinx was built during the Fourth Dynasty and stands near the pyramids of Giza at approximately 73 metres long and 20 metres high. The combination of a human head and a lion's body symbolises royal strength and authority, reflecting the power of Egyptian pharaohs.",
-    "longExplanation": [
-      "The construction of the Great Sphinx required workers to carve directly into the limestone bedrock of the Giza Plateau. Instead of using separate stone blocks to build the monument, the workers shaped the existing rock into the enormous lion-like body. Additional limestone blocks were used for certain parts of the monument for areas that needed repairs or reinforcement. The sculpture's face was shaped with human features and a royal headdress. The missing nose has become one of its most recognisable features, however when and why it was damaged is unknown.",
-      "The Great Sphinx is generally interpreted as a symbol of royal power, combining the intelligence and authority of a human ruler with the strength of a lion. Being positioned near Khafre's pyramid complex suggests that it may have served a protective or ceremonial purpose, however its actual purpose still isn't fully understood. Wind erosion and weathering over thousands of years have damaged parts of the monument. Despite the damage it has suffered, the Great Sphinx remains one of the most recognisable monuments of ancient Egypt, providing valuable insight into the artistic achievements and beliefs of the Old Kingdom."
-    ],
-    "funFactCorrect": "The Great Sphinx was mainly carved from natural limestone bedrock, rather than being constructed entirely from separate stone blocks.",
-    "funFactIncorrect": "The Great Sphinx measures approximately 73 metres long and 20 metres high, making it one of the largest surviving sculptures from the ancient world.",
-    "clue": "This artefact combines the physical features of a human and an animal to represent royal power.",
-    "quiz": {
-      "easy": {
-        "question": "Which two features are combined in the Great Sphinx of Giza?",
-        "options": ["A human head and a lion's body", "A falcon's head and a human body", "A crocodile's head and a lion's body", "A human head and a horse's body"],
-        "correctIndex": 0
       },
       "hard": {
-        "question": "How was the main body of the Great Sphinx constructed?",
-        "options": ["It was cast from molten bronze", "It was assembled from multiple carved stones", "It was made from clay bricks covered in plaster", "It was carved directly from natural limestone"],
-        "correctIndex": 3
+        "question": "Which of the following were NOT in the Abusir papyri?",
+        "options": ["Lists of offerings", "Temple designs", "Priest duty rosters", "Permits"],
+        "correctIndex": 1
       }
     }
   },
@@ -99,32 +73,6 @@
       "hard": {
         "question": "Why were scenes of food and offerings carved into Egyptian tombs?",
         "options": ["To teach visitors how to cook", "To symbolically provide for the deceased in the afterlife", "To record the price of food in markets", "To indicate where food supplies were stored"],
-        "correctIndex": 1
-      }
-    }
-  },
-  {
-    "id": "hetepheres-bracelets",
-    "name": "Bracelets of Queen Hetepheres I",
-    "correctZone": "display-case",
-    "image": "assets/ancient-egypt/artefacts/hetepheres-bracelets.avif",
-    "blurb": "The bracelets of Queen Hetepheres I were pieces of royal jewellery dating to the Fourth Dynasty of ancient Egypt's Old Kingdom. They belonged to Queen Hetepheres, the mother of Pharaoh Khufu, who built the Great Pyramid of Giza. The bracelets were primarily made from silver and then decorated with colourful gemstones arranged in butterfly like patterns. They were discovered in her tomb in Giza and demonstrate the wealth and craftsmanship of Egypt's royal family. Modern research also suggests that the silver was imported through ancient trade networks.",
-    "longExplanation": [
-      "The bracelets were discovered in 1925 during excavations of Queen Hetepheres I's burial at Giza. They were found inside a wooden jewellery box, which originally held a collection of silver bracelets arranged on supports. Each of these bracelets was decorated with carefully arranged coloured inlays, creating patterns resembling butterflies. The designs required skilled metalworkers to shape the silver and fit small pieces of stone into the surface. The preservation of the bracelets has allowed researchers to study both the jewellery making techniques and the materials used by ancient Egyptian craftspeople.",
-      "The bracelets are particularly significant as silver was much rarer than gold in ancient Egypt, making them valuable examples of royal luxury. In 2023, researchers from Macquarie University and collaborating institutions analysed their metal composition to investigate where the silver originated. Their findings suggested that the material may have come from the Aegean region, possibly reaching Egypt through trade connections involving the eastern Mediterranean, giving evidence to the idea that Old Kingdom Egypt had participated in extensive trading networks and had access to valuable materials from distant regions."
-    ],
-    "funFactCorrect": "The butterfly-pattern gemstone decorations on these bracelets demonstrate the detailed craftsmanship of ancient Egyptian jewellery makers.",
-    "funFactIncorrect": "Scientific analysis of the bracelets suggests that their silver may have originated from the Aegean region, providing evidence of ancient Egyptian trade connections.",
-    "clue": "This artefact was made using a precious metal that was relatively rare in ancient Egypt.",
-    "quiz": {
-      "easy": {
-        "question": "Who originally owned the bracelets discovered in a tomb at Giza?",
-        "options": ["Queen Cleopatra VII", "Queen Hetepheres I", "Queen Nefertiti", "Queen Tiye"],
-        "correctIndex": 1
-      },
-      "hard": {
-        "question": "What did modern scientific analysis suggest about the silver used in Queen Hetepheres I's bracelets?",
-        "options": ["It was produced using modern industrial techniques", "It may have originated from the Aegean region", "It was collected from the Nile River", "It was created by melting down gold"],
         "correctIndex": 1
       }
     }
@@ -156,6 +104,58 @@
     }
   },
   {
+    "id": "brewers-vat",
+    "name": "Brewer's Vat of Queen Mother Ankhenes-Pepi",
+    "correctZone": "display-case",
+    "image": "assets/ancient-egypt/artefacts/brewers-vat.avif",
+    "blurb": "The Brewer's Vat of Queen Mother Ankhenes-Pepi is a miniature stone model of a vessel used in ancient Egyptian beer production. Dating to the Sixth Dynasty of the Old Kingdom, it was probably created for the burial of Queen Mother Ankhenes-Pepi or her son, Pharaoh Pepi II. Beer was an important part of the Egyptian diet and was consumed by people from different social classes. This model was placed among funerary equipment to symbolically provide the deceased with beer in the afterlife.",
+    "longExplanation": [
+      "Beer production had several stages during ancient Egypt. This included preparing the grain, combining ingredients with water, and then finally allowing the mixture to ferment. Large pottery vessels were used with woven reed stands to help support the containers with rounded or pointed bases throughout this process. The Brewer's Vat of Queen Mother Ankhenes-Pepi was 17 centimeters tall and was made from travertine, a type of stone also known as Egyptian alabaster. Although the vat was shaped to resemble real brewing equipment, the model was not intended for real beer production.",
+      "Beer was an important part of ancient Egyptian society as it served as a common drink and a significant part of daily food supplies. Beer was also connected to religious ceremonies and funerary offerings. The miniature vat was probably associated with Queen Mother Ankhenes-Pepi or her son, Pharaoh Pepi II. Egyptians believed that objects placed in tombs would continue to serve the deceased in the afterlife. By including a model brewing vessel in the tomb, they had hoped to ensure beer would still remain available to the deceased."
+    ],
+    "funFactCorrect": "Although this artefact resembles a brewing vessel, it is actually a miniature stone model rather than a full-sized vat used to produce beer.",
+    "funFactIncorrect": "Beer was an important part of everyday life in ancient Egypt, so miniature versions of brewer's vats were sometimes included in burial chambers.",
+    "clue": "This artefact represents equipment used to produce a drink that was commonly consumed in ancient Egypt.",
+    "quiz": {
+      "easy": {
+        "question": "What was the Brewer's Vat of Queen Mother Ankhenes-Pepi intended to represent?",
+        "options": ["A container used for storing jewellery", "A bowl used for preparing cosmetics", "A vessel used in beer production", "A container used to preserve organs"],
+        "correctIndex": 2
+      },
+      "hard": {
+        "question": "Why was a miniature brewing vat included among funerary equipment?",
+        "options": ["To record the quantity of beer produced by the royal family", "To symbolically provide beer for the deceased in the afterlife", "To mark the deceased's occupation as a brewer", "To identify the tomb's builders"],
+        "correctIndex": 1
+      }
+    }
+  },
+  {
+    "id": "hetepheres-bracelets",
+    "name": "Bracelets of Queen Hetepheres I",
+    "correctZone": "display-case",
+    "image": "assets/ancient-egypt/artefacts/hetepheres-bracelets.avif",
+    "blurb": "The bracelets of Queen Hetepheres I were pieces of royal jewellery dating to the Fourth Dynasty of ancient Egypt's Old Kingdom. They belonged to Queen Hetepheres, the mother of Pharaoh Khufu, who built the Great Pyramid of Giza. The bracelets were primarily made from silver and then decorated with colourful gemstones arranged in butterfly like patterns. They were discovered in her tomb in Giza and demonstrate the wealth and craftsmanship of Egypt's royal family. Modern research also suggests that the silver was imported through ancient trade networks.",
+    "longExplanation": [
+      "The bracelets were discovered in 1925 during excavations of Queen Hetepheres I's burial at Giza. They were found inside a wooden jewellery box, which originally held a collection of silver bracelets arranged on supports. Each of these bracelets was decorated with carefully arranged coloured inlays, creating patterns resembling butterflies. The designs required skilled metalworkers to shape the silver and fit small pieces of stone into the surface. The preservation of the bracelets has allowed researchers to study both the jewellery making techniques and the materials used by ancient Egyptian craftspeople.",
+      "The bracelets are particularly significant as silver was much rarer than gold in ancient Egypt, making them valuable examples of royal luxury. In 2023, researchers from Macquarie University and collaborating institutions analysed their metal composition to investigate where the silver originated. Their findings suggested that the material may have come from the Aegean region, possibly reaching Egypt through trade connections involving the eastern Mediterranean, giving evidence to the idea that Old Kingdom Egypt had participated in extensive trading networks and had access to valuable materials from distant regions."
+    ],
+    "funFactCorrect": "The butterfly-pattern gemstone decorations on these bracelets demonstrate the detailed craftsmanship of ancient Egyptian jewellery makers.",
+    "funFactIncorrect": "Scientific analysis of the bracelets suggests that their silver may have originated from the Aegean region, providing evidence of ancient Egyptian trade connections.",
+    "clue": "This artefact was made using a precious metal that was relatively rare in ancient Egypt.",
+    "quiz": {
+      "easy": {
+        "question": "Who originally owned the bracelets discovered in a tomb at Giza?",
+        "options": ["Queen Cleopatra VII", "Queen Hetepheres I", "Queen Nefertiti", "Queen Tiye"],
+        "correctIndex": 1
+      },
+      "hard": {
+        "question": "What did modern scientific analysis suggest about the silver used in Queen Hetepheres I's bracelets?",
+        "options": ["It was produced using modern industrial techniques", "It may have originated from the Aegean region", "It was collected from the Nile River", "It was created by melting down gold"],
+        "correctIndex": 1
+      }
+    }
+  },
+  {
     "id": "carrying-chair",
     "name": "Carrying Chair of Queen Hetepheres I",
     "correctZone": "display-case",
@@ -182,6 +182,32 @@
     }
   },
   {
+    "id": "great-sphinx",
+    "name": "The Great Sphinx of Giza",
+    "correctZone": "display-case",
+    "image": "assets/ancient-egypt/artefacts/great-sphinx.avif",
+    "blurb": "The Great Sphinx of Giza is one of the most recognisable monuments from ancient Egypt. Carved from natural limestone, the sculpture has the body of a lion and the head of a human, believed by many historians to represent Pharaoh Khafre. The Sphinx was built during the Fourth Dynasty and stands near the pyramids of Giza at approximately 73 metres long and 20 metres high. The combination of a human head and a lion's body symbolises royal strength and authority, reflecting the power of Egyptian pharaohs.",
+    "longExplanation": [
+      "The construction of the Great Sphinx required workers to carve directly into the limestone bedrock of the Giza Plateau. Instead of using separate stone blocks to build the monument, the workers shaped the existing rock into the enormous lion-like body. Additional limestone blocks were used for certain parts of the monument for areas that needed repairs or reinforcement. The sculpture's face was shaped with human features and a royal headdress. The missing nose has become one of its most recognisable features, however when and why it was damaged is unknown.",
+      "The Great Sphinx is generally interpreted as a symbol of royal power, combining the intelligence and authority of a human ruler with the strength of a lion. Being positioned near Khafre's pyramid complex suggests that it may have served a protective or ceremonial purpose, however its actual purpose still isn't fully understood. Wind erosion and weathering over thousands of years have damaged parts of the monument. Despite the damage it has suffered, the Great Sphinx remains one of the most recognisable monuments of ancient Egypt, providing valuable insight into the artistic achievements and beliefs of the Old Kingdom."
+    ],
+    "funFactCorrect": "The Great Sphinx was mainly carved from natural limestone bedrock, rather than being constructed entirely from separate stone blocks.",
+    "funFactIncorrect": "The Great Sphinx measures approximately 73 metres long and 20 metres high, making it one of the largest surviving sculptures from the ancient world.",
+    "clue": "This artefact combines the physical features of a human and an animal to represent royal power.",
+    "quiz": {
+      "easy": {
+        "question": "Which two features are combined in the Great Sphinx of Giza?",
+        "options": ["A human head and a lion's body", "A falcon's head and a human body", "A crocodile's head and a lion's body", "A human head and a horse's body"],
+        "correctIndex": 0
+      },
+      "hard": {
+        "question": "How was the main body of the Great Sphinx constructed?",
+        "options": ["It was cast from molten bronze", "It was assembled from multiple carved stones", "It was made from clay bricks covered in plaster", "It was carved directly from natural limestone"],
+        "correctIndex": 3
+      }
+    }
+  },
+  {
     "id": "great-pyramid",
     "name": "Great Pyramid of Giza",
     "correctZone": "display-case",
@@ -204,32 +230,6 @@
         "question": "What is the base angle of the Great Pyramid of Giza?",
         "options": ["49.27 degrees", "60 degrees", "59.52 degrees", "51.84 degrees"],
         "correctIndex": 3
-      }
-    }
-  },
-  {
-    "id": "abusir-papyri",
-    "name": "Abusir Papyri",
-    "correctZone": "display-case",
-    "image": "assets/ancient-egypt/artefacts/abusir-papyri.avif",
-    "blurb": "The Abusir papyri are a set of temple administration documents dating back to the late Fifth and early Sixth dynasties. The documents are written in a mixture of hieroglyphs and hieratic, which is a cursive ancient Egyptian writing system that developed alongside hieroglyphs. Though the papyri are now damaged and fragmented, the writing that we can make out gives us detailed information about the daily operation of ancient temples and can help us better understand the lives of the people who lived there.",
-    "longExplanation": [
-      "Most of the papyri were found during an illegal excavation in 1893 and sold on the antiquities market. A later excavation by Ludwig Borchardt found more of the papyri and revealed that the document came from a mortuary temple attached to the Pyramid of Neferirkare. Originally a six-step step pyramid, the monument was later converted to an eight-layered true pyramid which made it the tallest structure in the Abusir necropolis. Later Abusir excavations in the 1980s also found more papyrus fragments in the temple of Khentkaues, who was the wife of both Neferirkare and his successor Neferefre.",
-      "The Abusir papyri document the organisation and running of the temple they were found in, including information about priest duty rosters, temple equipment inventories, lists of offerings, letters, and permits. They also showed how the Pharoah's pyramid complex was constantly exchanging goods, services, and offerings with state institutions and other temples, including Neferirkare's now lost sun temple built at Abu Ghurob. These types of documents can help us identify the locations of other excavation sites where we might uncover more ancient Egyptian temples."
-    ],
-    "funFactCorrect": "The Abusir Papyri were written in a combination of hieroglyphs and hieratic, which was an ancient cursive writing system.",
-    "funFactIncorrect": "The Abusir Papyri are a collection of documents from temples in the Abusir pyramid complex that operated in the late 5th and early 6th dynasties.",
-    "clue": "This artefact was found in the Abusir pyramid complex.",
-    "quiz": {
-      "easy": {
-        "question": "What were the Abusir papyri?",
-        "options": ["Temple prayer books", "Administrative documents", "Priest diaries", "Pharaoh travel documents"],
-        "correctIndex": 1
-      },
-      "hard": {
-        "question": "Which of the following were NOT in the Abusir papyri?",
-        "options": ["Lists of offerings", "Temple designs", "Priest duty rosters", "Permits"],
-        "correctIndex": 1
       }
     }
   },
