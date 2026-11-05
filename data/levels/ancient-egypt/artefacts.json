@@ -1,261 +1,261 @@
 [
   {
-    "id": "example-artefact-1",
-    "name": "Crab",
+    "id": "mehen-game",
+    "name": "Mehen Game Board",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-1.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
+    "image": "assets/ancient-egypt/artefacts/mehen-game.avif",
+    "blurb": "The Mehen Game Board was a board game from ancient Egypt. The board was shaped like a coiled snake containing a spiral track that led towards the snake's head at the centre. The game was played during the Old Kingdom and is one of the earliest known board games in history. The exact rules still remain unknown however historians believe that players might've moved small balls or animal shaped pieces along the track. Mehen was also associated with Egyptian religious beliefs, particularly the protection of the sun god Ra.",
     "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
+      "Although the Mehen Game Board is one of the earliest known board games, historians have never discovered a complete set of instructions explaining how it was played. Small stone balls and lion shaped gaming pieces have been found alongside some boards by archaeologists. This suggests players may have moved these objects around the spiral track but it is still unclear how many people participated, how turns were decided, or how the winner was determined. The surviving boards also varied in size and design indicating that different versions of the game may have existed.",
+      "Mehen was more than just a form of entertainment. The snake also holds religious significance in ancient Egyptian beliefs. The serpent deity Mehen was believed to protect the sun god Ra during his nightly journey through the underworld. Examples of the game have often been discovered in funerary contexts leading researchers to believe that played Mehen might have symbolised the journey into the afterlife. The connection between the game and the protective serpent suggests that Mehen may have represented more than entertainment, although its exact religious role remains uncertain."
     ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "clue": "Placeholder clue used for hard-mode arrangement instead of a silhouette (task R9).",
+    "funFactCorrect": "The Mehen Game Board is one of the earliest known board games, although its exact rules remain a mystery.",
+    "funFactIncorrect": "This board game shares its name with Mehen, a deity believed to guard the sun god Ra during his nightly journey through the underworld.",
+    "clue": "This artefact shares its name with a protective serpent from ancient Egyptian mythology.",
     "quiz": {
       "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "What was the main purpose of the Mehen Game Board?",
+        "options": ["To prepare food for religious ceremonies", "To play a board game", "To record important historical events", "To measure the passage of time"],
+        "correctIndex": 1
       },
       "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "Which Egyptian deity was associated with the Mehen Game Board?",
+        "options": ["The god associated with mummification", "The goddess associated with music and motherhood", "The serpent who protected Ra", "The god associated with writing"],
+        "correctIndex": 2
       }
     }
-  }, 
+  },
   {
-    "id": "example-artefact-2",
-    "name": "Example Artefact (replace with real name - task R2)",
+    "id": "abusir-papyri",
+    "name": "Abusir Papyri",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-2.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
+    "image": "assets/ancient-egypt/artefacts/abusir-papyri.avif",
+    "blurb": "The Abusir papyri are a set of temple administration documents dating back to the late Fifth and early Sixth dynasties. The documents are written in a mixture of hieroglyphs and hieratic, which is a cursive ancient Egyptian writing system that developed alongside hieroglyphs. Though the papyri are now damaged and fragmented, the writing that we can make out gives us detailed information about the daily operation of ancient temples and can help us better understand the lives of the people who lived there.",
     "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
+      "Most of the papyri were found during an illegal excavation in 1893 and sold on the antiquities market. A later excavation by Ludwig Borchardt found more of the papyri and revealed that the document came from a mortuary temple attached to the Pyramid of Neferirkare. Originally a six-step step pyramid, the monument was later converted to an eight-layered true pyramid which made it the tallest structure in the Abusir necropolis. Later Abusir excavations in the 1980s also found more papyrus fragments in the temple of Khentkaues, who was the wife of both Neferirkare and his successor Neferefre.",
+      "The Abusir papyri document the organisation and running of the temple they were found in, including information about priest duty rosters, temple equipment inventories, lists of offerings, letters, and permits. They also showed how the Pharoah's pyramid complex was constantly exchanging goods, services, and offerings with state institutions and other temples, including Neferirkare's now lost sun temple built at Abu Ghurob. These types of documents can help us identify the locations of other excavation sites where we might uncover more ancient Egyptian temples."
     ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "clue": "Placeholder clue used for hard-mode arrangement instead of a silhouette (task R9).",
+    "funFactCorrect": "The Abusir Papyri were written in a combination of hieroglyphs and hieratic, which was an ancient cursive writing system.",
+    "funFactIncorrect": "The Abusir Papyri are a collection of documents from temples in the Abusir pyramid complex that operated in the late 5th and early 6th dynasties.",
+    "clue": "This artefact was found in the Abusir pyramid complex.",
     "quiz": {
       "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
+        "question": "What were the Abusir papyri?",
+        "options": ["Temple prayer books", "Administrative documents", "Priest diaries", "Pharaoh travel documents"],
+        "correctIndex": 1
+      },
+      "hard": {
+        "question": "Which of the following were NOT in the Abusir papyri?",
+        "options": ["Lists of offerings", "Temple designs", "Priest duty rosters", "Permits"],
+        "correctIndex": 1
+      }
+    }
+  },
+  {
+    "id": "tomb-reliefs",
+    "name": "Egyptian Tomb Reliefs",
+    "correctZone": "display-case",
+    "image": "assets/ancient-egypt/artefacts/tomb-reliefs.avif",
+    "blurb": "Egyptian tomb reliefs were artworks carved into tombs and burial chambers for decoration. These carvings often depicted scenes of everyday life, showing things like farming, fishing, hunting, and transporting goods along the Nile. They also showed religious ceremonies and offerings intended to support the deceased in the afterlife. Reliefs were created by carving designs into stone surfaces and then potentially adding some paint to highlight details. Beside their religious importance, the artworks provide a valuable insight into how ancient Egyptians lived and worked.",
+    "longExplanation": [
+      "Creating a tomb relief required careful planning and skilled craftsmanship. The artist would first prepare the stone surface before sketching the scenes they intended to carve. Using tools such as copper chisels and stone implements, artists gradually removed sections of the limestone to create raised or sunken designs. Ancient Egyptian artists often drew people with their heads and legs facing sideways, while their shoulders and eyes faced forward. This was a common artistic style used in Egyptian carvings and paintings. After carving, artists could also apply colourful pigments to make the scenes and hieroglyphs more detailed and visually striking.",
+      "These tomb reliefs also served religious purposes due to the belief that life continued after death. Images of food, workers, and offerings were intended to help provide for the deceased in the afterlife. Carvings also sometimes included prayers and inscriptions identifying the tomb owner or describing their achievements. These carvings also provide historians with valuable evidence of ancient Egyptian society, revealing details about occupations, traditions, and the activities considered important at the time. By studying these scenes, researchers can better understand how everyday life and religious beliefs were connected during ancient Egypt."
+    ],
+    "funFactCorrect": "Ancient Egyptian artists often depicted people with their heads and legs shown from the side, while their shoulders and eyes were shown from the front.",
+    "funFactIncorrect": "Many Egyptian tomb reliefs were originally painted in bright colours, although much of the paint has faded or disappeared over time.",
+    "clue": "This artefact often depicted scenes of everyday life.",
+    "quiz": {
+      "easy": {
+        "question": "What was a common subject depicted in Egyptian tomb reliefs?",
+        "options": ["Everyday activities and religious offerings", "Modern inventions and machinery", "Events from medieval Europe", "Maps of distant continents"],
         "correctIndex": 0
       },
       "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
+        "question": "Why were scenes of food and offerings carved into Egyptian tombs?",
+        "options": ["To teach visitors how to cook", "To symbolically provide for the deceased in the afterlife", "To record the price of food in markets", "To indicate where food supplies were stored"],
+        "correctIndex": 1
+      }
+    }
+  },
+  {
+    "id": "naos-sistrum",
+    "name": "Naos Sistrum",
+    "correctZone": "display-case",
+    "image": "assets/ancient-egypt/artefacts/naos-sistrum.avif",
+    "blurb": "The sistrum was a type of musical instrument that was like a rattle and was only seen in Pharaonic Egypt. These instruments were often used in religious ceremonies and were usually associated with the goddess Hathor. This specific sistrum is called a Naos Sistrum, which was the first type of sistrum we've found, and dates to roughly 2323-2291 BCE. Naos Sistrums were given their name because they depicted a small shrine, also called a Naos, at the top of the instrument where the sound chamber of the rattle was located.",
+    "longExplanation": [
+      "This sistrum appears to be from the reign of Pharaoh Teti, the first sovereign of the 6th Dynasty. It was made from travertine, pigment, and resin, and originally had copper rods and rings that have not been found. On the instrument's handle, which was carved to resemble a papyrus stalk, there is an inscription that translates to “The King of Upper and Lower Egypt, Son of Ra, Teti, beloved of Hathor, Lady of Dendara, may he live eternally”. The five names of Teti's full title were also carved on the face of the shrine at the top of the sistrum.",
+      "When used in religious ceremonies, the sistrum was believed to ward off violence from deities like Hathor. The sistrum's unique sound was said to resemble the sound of rustling papyri that Hathor was said to have made when crossing the swamps in her usual cow form. Ancient Egyptians appear to have believed that this sound would soothe the goddess and prevent her from transforming into her more dangerous lioness form. Later texts also show that some people believed the sistrum to be an incarnation of Hathor, and so was often associated with her powers of joy, music, and dance."
+    ],
+    "funFactCorrect": "The Naos Sistrum was often used in religious ceremonies, and was believed to ward off violence from dangerous deities.",
+    "funFactIncorrect": "The Naos Sistrum was a musical instrument unique to Pharaonic Egypt, and was often used when making offerings to the goddess Hathor.",
+    "clue": "This artefact was believed to ward off dangerous deities.",
+    "quiz": {
+      "easy": {
+        "question": "What deity was the Naos Sistrum usually associated with?",
+        "options": ["Horus", "Ra", "Mehen", "Hathor"],
+        "correctIndex": 3
+      },
+      "hard": {
+        "question": "What was the Naos Sistrum supposed to sound like?",
+        "options": ["Papyri rustling", "Wings flapping", "Cows mooing", "Birds chirping"],
         "correctIndex": 0
       }
     }
   },
   {
-    "id": "example-artefact-3",
-    "name": "Example Artefact (replace with real name - task R2)",
+    "id": "brewers-vat",
+    "name": "Brewer's Vat of Queen Mother Ankhenes-Pepi",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-3.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
+    "image": "assets/ancient-egypt/artefacts/brewers-vat.avif",
+    "blurb": "The Brewer's Vat of Queen Mother Ankhenes-Pepi is a miniature stone model of a vessel used in ancient Egyptian beer production. Dating to the Sixth Dynasty of the Old Kingdom, it was probably created for the burial of Queen Mother Ankhenes-Pepi or her son, Pharaoh Pepi II. Beer was an important part of the Egyptian diet and was consumed by people from different social classes. This model was placed among funerary equipment to symbolically provide the deceased with beer in the afterlife.",
     "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
+      "Beer production had several stages during ancient Egypt. This included preparing the grain, combining ingredients with water, and then finally allowing the mixture to ferment. Large pottery vessels were used with woven reed stands to help support the containers with rounded or pointed bases throughout this process. The Brewer's Vat of Queen Mother Ankhenes-Pepi was 17 centimeters tall and was made from travertine, a type of stone also known as Egyptian alabaster. Although the vat was shaped to resemble real brewing equipment, the model was not intended for real beer production.",
+      "Beer was an important part of ancient Egyptian society as it served as a common drink and a significant part of daily food supplies. Beer was also connected to religious ceremonies and funerary offerings. The miniature vat was probably associated with Queen Mother Ankhenes-Pepi or her son, Pharaoh Pepi II. Egyptians believed that objects placed in tombs would continue to serve the deceased in the afterlife. By including a model brewing vessel in the tomb, they had hoped to ensure beer would still remain available to the deceased."
     ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "clue": "Placeholder clue used for hard-mode arrangement instead of a silhouette (task R9).",
+    "funFactCorrect": "Although this artefact resembles a brewing vessel, it is actually a miniature stone model rather than a full-sized vat used to produce beer.",
+    "funFactIncorrect": "Beer was an important part of everyday life in ancient Egypt, so miniature versions of brewer's vats were sometimes included in burial chambers.",
+    "clue": "This artefact represents equipment used to produce a drink that was commonly consumed in ancient Egypt.",
     "quiz": {
       "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "What was the Brewer's Vat of Queen Mother Ankhenes-Pepi intended to represent?",
+        "options": ["A container used for storing jewellery", "A bowl used for preparing cosmetics", "A vessel used in beer production", "A container used to preserve organs"],
+        "correctIndex": 2
       },
       "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "Why was a miniature brewing vat included among funerary equipment?",
+        "options": ["To record the quantity of beer produced by the royal family", "To symbolically provide beer for the deceased in the afterlife", "To mark the deceased's occupation as a brewer", "To identify the tomb's builders"],
+        "correctIndex": 1
       }
     }
   },
   {
-    "id": "example-artefact-4",
-    "name": "Example Artefact (replace with real name - task R2)",
+    "id": "hetepheres-bracelets",
+    "name": "Bracelets of Queen Hetepheres I",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-4.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
+    "image": "assets/ancient-egypt/artefacts/hetepheres-bracelets.avif",
+    "blurb": "The bracelets of Queen Hetepheres I were pieces of royal jewellery dating to the Fourth Dynasty of ancient Egypt's Old Kingdom. They belonged to Queen Hetepheres, the mother of Pharaoh Khufu, who built the Great Pyramid of Giza. The bracelets were primarily made from silver and then decorated with colourful gemstones arranged in butterfly like patterns. They were discovered in her tomb in Giza and demonstrate the wealth and craftsmanship of Egypt's royal family. Modern research also suggests that the silver was imported through ancient trade networks.",
     "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
+      "The bracelets were discovered in 1925 during excavations of Queen Hetepheres I's burial at Giza. They were found inside a wooden jewellery box, which originally held a collection of silver bracelets arranged on supports. Each of these bracelets was decorated with carefully arranged coloured inlays, creating patterns resembling butterflies. The designs required skilled metalworkers to shape the silver and fit small pieces of stone into the surface. The preservation of the bracelets has allowed researchers to study both the jewellery making techniques and the materials used by ancient Egyptian craftspeople.",
+      "The bracelets are particularly significant as silver was much rarer than gold in ancient Egypt, making them valuable examples of royal luxury. In 2023, researchers from Macquarie University and collaborating institutions analysed their metal composition to investigate where the silver originated. Their findings suggested that the material may have come from the Aegean region, possibly reaching Egypt through trade connections involving the eastern Mediterranean, giving evidence to the idea that Old Kingdom Egypt had participated in extensive trading networks and had access to valuable materials from distant regions."
     ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "clue": "Placeholder clue used for hard-mode arrangement instead of a silhouette (task R9).",
+    "funFactCorrect": "The butterfly-pattern gemstone decorations on these bracelets demonstrate the detailed craftsmanship of ancient Egyptian jewellery makers.",
+    "funFactIncorrect": "Scientific analysis of the bracelets suggests that their silver may have originated from the Aegean region, providing evidence of ancient Egyptian trade connections.",
+    "clue": "This artefact was made using a precious metal that was relatively rare in ancient Egypt.",
     "quiz": {
       "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "Who originally owned the bracelets discovered in a tomb at Giza?",
+        "options": ["Queen Cleopatra VII", "Queen Hetepheres I", "Queen Nefertiti", "Queen Tiye"],
+        "correctIndex": 1
       },
       "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "What did modern scientific analysis suggest about the silver used in Queen Hetepheres I's bracelets?",
+        "options": ["It was produced using modern industrial techniques", "It may have originated from the Aegean region", "It was collected from the Nile River", "It was created by melting down gold"],
+        "correctIndex": 1
       }
     }
   },
   {
-    "id": "example-artefact-5",
-    "name": "Example Artefact (replace with real name - task R2)",
+    "id": "carrying-chair",
+    "name": "Carrying Chair of Queen Hetepheres I",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-5.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
+    "image": "assets/ancient-egypt/artefacts/carrying-chair.avif",
+    "blurb": "This carrying chair is one of the first pieces of furniture found from the Old Kingdom period of ancient Egypt. It was found in the burial chamber of Queen Hetepheres I, along with other common funerary objects like pottery, jewellery, other furniture, and a sarcophagus. While the original wood from the chair was deformed and decayed by the time the chamber was discovered, the remaining pieces of the original chair have been mounted on new wood, and the restored chair is now displayed in the Cairo Museum.",
     "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
+      "When the burial chamber was discovered, most of its contents had collapsed into unrecognisable piles that had to be carefully documented and removed. The carrying chair was one of the first pieces of furniture recognised from this pile of debris, likely because it was preserved better than many of the other pieces. The frame of the chair had been completely sheathed in heavy sheet gold, which retained its original shape and dimensions. Some of the wood from the chair was also impressively intact, with four pieces that were perfect apart from being shrunk to one-sixth of their original size.",
+      "The back of the chair features gold hieroglyphs that roughly translate to “Mother of the King of Upper and Lower Egypt, Follower of Horus, Guide of the Ruler, Favorite one, she whose every word is done for her, the Daughter of the God's body, Hetep-heres”. The titles before the Queen's name speak of her relationship with different Pharaohs. Though no Pharaohs are named in the inscription, we know that Hetepheres married Pharaoh Snefru, and gave birth to his son and successor, Pharaoh Khufu. We also believe she may have been the daughter of Pharaoh Huni, who ruled before Snefru."
     ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "clue": "Placeholder clue used for hard-mode arrangement instead of a silhouette (task R9).",
+    "funFactCorrect": "This carrying chair was likely gifted to Queen Hetepheres I by her son Pharaoh Khufu, who built the Great Pyramid of Giza.",
+    "funFactIncorrect": "This carrying chair was one of the first pieces of furniture we've discovered that comes from the Old Kingdom period of ancient Egypt.",
+    "clue": "This artefact had hieroglyphic titles that tell us about the owner's relationship to three different Pharaohs.",
     "quiz": {
       "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "Why was the discovery of Queen Hetepheres' carrying chair unique?",
+        "options": ["It was the first furniture found made with silver", "It was the first furniture found fully intact", "It was the first furniture found from the Old Kingdom", "It was the first furniture found with hieroglyphics"],
+        "correctIndex": 2
       },
       "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "Which of the following was NOT a title written on Queen Hetepheres' carrying chair?",
+        "options": ["Follower of Horus", "Lady of Dendara", "Favourite one", "Guide of the Ruler"],
+        "correctIndex": 1
       }
     }
   },
   {
-    "id": "example-artefact-6",
-    "name": "Example Artefact (replace with real name - task R2)",
+    "id": "great-sphinx",
+    "name": "The Great Sphinx of Giza",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-6.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
+    "image": "assets/ancient-egypt/artefacts/great-sphinx.avif",
+    "blurb": "The Great Sphinx of Giza is one of the most recognisable monuments from ancient Egypt. Carved from natural limestone, the sculpture has the body of a lion and the head of a human, believed by many historians to represent Pharaoh Khafre. The Sphinx was built during the Fourth Dynasty and stands near the pyramids of Giza at approximately 73 metres long and 20 metres high. The combination of a human head and a lion's body symbolises royal strength and authority, reflecting the power of Egyptian pharaohs.",
     "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
+      "The construction of the Great Sphinx required workers to carve directly into the limestone bedrock of the Giza Plateau. Instead of using separate stone blocks to build the monument, the workers shaped the existing rock into the enormous lion-like body. Additional limestone blocks were used for certain parts of the monument for areas that needed repairs or reinforcement. The sculpture's face was shaped with human features and a royal headdress. The missing nose has become one of its most recognisable features, however when and why it was damaged is unknown.",
+      "The Great Sphinx is generally interpreted as a symbol of royal power, combining the intelligence and authority of a human ruler with the strength of a lion. Being positioned near Khafre's pyramid complex suggests that it may have served a protective or ceremonial purpose, however its actual purpose still isn't fully understood. Wind erosion and weathering over thousands of years have damaged parts of the monument. Despite the damage it has suffered, the Great Sphinx remains one of the most recognisable monuments of ancient Egypt, providing valuable insight into the artistic achievements and beliefs of the Old Kingdom."
     ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "clue": "Placeholder clue used for hard-mode arrangement instead of a silhouette (task R9).",
+    "funFactCorrect": "The Great Sphinx was mainly carved from natural limestone bedrock, rather than being constructed entirely from separate stone blocks.",
+    "funFactIncorrect": "The Great Sphinx measures approximately 73 metres long and 20 metres high, making it one of the largest surviving sculptures from the ancient world.",
+    "clue": "This artefact combines the physical features of a human and an animal to represent royal power.",
     "quiz": {
       "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
+        "question": "Which two features are combined in the Great Sphinx of Giza?",
+        "options": ["A human head and a lion's body", "A falcon's head and a human body", "A crocodile's head and a lion's body", "A human head and a horse's body"],
         "correctIndex": 0
       },
       "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "How was the main body of the Great Sphinx constructed?",
+        "options": ["It was cast from molten bronze", "It was assembled from multiple carved stones", "It was made from clay bricks covered in plaster", "It was carved directly from natural limestone"],
+        "correctIndex": 3
       }
     }
   },
   {
-    "id": "example-artefact-7",
-    "name": "Example Artefact (replace with real name - task R2)",
+    "id": "great-pyramid",
+    "name": "Great Pyramid of Giza",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-7.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
+    "image": "assets/ancient-egypt/artefacts/great-pyramid.avif",
+    "blurb": "Also known as the Khufu Pyramid, the Great Pyramid of Giza was built in the 4th Dynasty during the reign of Pharaoh Khufu, roughly around 2589-2566 BCE. The last remaining wonder of the Ancient world, the Great Pyramid is not only the largest megalithic monument but also appears to be the most accurately constructed pyramid. The four square corners of the pyramid were placed so that each side of the pyramid is facing a cardinal direction - North, South, East, or West - and were laid out so precisely that it's almost as accurate as modern construction.",
     "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
+      "Some believe that the pyramid was built very accurately so that it could act as a calendar. In ancient Egypt, the year was divided into three seasons - when the Nile flooded, when food was grown, and when food was harvested. On the Spring and Autumn Equinoxes, which marked the start of the growing and harvesting seasons, the sun would always be at a 60 degree angle at noon. The base angle of the pyramid, 51.84 degrees, was specifically chosen so that the sun only shone on the North side of the pyramid on the days the season changed.",
+      "There is some debate among Egyptologists about the purpose of some parts of the Great Pyramid's design, especially regarding several shafts that lead from the King's and Queen's chambers to the outside of the pyramid. Some believe that these were just air shafts designed to ventilate the pyramid, though this seems unlikely because there were multiple blocks closing off each shaft. Another theory is that these shafts had a religious significance, and that the shafts were designed to exit the pyramid at positions that would line up with certain stars associated with rituals around rebirth and the afterlife."
     ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "clue": "Placeholder clue used for hard-mode arrangement instead of a silhouette (task R9).",
+    "funFactCorrect": "The Great Pyramid of Giza is the largest and most accurately constructed pyramid, and may have been used to mark the changing of seasons.",
+    "funFactIncorrect": "The Great Pyramid of Giza was built during the reign of Pharaoh Khufu, which was roughly around 2589-2566 BCE.",
+    "clue": "This artefact may have been used as a calendar.",
     "quiz": {
       "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
+        "question": "Who built the Great Pyramid of Giza?",
+        "options": ["Pharaoh Khufu", "Pharaoh Teti", "Pharaoh Huni", "Pharaoh Snefru"],
         "correctIndex": 0
       },
       "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "What is the base angle of the Great Pyramid of Giza?",
+        "options": ["49.27 degrees", "60 degrees", "59.52 degrees", "51.84 degrees"],
+        "correctIndex": 3
       }
     }
   },
   {
-    "id": "example-artefact-8",
-    "name": "Example Artefact (replace with real name - task R2)",
+    "id": "meidum-geese",
+    "name": "Meidum Geese",
     "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-8.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
+    "image": "assets/ancient-egypt/artefacts/meidum-geese.avif",
+    "blurb": "This painting was discovered by museum curator Luigi Vassalli in 1871 and comes from the reign of Snefru, which was around 2575-2551 BCE. The piece is made of painted plaster, which was a common technique used to decorate ancient Egyptian tombs as it was faster than relief-carving on stone and didn't require paying for high-quality stone to produce high-quality art. This goose painting is sometimes referred to as “Egypt's Mona Lisa” due to the impressive quality of the painting and the incredible detail put into the geese, including serrated bills and textured feathers.",
     "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
+      "The painting was found in the tomb chapel of Itet, who was likely the daughter-in-law of Pharaoh Snefru and was married to his vizier Nefermaat. As they were part of the royal family, Nefermaat and Itet were given a large Mastaba tomb at Meidum, close to the Pharaoh's pyramid. The paint used in the artwork was created from mixing egg whites with different natural materials that determined the paint colour. The materials used in this painting included limestone used for whites, hematite used for reds, and malachite used for greens.",
+      "In 2015, Italian archaeologist Francesco Tiradritti claimed that the Meidum Geese painting was a forgery painted by Luigi Vassalli. Tiradritti believed that the geese depicted in the painting would not have lived in that area of ancient Egypt and said that the drawing style and colours in the image were unusual for the time. However, many have denied this claim, with the director of the Grand Egyptian Museum arguing that the plaster fragment includes paint that connects with images still on the tomb wall, and that the Meidum area is a resting place for migrating birds."
     ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "clue": "Placeholder clue used for hard-mode arrangement instead of a silhouette (task R9).",
+    "funFactCorrect": "The Meidum Geese painting is often referred to as the Egyptian Mona Lisa, due to its high quality and intricate details.",
+    "funFactIncorrect": "This painting was found in the tomb chapel of Itet, the wife of Pharaoh Snefu's vizier, and dates back to roughly 2575-2551 BCE.",
+    "clue": "In 2015, an Italian Egyptologist claimed that this artefact was a forgery.",
     "quiz": {
       "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "What was the Meidum Geese artwork made out of?",
+        "options": ["Sculpted stone", "Carved wood", "Painted plaster", "Moulded clay"],
+        "correctIndex": 2
       },
       "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
-      }
-    }
-  },
-  {
-    "id": "example-artefact-9",
-    "name": "Example Artefact (replace with real name - task R2)",
-    "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-9.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
-    "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
-    ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "clue": "Placeholder clue used for hard-mode arrangement instead of a silhouette (task R9).",
-    "quiz": {
-      "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
-      },
-      "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
-      }
-    }
-  },
-  {
-    "id": "example-artefact-10",
-    "name": "Example Artefact (replace with real name - task R2)",
-    "correctZone": "display-case",
-    "image": "assets/gold-rush/artefacts/example-artefact-10.avif",
-    "blurb": "Placeholder ~150 word blurb shown when arranged correctly (task R6). Must be verified against a reliable source before merge, per Quality Control Plan 5.2.",
-    "longExplanation": [
-      "Placeholder paragraph 1 of 2 for the expanded info panel (task R7).",
-      "Placeholder paragraph 2 of 2, including 2-3 best sources to learn more (task R7)."
-    ],
-    "funFactCorrect": "Placeholder fun fact shown when sorted into the display case correctly (task R8).",
-    "funFactIncorrect": "Placeholder fun fact shown when incorrectly sorted into the rejection bin (task R8).",
-    "clue": "Placeholder clue used for hard-mode arrangement instead of a silhouette (task R9).",
-    "quiz": {
-      "easy": {
-        "question": "Placeholder easy-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
-      },
-      "hard": {
-        "question": "Placeholder hard-mode quiz question (task R10).",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correctIndex": 0
+        "question": "What type of stone was used to make the green paint for the Meidum Geese painting?",
+        "options": ["Limestone", "Hematite", "Emerald", "Malachite"],
+        "correctIndex": 3
       }
     }
   }

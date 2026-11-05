@@ -1,82 +1,82 @@
 [
   {
-    "id": "old-gold-chocolate",
-    "name": "Old Gold Chocolate",
+    "id": "chess",
+    "name": "Chess",
     "correctZone": "storage-vault",
-    "image": "assets/gold-rush/fillers/old-gold-chocolate.avif",
-    "funFactCorrect": "Sir Macpherson Robertson created many classic chocolates after the gold rush ended, including Old Gold Chocolate, Cherry Ripe, and Freddo Frogs.",
-    "funFactIncorrect": "While the creator of Old Gold Chocolate was born in Ballarat during the gold rush, the chocolate itself was not produced until 1916."
+    "image": "assets/ancient-egypt/fillers/chess.avif",
+    "funFactCorrect": "Modern chess arose in 1475, after an earlier version was changed to swap a weak minister piece for the queen, and an elephant piece for the bishop.",
+    "funFactIncorrect": "Early versions of chess first appeared in India around the 6th century CE, thousands of years after the Old Kingdom period of ancient Egypt."
   },
   {
-    "id": "thylacine-skull",
-    "name": "Thylacine Skull",
+    "id": "dominoes",
+    "name": "Dominoes",
     "correctZone": "storage-vault",
-    "image": "assets/gold-rush/fillers/thylacine-skull.avif",
-    "funFactCorrect": "This skull belongs to a Thylacine, also known as the Tasmanian Tiger, which were officially declared extinct in 1986.",
-    "funFactIncorrect": "This skull belongs to a Thylacine, and while some were still living in Tasmania during the gold rush, they didn't have a big role in it."
+    "image": "assets/ancient-egypt/fillers/dominoes.avif",
+    "funFactCorrect": "Most Western sets of dominoes come in a set of 28 pieces where dominoes range from 0-0 to 6-6, though some larger sets with more pieces run to 9-9 or 12-12.",
+    "funFactIncorrect": "Dominoes originated in China in the 1300s, though they are quite different from Western dominoes like this, which were first recorded in 1700s Europe."
   },
   {
-    "id": "gregorian-telescope",
-    "name": "Gregorian Astronomical Reflector Telescope",
+    "id": "el-castillo",
+    "name": "El Castillo",
     "correctZone": "storage-vault",
-    "image": "assets/gold-rush/fillers/gregorian-telescope.avif", 
-    "funFactCorrect": "This type of telescope was invented in the 1600s by James Gregory, and makes things appear larger by reflecting light off two metal mirrors.",
-    "funFactIncorrect": "This is a Gregorian reflector astronomical telescope which was invented in 1661, long before the Australian gold rush."
+    "image": "assets/ancient-egypt/fillers/el-castillo.avif",
+    "funFactCorrect": "El Castillo was a Mayan temple, and was designed to create a moving shadow of the snake deity Kulkulkan on the Spring and Autumn equinoxes.",
+    "funFactIncorrect": "While it might resemble Egyptian step pyramids, El Castillo was a Mayan temple built in the Chichen Itza complex."
   },
   {
-    "id": "trilobite",
-    "name": "Trilobite",
+    "id": "coins",
+    "name": "1800s British Coins",
     "correctZone": "storage-vault",
-    "image": "assets/gold-rush/fillers/trilobite.avif",
-    "funFactCorrect": "This is a fossilised Trilobite, which is a group of prehistoric animals with over 20,000 different species that have been found all over the world.",
-    "funFactIncorrect": "This is a fossilised Trilobite, which is a type of animal that lived between 521 million years ago and 251 million years ago."
+    "image": "assets/ancient-egypt/fillers/coins.avif",
+    "funFactCorrect": "These coins were made during the reign of Queen Victoria, when the British still used a currency system of pounds, shillings, and pence.",
+    "funFactIncorrect": "These coins were made in the United Kingdom during the reign of Queen Victoria, well after the end of Pharaonic Egypt."
   },
   {
-    "id": "monopoly",
-    "name": "Monopoly",
+    "id": "cave-canem",
+    "name": "Cave Canem Mosaic",
     "correctZone": "storage-vault",
-    "image": "assets/gold-rush/fillers/monopoly.avif",
-    "funFactCorrect": "The first version of Monopoly was called “The Landlord's Game” and included two sets of rules - one known as Monopoly, and the other known as Prosperity.",
-    "funFactIncorrect": "The first version of Monopoly was called “The Landlord's Game”, and was created by Lizzie Magie in 1903."
+    "image": "assets/ancient-egypt/fillers/cave-canem.avif",
+    "funFactCorrect": "The Cave Canem Mosaic is known as one of the earliest “beware of the dog” signs, and was one of many Pompeii mosaics that depicted a guard dog.",
+    "funFactIncorrect": "The Cave Canem Mosaic is a Roman mosaic from the 1st century CE found at the House of the Tragic Poet in Pompeii."
   },
   {
-    "id": "awa-television",
-    "name": "AWA Radiola Deep Image Television",
+    "id": "calendar-stone",
+    "name": "Aztec Calendar Stone",
     "correctZone": "storage-vault",
-    "image": "assets/gold-rush/fillers/awa-television.avif",
-    "funFactCorrect": "Television did not begin regular broadcasting in Australia until 1956, and this particular AWA Radiola Deep Image Television was made in 1958.",
-    "funFactIncorrect": "While this AWA Radiola television was made by an Australian company it wasn't produced until 1958, so most gold rush miners would not have lived to see it."
+    "image": "assets/ancient-egypt/fillers/calendar-stone.avif",
+    "funFactCorrect": "The Aztec Calendar Stone, also known as the Sun Stone, was created in central Mexico thousands of years after Egypt's Old Kingdom.",
+    "funFactIncorrect": "Although its circular design and detailed carvings might resemble an ancient Egyptian artefact, the Aztec Calendar Stone depicts Aztec religious and cosmological beliefs."
   },
   {
-    "id": "mining-safety-lamp",
-    "name": "Mining Safety Lamp",
+    "id": "haniwa-horse",
+    "name": "Haniwa Horse Figurine",
     "correctZone": "storage-vault",
-    "image": "assets/gold-rush/fillers/mining-safety-lamp.avif",
-    "funFactCorrect": "These safety lamps were designed to prevent explosions in coal mines, and this particular type of lamp was used at Cooranbong Colliery in the 1990s.",
-    "funFactIncorrect": "While this safety lamp may look like something a gold rush miner would carry, it was designed to be used in enclosed coal mines, not the open goldfields."
+    "image": "assets/ancient-egypt/fillers/haniwa-horse.avif",
+    "funFactCorrect": "Haniwa horse figurines were made from clay in ancient Japan during the Kofun period, somewhere between the third and sixth centuries CE.",
+    "funFactIncorrect": "Although haniwa figurines were associated with burial practices, they were placed around Japanese burial mounds rather than inside Egyptian tombs."
   },
   {
-    "id": "miner-helmet",
-    "name": "Miner's Helmet",
+    "id": "maya-hieroglyphs",
+    "name": "Mayan Hieroglyphic Panel",
     "correctZone": "storage-vault",
-    "image": "assets/gold-rush/fillers/miner-helmet.avif",
-    "funFactCorrect": "This miner's helmet was manufactured by Protector Safety in 1989, and includes fittings for an electric cap lamp and battery cable.",
-    "funFactIncorrect": "This miner's safety helmet would have looked out of place on the goldfields, where the main form of head protection was cloth hats."
-  },  
-  {
-    "id": "box-camera",
-    "name": "Box Camera",
-    "correctZone": "storage-vault",
-    "image": "assets/gold-rush/fillers/box-camera.avif",
-    "funFactCorrect": "This is an Austral No 1A Film & Plate camera, which was sold by Baker & Rouse Pty Ltd in the early 1900s.",
-    "funFactIncorrect": "While photography was around during the gold rush, this particular type of box camera wasn't sold until the early 1900s."
+    "image": "assets/ancient-egypt/fillers/maya-hieroglyphs.avif",
+    "funFactCorrect": "The Maya civilisation developed its own hieroglyphic writing system in Mesoamerica, using symbols that represented words and sounds.",
+    "funFactIncorrect": "Although Maya and Egyptian writing systems both used detailed symbols and images, these hieroglyphs belong to the Maya civilisation of South America."
   },
   {
-    "id": "backpack",
-    "name": "Modern Backpack",
+    "id": "geta-sandals",
+    "name": "Japanese Geta Sandals",
     "correctZone": "storage-vault",
-    "image": "assets/gold-rush/fillers/backpack.avif",
-    "funFactCorrect": "This is a modern backpack, with features like padded shoulder straps and zippers which were not invented until after the gold rush.",
-    "funFactIncorrect": "While prospectors may have found this modern backpack useful, they would have carried their belongings in swags or other types of luggage from that time."
+    "image": "assets/ancient-egypt/fillers/geta-sandals.avif",
+    "funFactCorrect": "Geta are traditional Japanese footwear made with raised wooden platforms, designed to help keep the wearer's feet above dirt, mud, and wet ground.",
+    "funFactIncorrect": "Although ancient Egyptians also wore sandals, these traditional Japanese geta are distinguished by their wooden soles and raised supports."
+  },
+  {
+    "id": "monkey",
+    "name": "Barrel of Monkeys",
+    "correctZone": "storage-vault",
+    "image": "assets/ancient-egypt/fillers/monkey.avif",
+    "funFactCorrect": "Barrel of Monkeys is a modern children's toy game in which players connect plastic monkeys by hooking their curved arms together to form a chain.",
+    "funFactIncorrect": "These monkeys have curved arms designed to hook onto one another, allowing players to create a continuous chain by lifting one monkey at a time."
   }
 ]

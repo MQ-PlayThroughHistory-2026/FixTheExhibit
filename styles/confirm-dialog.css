@@ -1,0 +1,35 @@
+/* confirm-dialog.css
+   The restart / leave confirmation. Goes together with js/ui/confirm-dialog.js.
+   Overlay, backplate, title card and buttons all come from pause-menu.css -
+   this file only adds what that one doesn't have. */
+
+/* Above the pause menu / stage popup / certificate that opened it (all 1000),
+   still below the inactivity timeout (9999). */
+.confirm-dialog {
+  z-index: 1100;
+}
+
+.confirm-title {
+  width: 64cqw;
+  font-size: 7cqw;
+}
+
+.confirm-text {
+  margin: 0;
+  color: var(--color-bg); /* base.css mutes <p>, which disappears on the light backplate */
+  text-align: center;
+  font-weight: 600;
+  font-size: 4cqw;
+  line-height: 1.3;
+}
+
+@container pause-overlay (max-width: 600px) {
+  .confirm-title {
+    width: 84cqw;
+    font-size: 9cqw;
+  }
+
+  .confirm-text {
+    font-size: 5.5cqw;
+  }
+}

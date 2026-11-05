@@ -8,21 +8,32 @@
  * Each phase writes its own entry into ctx.results (js/game/level.js) when
  * it finishes, as { correct, total }:
  *   sorting    packages sorted into the right zone, out of every package.
- *              Packages left on the belt when the timer ran out aren't
- *              correct, so running out of time costs points without the
- *              clock needing a share of its own.
+ *              Running out of time forces a restart of the stage, so every
+ *              package is always sorted by the end; instead, each time-out
+ *              (ctx.results.sortingTimeouts, counted by sorting-scene.js)
+ *              scales this part of the score down, see
+ *              sortingTimeoutFactor() below.
  *   arranging  artefacts placed, out of drops onto a slot. Every artefact
  *              ends up placed, so this is what tells a careful player from
  *              one who tried every slot.
  *   quiz       questions answered correctly, out of every question.
  * Each is a 0 to 1 accuracy, weighted by WEIGHTS below. Restarting a phase
- * overwrites its entry, so only the run that was kept counts.
+ * overwrites its entry, so only the run that was kept counts. The time-out
+ * count is the exception: it is kept across restarts of the sorting stage,
+ * and only starts again from 0 when the whole level is replayed.
  */
 
 import { DIFFICULTIES } from './state.js';
 
 // Share of the final score each phase is worth. Adds up to 100.
 const WEIGHTS = { sorting: 30, arranging: 20, quiz: 50 };
+
+// Each time the sorting timer runs out takes this share off the sorting
+// score (0.2 = 20%), but never below SORTING_TIMEOUT_FLOOR of it, so a
+// player who struggles keeps some of that part of the score. Tune both
+// when balancing the title cut-offs below.
+const SORTING_TIMEOUT_PENALTY = 0.2;
+const SORTING_TIMEOUT_FLOOR = 0.4;
 
 // Highest first. A title is earned at or above its cut off for the difficulty.
 const TITLES = [
@@ -54,8 +65,17 @@ const TITLES = [
 ];
 
 /**
+ * What share of the sorting score is kept after the given number of time-outs:
+ * 1 with none, then 0.8, 0.6, 0.4 and 0.4 from there on.
+ * @param {number} [timeouts]  how many times the sorting timer ran out
+ */
+export function sortingTimeoutFactor(timeouts = 0) {
+  return Math.max(SORTING_TIMEOUT_FLOOR, 1 - SORTING_TIMEOUT_PENALTY * Math.max(0, timeouts));
+}
+
+/**
  * The level's score as a whole number from 0 to 100.
- * @param {Record<string, { correct: number, total: number }>} results  ctx.results from js/game/level.js
+ * @param {Record<string, { correct: number, total: number }> & { sortingTimeouts?: number }} results  ctx.results from js/game/level.js
  */
 export function calculateScore(results) {
   let earned = 0;
@@ -64,7 +84,8 @@ export function calculateScore(results) {
     const result = results[phase];
     // A phase with nothing to score (e.g. a level with no artefacts) is left out rather than counted as 0.
     if (!result || result.total <= 0) return;
-    earned += weight * (result.correct / result.total);
+    const keep = phase === 'sorting' ? sortingTimeoutFactor(results.sortingTimeouts) : 1;
+    earned += weight * (result.correct / result.total) * keep;
     possible += weight;
   });
   return possible === 0 ? 0 : Math.round((earned / possible) * 100);

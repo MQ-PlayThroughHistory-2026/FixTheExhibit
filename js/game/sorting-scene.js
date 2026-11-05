@@ -67,7 +67,7 @@ function shuffle(list) {
 // crossing time the same as on the reference width. Where it runs is up to
 // belt.js, which follows the scene's art.
 function beltSpeed(stage) {
-  return ctx.settings.beltSpeedPxPerSec * (stage.clientWidth / REFERENCE_STAGE_WIDTH_PX);
+  return ctx.settings.beltSpeedPxPerSec * Math.max(stage.clientWidth / REFERENCE_STAGE_WIDTH_PX, 1);
 }
 
 // No box behind a drop zone's art (index.html starts them as has-image);
@@ -201,13 +201,17 @@ function onTimeUp(sorter) {
   setDragSuspended(true);
   playSfx('timesUp');
   const summary = sorter.getSummary();
-  // Whatever was left on the belt counts against the score (score.js).
-  //ctx.results.sorting = { correct: summary.correct, total: summary.total };
+  // The stage has to be played again, so there's no sorting result to keep, but
+  // the time-out is counted and takes points off the sorting score (score.js).
+  // It lives on ctx.results, which survives restarting this stage and is only
+  // cleared when the whole level starts again.
+  ctx.results.sortingTimeouts = (ctx.results.sortingTimeouts ?? 0) + 1;
   showStageTransition({
     title: "Time's Up!",
-    message: `You sorted ${summary.sorted} of ${summary.total} packages. Try again to sort all of the packages!`,
-    //onNext: ctx.onNext,
+    message: `You sorted ${summary.sorted} of ${summary.total} packages. Try again to sort all of the packages! Each time you run out of time lowers your final score a little.`,
     onRestart: restart,
+    // The stage has already failed, so a restart here loses nothing worth asking about.
+    confirmRestart: false,
   });
 }
 

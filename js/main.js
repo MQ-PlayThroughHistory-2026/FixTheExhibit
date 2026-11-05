@@ -9,10 +9,12 @@ import { registerScreens } from './ui/screens.js';
 import { initMenu } from './ui/menu.js';
 import { initFullscreenOnFirstInteraction, initStaffExit } from './ui/kiosk.js';
 import { initAudio } from './ui/audio.js';
+import { initTts } from './ui/tts.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   registerScreens();
   initAudio();
+  initTts();
   initMenu();
   initFullscreenOnFirstInteraction();
   initStaffExit();

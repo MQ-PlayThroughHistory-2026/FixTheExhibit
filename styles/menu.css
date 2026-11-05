@@ -45,55 +45,232 @@
   }
 }
 
-.level-card,
-.difficulty-card {
-  background: var(--color-surface);
-  border: 2px solid transparent;
-  border-radius: var(--radius-md);
-  padding: var(--space-lg) var(--space-md);
-  color: var(--color-text);
+/* Level and difficulty select. The same look as the settings panel, the
+   grey backplate (nine-sliced like the quiz card in quiz.css,
+   with the stretched copy underneath to hide slice seams), a dark title
+   plate and the arrow art flipped as Back. Each choice is a parchment card
+   on the information card art. Everything inside the panel is sized in cqw
+   of the panel. */
+.select-panel {
+  --panel-width: min(880px, 100vw - var(--space-lg) * 2, (100vh - var(--space-lg) * 2) * 1024 / 828);
+  --frame: round(down, var(--panel-width) * 0.1, 1px);
+  container-type: inline-size;
+  width: var(--panel-width);
+  min-height: calc(var(--panel-width) * 828 / 1024);
+  margin: auto;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
-  text-align: left;
+  justify-content: center;
+  gap: calc(var(--panel-width) * 0.025);
+  padding: calc(var(--panel-width) * 0.01);
+  border: var(--frame) solid transparent;
+  border-image: url('../assets/ui/menu-backplate.avif') 15% 12% fill / var(--frame) stretch;
+  background: url('../assets/ui/menu-backplate.avif') center / 100% 100% no-repeat border-box;
+  color: var(--color-text);
 }
 
+/* Back arrow, title plate, and an empty third column so the plate stays centred. */
+.select-title-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 3cqw;
+}
+
+/* menu-titlecard.avif nine-sliced, so the plate fits titles of any length
+   and wraps them on a phone instead of squashing the art. */
+.select-title {
+  --plate-frame: max(10px, 3.4cqw);
+  grid-column: 2;
+  margin: 0;
+  padding: 0.6cqw 2.6cqw;
+  border: var(--plate-frame) solid transparent;
+  border-image: url('../assets/ui/menu-titlecard.avif') 19% 9% 19.6% fill / var(--plate-frame) stretch;
+  background: url('../assets/ui/menu-titlecard.avif') center / 100% 100% no-repeat border-box;
+  color: var(--color-text);
+  font-size: clamp(1.25rem, 5cqw, 2.3rem);
+  line-height: 1.15;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* arrow.avif points right, so Back is the same art flipped, as in the
+   arranging scene's card deck (arranging-scene.css). */
+.select-back {
+  grid-column: 1;
+  justify-self: end;
+  width: max(44px, 9cqw);
+  aspect-ratio: 1;
+  min-height: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+.select-back img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scaleX(-1);
+  pointer-events: none;
+}
+
+.select-back:hover {
+  filter: brightness(1.08);
+}
+
+/* White bold text on the grey, at least 19.2px so it counts as large
+   text, with a tight dark shadow so it stands clear of the grey. */
+.select-intro {
+  margin: 0;
+  max-width: none;
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(1.2rem, 2.8cqw, 1.4rem);
+  text-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.75),
+    0 0 6px rgba(0, 0, 0, 0.5);
+  text-wrap: balance;
+}
+
+/* As many cards per row as fit (two levels and two difficulties sit side
+   by side). Each card spans shared rows through subgrid, so the headings,
+   dividers and descriptions line up across the row. The "Loading levels"
+   and error text are plain text in here, so they are white too. */
+.select-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 30cqw), 1fr));
+  column-gap: 3cqw;
+  row-gap: 3cqw;
+  color: #fff;
+  font-weight: 600;
+}
+
+.level-card,
+.difficulty-card {
+  display: grid;
+  grid-template-rows: subgrid;
+  justify-items: center;
+  row-gap: 1.8cqw;
+  min-height: 0;
+  padding: 5cqw 2.5cqw 5.4cqw;
+  background: url('../assets/ui/info-card.avif') center / 100% 100% no-repeat;
+  border-radius: var(--radius-md);
+  color: var(--color-ink);
+  text-align: center;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+  transition:
+    transform var(--transition-fast),
+    filter var(--transition-fast);
+}
+
+/* Level cards hold name, time period and description, difficulty cards
+   name and description (renderLevelCards() and index.html). */
+.level-card {
+  grid-row: span 3;
+}
+
+.difficulty-card {
+  grid-row: span 2;
+}
+
+/* Lifts a little under the pointer so it reads as a button. */
 .level-card:hover,
 .difficulty-card:hover {
-  background: var(--color-surface-raised);
+  transform: translateY(-3px);
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.45)) brightness(1.04);
 }
 
+/* Centred in its shared row, so a one-line name sits level with a two-line one. */
 .level-card h3,
 .difficulty-card h3 {
+  align-self: center;
   margin: 0;
   font-family: var(--font-heading);
+  font-size: clamp(1.15rem, 3.8cqw, 1.8rem);
 }
 
 .level-card h5 {
   margin: 0;
   font-family: var(--font-body);
-  color: var(--color-text);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(0.9rem, 2.5cqw, 1.2rem);
 }
 
+/* Description under a thin divider. */
 .level-card p,
 .difficulty-card p {
+  align-self: start;
+  width: 100%;
   margin: 0;
-  color: var(--color-text-muted);
   max-width: none;
+  padding-top: 1.8cqw;
+  border-top: 1px solid color-mix(in srgb, var(--color-ink) 40%, transparent);
+  color: var(--color-ink);
+  font-size: clamp(0.95rem, 2.7cqw, 1.25rem);
+  line-height: 1.35;
+  text-wrap: balance;
 }
 
-.difficulty-card[data-difficulty='easy'] {
-  border-color: var(--color-easy);
+/* Easy and Hard keep their green and red, now on the heading and divider. */
+.difficulty-card[data-difficulty='easy'] h3 {
+  color: color-mix(in srgb, var(--color-easy) 75%, #000);
 }
 
-.difficulty-card[data-difficulty='easy']:hover {
-  background: color-mix(in srgb, var(--color-easy) 18%, var(--color-surface));
+.difficulty-card[data-difficulty='easy'] p {
+  border-top: 2px solid var(--color-easy);
 }
 
-.difficulty-card[data-difficulty='hard'] {
-  border-color: var(--color-hard);
+.difficulty-card[data-difficulty='hard'] h3 {
+  color: color-mix(in srgb, var(--color-hard) 85%, #000);
 }
 
-.difficulty-card[data-difficulty='hard']:hover {
-  background: color-mix(in srgb, var(--color-hard) 18%, var(--color-surface));
+.difficulty-card[data-difficulty='hard'] p {
+  border-top: 2px solid var(--color-hard);
+}
+
+/* Phone. The panel fills the width and grows with its content, the cards
+   stack, and the title plate wraps beside the Back arrow. */
+@media (max-width: 600px) {
+  .select-panel {
+    --panel-width: calc(100vw - var(--space-lg) * 2);
+    --frame: round(down, var(--panel-width) * 0.09, 1px);
+    min-height: 0;
+    gap: calc(var(--panel-width) * 0.04);
+  }
+
+  .select-title {
+    font-size: clamp(1.2rem, 7cqw, 1.6rem);
+  }
+
+  .select-grid {
+    grid-template-columns: 1fr;
+    row-gap: 5cqw;
+  }
+
+  .level-card,
+  .difficulty-card {
+    row-gap: 2.5cqw;
+    padding: 6cqw 5cqw;
+  }
+
+  .level-card p,
+  .difficulty-card p {
+    padding-top: 2.5cqw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .level-card,
+  .difficulty-card {
+    transition: none;
+  }
+
+  .level-card:hover,
+  .difficulty-card:hover {
+    transform: none;
+  }
 }

@@ -13,7 +13,8 @@
  *   onNext    call to move on to the next phase; undefined on the last one
  *   onRestartLevel  call to play the whole level again from its first phase
  *   results   each phase leaves its { correct, total } here under its own
- *             name when it finishes, for the final score (score.js)
+ *             name when it finishes, for the final score (score.js). The
+ *             sorting stage also keeps a running sortingTimeouts count here.
  * A phase that restarts itself should call start again with the same ctx.
  */
 

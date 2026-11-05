@@ -15,11 +15,14 @@
   <link rel="stylesheet" href="styles/pause-menu.css" />
   <link rel="stylesheet" href="styles/stage-transition.css" />
   <link rel="stylesheet" href="styles/certificate.css" />
+  <link rel="stylesheet" href="styles/confirm-dialog.css" />
   <link rel="stylesheet" href="styles/info-card.css" />
   <link rel="stylesheet" href="styles/hud.css" />
   <link rel="stylesheet" href="styles/sorting-scene.css" />
   <link rel="stylesheet" href="styles/arranging-scene.css" />
   <link rel="stylesheet" href="styles/quiz.css" />
+  <link rel="stylesheet" href="styles/credits.css" />
+  <link rel="stylesheet" href="styles/tts.css" />
 </head>
 <body>
   <div id="app">
@@ -34,20 +37,31 @@
 
       <!-- Instructions (FR01): shown once, the first time Start is pressed
            (js/ui/tutorial.js). -->
-      <div id="intro-tutorial" class="info-card tutorial-card intro-card hidden" role="dialog" aria-labelledby="intro-tutorial-title">
+      <div id="intro-tutorial" class="info-card tutorial-card intro-card hidden" data-tts role="dialog" aria-labelledby="intro-tutorial-title">
         <div class="info-card-content">
           <strong id="intro-tutorial-title" class="info-card-title">Instructions</strong>
           <p>
             It's your first day as an intern and it's opening day for the museum's latest exhibit,
             but the delivery labels have been mixed up!
-          </p>
-          <p>
+            <br><br>
             Find the real artefacts that belong in the exhibit before time runs out,
             then arrange the exhibit and complete a short quiz about what you've learnt.
           </p>
           <button class="info-card-action">Got it, let's start</button>
         </div>
       </div>
+
+      <!-- Credits, a team icon bottom left, mirroring the staff exit gear.
+           data-target opens the credits screen through wireBackButtons()
+           in screens.js. -->
+      <button id="btn-credits" class="credits-trigger" data-target="screen-credits" aria-label="Credits">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="9" cy="8" r="3.25" />
+          <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+          <circle cx="17" cy="8.5" r="2.5" />
+          <path d="M16.5 14.1c2.6.3 4.5 2.6 4.5 5.4" />
+        </svg>
+      </button>
 
       <!-- Exit Fullscreen function -->
       <button id="btn-staff-exit" class="staff-exit-trigger" aria-label="Staff exit">&#9881;</button>
@@ -67,28 +81,100 @@
     </section>
 
     <!-- Level select -->
+    <!-- Credits, opened from the team icon on the title page. Laid out like
+         the settings panel (grey backplate, title card, red X to close) with
+         a parchment card per team on the information card art. No
+         data-settings, the panel is its own page and the X is the way back. -->
+    <section id="screen-credits" class="screen hidden">
+      <div class="credits-panel">
+        <div class="pause-title-row">
+          <h2 class="pause-title">Credits</h2>
+          <button type="button" class="pause-close" data-target="screen-main-menu" aria-label="Close credits">
+            <img src="assets/ui/menu-close.avif" alt="" />
+          </button>
+        </div>
+        <p class="credits-intro">Fix the Exhibit was made by a team of six, working across research, art and development.</p>
+        <div class="credits-grid">
+          <div class="credits-team">
+            <h3>Research</h3>
+            <p class="credits-blurb">Chose the artefacts and wrote and checked the history behind them.</p>
+            <ul class="credits-members">
+              <li><span class="credits-name">Samantha Hamilton</span> <span class="credits-role">Researcher and Producer</span></li>
+              <li><span class="credits-name">Cody Huang</span> <span class="credits-role">Research Lead</span></li>
+            </ul>
+          </div>
+          <div class="credits-team">
+            <h3>Visual Arts</h3>
+            <p class="credits-blurb">Created the artwork, buttons and menus that bring the museum to life.</p>
+            <ul class="credits-members">
+              <li><span class="credits-name">Leon Vasington</span> <span class="credits-role">Visual Lead</span></li>
+              <li><span class="credits-name">Nathan Wu</span> <span class="credits-role">Artist and UI Designer</span></li>
+            </ul>
+          </div>
+          <div class="credits-team">
+            <h3>Development</h3>
+            <p class="credits-blurb">Built the game and tested it from start to finish.</p>
+            <ul class="credits-members">
+              <li><span class="credits-name">Yuyang Su</span> <span class="credits-role">Development Lead</span></li>
+              <li><span class="credits-name">Arjun Gupta</span> <span class="credits-role">Developer and QA Tester</span></li>
+            </ul>
+          </div>
+        </div>
+        <!-- Music credit, worded as the licence asks. The licence address is
+             plain text rather than a link, so it can't open a browser tab on
+             a locked kiosk. -->
+        <div class="credits-music">
+          <h3>Attribution for Music</h3>
+          <p class="credits-music-lines">
+            <span>"Hustle" Kevin MacLeod (incompetech.com)</span>
+            <span>Licensed under Creative Commons: By Attribution 4.0 License</span>
+            <span>http://creativecommons.org/<wbr>licenses/<wbr>by/<wbr>4.0/</span>
+          </p>
+        </div>
+        <p class="credits-thanks">Thanks for playing!</p>
+      </div>
+    </section>
+
+    <!-- Level select. Drawn like the settings panel (grey
+         backplate, dark title plate) with each level on a parchment card,
+         built by renderLevelCards() in js/ui/menu.js. The arrow goes back
+         to the title page through data-target (wireBackButtons). -->
     <section id="screen-level-select" class="screen hidden" data-settings>
-      <h2>Choose a level</h2>
-      <p>Pick which exhibit you'll be putting together today.</p>
-      <div id="level-list" class="card-grid">Loading levels&hellip;</div>
-      <button class="btn-back" data-target="screen-main-menu">&larr; Back</button>
+      <div class="select-panel">
+        <div class="select-title-row">
+          <button type="button" class="select-back" data-target="screen-main-menu" aria-label="Back to the title page">
+            <img src="assets/ui/arrow.avif" alt="" />
+          </button>
+          <h2 class="select-title">Choose a Level</h2>
+        </div>
+        <p class="select-intro">Pick which exhibit you'll be putting together today.</p>
+        <div id="level-list" class="select-grid">Loading levels&hellip;</div>
+      </div>
     </section>
 
     <!-- Difficulty select (D6) -->
+    <!-- Difficulty select, the same panel and cards as the level select.
+         The arrow goes back to the level select. -->
     <section id="screen-difficulty-select" class="screen hidden" data-settings>
-      <h2>Choose difficulty</h2>
-      <p>This changes the sorting timer, belt speed, arrangement hints, and quiz difficulty.</p>
-      <div class="card-grid">
-        <button type="button" class="difficulty-card" data-difficulty="easy">
-          <h3>Easy</h3>
-          <p>Longer timer, slower belt, silhouettes to guide arrangement, and simpler questions.</p>
-        </button>
-        <button type="button" class="difficulty-card" data-difficulty="hard">
-          <h3>Hard</h3>
-          <p>Shorter timer, faster belt, clues to guide arrangement, and trickier questions.</p>
-        </button>
+      <div class="select-panel">
+        <div class="select-title-row">
+          <button type="button" class="select-back" data-target="screen-level-select" aria-label="Back to the levels">
+            <img src="assets/ui/arrow.avif" alt="" />
+          </button>
+          <h2 class="select-title">Choose Difficulty</h2>
+        </div>
+        <p class="select-intro">This changes the sorting timer, belt speed, arrangement hints, and quiz difficulty.</p>
+        <div class="select-grid">
+          <button type="button" class="difficulty-card" data-difficulty="easy">
+            <h3>Easy</h3>
+            <p>Longer timer, slower belt, silhouettes to guide arrangement, and simpler questions.</p>
+          </button>
+          <button type="button" class="difficulty-card" data-difficulty="hard">
+            <h3>Hard</h3>
+            <p>Shorter timer, faster belt, clues to guide arrangement, and trickier questions.</p>
+          </button>
+        </div>
       </div>
-      <button class="btn-back" data-target="screen-level-select">&larr; Back</button>
     </section>
 
     <!-- Sorting phase (D1), built by js/game/sorting-scene.js -->
@@ -114,28 +200,26 @@
           </span>
         </div>
         <!-- First-time tutorial (js/ui/tutorial.js) -->
-        <div id="sorting-tutorial" class="info-card tutorial-card hidden" role="dialog" aria-labelledby="sorting-tutorial-title">
+        <div id="sorting-tutorial" class="info-card tutorial-card hidden" data-tts role="dialog" aria-labelledby="sorting-tutorial-title">
           <div class="info-card-content">
             <strong id="sorting-tutorial-title" class="info-card-title">How to Play</strong>
             <p>
               Drag each package into the display case if it belongs in this exhibit, or into storage if it doesn't.
-            </p>
-            <p id="sorting-tutorial-text"></p>
-            <p>
-              As you sort the packages, cards will pop up with fun facts about the object. 
+              <br><br>
+              <span id="sorting-tutorial-text"></span>
+              <br><br>
+              As you sort the packages, cards will pop up with fun facts about the object.
               When the fun fact card is open, everything in the level will stop - including the timer.
-            </p>
-            <p>
+              <br><br>
               If you miss an object and it leaves the screen, don't worry! It will come back around.
-            </p>
-            <p>
+              <br><br>
               Sort everything before the timer runs out, and have fun learning!
             </p>
             <button class="info-card-action">Got it, let's start</button>
           </div>
         </div>
         <!-- Information card (D3), shown after each drop -->
-        <div id="sorting-feedback" class="info-card sorting-feedback hidden" role="status" aria-live="polite">
+        <div id="sorting-feedback" class="info-card sorting-feedback hidden" data-tts role="status" aria-live="polite">
           <div class="info-card-content">
             <img id="sorting-feedback-image" class="sorting-feedback-image hidden" alt="" />
             <strong id="sorting-feedback-title" class="info-card-title"></strong>
@@ -158,11 +242,12 @@
       </div>
       <div id="arranging-stage" class="stage-area">
         <!-- First-time tutorial (js/ui/tutorial.js), text set by the hint type -->
-        <div id="arranging-tutorial" class="info-card tutorial-card hidden" role="dialog" aria-labelledby="arranging-tutorial-title">
+        <div id="arranging-tutorial" class="info-card tutorial-card hidden" data-tts role="dialog" aria-labelledby="arranging-tutorial-title">
           <div class="info-card-content">
             <strong id="arranging-tutorial-title" class="info-card-title">How to Play</strong>
-            <p id="arranging-tutorial-text"></p>
             <p>
+              <span id="arranging-tutorial-text"></span>
+              <br><br>
               When an artefact is placed in the correct spot, cards will pop up with the exhibit information about the artefact.
               You can choose how much you want to learn about the artefact, but remember that what you read in this exhibit will help
               you answer questions in the quiz.
@@ -171,7 +256,8 @@
           </div>
         </div>
         <!-- Information card (D4), shown after each correct placement: a deck
-             of cards, the blurb then each longExplanation paragraph, filled
+             of cards, the blurb, each longExplanation paragraph, then a QR code card
+             when assets/<level-id>/qr-code/<artefact-id>.png exists, filled
              from the template below by arranging-scene.js -->
         <div id="arranging-feedback" class="arranging-feedback hidden" role="status" aria-live="polite"></div>
         <template id="arranging-feedback-card">
@@ -196,7 +282,7 @@
           </div>
         </template>
         <!-- Hard-mode clue popup, opened by tapping an empty slot's clue card -->
-        <div id="arranging-clue" class="info-card arranging-clue hidden" role="status" aria-live="polite">
+        <div id="arranging-clue" class="info-card arranging-clue hidden" data-tts role="status" aria-live="polite">
           <div class="info-card-content arranging-clue-content">
             <strong class="info-card-title">Clue</strong>
             <p id="arranging-clue-text"></p>
@@ -217,7 +303,7 @@
         </div>
       </div>
       <div id="quiz-stage" class="quiz-stage">
-        <div class="quiz-card">
+        <div class="quiz-card" data-tts>
           <!-- tabindex="-1" lets quiz-scene.js move focus here for each new question -->
           <h3 id="quiz-question" class="quiz-question" tabindex="-1">
             <span id="quiz-question-number" class="quiz-question-number"></span>
@@ -258,7 +344,7 @@
   </button>
 
   <div id="pause-menu" class="pause-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pause-menu-title">
-    <div class="pause-panel">
+    <div class="pause-panel" data-tts data-tts-text="Settings. Use the sliders to change the volume of the background music, the sound effects, and the text to speech.">
       <div class="pause-title-row">
         <h2 id="pause-menu-title" class="pause-title">Settings</h2>
         <!-- Settings mode only, replaces the Restart / Resume / Quit row. -->
@@ -283,6 +369,14 @@
         <input type="range" class="pause-slider" data-channel="sfx" min="0" max="100" step="1" aria-labelledby="pause-sfx-label" />
       </div>
 
+      <div class="pause-volume-row">
+        <span id="pause-tts-label" class="pause-label">Text to Speech</span>
+        <button type="button" class="pause-mute" data-channel="tts" aria-label="Mute text to speech">
+          <img src="assets/ui/menu-volume.avif" alt="" />
+        </button>
+        <input type="range" class="pause-slider" data-channel="tts" min="0" max="100" step="1" aria-labelledby="pause-tts-label" />
+      </div>
+
       <div class="pause-actions">
         <button type="button" id="btn-pause-restart" class="pause-action">Restart</button>
         <button type="button" id="btn-pause-resume" class="pause-resume" aria-label="Resume">
@@ -296,7 +390,7 @@
   <!-- Stage complete popup (js/ui/stage-transition.js). Reuses the pause
        menu's panel and button art. -->
   <div id="stage-transition" class="pause-overlay stage-transition hidden" role="dialog" aria-modal="true" aria-labelledby="stage-transition-title" aria-describedby="stage-transition-text">
-    <div class="pause-panel">
+    <div class="pause-panel" data-tts>
       <h2 id="stage-transition-title" class="pause-title stage-transition-title">Well Done!</h2>
       <p id="stage-transition-text" class="stage-transition-text"></p>
 
@@ -311,9 +405,9 @@
   <!-- End of level certificate (js/ui/certificate.js). Reuses the pause
        menu's overlay and button art. -->
   <div id="certificate" class="pause-overlay certificate hidden" role="dialog" aria-modal="true" aria-labelledby="certificate-title" aria-describedby="certificate-description">
-    <div class="certificate-panel">
+    <div class="certificate-panel" data-tts>
       <p class="certificate-heading">Congratulations!</p>
-      <p id="certificate-level" class="certificate-level"></p>
+      <p id="certificate-level" class="certificate-level" data-tts-continue></p>
       <h2 id="certificate-title" class="certificate-title"></h2>
       <p id="certificate-description" class="certificate-description"></p>
       <p id="certificate-score" class="certificate-score"></p>
@@ -321,6 +415,20 @@
       <div class="pause-actions">
         <button type="button" id="btn-certificate-restart" class="pause-action">Restart</button>
         <button type="button" id="btn-certificate-exit" class="pause-action">Leave</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Restart / leave confirmation (js/ui/confirm-dialog.js). Sits above the
+       pause menu, stage popup and certificate that open it. -->
+  <div id="confirm-dialog" class="pause-overlay confirm-dialog hidden" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-text">
+    <div class="pause-panel" data-tts>
+      <h2 id="confirm-title" class="pause-title confirm-title"></h2>
+      <p id="confirm-text" class="confirm-text"></p>
+
+      <div class="pause-actions">
+        <button type="button" id="btn-confirm-cancel" class="pause-action">Cancel</button>
+        <button type="button" id="btn-confirm-yes" class="pause-action"></button>
       </div>
     </div>
   </div>
