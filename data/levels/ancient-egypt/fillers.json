@@ -24,12 +24,12 @@
     "funFactIncorrect": "While it might resemble Egyptian step pyramids, El Castillo was a Mayan temple built in the Chichen Itza complex."
   },
   {
-    "id": "coin",
-    "name": "1800s British Coin",
+    "id": "coins",
+    "name": "1800s British Coins",
     "correctZone": "storage-vault",
-    "image": "assets/ancient-egypt/fillers/coin.avif",
-    "funFactCorrect": "This coin was made during the reign of Queen Victoria, when the British still used a currency system of pounds, shillings, and pence.",
-    "funFactIncorrect": "This coin was made in the United Kingdom during the reign of Queen Victoria, well after the end of Pharaonic Egypt."
+    "image": "assets/ancient-egypt/fillers/coins.avif",
+    "funFactCorrect": "These coins were made during the reign of Queen Victoria, when the British still used a currency system of pounds, shillings, and pence.",
+    "funFactIncorrect": "These coins were made in the United Kingdom during the reign of Queen Victoria, well after the end of Pharaonic Egypt."
   },
   {
     "id": "cave-canem",
@@ -72,10 +72,10 @@
     "funFactIncorrect": "Although ancient Egyptians also wore sandals, these traditional Japanese geta are distinguished by their wooden soles and raised supports."
   },
   {
-    "id": "monkeys",
+    "id": "monkey",
     "name": "Barrel of Monkeys",
     "correctZone": "storage-vault",
-    "image": "assets/ancient-egypt/fillers/monkeys.avif",
+    "image": "assets/ancient-egypt/fillers/monkey.avif",
     "funFactCorrect": "Barrel of Monkeys is a modern children's toy game in which players connect plastic monkeys by hooking their curved arms together to form a chain.",
     "funFactIncorrect": "These monkeys have curved arms designed to hook onto one another, allowing players to create a continuous chain by lifting one monkey at a time."
   }
