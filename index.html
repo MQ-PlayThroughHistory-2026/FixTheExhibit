@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="styles/arranging-scene.css" />
   <link rel="stylesheet" href="styles/quiz.css" />
   <link rel="stylesheet" href="styles/credits.css" />
+  <link rel="stylesheet" href="styles/tts.css" />
 </head>
 <body>
   <div id="app">
@@ -36,7 +37,7 @@
 
       <!-- Instructions (FR01): shown once, the first time Start is pressed
            (js/ui/tutorial.js). -->
-      <div id="intro-tutorial" class="info-card tutorial-card intro-card hidden" role="dialog" aria-labelledby="intro-tutorial-title">
+      <div id="intro-tutorial" class="info-card tutorial-card intro-card hidden" data-tts role="dialog" aria-labelledby="intro-tutorial-title">
         <div class="info-card-content">
           <strong id="intro-tutorial-title" class="info-card-title">Instructions</strong>
           <p>
@@ -199,7 +200,7 @@
           </span>
         </div>
         <!-- First-time tutorial (js/ui/tutorial.js) -->
-        <div id="sorting-tutorial" class="info-card tutorial-card hidden" role="dialog" aria-labelledby="sorting-tutorial-title">
+        <div id="sorting-tutorial" class="info-card tutorial-card hidden" data-tts role="dialog" aria-labelledby="sorting-tutorial-title">
           <div class="info-card-content">
             <strong id="sorting-tutorial-title" class="info-card-title">How to Play</strong>
             <p>
@@ -218,7 +219,7 @@
           </div>
         </div>
         <!-- Information card (D3), shown after each drop -->
-        <div id="sorting-feedback" class="info-card sorting-feedback hidden" role="status" aria-live="polite">
+        <div id="sorting-feedback" class="info-card sorting-feedback hidden" data-tts role="status" aria-live="polite">
           <div class="info-card-content">
             <img id="sorting-feedback-image" class="sorting-feedback-image hidden" alt="" />
             <strong id="sorting-feedback-title" class="info-card-title"></strong>
@@ -241,7 +242,7 @@
       </div>
       <div id="arranging-stage" class="stage-area">
         <!-- First-time tutorial (js/ui/tutorial.js), text set by the hint type -->
-        <div id="arranging-tutorial" class="info-card tutorial-card hidden" role="dialog" aria-labelledby="arranging-tutorial-title">
+        <div id="arranging-tutorial" class="info-card tutorial-card hidden" data-tts role="dialog" aria-labelledby="arranging-tutorial-title">
           <div class="info-card-content">
             <strong id="arranging-tutorial-title" class="info-card-title">How to Play</strong>
             <p>
@@ -281,7 +282,7 @@
           </div>
         </template>
         <!-- Hard-mode clue popup, opened by tapping an empty slot's clue card -->
-        <div id="arranging-clue" class="info-card arranging-clue hidden" role="status" aria-live="polite">
+        <div id="arranging-clue" class="info-card arranging-clue hidden" data-tts role="status" aria-live="polite">
           <div class="info-card-content arranging-clue-content">
             <strong class="info-card-title">Clue</strong>
             <p id="arranging-clue-text"></p>
@@ -302,7 +303,7 @@
         </div>
       </div>
       <div id="quiz-stage" class="quiz-stage">
-        <div class="quiz-card">
+        <div class="quiz-card" data-tts>
           <!-- tabindex="-1" lets quiz-scene.js move focus here for each new question -->
           <h3 id="quiz-question" class="quiz-question" tabindex="-1">
             <span id="quiz-question-number" class="quiz-question-number"></span>
@@ -343,7 +344,7 @@
   </button>
 
   <div id="pause-menu" class="pause-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pause-menu-title">
-    <div class="pause-panel">
+    <div class="pause-panel" data-tts data-tts-text="Settings. Use the sliders to change the volume of the background music, the sound effects, and the text to speech.">
       <div class="pause-title-row">
         <h2 id="pause-menu-title" class="pause-title">Settings</h2>
         <!-- Settings mode only, replaces the Restart / Resume / Quit row. -->
@@ -368,6 +369,14 @@
         <input type="range" class="pause-slider" data-channel="sfx" min="0" max="100" step="1" aria-labelledby="pause-sfx-label" />
       </div>
 
+      <div class="pause-volume-row">
+        <span id="pause-tts-label" class="pause-label">Text to Speech</span>
+        <button type="button" class="pause-mute" data-channel="tts" aria-label="Mute text to speech">
+          <img src="assets/ui/menu-volume.avif" alt="" />
+        </button>
+        <input type="range" class="pause-slider" data-channel="tts" min="0" max="100" step="1" aria-labelledby="pause-tts-label" />
+      </div>
+
       <div class="pause-actions">
         <button type="button" id="btn-pause-restart" class="pause-action">Restart</button>
         <button type="button" id="btn-pause-resume" class="pause-resume" aria-label="Resume">
@@ -381,7 +390,7 @@
   <!-- Stage complete popup (js/ui/stage-transition.js). Reuses the pause
        menu's panel and button art. -->
   <div id="stage-transition" class="pause-overlay stage-transition hidden" role="dialog" aria-modal="true" aria-labelledby="stage-transition-title" aria-describedby="stage-transition-text">
-    <div class="pause-panel">
+    <div class="pause-panel" data-tts>
       <h2 id="stage-transition-title" class="pause-title stage-transition-title">Well Done!</h2>
       <p id="stage-transition-text" class="stage-transition-text"></p>
 
@@ -396,9 +405,9 @@
   <!-- End of level certificate (js/ui/certificate.js). Reuses the pause
        menu's overlay and button art. -->
   <div id="certificate" class="pause-overlay certificate hidden" role="dialog" aria-modal="true" aria-labelledby="certificate-title" aria-describedby="certificate-description">
-    <div class="certificate-panel">
+    <div class="certificate-panel" data-tts>
       <p class="certificate-heading">Congratulations!</p>
-      <p id="certificate-level" class="certificate-level"></p>
+      <p id="certificate-level" class="certificate-level" data-tts-continue></p>
       <h2 id="certificate-title" class="certificate-title"></h2>
       <p id="certificate-description" class="certificate-description"></p>
       <p id="certificate-score" class="certificate-score"></p>
@@ -413,7 +422,7 @@
   <!-- Restart / leave confirmation (js/ui/confirm-dialog.js). Sits above the
        pause menu, stage popup and certificate that open it. -->
   <div id="confirm-dialog" class="pause-overlay confirm-dialog hidden" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-text">
-    <div class="pause-panel">
+    <div class="pause-panel" data-tts>
       <h2 id="confirm-title" class="pause-title confirm-title"></h2>
       <p id="confirm-text" class="confirm-text"></p>
 

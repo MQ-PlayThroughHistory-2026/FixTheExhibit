@@ -59,10 +59,11 @@
 /* Wide layout (the mockup): label | speaker | slider rows, at the
    backplate art's own aspect ratio, as big as the viewport allows. */
 .pause-panel {
-  --panel-width: min(880px, 100cqw, 100cqh * 4961 / 4008);
+  /* Taller than the backplate art's own 4961 / 4008 to make room for the three volume rows. */
+  --panel-width: min(880px, 100cqw, 100cqh * 4961 / 4600);
   container-type: inline-size;
   width: var(--panel-width);
-  aspect-ratio: 4961 / 4008;
+  aspect-ratio: 4961 / 4600;
   margin: auto; /* centres, and stays scrollable from the top if it overflows */
   /* Keeps the content clear of the frame and its cut corners. */
   padding: calc(var(--panel-width) * 0.1) calc(var(--panel-width) * 0.11);
@@ -99,10 +100,10 @@
 .pause-title {
   grid-column: 2;
   align-self: center;
-  width: 48cqw;
+  width: 42cqw;
   aspect-ratio: 4745 / 2284;
   margin: 0;
-  font-size: 9.5cqw;
+  font-size: 8.3cqw;
 }
 
 .pause-volume-row {

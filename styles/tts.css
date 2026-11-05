@@ -1,0 +1,140 @@
+/* tts.css
+   The speaker button in the top-right corner of each readable panel, and
+   its look while reading. Goes together with js/ui/tts.js. */
+
+.tts-button {
+  position: absolute;
+  top: 5%;
+  right: 7%;
+  z-index: 6; /* above the card's own content and the deck's neighbouring cards */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-height: 0;
+  padding: 0;
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.tts-button svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  fill-rule: evenodd;
+  pointer-events: none;
+}
+
+.tts-button .tts-cone {
+  stroke-linejoin: round;
+}
+
+.tts-button .tts-wave {
+  fill: none;
+}
+
+.tts-button:hover {
+  background: var(--color-surface-raised);
+  border-color: var(--color-primary-hover);
+}
+
+/* While reading: gold, with the sound waves pulsing (single soft fade, nothing flashing - NFR05). */
+.tts-button.is-speaking {
+  background: var(--color-primary);
+  border-color: var(--color-focus-ring);
+  color: var(--color-bg);
+}
+
+.tts-button.is-speaking .tts-wave {
+  animation: tts-wave 1.2s ease-in-out infinite;
+}
+
+.tts-button.is-speaking .tts-wave-2 {
+  animation-delay: 0.3s;
+}
+
+@keyframes tts-wave {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tts-button.is-speaking .tts-wave {
+    animation: none;
+  }
+}
+
+/* Browsers with no speech synthesis never show it. */
+.no-tts .tts-button {
+  display: none;
+}
+
+/* Panels that aren't already positioned, so the button has a corner to sit in. */
+.pause-panel,
+.certificate-panel,
+.quiz-card {
+  position: relative;
+}
+
+/* Overlay panels (stage popup, certificate, confirm dialog): placed inside the art's frame,
+   scaling with the panel. */
+.pause-panel > .tts-button,
+.certificate-panel > .tts-button {
+  --tts-size: clamp(40px, calc(var(--panel-width) * 0.075), 56px);
+  top: calc(var(--panel-width) * 0.07);
+  right: calc(var(--panel-width) * 0.08);
+  width: var(--tts-size);
+  height: var(--tts-size);
+}
+
+/* Sits in the card's frame above the question plate, so it never covers the question. */
+.quiz-card > .tts-button {
+  --tts-size: clamp(30px, calc(var(--frame) * 0.8), 44px);
+  width: var(--tts-size);
+  height: var(--tts-size);
+  top: calc((var(--frame) - var(--tts-size)) / 2);
+  right: calc((var(--frame) - var(--tts-size)) / 2);
+}
+
+/* Only the top card of the information deck has a button; the side cards are one big button themselves. */
+.arranging-feedback-card:not(.is-active) > .tts-button {
+  display: none;
+}
+
+/* The tutorial and information cards have a tall, narrow shape, so a little tighter in the corner. */
+.info-card > .tts-button {
+  top: 4.5%;
+  right: 6%;
+}
+
+.arranging-clue > .tts-button {
+  top: 9%;
+  right: 7%;
+}
+
+/* The stage popup ("Well Done!") and the leave / restart confirmation: the
+   button sits lower, clear of the frame's cut corner. It's out of the
+   layout (position: absolute), so the panel's contents don't move for it. */
+#pause-menu .pause-panel > .tts-button,
+.stage-transition .pause-panel > .tts-button,
+.confirm-dialog .pause-panel > .tts-button {
+  top: calc(var(--panel-width) * 0.2);
+  right: calc(var(--panel-width) * 0.085);
+}
+
+/* Phone-width settings menu (the one with the red X beside the title): the
+   title row is too tight for both, so the button drops to just under the X.
+   The in-game pause menu has no X, so it keeps the spot above. */
+@container pause-overlay (max-width: 600px) {
+  #pause-menu .pause-panel:has(.pause-close:not(.hidden)) > .tts-button {
+    top: calc(var(--panel-width) * 0.43);
+    right: calc(var(--panel-width) * 0.075);
+  }
+}
