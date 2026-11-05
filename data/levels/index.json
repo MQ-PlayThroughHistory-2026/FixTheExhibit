@@ -3,12 +3,12 @@
     "id": "gold-rush",
     "name": "Australian Gold Rush",
     "time": "1851-1901",
-    "description": "Sort real gold rush artefacts."
+    "description": "Sort Real Gold Rush Artefacts."
   },
   {
     "id": "ancient-egypt",
     "name": "Ancient Egypt",
     "time": "Old Kingdom: 2686-2181 BCE",
-    "description": "Sort real ancient Egyptian artefacts."
+    "description": "Sort Real Ancient Egyptian Artefacts."
   }
 ]
