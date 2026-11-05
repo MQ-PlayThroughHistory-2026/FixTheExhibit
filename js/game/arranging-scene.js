@@ -846,6 +846,16 @@ export function initArrangingScene(runCtx) {
       // An open clue/blurb popup suspends drag itself, so keep it suspended.
       onResume: () => setDragSuspended(isPopupOpen()),
       onRestart: () => initArrangingScene(ctx),
+      // Demo shortcut: drops the scene without scoring it and moves on to the quiz.
+      onSkip() {
+        completedSummary = null;
+        unwatchViewport?.();
+        hideFeedback();
+        hideCluePopup();
+        document.getElementById('arranging-tutorial').classList.add('hidden');
+        setDragSuspended(false);
+        ctx.onNext?.();
+      },
     });
     wired = true;
   }

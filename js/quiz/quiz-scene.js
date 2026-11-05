@@ -166,6 +166,12 @@ export function initQuizScene(runCtx) {
     document.getElementById('btn-quiz-next').addEventListener('click', goNext);
     registerPauseHandlers('screen-quiz', {
       onRestart: () => initQuizScene(ctx),
+      // Demo shortcut: the quiz is the last stage, so skipping it goes
+      // straight to the certificate (unanswered questions aren't scored).
+      onSkip() {
+        leaveScene();
+        showLevelCertificate();
+      },
     });
     wired = true;
   }

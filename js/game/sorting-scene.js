@@ -89,6 +89,17 @@ function restart() {
   initSortingScene(ctx);
 }
 
+// Pause menu's Skip (demo shortcut): drops the scene without scoring it and
+// moves on to the next phase.
+function skip() {
+  completedSummary = null; // so closing the card can't open the transition
+  leaveScene();
+  hideCard();
+  document.getElementById('sorting-tutorial').classList.add('hidden');
+  setDragSuspended(false);
+  ctx.onNext?.();
+}
+
 // Shows the item's name on a package with no image (or a broken one). In its
 // own element so a long name is clipped to the box while the package's floor
 // shadow (sorting-scene.css) still hangs out below it.
@@ -262,6 +273,7 @@ export function initSortingScene(runCtx) {
         setDragSuspended(false);
       },
       onRestart: restart,
+      onSkip: skip,
     });
     wired = true;
   }

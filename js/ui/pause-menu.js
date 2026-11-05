@@ -23,6 +23,8 @@
  *     onPause,   // freeze the scene (belt, drag, timers...)
  *     onResume,  // undo onPause
  *     onRestart, // start the scene over - Restart is hidden if omitted
+ *     onSkip,    // tear the scene down and move on to the next stage (demo
+ *                // shortcut) - Skip is hidden if omitted
  *   });
  */
 
@@ -126,6 +128,10 @@ function openMenu() {
   document.querySelector('#pause-menu .pause-actions').classList.toggle('hidden', isSettings);
   document.getElementById('btn-pause-close').classList.toggle('hidden', !isSettings);
   document.getElementById('btn-pause-restart').classList.toggle('hidden', !activeHandlers().onRestart);
+  const skipButton = document.getElementById('btn-pause-skip');
+  skipButton.classList.toggle('hidden', !activeHandlers().onSkip);
+  // Lets the stylesheet shrink the button row to fit a fourth button.
+  document.querySelector('#pause-menu .pause-actions').classList.toggle('has-skip', !skipButton.classList.contains('hidden'));
   document.getElementById('pause-menu').classList.remove('hidden');
   document.getElementById('btn-pause').classList.add('hidden');
   document.getElementById(isSettings ? 'btn-pause-close' : 'btn-pause-resume').focus();
@@ -155,6 +161,15 @@ async function restart() {
   hideMenu();
   onResume?.();
   onRestart?.();
+}
+
+// Demo shortcut: no confirmation. The scene's onSkip tears itself down (it
+// isn't resumed first) and starts the next stage, or ends the level.
+function skip() {
+  if (!isOpen) return;
+  const { onSkip } = activeHandlers();
+  hideMenu();
+  onSkip?.();
 }
 
 // A full reload rather than going back to the main menu, so nothing from
@@ -198,6 +213,7 @@ export function initPauseMenu() {
   document.getElementById('btn-pause-resume').addEventListener('click', resume);
   document.getElementById('btn-pause-close').addEventListener('click', resume);
   document.getElementById('btn-pause-restart').addEventListener('click', restart);
+  document.getElementById('btn-pause-skip').addEventListener('click', skip);
   document.getElementById('btn-pause-quit').addEventListener('click', quit);
   wireVolumeControls();
 

@@ -288,3 +288,25 @@
     font-size: 6.5cqw;
   }
 }
+
+/* With the demo Skip button there are four buttons in the row, so shrink them to fit. */
+.pause-actions.has-skip {
+  gap: 3cqw;
+}
+
+.pause-actions.has-skip .pause-action {
+  width: 22cqw;
+  font-size: 3.8cqw;
+}
+
+@container pause-overlay (max-width: 600px) {
+  .pause-actions.has-skip {
+    flex-wrap: wrap;
+    gap: 3cqw;
+  }
+
+  .pause-actions.has-skip .pause-action {
+    width: 30cqw;
+    font-size: 5.5cqw;
+  }
+}
