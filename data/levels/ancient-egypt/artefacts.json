@@ -52,32 +52,6 @@
     }
   },
   {
-    "id": "tomb-reliefs",
-    "name": "Egyptian Tomb Reliefs",
-    "correctZone": "display-case",
-    "image": "assets/ancient-egypt/artefacts/tomb-reliefs.avif",
-    "blurb": "Egyptian tomb reliefs were artworks carved into tombs and burial chambers for decoration. These carvings often depicted scenes of everyday life, showing things like farming, fishing, hunting, and transporting goods along the Nile. They also showed religious ceremonies and offerings intended to support the deceased in the afterlife. Reliefs were created by carving designs into stone surfaces and then potentially adding some paint to highlight details. Beside their religious importance, the artworks provide a valuable insight into how ancient Egyptians lived and worked.",
-    "longExplanation": [
-      "Creating a tomb relief required careful planning and skilled craftsmanship. The artist would first prepare the stone surface before sketching the scenes they intended to carve. Using tools such as copper chisels and stone implements, artists gradually removed sections of the limestone to create raised or sunken designs. Ancient Egyptian artists often drew people with their heads and legs facing sideways, while their shoulders and eyes faced forward. This was a common artistic style used in Egyptian carvings and paintings. After carving, artists could also apply colourful pigments to make the scenes and hieroglyphs more detailed and visually striking.",
-      "These tomb reliefs also served religious purposes due to the belief that life continued after death. Images of food, workers, and offerings were intended to help provide for the deceased in the afterlife. Carvings also sometimes included prayers and inscriptions identifying the tomb owner or describing their achievements. These carvings also provide historians with valuable evidence of ancient Egyptian society, revealing details about occupations, traditions, and the activities considered important at the time. By studying these scenes, researchers can better understand how everyday life and religious beliefs were connected during ancient Egypt."
-    ],
-    "funFactCorrect": "Ancient Egyptian artists often depicted people with their heads and legs shown from the side, while their shoulders and eyes were shown from the front.",
-    "funFactIncorrect": "Many Egyptian tomb reliefs were originally painted in bright colours, although much of the paint has faded or disappeared over time.",
-    "clue": "This artefact often depicted scenes of everyday life.",
-    "quiz": {
-      "easy": {
-        "question": "What was a common subject depicted in Egyptian tomb reliefs?",
-        "options": ["Everyday activities and religious offerings", "Modern inventions and machinery", "Events from medieval Europe", "Maps of distant continents"],
-        "correctIndex": 0
-      },
-      "hard": {
-        "question": "Why were scenes of food and offerings carved into Egyptian tombs?",
-        "options": ["To teach visitors how to cook", "To symbolically provide for the deceased in the afterlife", "To record the price of food in markets", "To indicate where food supplies were stored"],
-        "correctIndex": 1
-      }
-    }
-  },
-  {
     "id": "naos-sistrum",
     "name": "Naos Sistrum",
     "correctZone": "display-case",
@@ -230,6 +204,32 @@
         "question": "What is the base angle of the Great Pyramid of Giza?",
         "options": ["49.27 degrees", "60 degrees", "59.52 degrees", "51.84 degrees"],
         "correctIndex": 3
+      }
+    }
+  },
+  {
+    "id": "tomb-reliefs",
+    "name": "Egyptian Tomb Reliefs",
+    "correctZone": "display-case",
+    "image": "assets/ancient-egypt/artefacts/tomb-reliefs.avif",
+    "blurb": "Egyptian tomb reliefs were artworks carved into tombs and burial chambers for decoration. These carvings often depicted scenes of everyday life, showing things like farming, fishing, hunting, and transporting goods along the Nile. They also showed religious ceremonies and offerings intended to support the deceased in the afterlife. Reliefs were created by carving designs into stone surfaces and then potentially adding some paint to highlight details. Beside their religious importance, the artworks provide a valuable insight into how ancient Egyptians lived and worked.",
+    "longExplanation": [
+      "Creating a tomb relief required careful planning and skilled craftsmanship. The artist would first prepare the stone surface before sketching the scenes they intended to carve. Using tools such as copper chisels and stone implements, artists gradually removed sections of the limestone to create raised or sunken designs. Ancient Egyptian artists often drew people with their heads and legs facing sideways, while their shoulders and eyes faced forward. This was a common artistic style used in Egyptian carvings and paintings. After carving, artists could also apply colourful pigments to make the scenes and hieroglyphs more detailed and visually striking.",
+      "These tomb reliefs also served religious purposes due to the belief that life continued after death. Images of food, workers, and offerings were intended to help provide for the deceased in the afterlife. Carvings also sometimes included prayers and inscriptions identifying the tomb owner or describing their achievements. These carvings also provide historians with valuable evidence of ancient Egyptian society, revealing details about occupations, traditions, and the activities considered important at the time. By studying these scenes, researchers can better understand how everyday life and religious beliefs were connected during ancient Egypt."
+    ],
+    "funFactCorrect": "Ancient Egyptian artists often depicted people with their heads and legs shown from the side, while their shoulders and eyes were shown from the front.",
+    "funFactIncorrect": "Many Egyptian tomb reliefs were originally painted in bright colours, although much of the paint has faded or disappeared over time.",
+    "clue": "This artefact often depicted scenes of everyday life.",
+    "quiz": {
+      "easy": {
+        "question": "What was a common subject depicted in Egyptian tomb reliefs?",
+        "options": ["Everyday activities and religious offerings", "Modern inventions and machinery", "Events from medieval Europe", "Maps of distant continents"],
+        "correctIndex": 0
+      },
+      "hard": {
+        "question": "Why were scenes of food and offerings carved into Egyptian tombs?",
+        "options": ["To teach visitors how to cook", "To symbolically provide for the deceased in the afterlife", "To record the price of food in markets", "To indicate where food supplies were stored"],
+        "correctIndex": 1
       }
     }
   },
