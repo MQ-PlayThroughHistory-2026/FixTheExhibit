@@ -50,20 +50,24 @@
 
 /* The panel. Same backplate as the settings panel, nine-sliced like the
    quiz card (quiz.css) so the cut corners keep their shape when the panel
-   grows taller than the art on a phone. The stretched copy underneath
-   hides any hairline seam between the slices. Its own sizes come from
-   --panel-width, everything inside is sized in cqw of the panel. */
+   is taller than the art on a phone. The stretched copy underneath hides
+   any hairline seam between the slices. Both credits pages use this exact
+   panel at a fixed height, with the title row at the top, the page
+   controls at the bottom and the content centred in .credits-body, so the
+   title, X and page buttons sit in the same place on both pages. Sizes
+   come from --panel-width, everything inside is in cqw of the panel. */
 .credits-panel {
   --panel-width: min(880px, 100vw - var(--space-lg) * 2, (100vh - var(--space-lg) * 2) * 1024 / 828);
   --frame: round(down, var(--panel-width) * 0.1, 1px);
   container-type: inline-size;
   width: var(--panel-width);
-  min-height: calc(var(--panel-width) * 828 / 1024);
+  /* The art's shape, but at least 700px where the screen has the height
+     (a portrait tablet), as the text stops shrinking before the panel does. */
+  height: min(100vh - var(--space-lg) * 2, max(var(--panel-width) * 828 / 1024, 700px));
   margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: calc(var(--panel-width) * 0.011);
+  gap: calc(var(--panel-width) * 0.008);
   padding: calc(var(--panel-width) * 0.01);
   border: var(--frame) solid transparent;
   border-image: url('../assets/ui/menu-backplate.avif') 15% 12% fill / var(--frame) stretch;
@@ -71,14 +75,34 @@
   color: var(--color-text);
 }
 
+.credits-panel > .pause-title-row,
+.credits-panel > .credits-pager {
+  flex: none;
+}
+
+/* Everything between the title and the page controls, centred. It scrolls
+   only if a page ever outgrows the panel (a phone), and its padding leaves
+   room for the cards' drop shadows. */
+.credits-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-content: safe center;
+  gap: 1.6cqw;
+  padding: 0.4cqw 1cqw 1cqw;
+}
+
 /* Smaller title card and X than the settings panel, leaving room for the cards. */
 .credits-panel .pause-title {
-  width: 29cqw;
-  font-size: 5.4cqw;
+  width: 27cqw;
+  font-size: 5cqw;
 }
 
 .credits-panel .pause-close {
-  width: 9cqw;
+  width: max(44px, 9cqw);
   margin-left: 2cqw;
 }
 
@@ -124,7 +148,7 @@
   grid-template-rows: subgrid;
   justify-items: center;
   row-gap: 1.2cqw;
-  padding: 2.4cqw 2.4cqw;
+  padding: 2.4cqw;
   background: url('../assets/ui/info-card.avif') center / 100% 100% no-repeat;
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
   color: var(--color-ink);
@@ -181,54 +205,154 @@
   font-size: clamp(0.85rem, 2.1cqw, 1rem);
 }
 
-/* Music credit. A slim parchment strip under the team cards, heading on
-   the left and the three licence lines on the right, each kept whole. */
-.credits-music {
+/* Page controls. A three column row that never changes between pages,
+   previous in the left column, the page number in the middle and next in
+   the right column. A page without one of them keeps an empty slot there.
+   The buttons use the game's next art (next.avif, the quiz and stage popup
+   arrow), flipped for previous, with a white label beside it. */
+.credits-pager {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  column-gap: 2.4cqw;
-  padding: 0.9cqw 3cqw;
-  background: url('../assets/ui/info-card.avif') center / 100% 100% no-repeat;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
-  color: var(--color-ink);
+  column-gap: 2cqw;
+  height: max(8cqw, 48px); /* the buttons' min-height */
 }
 
-.credits-music h3 {
-  margin: 0;
-  font-family: var(--font-heading);
-  font-size: clamp(1rem, 2.6cqw, 1.3rem);
-  line-height: 1.15;
-  text-align: center;
-  max-width: 7em; /* two even lines, "Attribution / for Music" */
-  text-wrap: balance;
+.credits-pager-button,
+.credits-pager-slot {
+  grid-row: 1;
 }
 
-.credits-music-lines {
-  margin: 0;
-  max-width: none;
-  padding-left: 2.4cqw;
-  border-left: 1px solid color-mix(in srgb, var(--color-ink) 40%, transparent);
-  color: var(--color-ink);
-  font-size: clamp(0.8rem, 1.9cqw, 0.95rem);
-  line-height: 1.35;
+.credits-pager-button.is-prev,
+.credits-pager-slot.is-prev {
+  grid-column: 1;
+  justify-self: start;
+}
+
+.credits-pager-button.is-next,
+.credits-pager-slot.is-next {
+  grid-column: 3;
+  justify-self: end;
+}
+
+.credits-pager-button {
+  display: flex;
+  align-items: center;
+  gap: 1.6cqw;
+  min-height: 48px;
+  padding: 0.4cqw;
+  background: transparent;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(0.95rem, 2.3cqw, 1.15rem);
+  line-height: 1.2;
+  text-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.75),
+    0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.credits-pager-button.is-prev {
   text-align: left;
 }
 
-.credits-music-lines span {
-  display: block;
-  overflow-wrap: anywhere; /* last resort, the address breaks at its slashes first (<wbr> in index.html) */
+.credits-pager-button.is-next {
+  text-align: right;
 }
 
-/* Phone. The panel fills the width and grows as tall as its content, the
-   cards stack, and the title and X are sized up to stay readable and
-   tappable. */
+.credits-pager-label {
+  max-width: 11em;
+  text-wrap: balance;
+}
+
+.credits-pager-button img {
+  flex-shrink: 0;
+  width: clamp(72px, 13cqw, 120px);
+  aspect-ratio: 1280 / 616; /* next.avif */
+  pointer-events: none;
+}
+
+/* next.avif points right, so previous is the same art flipped. */
+.credits-pager-button.is-prev img {
+  transform: scaleX(-1);
+}
+
+.credits-pager-button:hover img {
+  filter: brightness(1.08);
+}
+
+.credits-pager-page {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+  max-width: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: clamp(0.85rem, 2cqw, 1rem);
+  font-variant-numeric: tabular-nums; /* "1" and "2" the same width, so the number never shifts */
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75);
+}
+
+/* Page 2. One parchment card per attribution, side by side. Both span two
+   shared rows (heading, lines) through subgrid, so the headings and
+   dividers line up even though the lines differ in length. */
+.credits-attributions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2.5cqw;
+  row-gap: 0;
+}
+
+.credits-attribution {
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+  justify-items: center;
+  row-gap: 1.2cqw;
+  padding: 2.4cqw;
+  background: url('../assets/ui/info-card.avif') center / 100% 100% no-repeat;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+  color: var(--color-ink);
+  text-align: center;
+}
+
+/* Same heading size as the team cards on page 1. */
+.credits-attribution h3 {
+  align-self: center;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 3.4cqw, 1.6rem);
+}
+
+/* Under a thin ink rule, one licence item per line, kept whole where it fits. */
+.credits-attribution-lines {
+  align-self: start;
+  width: 100%;
+  margin: 0;
+  max-width: none;
+  padding-top: 1.4cqw;
+  border-top: 1px solid color-mix(in srgb, var(--color-ink) 40%, transparent);
+  color: var(--color-ink);
+  font-size: clamp(0.9rem, 2.25cqw, 1.05rem);
+  line-height: 1.35;
+}
+
+.credits-attribution-lines span {
+  display: block;
+  text-wrap: balance; /* even lines when an item has to wrap */
+  overflow-wrap: anywhere; /* last resort, the addresses break at their slashes first (<wbr> in index.html) */
+}
+
+/* Phone. Both pages fill the screen height, so the title, X and page
+   controls still sit in the same place on both, and the middle scrolls
+   when the stacked cards are taller than the room left. */
 @media (max-width: 600px) {
   .credits-panel {
     --panel-width: calc(100vw - var(--space-lg) * 2);
     --frame: round(down, var(--panel-width) * 0.09, 1px);
-    min-height: 0;
-    gap: calc(var(--panel-width) * 0.04);
+    height: calc(100vh - var(--space-lg) * 2);
+    height: calc(100dvh - var(--space-lg) * 2);
+    gap: calc(var(--panel-width) * 0.03);
   }
 
   .credits-panel .pause-title {
@@ -241,12 +365,20 @@
     width: max(44px, 17cqw);
   }
 
-  .credits-grid {
+  .credits-body {
+    justify-content: flex-start;
+    gap: 4cqw;
+    padding: 1cqw 2cqw 3cqw;
+  }
+
+  .credits-grid,
+  .credits-attributions {
     grid-template-columns: 1fr;
     row-gap: 5cqw;
   }
 
-  .credits-team {
+  .credits-team,
+  .credits-attribution {
     row-gap: 2.5cqw;
     padding: 6cqw 5cqw;
   }
@@ -256,21 +388,77 @@
     padding-top: 2.5cqw;
   }
 
-  /* Heading above the licence lines, all centred, like the team cards. */
-  .credits-music {
-    grid-template-columns: 1fr;
-    row-gap: 2.5cqw;
-    padding: 5cqw 5cqw;
+  .credits-attribution-lines {
+    padding-top: 2.5cqw;
+  }
+}
+
+/* Narrow panel (a phone, or a short screen that shrinks the panel), where
+   the labels no longer fit beside the arrows. Each button puts its arrow
+   above the label, and the row is sized for a two line label, so it is the
+   same size on both pages whatever the label length. */
+@container (max-width: 500px) {
+  .credits-pager {
+    --arrow: clamp(64px, 20cqw, 72px);
+    align-items: start;
+    height: calc(0.8cqw + var(--arrow) * 616 / 1280 + 1.5cqw + 0.9rem * 1.2 * 2);
   }
 
-  .credits-music h3 {
-    max-width: none;
+  .credits-pager-button {
+    flex-direction: column;
+    gap: 1.5cqw;
+    font-size: 0.9rem;
   }
 
-  .credits-music-lines {
-    padding: 2.5cqw 0 0;
-    border-left: none;
-    border-top: 1px solid color-mix(in srgb, var(--color-ink) 40%, transparent);
+  .credits-pager-button.is-prev,
+  .credits-pager-button.is-next {
     text-align: center;
+  }
+
+  .credits-pager-label {
+    max-width: 9em;
+  }
+
+  /* Arrow above the label on both buttons (the next label comes first in the markup). */
+  .credits-pager-button img {
+    order: -1;
+    width: var(--arrow);
+  }
+
+  /* Level with the middle of the arrows. */
+  .credits-pager-page {
+    margin-top: calc(0.4cqw + var(--arrow) * 616 / 1280 / 2);
+    translate: 0 -50%;
+  }
+}
+
+/* Narrower still (a portrait phone). The page number moves to its own line
+   and the buttons split the row under it. */
+@container (max-width: 340px) {
+  .credits-pager {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    align-content: start;
+    gap: 2cqw;
+    height: calc(0.85rem * 1.2 + 2cqw + 0.8cqw + var(--arrow) * 616 / 1280 + 1.5cqw + 0.9rem * 1.2 * 2);
+  }
+
+  .credits-pager-button,
+  .credits-pager-slot {
+    grid-row: 2;
+  }
+
+  .credits-pager-button.is-next,
+  .credits-pager-slot.is-next {
+    grid-column: 2;
+  }
+
+  .credits-pager-page {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: center;
+    margin-top: 0;
+    translate: none;
+    line-height: 1.2;
   }
 }
