@@ -128,9 +128,16 @@ App runs at `http://localhost:3000` (or whatever port `serve` gives you).
 
 ```
 fix-the-exhibit/
-├── docs/
-│   └── Help/Training Document.pdf    # user manual
+├── KioskMode/                        # information and resources to open Fix the Exhibit in kiosk mode
+│   ├── README.md
+│   └── start-game.bat
 ├── assets/                           # artefact images, audio, icons
+│   ├── ancient-egypt/
+│   ├── arrange-scene/
+│   ├── gold-rush/
+│   ├── sort-scene/
+│   ├── sounds/
+│   └── ui/
 ├── data/
 │   └── levels/
 │       ├── index.json                # level-select metadata (id, name, time, description)
@@ -141,10 +148,12 @@ fix-the-exhibit/
 │           ├── artefacts.json
 │           └── fillers.json
 ├── js/
-│   ├── game/                         # game loop, conveyor belt, scoring, timer, drag interactions
-│   ├── ui/                           # display case, storage vault, HUD rendering
-│   ├── quiz/                         # end-of-level quiz logic
-│   └── main.js                       # entry point
+│   ├── game/
+│   ├── quiz/
+│   │   ├── quiz-scene.js
+│   │   └── quiz.js
+│   ├── ui/
+│   └── main.js
 ├── styles/
 │   ├── arranging-scene.css
 │   ├── arranging.css
@@ -165,10 +174,10 @@ fix-the-exhibit/
 │   ├── stage-transition.css
 │   ├── tts.css
 │   └── variables.css
-├── .gitignore                        # file with list of file types that should not be tracked by the repository
+├── .gitignore                         # file with list of file types that should not be tracked by the repository
 ├── CONTRIBUTING.md
 ├── LICENSE
-├── README.md                         # you are here                       
+├── README.md                          # you are here
 └── index.html
 
 ```
