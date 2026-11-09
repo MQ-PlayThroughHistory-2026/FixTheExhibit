@@ -149,18 +149,7 @@ For design docs, research protocol, and client notes, see [`docs/`](./docs/).
 | Name | Role | Contributions | Related Assets |
 |---|---|---|---|
 | If other teams want to link their portfolios, e.g., your instagram if you're an art guy -> follow Yuyang's name format, but replace the link. 🚩 | Example | Example | - **Cool cat png:** `FixTheExhibit/assets/cat.png`<br> |
-| Nathan Wu | UI/UX Designer, Visual Assets | - Designed UI mockups and interface layouts for the game.
-- Created visual designs for the main menu and gameplay interfaces.
-- Designed UI elements, including buttons, backgrounds, title boxes and HUD components.
-- Created designs for the quiz interface, audio settings and historical information cards.
-- Contributed to the visual presentation and consistency of the game's interface.
-- Documented UI designs and mockups for the project documentation. | - Main Menu UI
-- Gameplay HUD
-- Timer UI
-- Quiz UI
-- Audio Settings UI
-- Historical Information Cards
-- UI Mockups |
+| Nathan Wu | UI/UX Designer, Visual Assets | - Designed UI mockups and interface layouts for the game.<br>- Created visual designs for the main menu and gameplay interfaces.<br>- Designed UI elements, including buttons, backgrounds, title boxes and HUD components.<br>- Created designs for the quiz interface, audio settings and historical information cards.<br>- Documented UI designs and mockups for the project documentation. | - **UI image assets, including those for the main menu, audio settings, timer, quiz, and information cards** `FixTheExhibit/assets/ui/`|
 
 ### Research Team
 | Name | Role | Contributions | Related Research |
