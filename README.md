@@ -128,61 +128,63 @@ App runs at `http://localhost:3000` (or whatever port `serve` gives you).
 
 ```
 fix-the-exhibit/
-├── KioskMode/                        # information and resources to open Fix the Exhibit in kiosk mode
+├── KioskMode/
 │   ├── README.md
 │   └── start-game.bat
-├── assets/                           # artefact images, audio, icons
+├── assets/
 │   ├── ancient-egypt/
+│   │   ├── artefacts/
+│   │   │   └── *.avif                # images
+│   │   ├── fillers/
+│   │   │   └── *.avif
+│   │   └── qr-code/
+│   │       └── *.png                 # images
 │   ├── arrange-scene/
+│   │   └── *.avif
 │   ├── gold-rush/
+│   │   ├── artefacts/
+│   │   │   └── *.avif
+│   │   ├── fillers/
+│   │   │   └── *.avif
+│   │   └── qr-code/
+│   │       └── *.png
 │   ├── sort-scene/
+│   │   ├── conveyer belt.webm
+│   │   ├── dropshadow.png
+│   │   └── *.avif
 │   ├── sounds/
+│   │   ├── background-music/
+│   │   │   └── bgm.mp3
+│   │   └── effects/
+│   │       └── *.mp3                 # audio files
 │   └── ui/
+│       └── *.avif
 ├── data/
 │   └── levels/
 │       ├── index.json                # level-select metadata (id, name, time, description)
 │       ├── gold-rush/
-│       │   ├── artefacts.json        # the 10 real artefacts for this level
-│       │   └── fillers.json          # the 10 filler packages for this level
+│       │   ├── artefacts.json        # information about 10 real artefacts for this level
+│       │   └── fillers.json          # information about 10 filler packages for this level
 │       └── ancient-egypt/
 │           ├── artefacts.json
 │           └── fillers.json
 ├── js/
 │   ├── game/
+│   │   └── *.js                      # game loop, conveyer belt, scoring, timer, drag interactions
 │   ├── quiz/
-│   │   ├── quiz-scene.js
-│   │   └── quiz.js
+│   │   └── *.js                      # end-of-level quiz logic
 │   ├── ui/
-│   └── main.js
+│   │   └── *.js                      # display case, storage vault, HUD rendering, audio, tutorials
+│   └── main.js                       # entry point
 ├── styles/
-│   ├── arranging-scene.css
-│   ├── arranging.css
-│   ├── base.css
-│   ├── belt.css
-│   ├── certificate.css
-│   ├── confirm-dialog.css
-│   ├── credits.css
-│   ├── hud.css
-│   ├── info-card.css
-│   ├── kiosk-refresh.css
-│   ├── kiosk.css
-│   ├── menu.css
-│   ├── pause-menu.css
-│   ├── quiz.css
-│   ├── sorting-scene.css
-│   ├── sorting.css
-│   ├── stage-transition.css
-│   ├── tts.css
-│   └── variables.css
-├── .gitignore                         # file with list of file types that should not be tracked by the repository
+│   └── *.css                         # styling
+├── .gitignore
 ├── CONTRIBUTING.md
 ├── LICENSE
-├── README.md                          # you are here
+├── README.md                         # you are here
 └── index.html
 
 ```
-
-^Adjust as the project progresses, things change. Just an outline for now. 🚩
 
 ## Contributing To This Project
 
@@ -195,19 +197,19 @@ For design docs, research protocol, and client notes, see [`docs/`](./docs/).
 | Name | Role | Contributions | Related Source Code |
 |---|---|---|---|
 | [Yuyang Su](https://github.com/VnKnpwN) | Fullstack Dev, Docs | - Authored README.md<br>- Authored CONTRIBUTING.md<br>- Managed Github operations<br> | - **README.md:** `FixTheExhibit/README.md`<br>- **CONTRIBUTING.md:** `FixTheExhibit/CONTRIBUTING.md`<br> |
-| Arjun Gupta<br>[GitHub](https://github.com/Arjung952) · [LinkedIn](https://www.linkedin.com/in/YOUR-HANDLE) | Developer, QA Tester | - Developed the sorting stage and conveyor belt<br>- Developed the end-of-level quiz<br>- Developed the credits page<br>- Tested the game across desktop, tablet and mobile<br>- Authored the test specification and help guide<br>- Reviewed and merged pull requests<br> | - **Sorting** `FixTheExhibit/js/game/sorting.js`<br>- **Conveyor belt** `FixTheExhibit/js/game/belt.js`<br>- **Quiz** `FixTheExhibit/js/quiz/`<br>- **Credits** `FixTheExhibit/styles/credits.css`<br> |
+| Arjun Gupta<br>[GitHub](https://github.com/Arjung952) · [LinkedIn](https://www.linkedin.com/in/YOUR-HANDLE) | Developer, QA Tester | - Developed the sorting stage and conveyor belt<br>- Developed the end-of-level quiz<br>- Developed the credits page<br>- Tested the game across desktop, tablet and mobile<br>- Co-authored the user manual<br>- Reviewed and merged pull requests<br> | - **Sorting** `FixTheExhibit/js/game/sorting.js`<br>- **Conveyor belt** `FixTheExhibit/js/game/belt.js`<br>- **Quiz** `FixTheExhibit/js/quiz/`<br>- **Credits** `FixTheExhibit/styles/credits.css`<br> |
 
 ### Visuals Team
 | Name | Role | Contributions | Related Assets |
 |---|---|---|---|
 | If other teams want to link their portfolios, e.g., your instagram if you're an art guy -> follow Yuyang's name format, but replace the link. 🚩 | Example | Example | - **Cool cat png:** `FixTheExhibit/assets/cat.png`<br> |
-| Nathan Wu | UI/UX Designer, Visual Assets | - Designed UI mockups and interface layouts for the game.<br>- Created visual designs for the main menu and gameplay interfaces.<br>- Designed UI elements, including buttons, backgrounds, title boxes and HUD components.<br>- Created designs for the quiz interface, audio settings and historical information cards.<br>- Documented UI designs and mockups for the project documentation. | - **UI image assets, including those for the main menu, audio settings, timer, quiz, and information cards** `FixTheExhibit/assets/ui/`|
+| Nathan Wu | UI/UX Designer, Visual Assets | - Designed UI mockups and interface layouts for the game.<br>- Created visual designs for the main menu and gameplay interfaces.<br>- Designed UI elements, including buttons, backgrounds, title boxes and HUD components.<br>- Created designs for the quiz interface, audio settings and historical information cards.<br>- Documented UI designs and mockups for the project documentation. | - **UI image assets, including those for the main menu, audio settings, timer, quiz, and information cards** `FixTheExhibit/assets/ui/*.avif`|
 
 ### Research Team
 | Name | Role | Contributions | Related Research |
 |---|---|---|---|
-| Example | Example | Example | - `data/levels/ancient-egypt` |
-| Cody Huang | Historical Research, Content Development | - Researched historical artefacts for the Ancient Egypt and Australian Gold Rush levels.<br>- Wrote historical blurbs and detailed artefact information for educational content cards.<br>- Created fun facts for historical artefacts and filler objects.<br>- Developed easy and hard multiple-choice quiz questions for artefacts.<br>- Wrote clues to help players identify artefact placements during the arranging stage.<br>- Sourced historical references and generated QR codes for further reading.<br> | - **Ancient Egypt artefacts:** `data/levels/ancient-egypt/artefacts.json`<br>- **Ancient Egypt fillers:** `data/levels/ancient-egypt/fillers.json`<br>- **Australian Gold Rush artefacts:** `data/levels/gold-rush/artefacts.json`<br>- **Australian Gold Rush fillers:** `data/levels/gold-rush/fillers.json`<br>- **Historical reference QR codes:** `assets/ancient-egypt/qr-code/`, `assets/gold-rush/qr-code/`<br> |
+| [Samantha Hamilton](https://linktr.ee/SamanthaHamilton2) | Research, Content Development, Project Manager | - Researched artefacts and filler objects for both levels.<br>- Developed and implemented written game content.<br>- Reviewed all work to ensure consistency.<br>- Organised meetings and task assignments.<br>- Co-authored documentation. | - **Ancient Egypt artefacts:** `data/levels/ancient-egypt/artefacts.json`<br>- **Ancient Egypt fillers:** `data/levels/ancient-egypt/fillers.json`<br>- **Australian Gold Rush artefacts:** `data/levels/gold-rush/artefacts.json`<br>- **Australian Gold Rush fillers:** `data/levels/gold-rush/fillers.json`<br>- **Historical reference QR codes:** `assets/ancient-egypt/qr-code/`, `assets/gold-rush/qr-code/`<br> |
+| Cody Huang | Research, Content Development | - Researched historical artefacts for the Ancient Egypt and Australian Gold Rush levels.<br>- Wrote historical blurbs and detailed artefact information for educational content cards.<br>- Created fun facts for historical artefacts and filler objects.<br>- Developed easy and hard multiple-choice quiz questions for artefacts.<br>- Wrote clues to help players identify artefact placements during the arranging stage.<br>- Sourced historical references and generated QR codes for further reading.<br> | - **Ancient Egypt artefacts:** `data/levels/ancient-egypt/artefacts.json`<br>- **Ancient Egypt fillers:** `data/levels/ancient-egypt/fillers.json`<br>- **Australian Gold Rush artefacts:** `data/levels/gold-rush/artefacts.json`<br>- **Australian Gold Rush fillers:** `data/levels/gold-rush/fillers.json`<br>- **Historical reference QR codes:** `assets/ancient-egypt/qr-code/`, `assets/gold-rush/qr-code/`<br> |
 
 ^just follow the table format to add ur contributions. 🚩
 
