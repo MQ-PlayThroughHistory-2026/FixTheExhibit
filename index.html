@@ -486,13 +486,13 @@
 
   <!-- Timeout Modal -->
   <div id="timeoutModal" class="timeout-overlay hidden">
-    <div class="timeout-content">
-      <h2>Are you still there?</h2>
-        <p>You have been inactive.</p>
-        <p>The page will refresh in <span id="countdown">60</span> seconds.</p>
-        <div class="timeout-buttons">
-          <button id="btnContinue" class="btn btn-continue">Continue</button>
-        </div>
+    <div class="timeout-content" role="alertdialog" aria-labelledby="timeout-title">
+      <h2 id="timeout-title">Are you still there?</h2>
+      <p>You have been inactive.</p>
+      <p>The page will refresh in <span id="countdown">60</span> seconds.</p>
+      <div class="timeout-buttons">
+        <button id="btnContinue" class="btn btn-continue">Continue</button>
+      </div>
     </div>
   </div>
 
