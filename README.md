@@ -168,8 +168,6 @@ fix-the-exhibit/
 │       └── ancient-egypt/
 │           ├── artefacts.json
 │           └── fillers.json
-├── docs/
-│   └── User Manual.pdf
 ├── js/
 │   ├── game/
 │   │   └── *.js                      # game loop, conveyer belt, scoring, timer, drag interactions
@@ -184,6 +182,7 @@ fix-the-exhibit/
 ├── CONTRIBUTING.md
 ├── LICENSE
 ├── README.md                         # you are here
+├── User Manual.pdf
 └── index.html
 
 ```
@@ -191,8 +190,6 @@ fix-the-exhibit/
 ## Contributing To This Project
 
 Want to work on this project? Branching model, commit conventions, PR process, and issue tracking all live in [`CONTRIBUTING.md`](./CONTRIBUTING.md).
-
-For design docs, research protocol, and client notes, see [`docs/`](./docs/).
 
 ## Project Teams
 ### Development Team
