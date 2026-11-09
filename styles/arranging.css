@@ -53,7 +53,7 @@
 }
 
 .silhouette-slot.flash-incorrect img.silhouette-img {
-  filter: brightness(0) drop-shadow(0 0 3px var(--color-hard-hover)) drop-shadow(0 0 8px var(--color-hard-hover));
+  filter: brightness(0) drop-shadow(0 0 3px var(--color-hard)) drop-shadow(0 0 8px var(--color-hard));
   opacity: 0.7;
 }
 
@@ -73,7 +73,7 @@
 }
 
 .silhouette-slot.flash-incorrect img.clue-card-art {
-  filter: drop-shadow(0 0 3px var(--color-hard-hover)) drop-shadow(0 0 8px var(--color-hard-hover));
+  filter: drop-shadow(0 0 3px var(--color-hard)) drop-shadow(0 0 8px var(--color-hard));
 }
 
 /* :not(.is-clue-open) stops the hover state fighting the fade to 0 below. */
@@ -125,7 +125,7 @@
    shadow cast down onto the shelf, following the artefact's own outline.
    Last in the chain so the shadow also sits under the glow. */
 :root {
-  --placed-glow: drop-shadow(0 0 3px var(--color-easy-hover)) drop-shadow(0 0 8px var(--color-easy-hover));
+  --placed-glow: drop-shadow(0 0 3px var(--color-easy)) drop-shadow(0 0 8px var(--color-easy));
   --placed-shadow: drop-shadow(0 7px 5px rgba(0, 0, 0, 0.75));
 }
 
