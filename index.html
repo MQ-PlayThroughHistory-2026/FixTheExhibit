@@ -68,13 +68,16 @@
 
       <div id="staff-exit-modal" class="modal hidden">
         <div class="modal-content">
+          <!-- Same id the cancel button had, so kiosk.js still closes the modal with it. -->
+          <button id="btn-staff-exit-cancel" class="modal-close" aria-label="Close">
+            <img src="assets/ui/menu-close.avif" alt="" />
+          </button>
           <h2>Staff Exit</h2>
           <p>Enter the staff passphrase to exit fullscreen.</p>
           <input type="password" id="staff-exit-passphrase" autocomplete="off" />
           <p id="staff-exit-error" class="error-text hidden">Incorrect passphrase.</p>
           <div class="modal-actions">
-            <button id="btn-staff-exit-cancel" class="btn-secondary">Cancel</button>
-            <button id="btn-staff-exit-submit" class="btn-primary">Confirm</button>
+            <button id="btn-staff-exit-submit" class="modal-confirm">Confirm</button>
           </div>
         </div>
       </div>
