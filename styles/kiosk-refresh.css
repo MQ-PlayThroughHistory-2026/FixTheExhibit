@@ -1,9 +1,20 @@
+/* kiosk-refresh.css
+   The "Are you still there?" idle warning. Goes together with
+   js/ui/kiosk-refresh.js (which only toggles .hidden and writes the
+   countdown number, so the look can change freely here).
+   A small parchment card (assets/ui/info-card.avif, like the level cards)
+   along the bottom of the screen, with the menu button art for Continue. */
+
 .timeout-overlay {
     position: fixed;
+    left: 0;
+    right: 0;
     bottom: 20px;
-    z-index: 9999; /* Keeps it above all existing page elements */
-    pointer-events: auto;
+    z-index: 9999; /* Keeps it above all existing page elements, including confirm dialogs (1100) */
     display: flex;
+    justify-content: center;
+    padding: 0 var(--space-md);
+    pointer-events: none; /* only the card itself catches taps */
 }
 
 .timeout-overlay.hidden {
@@ -11,41 +22,72 @@
 }
 
 .timeout-content {
-    background: rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    border-radius: 8px;
+    width: min(400px, 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 1.75rem 2rem 1.5rem;
+    box-sizing: border-box;
+    background: url('../assets/ui/info-card.avif') center / 90% 100% no-repeat;
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
+    color: var(--color-ink);
     text-align: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-    width: 320px;
-    max-width: calc(100vw - 40px);
-    font-family: Arial, sans-serif;
-    border: 1px solid #e0e0e0;
+    pointer-events: auto;
+}
+
+.timeout-content h2 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.4rem, 5vw, 1.8rem);
+    line-height: 1.15;
+}
+
+/* base.css mutes <p>, which would be hard to read on the light card. */
+.timeout-content p {
+    margin: 0;
+    max-width: none;
+    color: inherit;
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1.35;
+}
+
+#countdown {
+    display: inline-block;
+    min-width: 2ch; /* stops the text shifting as the number drops from 60 to 9 */
+    font-weight: 800;
+    font-size: 1.15em;
+    color: var(--color-hard);
 }
 
 .timeout-buttons {
-    margin-top: 15px;
+    margin-top: var(--space-sm);
     display: flex;
     justify-content: center;
+    width: 100%;
 }
 
+/* Continue: same button art as the tutorial cards' "Got it" button. */
 .timeout-buttons .btn {
-    flex: 1;
-    padding: 10px 16px;
+    width: 160px;
+    max-width: 100%;
+    /* Matches button.avif's proportions. */
+    aspect-ratio: 4745 / 2284;
+    min-height: 0;
+    padding: 0 18px; /* keeps the text inside the art's frame */
     border: none;
-    border-radius: 6px;
+    border-radius: 0;
+    background: url('../assets/ui/button.avif') center / 100% 100% no-repeat;
+    color: var(--color-bg);
+    font-weight: 600;
+    font-size: 1.05rem;
+    line-height: 1.15;
     cursor: pointer;
-    font-size: 14px;
-    min-height: 44px;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
 }
 
-.btn-continue {
-    background-color: #28a745;
-    color: white;
-}
-
-#countdown {
-    font-weight: bold;
-    color: #dc3545;
+.timeout-buttons .btn:hover {
+    filter: brightness(1.08);
 }

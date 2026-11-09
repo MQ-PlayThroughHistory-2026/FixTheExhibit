@@ -244,8 +244,10 @@ export function initTts() {
 
   // Any press that isn't on a speaker button stops the reading: closing a
   // card, turning a page, pressing Next, opening the pause menu...
+  // The TTS volume slider is left out: letting go of it fires a click right
+  // after the sample starts (pause-menu.js), which would cut the sample off.
   document.addEventListener('click', (event) => {
-    if (!event.target.closest('.tts-button')) stopSpeaking();
+    if (!event.target.closest('.tts-button, .pause-slider[data-channel="tts"]')) stopSpeaking();
   }, true);
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') stopSpeaking();
