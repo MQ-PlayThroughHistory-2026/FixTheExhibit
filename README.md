@@ -204,9 +204,8 @@ For design docs, research protocol, and client notes, see [`docs/`](./docs/).
 ### Visuals Team
 | Name | Role | Contributions | Related Assets |
 |---|---|---|---|
-| If other teams want to link their portfolios, e.g., your instagram if you're an art guy -> follow Yuyang's name format, but replace the link. 🚩 | Example | Example | - **Cool cat png:** `FixTheExhibit/assets/cat.png`<br> |
 | Nathan Wu | UI/UX Designer, Visual Assets | - Designed UI mockups and interface layouts for the game.<br>- Created visual designs for the main menu and gameplay interfaces.<br>- Designed UI elements, including buttons, backgrounds, title boxes and HUD components.<br>- Created designs for the quiz interface, audio settings and historical information cards.<br>- Documented UI designs and mockups for the project documentation. | - **UI image assets, including those for the main menu, audio settings, timer, quiz, and information cards** `FixTheExhibit/assets/ui/*.avif`|
-| Leon Vasington | Visual Lead, 3D Modeler | -In-person research of museum games.<br> -Created mockup designs of main game scenes.<br> -Modeled and textured in-game artefacts<br> -Modeled and textured backgrounds for main game scenes.<br> -Created and animated conveyer belt asset. | **Rendered artefacts, Conveyer animation, Background scenes** `FixTheExhibit/assets/ancient-egypt/artefacts/*.avif`, `FixTheExhibit\assets\arrange-scene/*.avif`, `FixTheExhibit/assets/gold-rush/artefacts/*.avif`, `FixTheExhibit\assets\sort-scene/*.avif`|
+| Leon Vasington | Visual Lead, 3D Modeler | -In-person research of museum games.<br> -Created mockup designs of main game scenes.<br> -Modeled and textured in-game artefacts<br> -Modeled and textured backgrounds for main game scenes.<br> -Created and animated conveyer belt asset. | - **Rendered artefacts, Conveyer animation, Background scenes** `FixTheExhibit/assets/ancient-egypt/artefacts/*.avif`, `FixTheExhibit\assets\arrange-scene/*.avif`, `FixTheExhibit/assets/gold-rush/artefacts/*.avif`, `FixTheExhibit\assets\sort-scene/*.avif`|
 
 ### Research Team
 | Name | Role | Contributions | Related Research |
