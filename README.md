@@ -168,6 +168,8 @@ fix-the-exhibit/
 │       └── ancient-egypt/
 │           ├── artefacts.json
 │           └── fillers.json
+├── docs/
+│   └── User Manual.pdf
 ├── js/
 │   ├── game/
 │   │   └── *.js                      # game loop, conveyer belt, scoring, timer, drag interactions
