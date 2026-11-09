@@ -9,6 +9,7 @@ This doc covers the day-to-day mechanics of contributing - branching, commits, P
 
 - `main` is always demo-stable. Only release milestones land here. 
 - `dev` is for active development. Most work targets this.
+- `demo-showcase` is a version of main that includes a "skip" button in the pause menu to move to the next stage. This feature is intended to help develop or showcase the project, not for wide release.
 - `feature/*`, `fix/*` - dedicated branches for individual pieces of work (e.g. `feature/conveyor-belt`, `fix/timer-bug`).
 
 ## Merging
