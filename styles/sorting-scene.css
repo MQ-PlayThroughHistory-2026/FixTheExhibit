@@ -230,6 +230,14 @@
   color: color-mix(in srgb, var(--color-easy) 75%, #000);
 }
 
+.sorting-feedback.is-correct {
+  filter: drop-shadow(0 0 16px var(--color-easy)) drop-shadow(0 0 8px var(--color-easy));
+}
+
 .sorting-feedback.is-incorrect .info-card-title {
   color: color-mix(in srgb, var(--color-hard) 85%, #000);
+}
+
+.sorting-feedback.is-incorrect {
+  filter: drop-shadow(0 0 16px var(--color-hard)) drop-shadow(0 0 8px var(--color-hard));
 }
