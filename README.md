@@ -198,6 +198,11 @@ For design docs, research protocol, and client notes, see [`docs/`](./docs/).
 | Name | Role | Contributions | Related Research |
 |---|---|---|---|
 | Example | Example | Example | - `data/levels/ancient-egypt` |
+| Cody Huang | Historical Research, Content Development | - Researched and selected historical artefacts for the Ancient Egypt and Australian Gold Rush levels.<br>- Wrote historical blurbs and detailed artefact information for educational content cards.<br>- Created fun facts for artefacts and filler objects.<br>- Developed easy and hard multiple-choice quiz questions for historical artefacts.<br>- Wrote clues to guide players during the arranging stage.<br>- Sourced historical references and QR code links for further reading.<br>- Reviewed and refined historical content for accuracy, clarity and consistency.<br> |- **Ancient Egypt artefacts:** `data/levels/ancient-egypt/artefacts.json`<br>
+- **Ancient Egypt fillers:** `data/levels/ancient-egypt/fillers.json`<br>
+- **Australian Gold Rush artefacts:** `data/levels/gold-rush/artefacts.json`<br>
+- **Australian Gold Rush fillers:** `data/levels/gold-rush/fillers.json`<br>
+- **Historical reference QR codes:** `assets/ancient-egypt/qr-code/`, `assets/gold-rush/qr-code/`|
 
 ^just follow the table format to add ur contributions. 🚩
 
