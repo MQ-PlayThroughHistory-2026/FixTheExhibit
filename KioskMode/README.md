@@ -2,7 +2,7 @@
 
 `start-game.bat` opens **Fix the Exhibit** in a locked-down, fullscreen Chrome window for use on a museum touchscreen. Visitors see only the game: no address bar, tabs or browser menus.
 
-This is the recommended way to run the game in a museum. See Section 4.4 of the Help/Training Document for the full walkthrough.
+This is the recommended way to run the game in a museum. See Section 4.4 of the User Manual for the full walkthrough.
 
 ## What it does
 
@@ -23,7 +23,7 @@ Kiosk mode also stays fullscreen through the game's inactivity reset (after 3 mi
 https://mq-playthroughhistory-2026.github.io/FixTheExhibit/?kiosk
 ```
 
-Replace everything before `?kiosk` with the museum's own address (see Help/Training Document Section 4.3, "Hosting on GitHub Pages"). Keep `?kiosk` on the end.
+Replace everything before `?kiosk` with the museum's own address (see User Manual Section 4.3, "Hosting on GitHub Pages"). Keep `?kiosk` on the end.
 
 **2. Requirements**
 
@@ -56,7 +56,7 @@ Edge uses its own profile handling, so the `--user-data-dir` option is not neede
 
 ## Running without internet
 
-If the venue cannot guarantee reliable internet, run a local copy of the game instead. Help/Training Document Section 4.5 has a variant of this script that first starts a small local web server and then opens `http://localhost:8000/?kiosk`. Content changes then have to be copied onto each kiosk by hand.
+If the venue cannot guarantee reliable internet, run a local copy of the game instead. User Manual Section 4.5 has a variant of this script that first starts a small local web server and then opens `http://localhost:8000/?kiosk`. Content changes then have to be copied onto each kiosk by hand.
 
 ## Troubleshooting
 
@@ -66,7 +66,7 @@ If the venue cannot guarantee reliable internet, run a local copy of the game in
 | The script window flashes and nothing opens | Chrome is not installed, or not registered with Windows. Install Google Chrome. |
 | The staff-exit gear shows on the title screen | `?kiosk` is missing from the end of `GAME_URL`. Add it. |
 | Can't leave the game | Press **Alt + F4**. |
-| An iPad is being used | Windows scripts don't apply. Use **Guided Access** (Settings, Accessibility, Guided Access). See Help/Training Document Section 4.6. |
+| An iPad is being used | Windows scripts don't apply. Use **Guided Access** (Settings, Accessibility, Guided Access). See User Manual Section 4.6. |
 
 ## Security note
-Kiosk mode stops visitors reaching the address bar and browser menus, but it is not a full lock-down. For a dedicated device that must be fully locked, use Windows **Assigned Access** (Help/Training Document Section 4.6).
+Kiosk mode stops visitors reaching the address bar and browser menus, but it is not a full lock-down. For a dedicated device that must be fully locked, use Windows **Assigned Access** (User Manual Section 4.6).

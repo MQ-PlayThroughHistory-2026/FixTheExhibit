@@ -68,13 +68,16 @@
 
       <div id="staff-exit-modal" class="modal hidden">
         <div class="modal-content">
+          <!-- Same id the cancel button had, so kiosk.js still closes the modal with it. -->
+          <button id="btn-staff-exit-cancel" class="modal-close" aria-label="Close">
+            <img src="assets/ui/menu-close.avif" alt="" />
+          </button>
           <h2>Staff Exit</h2>
           <p>Enter the staff passphrase to exit fullscreen.</p>
           <input type="password" id="staff-exit-passphrase" autocomplete="off" />
           <p id="staff-exit-error" class="error-text hidden">Incorrect passphrase.</p>
           <div class="modal-actions">
-            <button id="btn-staff-exit-cancel" class="btn-secondary">Cancel</button>
-            <button id="btn-staff-exit-submit" class="btn-primary">Confirm</button>
+            <button id="btn-staff-exit-submit" class="modal-confirm">Confirm</button>
           </div>
         </div>
       </div>
@@ -85,6 +88,9 @@
          the settings panel (grey backplate, title card, red X to close) with
          a parchment card per team on the information card art. No
          data-settings, the panel is its own page and the X is the way back. -->
+    <!-- Credits, page 1 of 2. Both pages share one layout: the title and X
+         pinned to the top, the page controls pinned to the bottom, and the
+         content centred in between, so the controls never move. -->
     <section id="screen-credits" class="screen hidden">
       <div class="credits-panel">
         <div class="pause-title-row">
@@ -93,45 +99,93 @@
             <img src="assets/ui/menu-close.avif" alt="" />
           </button>
         </div>
-        <p class="credits-intro">Fix the Exhibit was made by a team of six, working across research, art and development.</p>
-        <div class="credits-grid">
-          <div class="credits-team">
-            <h3>Research</h3>
-            <p class="credits-blurb">Chose the artefacts and wrote and checked the history behind them.</p>
-            <ul class="credits-members">
-              <li><span class="credits-name">Samantha Hamilton</span> <span class="credits-role">Researcher and Producer</span></li>
-              <li><span class="credits-name">Cody Huang</span> <span class="credits-role">Research Lead</span></li>
-            </ul>
+        <div class="credits-body">
+          <p class="credits-intro">Fix the Exhibit was made by a team of six, working across research, art and development.</p>
+          <div class="credits-grid">
+            <div class="credits-team">
+              <h3>Research</h3>
+              <p class="credits-blurb">Chose the artefacts and wrote and checked the history behind them.</p>
+              <ul class="credits-members">
+                <li><span class="credits-name">Samantha Hamilton</span> <span class="credits-role">Researcher and Producer</span></li>
+                <li><span class="credits-name">Cody Huang</span> <span class="credits-role">Research Lead</span></li>
+              </ul>
+            </div>
+            <div class="credits-team">
+              <h3>Visual Arts</h3>
+              <p class="credits-blurb">Created the artwork, buttons and menus that bring the museum to life.</p>
+              <ul class="credits-members">
+                <li><span class="credits-name">Leon Vasington</span> <span class="credits-role">Visual Lead</span></li>
+                <li><span class="credits-name">Nathan Wu</span> <span class="credits-role">Artist and UI Designer</span></li>
+              </ul>
+            </div>
+            <div class="credits-team">
+              <h3>Development</h3>
+              <p class="credits-blurb">Built the game and tested it from start to finish.</p>
+              <ul class="credits-members">
+                <li><span class="credits-name">Yuyang Su</span> <span class="credits-role">Development Lead</span></li>
+                <li><span class="credits-name">Arjun Gupta</span> <span class="credits-role">Developer and QA Tester</span></li>
+              </ul>
+            </div>
           </div>
-          <div class="credits-team">
-            <h3>Visual Arts</h3>
-            <p class="credits-blurb">Created the artwork, buttons and menus that bring the museum to life.</p>
-            <ul class="credits-members">
-              <li><span class="credits-name">Leon Vasington</span> <span class="credits-role">Visual Lead</span></li>
-              <li><span class="credits-name">Nathan Wu</span> <span class="credits-role">Artist and UI Designer</span></li>
-            </ul>
-          </div>
-          <div class="credits-team">
-            <h3>Development</h3>
-            <p class="credits-blurb">Built the game and tested it from start to finish.</p>
-            <ul class="credits-members">
-              <li><span class="credits-name">Yuyang Su</span> <span class="credits-role">Development Lead</span></li>
-              <li><span class="credits-name">Arjun Gupta</span> <span class="credits-role">Developer and QA Tester</span></li>
-            </ul>
+          <p class="credits-thanks">Thanks for Playing!</p>
+        </div>
+        <!-- Page controls. Previous always bottom left, next always bottom right,
+             the empty side keeps its space so nothing moves between pages. -->
+        <div class="credits-pager">
+          <span class="credits-pager-slot is-prev" aria-hidden="true"></span>
+          <p class="credits-pager-page">Page 1 of 2</p>
+          <button type="button" class="credits-pager-button is-next" data-target="screen-credits-attributions">
+            <span class="credits-pager-label">For Attributions, See Next Page</span>
+            <img src="assets/ui/next.avif" alt="" />
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Credits, page 2 of 2. Attributions for outside work, worded as each
+         licence asks. Addresses are plain text rather than links, so they
+         can't open a browser tab on a locked kiosk. -->
+    <section id="screen-credits-attributions" class="screen hidden">
+      <div class="credits-panel">
+        <div class="pause-title-row">
+          <h2 class="pause-title">Credits</h2>
+          <button type="button" class="pause-close" data-target="screen-main-menu" aria-label="Close credits">
+            <img src="assets/ui/menu-close.avif" alt="" />
+          </button>
+        </div>
+        <div class="credits-body">
+          <p class="credits-intro">Attributions for the Music and Artwork used in the game.</p>
+          <div class="credits-attributions">
+            <div class="credits-attribution">
+              <h3>Music</h3>
+              <p class="credits-attribution-lines">
+                <span>"Hustle" Kevin MacLeod (incompetech.com)</span>
+                <span>Licensed under Creative Commons: By Attribution 4.0 License</span>
+                <span>http://creativecommons.org/<wbr>licenses/<wbr>by/<wbr>4.0/</span>
+              </p>
+            </div>
+            <div class="credits-attribution">
+              <h3>Artwork</h3>
+              <p class="credits-attribution-lines">
+                <span>"Sphynx for AR" by rowan (sketchfab.com/rowana)</span>
+                <span>https://sketchfab.com/<wbr>3d-models/<wbr>sphynx-for-ar-<wbr>d4ccf7a27ea741f8b89225e935471c7f</span>
+                <span>Licensed under Creative Commons: Attribution 4.0 License</span>
+                <span>http://creativecommons.org/<wbr>licenses/<wbr>by/<wbr>4.0/</span>
+                <span>Rendered as a still image for The Great Sphinx of Giza.</span>
+              </p>
+            </div>
           </div>
         </div>
-        <!-- Music credit, worded as the licence asks. The licence address is
-             plain text rather than a link, so it can't open a browser tab on
-             a locked kiosk. -->
-        <div class="credits-music">
-          <h3>Attribution for Music</h3>
-          <p class="credits-music-lines">
-            <span>"Hustle" Kevin MacLeod (incompetech.com)</span>
-            <span>Licensed under Creative Commons: By Attribution 4.0 License</span>
-            <span>http://creativecommons.org/<wbr>licenses/<wbr>by/<wbr>4.0/</span>
-          </p>
+        <!-- Page controls. Previous always bottom left, next always bottom right,
+             the empty side keeps its space so nothing moves between pages. -->
+        <div class="credits-pager">
+          <button type="button" class="credits-pager-button is-prev" data-target="screen-credits">
+            <img src="assets/ui/next.avif" alt="" />
+            <span class="credits-pager-label">Back to the Team</span>
+          </button>
+          <p class="credits-pager-page">Page 2 of 2</p>
+          <span class="credits-pager-slot is-next" aria-hidden="true"></span>
         </div>
-        <p class="credits-thanks">Thanks for playing!</p>
       </div>
     </section>
 
@@ -147,8 +201,8 @@
           </button>
           <h2 class="select-title">Choose a Level</h2>
         </div>
-        <p class="select-intro">Pick which exhibit you'll be putting together today.</p>
-        <div id="level-list" class="select-grid">Loading levels&hellip;</div>
+        <p class="select-intro">Pick which Exhibit you'll be putting together today!</p>
+        <div id="level-list" class="select-grid">Loading Levels&hellip;</div>
       </div>
     </section>
 
@@ -437,13 +491,13 @@
 
   <!-- Timeout Modal -->
   <div id="timeoutModal" class="timeout-overlay hidden">
-    <div class="timeout-content">
-      <h2>Are you still there?</h2>
-        <p>You have been inactive.</p>
-        <p>The page will refresh in <span id="countdown">60</span> seconds.</p>
-        <div class="timeout-buttons">
-          <button id="btnContinue" class="btn btn-continue">Continue</button>
-        </div>
+    <div class="timeout-content" role="alertdialog" aria-labelledby="timeout-title">
+      <h2 id="timeout-title">Are you still there?</h2>
+      <p>You have been inactive.</p>
+      <p>The page will refresh in <span id="countdown">60</span> seconds.</p>
+      <div class="timeout-buttons">
+        <button id="btnContinue" class="btn btn-continue">Continue</button>
+      </div>
     </div>
   </div>
 
